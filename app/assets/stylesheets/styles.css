@@ -245,6 +245,7 @@
  
  td {
 	 padding: 0rem 1rem;
+	 border-bottom: 1px solid var(--color-medium-black);	 
  }
  
  abbr {
@@ -278,7 +279,7 @@
  }
  
  header a {
-	 color: #555;
+	 color: var(--color-white);
 	 font-weight: 500;
 	 text-decoration: none;
  }
