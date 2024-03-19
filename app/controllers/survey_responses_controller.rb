@@ -1,7 +1,7 @@
 class SurveyResponsesController < ApplicationController
 	
 	def index
-		@responses = SurveyResponse.all
+		@responses = SurveyResponse.all.order(:created_at)
 	end
 	
 	def show
