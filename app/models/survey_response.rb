@@ -2,28 +2,6 @@ class SurveyResponse < ApplicationRecord
 
 	require 'csv'
 	
-	# :age_given
-	# :age_cope
-	# :klass_given
-	# :klass_cope
-	# :race_given
-	# :race_cope
-	# :religion_given
-	# :religion_cope
-	# :disability_given
-	# :disability_cope
-	# :neurodiversity_given
-	# :neurodiversity_cope
-	# :gender_given
-	# :gender_cope
-	# :lgbtq_given
-	# :lgbtq_cope
-	# :pronouns_given
-	# :pronouns_feeling
-	# :pronouns_experience
-	# :affinity
-	# :additional_notes
-
 	QUESTION_MAPPING = {
 		age_given: "Age",
 		age_cope: "Age Experience",
@@ -51,6 +29,7 @@ class SurveyResponse < ApplicationRecord
 	def self.refresh_from_csv
 		SurveyResponse.destroy_all
 		CSV.read("./data/survey.csv", headers: true).each do |record|
+			next unless record['Progress'].to_i.to_s == record['Progress']
 			SurveyResponse.create!(
 				age_given: record['Age1'],
 				age_cope: record['Age2cope'],
