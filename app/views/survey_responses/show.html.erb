@@ -1,4 +1,4 @@
-<h1>Response <%= @response.id %></h1>
+<h2>Response <%= @response.id %></h2>
 
 <table>
 	<thead>
@@ -8,9 +8,9 @@
 		</tr>
 	</thead>
 	<tbody>
-		<% SurveyResponse::QUESTION_MAPPING.each do |field| %>
+		<% SurveyResponse::QUESTION_MAPPING.each do |field,label| %>
 			<tr>
-				<td><%= field %></td>
+				<td class="label"><%= label %></td>
 				<td><%= @response.send(field) %></td>
 			</tr>
 		<% end %>

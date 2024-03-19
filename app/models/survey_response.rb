@@ -2,55 +2,34 @@ class SurveyResponse < ApplicationRecord
 
 	require 'csv'
 	
-	# :age_given
-	# :age_cope
-	# :klass_given
-	# :klass_cope
-	# :race_given
-	# :race_cope
-	# :religion_given
-	# :religion_cope
-	# :disability_given
-	# :disability_cope
-	# :neurodiversity_given
-	# :neurodiversity_cope
-	# :gender_given
-	# :gender_cope
-	# :lgbtq_given
-	# :lgbtq_cope
-	# :pronouns_given
-	# :pronouns_feeling
-	# :pronouns_experience
-	# :affinity
-	# :additional_notes
-
-	QUESTION_MAPPING = [
-		:age_given,
-		:age_cope,
-		:klass_given,
-		:klass_cope,
-		:race_given,
-		:race_cope,
-		:religion_given,
-		:religion_cope,
-		:disability_given,
-		:disability_cope,
-		:neurodiversity_given,
-		:neurodiversity_cope,
-		:gender_given,
-		:gender_cope,
-		:lgbtq_given,
-		:lgbtq_cope,
-		:pronouns_given,
-		:pronouns_feeling,
-		:pronouns_experience,
-		:affinity,
-		:additional_notes
-	]
+	QUESTION_MAPPING = {
+		age_given: "Age",
+		age_cope: "Age Experience",
+		klass_given: "Class",
+		klass_cope: "Class Experience",
+		race_given: "Race/Ethnicity",
+		race_cope: "Race/Ethnicity Experience",
+		religion_given: "Religion",
+		religion_cope: "Religion Experience",
+		disability_given: "Disability",
+		disability_cope: "Disability Experience",
+		neurodiversity_given: "Neurodiversity",
+		neurodiversity_cope: "Neurodiversity Experience",
+		gender_given: "Gender",
+		gender_cope: "Gender Experience",
+		lgbtq_given: "LGBTQIA+ Status",
+		lgbtq_cope: "LGBTQIA+ Experience",
+		pronouns_given: "Pronouns Given",
+		pronouns_feeling: "Pronoun Feelings",
+		pronouns_experience: "Pronoun Experiences",
+		affinity: "Identity Affinities",
+		additional_notes: "Identity Notes"
+	}
 
 	def self.refresh_from_csv
 		SurveyResponse.destroy_all
 		CSV.read("./data/survey.csv", headers: true).each do |record|
+			next unless record['Progress'].to_i.to_s == record['Progress']
 			SurveyResponse.create!(
 				age_given: record['Age1'],
 				age_cope: record['Age2cope'],
