@@ -43,6 +43,7 @@ class SurveyResponse < ApplicationRecord
 	end
 	
 	def self.create_from_record(record)
+		return unless record.to_hash.values.select(&:present?).count > 13
 		SurveyResponse.create!(
 			age_given: record['Age1'],
 			age_cope: record['Age2cope'],

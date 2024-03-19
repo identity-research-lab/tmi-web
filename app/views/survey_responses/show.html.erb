@@ -1,14 +1,13 @@
 <h2>Response <%= @response.id %></h2>
 <% if previous_response = @response.previous_response %>
-	<%= link_to "Previous", previous_response %>
-<% else %> 
-	Previous
+	<div class="flip" id="flip-left">
+		<%= link_to "<", previous_response %>
+	</div>
 <% end %>
- | 
 <% if next_response = @response.next_response %>
-	<%= link_to "Next", next_response %>
-<% else %>
-	Previous
+	<div class="flip" id="flip-right">
+		<%= link_to ">", next_response %>
+	</div>
 <% end %>
 
 <table>
@@ -27,16 +26,3 @@
 		<% end %>
 	</tbody>
 </table>
-
-<% if previous_response = @response.previous_response %>
-	<%= link_to "Previous", previous_response %>
-<% else %> 
-	Previous
-<% end %>
- | 
-<% if next_response = @response.next_response %>
-	<%= link_to "Next", next_response %>
-<% else %>
-	Previous
-<% end %>
-

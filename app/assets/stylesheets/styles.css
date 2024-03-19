@@ -173,6 +173,7 @@
 	 font-size: 2rem;
 	 line-height: 3rem;
 	 width: 75%;
+	 margin-bottom: 2rem;
  }
  
  * + h2 {
@@ -233,10 +234,14 @@
  
  table {
 	 width: 100%;
+	 border: 3px solid var(--color-black);
  }
- 
+
+	td {
+		border-bottom: 3px solid var(--color-medium-black);	 
+	} 
+
  td.label {
-	border-bottom: 1px solid var(--color-medium-black);	 
 	background: var(--color-light-grey);
 	width: 30%;
  }
@@ -468,7 +473,51 @@
 	 display: inline-block;
 	 vertical-align: baseline;
  }
-  
+
+#colophon {
+		clear: both;
+		position: relative;
+		margin-top: 1rem;
+		font-size: 1rem;
+		flex-direction: column;
+		flex-wrap: wrap;
+		column-gap: 10%;
+	}
+	
+	#colophon .colophon-logo {
+		flex: 25%;
+	}
+	
+	#colophon .logo {
+		height: 8rem;
+		display: inline-block;
+		margin: -1.65rem;
+	}
+	
+	#colophon .colophon-copyright {
+		flex: 70%;
+	}
+	
+	.flip {
+		position: fixed;
+		top: 50%;
+		background-color: var(--color-red);
+		color: var(--color-white);
+		padding: .75rem;
+	}
+
+	.flip a {
+		color: var(--color-white);
+	}
+	
+	#flip-left {
+		left: 3rem;
+	}
+	
+	#flip-right {
+		right: 3rem;
+	}
+	
  @media (min-width: 300px) {
  
 	 body {
@@ -657,30 +706,5 @@
 	 }
  
  }
-
-#colophon {
-	 clear: both;
-	 position: relative;
-	 margin-top: 1rem;
-	 font-size: 1rem;
-	 flex-direction: column;
-	 flex-wrap: wrap;
-	 column-gap: 10%;
- }
- 
- #colophon .colophon-logo {
-	 flex: 25%;
- }
- 
- #colophon .logo {
-	 height: 8rem;
-	 display: inline-block;
-	 margin: -1.65rem;
- }
- 
- #colophon .colophon-copyright {
-	 flex: 70%;
- }
- 
  
  /* end @media (min-width: 1024px) */
