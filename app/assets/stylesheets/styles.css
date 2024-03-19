@@ -11,7 +11,7 @@
 	 --color-black: #000;
 	 --color-white: #fff;
 	 --color-medium-black: #353535;
-	 --color-light-grey: #7D7D7D;
+	 --color-light-grey: #aaa;
 	 --color-red: #900;
 	 --color-red-tint: #600;
 	 --color-white: #FFFFFF;
@@ -231,9 +231,14 @@
 	 content: "— ";
  }
  
+ table {
+	 width: 100%;
+ }
+ 
  td.label {
 	border-bottom: 1px solid var(--color-medium-black);	 
 	background: var(--color-light-grey);
+	width: 30%;
  }
  
  th {
@@ -246,6 +251,7 @@
  td {
 	 padding: 0rem 1rem;
 	 border-bottom: 1px solid var(--color-medium-black);	 
+	 vertical-align: top;
  }
  
  abbr {
