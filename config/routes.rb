@@ -11,5 +11,5 @@ Rails.application.routes.draw do
   root "survey_responses#index"
 
   resources :survey_responses
-    
+  
 end

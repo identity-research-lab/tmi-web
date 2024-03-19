@@ -1,0 +1,6 @@
+<h1>Upload a CSV</h1>
+
+<%= form_with url: survey_responses_path, method: :post do |form| %>
+	<%= form.file_field :csv, direct_upload: true %>
+	<%= form.submit  %>
+<% end  %>	
