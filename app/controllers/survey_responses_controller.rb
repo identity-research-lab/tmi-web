@@ -17,4 +17,10 @@ class SurveyResponsesController < ApplicationController
 		redirect_to survey_responses_path
 	end
 	
+	def question
+		@question_label = params.permit(:q)[:q]
+		@question_readable = SurveyResponse::QUESTION_MAPPING[params.permit(:q)[:q].to_sym]
+		@responses = SurveyResponse.all.order(:created_at)
+	end
+	
 end

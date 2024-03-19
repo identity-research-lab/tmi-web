@@ -1,0 +1,12 @@
+<h2>Responses to <%= @question_label %></h2>
+
+<table>
+	<tbody>
+		<% @responses.each do |response| %>
+			<tr>
+				<td><%= response.read_attribute(@question_label) %></td>
+				<td class="label"><%= link_to "View in Context", response %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

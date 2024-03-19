@@ -67,7 +67,11 @@ class SurveyResponse < ApplicationRecord
 			additional_notes: record['IdentityMore']
 		)
 	end
-		
+
+	def answer_for(question_label)
+		read_attribute(question_label)
+	end
+	
 	def next_response
 		SurveyResponse.where("created_at > ?", self.created_at).order("created_at ASC").limit(1).first
 	end
