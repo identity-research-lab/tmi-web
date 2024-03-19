@@ -1,6 +1,11 @@
 <h1>Upload a CSV</h1>
 
+<p>Note that this will delete all existing survey responses and replace them with the contents of the file you select.</p>
+
 <%= form_with url: survey_responses_path, method: :post do |form| %>
-	<%= form.file_field :csv, direct_upload: true %>
-	<%= form.submit  %>
+	<label>
+		CSV file: <br />
+		<%= form.file_field :csv, direct_upload: true %>
+	</label>
+	<%= form.submit "Upload and Replace" %>
 <% end  %>	

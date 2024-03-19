@@ -326,12 +326,17 @@
  button,
  input[type="text"],
  input[type="email"],
+ input[type="submit"],
  textarea {
 	 border: .0625rem solid hsl(0, 0%, 60%);
-	 font: inherit;
+	 color: var(--color-white);
+	 font-family: var(--font-body);
 	 padding: .125rem .25rem;
  }
  
+ 	input[type="submit"] {
+		 width: auto;
+	 }
  .radio-form-group {
 	 float: left;
 	 text-align: left;
@@ -373,6 +378,7 @@
 	 margin-left: 5em;
  }
  
+ input[type="submit"],
  button {
 	 background-color: var(--color-red);
 	 padding: .25rem 1rem;
