@@ -3,8 +3,9 @@
 <table>
 	<tbody>
 		<% @responses.each do |response| %>
+			<% next unless @response_value = response.read_attribute(@question_label) %>
 			<tr>
-				<td><%= response.read_attribute(@question_label) %></td>
+				<td><%= @response_value %></td>
 				<td class="label"><%= link_to "View in Context", response %></td>
 			</tr>
 		<% end %>
