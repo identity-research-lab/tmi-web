@@ -1,0 +1,18 @@
+<h1>Response <%= @response.id %></h1>
+
+<table>
+	<thead>
+		<tr>
+			<th>Question</th>
+			<th>Answer</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% SurveyResponse::QUESTION_MAPPING.each do |field| %>
+			<tr>
+				<td><%= field %></td>
+				<td><%= @response.send(field) %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
