@@ -23,7 +23,10 @@
 			<tr>
 				<td class="label"><a href="/question?q=tags">Tags</a></td>
 				<td><%= @response.tags.sort.join(", ") %></td>
-				<td class="form-entry"></td>
+				<td class="form-entry">
+					<%= f.text_area :tags, value: @response.tags.sort, multiple: true %>
+					<%= f.submit "Save", class: "small" %>
+				</td>
 			</tr>		
 			<% SurveyResponse::QUESTION_MAPPING.each do |field,label| %>
 				<tr>
@@ -35,7 +38,7 @@
 							<% fieldname = "#{fieldname}_coping_tags".to_sym %>
 						<% end %>
 						<% if @response.respond_to?(fieldname) && @response.read_attribute(field).present?  %>
-							<%= f.text_area fieldname, value: @response.read_attribute(fieldname).join(', '), multiple: true %>
+							<%= f.text_area fieldname, value: @response.read_attribute(fieldname).sort.join(', '), multiple: true %>
 							<%= f.submit "Save", class: "small" %>
 						<% end %>
 					</td>
