@@ -3,7 +3,7 @@ class SurveyResponse < ApplicationRecord
 	require 'csv'
 	require 'openai'
 
-	after_create :detect_themes, :detect_identities, :detect_copings
+	after_create :detect_themes, :detect_identities
 	
 	THEME_PROMPT = "Your role is that of a social science researcher. What themes are present in the following text? Be specific. Please answer with a simple comma-separated list. The text is as follows: "
 	
