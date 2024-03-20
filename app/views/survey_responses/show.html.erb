@@ -10,23 +10,35 @@
 	</div>
 <% end %>
 
-<table>
-	<thead>
-		<tr>
-			<th>Question</th>
-			<th>Answer</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td class="label"><a href="/question?q=themes">Themes</a></td>
-			<td><%= @response.themes.sort.join(", ") %></td>
-		</tr>
-		<% SurveyResponse::QUESTION_MAPPING.each do |field,label| %>
+<%= form_with model: @response do |f| %>
+	<table>
+		<thead>
 			<tr>
-				<td class="label"><a href="/question?q=<%= field %>"><%= label %></a></td>
-				<td><%= @response.read_attribute(field) %></td>
+				<th>Question</th>
+				<th>Answer</th>
+				<th>Themes</th>
 			</tr>
-		<% end %>
-	</tbody>
-</table>
+		</thead>
+		<tbody>
+			<tr>
+				<td class="label"><a href="/question?q=themes">Themes</a></td>
+				<td><%= @response.themes.sort.join(", ") %></td>
+				<td class="form-entry"></td>
+			</tr>		
+			<% SurveyResponse::QUESTION_MAPPING.each do |field,label| %>
+				<tr>
+					<td class="label"><a href="/question?q=<%= field %>"><%= label %></a></td>
+					<td><%= @response.read_attribute(field) %></td>
+					<td class="form-entry">
+						<% fieldname = (field.to_s.split("_").first + "_coping_themes").to_sym %>
+						<% if @response.respond_to?(fieldname) && @response.read_attribute(field).present?  %>
+							<%= f.text_area fieldname, value: @response.read_attribute(fieldname).join(', '), multiple: true %>
+							<%= f.submit "Save" %>
+						<% end %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+	<%= f.submit "Save" %>
+<% end %>

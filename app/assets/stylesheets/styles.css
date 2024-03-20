@@ -253,7 +253,12 @@
  td.label a:hover {
 		text-decoration: underline;
 	}
-	
+
+	td.form-entry {
+	background: var(--color-light-grey);
+	width: 30%;
+	}
+		
  th {
 	 text-align: left;
 	 padding: 1rem;
@@ -342,7 +347,7 @@
  input[type="submit"],
  textarea {
 	 border: .0625rem solid hsl(0, 0%, 60%);
-	 color: var(--color-white);
+	 color: var(--color-black);
 	 font-family: var(--font-body);
 	 padding: .125rem .25rem;
  }
