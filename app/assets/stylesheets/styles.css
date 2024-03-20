@@ -512,11 +512,11 @@
 	}
 	
 	#flip-left {
-		left: 3rem;
+		left: 10%;
 	}
 	
 	#flip-right {
-		right: 3rem;
+		right: 10%;
 	}
 	
  @media (min-width: 300px) {
