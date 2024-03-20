@@ -1,4 +1,4 @@
-<h2>Responses to "<%= @question_readable %>"</h2>
+<h2><%= @responses.count %> Responses to "<%= @question_readable %>"</h2>
 
 <table>
 	<thead>
@@ -10,7 +10,7 @@
 	</thead>
 	<tbody>
 		<% @responses.each do |response| %>
-			<% next unless @response_value = response.read_attribute(@question_label) %>
+			<% @response_value = response.read_attribute(@question_label) %>
 			<tr>
 				<td class="label">
 					<%= link_to response.id, response %>
