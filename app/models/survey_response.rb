@@ -3,6 +3,7 @@ class SurveyResponse < ApplicationRecord
 	require 'csv'
 	require 'openai'
 
+	before_validation :sanitize_array_values
 	after_create :detect_themes, :detect_identities
 	
 	THEME_PROMPT = "What themes are present in the following text? Be specific. Please answer with a simple comma-separated list."
@@ -94,6 +95,19 @@ class SurveyResponse < ApplicationRecord
 	
 	def previous_response
 		SurveyResponse.where("created_at < ?", self.created_at).order("created_at DESC").limit(1).first
+	end
+
+	private
+	
+	def sanitize_array_values	
+		self.age_coping_themes = age_coping_themes.reject(&:blank?)
+		self.klass_coping_themes = klass_coping_themes.reject(&:blank?)
+		self.race_coping_themes = race_coping_themes.reject(&:blank?)
+		self.religion_coping_themes = religion_coping_themes.reject(&:blank?)
+		self.disability_coping_themes = disability_coping_themes.reject(&:blank?)
+		self.neurodiversity_coping_themes = neurodiversity_coping_themes.reject(&:blank?)
+		self.gender_coping_themes = gender_coping_themes.reject(&:blank?)
+		self.lgbtq_coping_themes = lgbtq_coping_themes.reject(&:blank?)
 	end
 	
 end

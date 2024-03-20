@@ -30,10 +30,13 @@
 					<td class="label"><a href="/question?q=<%= field %>"><%= label %></a></td>
 					<td><%= @response.read_attribute(field) %></td>
 					<td class="form-entry">
-						<% fieldname = (field.to_s.split("_").first + "_coping_themes").to_sym %>
+						<% fieldname = field.to_s.split("_").first %>
+						<% if field.to_s.include?("cope") %>
+							<% fieldname = "#{fieldname}_coping_themes".to_sym %>
+						<% end %>
 						<% if @response.respond_to?(fieldname) && @response.read_attribute(field).present?  %>
 							<%= f.text_area fieldname, value: @response.read_attribute(fieldname).join(', '), multiple: true %>
-							<%= f.submit "Save" %>
+							<%= f.submit "Save", class: "small" %>
 						<% end %>
 					</td>
 				</tr>

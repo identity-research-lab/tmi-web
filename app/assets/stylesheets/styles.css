@@ -352,9 +352,17 @@
 	 padding: .125rem .25rem;
  }
  
- 	input[type="submit"] {
-		 width: auto;
-	 }
+	input[type="submit"] {
+		width: auto;
+	}
+
+	input[type="submit"].small {
+		padding: 0.25rem;
+		height: 1.5rem;
+		float: right;
+		margin: -.25rem 0 1rem 1rem;
+	}
+	 
  .radio-form-group {
 	 float: left;
 	 text-align: left;
