@@ -2,6 +2,8 @@ class SurveyResponse < ApplicationRecord
 
 	require 'csv'
 	require 'openai'
+
+	THEME_PROMPT = "What themes are present in the following text? Be specific. Please answer with a simple comma-separated list."
 	
 	QUESTION_MAPPING = {
 		age_given: "Age",
@@ -70,21 +72,8 @@ class SurveyResponse < ApplicationRecord
 		)
 	end
 
-	def set_themes
-		txt = "#{age_cope} #{klass_cope} #{race_cope} #{religion_cope} #{disability_cope} #{neurodiversity_cope} #{gender_cope} #{lgbtq_cope}"
-		client = OpenAI::Client.new
-		if response = client.chat( parameters: { model: "gpt-3.5-turbo", 
-			messages: [{ 
-				role: "user", 
-				content: "What themes are present in the following text? Please answer with a simple comma-separated list. #{txt}"
-			}], temperature: 0.7 } )	
-			update_attribute(:themes, response.dig("choices", 0, "message", "content").split(", "))
-			themes
-		end	
-	end
-	
-	def get_themes
-		@themes ||= set_themes
+	def detect_themes
+		ThemeExtractorJob.perform_later self
 	end
 			
 	def next_response
