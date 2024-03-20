@@ -2,6 +2,11 @@ source "https://rubygems.org"
 
 ruby "3.3.0"
 
+gem 'dotenv', groups: [:development, :test]
+
+# OpenAI for GPT-4
+gem 'ruby-openai'
+
 # Neo4j
 gem 'neo4j-ruby-driver', '~> 4.4.3'
 

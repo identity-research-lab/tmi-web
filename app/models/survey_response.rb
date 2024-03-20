@@ -1,6 +1,7 @@
 class SurveyResponse < ApplicationRecord
 
 	require 'csv'
+	require 'openai'
 	
 	QUESTION_MAPPING = {
 		age_given: "Age",
@@ -69,10 +70,18 @@ class SurveyResponse < ApplicationRecord
 		)
 	end
 
-	def answer_for(question_label)
-		read_attribute(question_label)
+	def themes(attr)
+		txt = read_attribute(attr)
+		client = OpenAI::Client.new
+		if response = client.chat( parameters: { model: "gpt-3.5-turbo", 
+			messages: [{ 
+				role: "user", 
+				content: "What themes are present in the following text? Please answer with a simple comma-separated list. #{txt}"
+			}], temperature: 0.7 } )	
+			return response.dig("choices", 0, "message", "content").split(", ")
+		end	
 	end
-	
+		
 	def next_response
 		SurveyResponse.where("created_at > ?", self.created_at).order("created_at ASC").limit(1).first
 	end
