@@ -24,7 +24,7 @@
 				<td class="label"><a href="/question?q=tags">Tags</a></td>
 				<td><%= @response.tags.sort.join(", ") %></td>
 				<td class="form-entry">
-					<%= f.text_area :tags, value: @response.tags.sort, multiple: true %>
+					<%= f.text_area :tags, value: @response.tags.sort.join(", "), multiple: true %>
 					<%= f.submit "Save", class: "small" %>
 				</td>
 			</tr>		

@@ -11,6 +11,9 @@ Rails.application.routes.draw do
   root "survey_responses#index"
 
   resources :survey_responses
+
   get "question/", controller: "survey_responses", action: "question"
+  
+  get "about", controller: "static", action: "about"
   
 end
