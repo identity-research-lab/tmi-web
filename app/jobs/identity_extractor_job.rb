@@ -1,24 +1,28 @@
 class IdentityExtractorJob < ApplicationJob
   queue_as :default
 
-  attr_accessor :survey_response
+  attr_accessor :survey_response, :attribute
   
-  def perform(record)
-    return unless record
+  def perform(record, attr)
     self.survey_response = record
-    set_themes
+    self.attribute = attr
+    set_identities
   end
 
-  def set_themes
-    txt = "#{self.survey_response.age_cope} #{self.survey_response.klass_cope} #{self.survey_response.race_cope} #{self.survey_response.religion_cope} #{self.survey_response.disability_cope} #{self.survey_response.neurodiversity_cope} #{self.survey_response.gender_cope} #{self.survey_response.lgbtq_cope}"
+  def set_identities
 
+    return unless txt = self.survey_response.read_attribute(self.attribute)
+    return if txt.empty?
+    
+    identity_attr = self.attribute.to_s.gsub("_given","_identities").to_sym
+    
     client = OpenAI::Client.new
     if response = client.chat( parameters: { model: "gpt-3.5-turbo", 
       messages: [{ 
         role: "user", 
-        content: "#{SurveyResponse::THEME_PROMPT} #{txt}"
+        content: "#{SurveyResponse::IDENTITY_PROMPT} \"#{txt}\""
       }], temperature: 0.7 } )	
-      survey_response.update_attribute( :themes, response.dig("choices", 0, "message", "content").downcase.split(/[\,\.][\s]*/))
+      survey_response.update_attribute( identity_attr, response.dig("choices", 0, "message", "content").downcase.split(/[\,\.][\s]*/))
       end	
   end
 end
