@@ -2,10 +2,14 @@
 
 <p>Note that this will delete all existing survey responses and replace them with the contents of the file you select.</p>
 
-<%= form_with url: survey_responses_path, method: :post do |form| %>
+<%= form_with url: survey_responses_path, method: :post do |f| %>
 	<label>
-		CSV file: <br />
-		<%= form.file_field :csv, direct_upload: true %>
+		CSV:
+		<%= f.file_field :csv, direct_upload: true %>
 	</label>
-	<%= form.submit "Upload and Replace" %>
+	<label class="checkbox-form-group">
+		<%= f.check_box :confirm %>
+		I understand that this will delete all existing data, including tags. 
+	</label>
+	<%= f.submit "Upload and Replace" %>
 <% end  %>	

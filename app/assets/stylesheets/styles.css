@@ -341,6 +341,10 @@
 	 width: calc(25% - 1.5rem);
  }
  
+ input[type="file"] {
+	 margin-top: 0rem;
+ }
+
  button,
  input[type="text"],
  input[type="email"],
@@ -383,10 +387,9 @@
  }
  
  .checkbox-form-group input[type="checkbox"] {
-	 margin-top: 1rem;
-	 margin-left: 0rem !important;
+	 margin: -.6rem 1rem 0 0;
 	 float: left;
-	 width: 100%;
+	 width: 1rem;
  }
  
  .checkbox-form-group label {
@@ -395,8 +398,8 @@
  
  .checkbox-form-group label > :first-child {
 	 padding: 0em;
-	 width: 5em;
-	 margin-left: 1em;
+	 margin-left: 1rem;
+	 margin-top: 1rem;
  }
  
  input[type="checkbox"] {

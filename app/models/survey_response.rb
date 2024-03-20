@@ -4,7 +4,7 @@ class SurveyResponse < ApplicationRecord
 	require 'openai'
 
 	before_validation :sanitize_array_values
-	after_create :detect_themes, :detect_identities
+	after_create :detect_themes
 	
 	THEME_PROMPT = "What themes are present in the following text? Be specific. Please answer with a simple comma-separated list."
 	
@@ -36,15 +36,8 @@ class SurveyResponse < ApplicationRecord
 		additional_notes: "Identity Notes"
 	}
 
-	def self.refresh_from_csv
-		SurveyResponse.destroy_all
-		CSV.read("./data/survey.csv", headers: true).each do |record|
-			next unless record['Progress'].to_i.to_s == record['Progress']
-			create_from_record(record)
-		end
-	end
-
 	def self.refresh_from_upload(file_handle)
+		return unless file_handle
 		SurveyResponse.destroy_all
 		CSV.read(file_handle, headers: true).each do |record|
 			next unless record['Progress'].to_i.to_s == record['Progress']

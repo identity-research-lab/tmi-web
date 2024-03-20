@@ -22,9 +22,12 @@ class SurveyResponsesController < ApplicationController
 	end
 	
 	def create
-		permitted = params.permit(:csv)
-		SurveyResponse.refresh_from_upload(permitted[:csv])
-		redirect_to survey_responses_path
+		permitted = params.permit(:csv, :confirm)
+		Rails.logger.info permitted[:confirm]
+		if permitted[:confirm] != "0"
+			SurveyResponse.refresh_from_upload(permitted[:csv])
+			redirect_to survey_responses_path
+		end
 	end
 	
 	def question
