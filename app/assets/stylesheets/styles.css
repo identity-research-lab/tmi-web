@@ -514,7 +514,7 @@
 		flex: 70%;
 	}
 	
-	.jump-icon::after {
+	.jump-link::after {
 		 content: "";
 		 width: .8em;
 		 height: .8em;
@@ -533,6 +533,7 @@
 		color: var(--color-white);
 		font-size: 3rem;
 		padding: .75rem;
+		border-radius: 5rem;
 	}
 
 	.flip a {

@@ -21,7 +21,7 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td class="label"><a href="/question?q=tags">Tags</a></td>
+				<td class="label"><a href="/question?q=tags" class="jump-link">Tags</a></td>
 				<td><%= @response.tags.sort.join(", ") %></td>
 				<td class="form-entry">
 					<%= f.text_area :tags, value: @response.tags.sort.join(", "), multiple: true %>
@@ -30,7 +30,7 @@
 			</tr>		
 			<% SurveyResponse::QUESTION_MAPPING.each do |field,label| %>
 				<tr>
-					<td class="label"><a href="/question?q=<%= field %>"><%= label %></a></td>
+					<td class="label"><a href="/question?q=<%= field %>" class="jump-link"><%= label %></a></td>
 					<td><%= @response.read_attribute(field) %></td>
 					<td class="form-entry">
 						<% fieldname = field.to_s.split("_").first %>

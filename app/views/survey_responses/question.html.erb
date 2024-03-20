@@ -13,7 +13,7 @@
 			<% @response_value = response.read_attribute(@question_label) %>
 			<tr>
 				<td class="label">
-					<%= link_to response.id, response %>
+					<%= link_to response.id, response, class: "jump-link" %>
 				</td>
 				<td>
 					<% if @response_value.respond_to?(:join) %>
