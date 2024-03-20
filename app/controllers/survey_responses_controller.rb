@@ -46,7 +46,7 @@ class SurveyResponsesController < ApplicationController
 	private
 
 		def response_params
-			params.require(:survey_response).permit(age_coping_themes: [], klass_coping_themes: [], race_coping_themes: [], religion_coping_themes: [], disability_coping_themes: [], neurodiversity_coping_themes: [], gender_coping_themes: [], lgbtq_coping_themes: [])
+			params.require(:survey_response).permit(age_coping_tags: [], klass_coping_tags: [], race_coping_tags: [], religion_coping_tags: [], disability_coping_tags: [], neurodiversity_coping_tags: [], gender_coping_tags: [], lgbtq_coping_tags: [])
 		end
 
 end

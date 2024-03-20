@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_20_191223) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_20_220541) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -67,7 +67,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_20_191223) do
     t.text "additional_notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "themes", default: [], array: true
+    t.string "tags", default: [], array: true
     t.string "age_identities", default: [], array: true
     t.string "klass_identities", default: [], array: true
     t.string "race_identities", default: [], array: true
@@ -76,14 +76,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_20_191223) do
     t.string "disability_identities", default: [], array: true
     t.string "neurodiversity_identities", default: [], array: true
     t.string "lgbtq_identities", default: [], array: true
-    t.string "age_coping_themes", default: [], array: true
-    t.string "klass_coping_themes", default: [], array: true
-    t.string "race_coping_themes", default: [], array: true
-    t.string "religion_coping_themes", default: [], array: true
-    t.string "gender_coping_themes", default: [], array: true
-    t.string "disability_coping_themes", default: [], array: true
-    t.string "neurodiversity_coping_themes", default: [], array: true
-    t.string "lgbtq_coping_themes", default: [], array: true
+    t.string "age_coping_tags", default: [], array: true
+    t.string "klass_coping_tags", default: [], array: true
+    t.string "race_coping_tags", default: [], array: true
+    t.string "religion_coping_tags", default: [], array: true
+    t.string "gender_coping_tags", default: [], array: true
+    t.string "disability_coping_tags", default: [], array: true
+    t.string "neurodiversity_coping_tags", default: [], array: true
+    t.string "lgbtq_coping_tags", default: [], array: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

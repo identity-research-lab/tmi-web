@@ -100,14 +100,14 @@ class SurveyResponse < ApplicationRecord
 	private
 	
 	def sanitize_array_values	
-		self.age_coping_themes = age_coping_themes.reject(&:blank?)
-		self.klass_coping_themes = klass_coping_themes.reject(&:blank?)
-		self.race_coping_themes = race_coping_themes.reject(&:blank?)
-		self.religion_coping_themes = religion_coping_themes.reject(&:blank?)
-		self.disability_coping_themes = disability_coping_themes.reject(&:blank?)
-		self.neurodiversity_coping_themes = neurodiversity_coping_themes.reject(&:blank?)
-		self.gender_coping_themes = gender_coping_themes.reject(&:blank?)
-		self.lgbtq_coping_themes = lgbtq_coping_themes.reject(&:blank?)
+		self.age_coping_tags = age_coping_tags.reject(&:blank?)
+		self.klass_coping_tags = klass_coping_tags.reject(&:blank?)
+		self.race_coping_tags = race_coping_tags.reject(&:blank?)
+		self.religion_coping_tags = religion_coping_tags.reject(&:blank?)
+		self.disability_coping_tags = disability_coping_tags.reject(&:blank?)
+		self.neurodiversity_coping_tags = neurodiversity_coping_tags.reject(&:blank?)
+		self.gender_coping_tags = gender_coping_tags.reject(&:blank?)
+		self.lgbtq_coping_tags = lgbtq_coping_tags.reject(&:blank?)
 	end
 	
 end

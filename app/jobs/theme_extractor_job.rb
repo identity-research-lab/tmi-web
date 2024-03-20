@@ -6,10 +6,10 @@ class ThemeExtractorJob < ApplicationJob
   def perform(record)
     return unless record
     self.survey_response = record
-    set_themes
+    set_tags
   end
 
-  def set_themes
+  def set_tags
     txt = "#{self.survey_response.age_cope} #{self.survey_response.klass_cope} #{self.survey_response.race_cope} #{self.survey_response.religion_cope} #{self.survey_response.disability_cope} #{self.survey_response.neurodiversity_cope} #{self.survey_response.gender_cope} #{self.survey_response.lgbtq_cope}"
 
     client = OpenAI::Client.new
@@ -18,7 +18,7 @@ class ThemeExtractorJob < ApplicationJob
         role: "user", 
         content: "#{SurveyResponse::THEME_PROMPT} #{txt}"
       }], temperature: 0.7 } )	
-      survey_response.update_attribute( :themes, response.dig("choices", 0, "message", "content").downcase.split(/[\,\.][\s]*/))
+      survey_response.update_attribute( :tags, response.dig("choices", 0, "message", "content").downcase.split(/[\,\.][\s]*/))
       end	
   end
 end

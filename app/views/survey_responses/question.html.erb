@@ -25,7 +25,7 @@
 					<%= form_with model: response do |f| %>
 						<% fieldname = @question_label.to_s %>
 						<% if @question_label.to_s.include?("cope") %>
-							<% fieldname = "#{fieldname.to_s.split("_").first}_coping_themes".to_sym %>
+							<% fieldname = "#{fieldname.to_s.split("_").first}_coping_tags".to_sym %>
 						<% end %>
 						<%= f.text_area fieldname, value: response.read_attribute(fieldname).join(', '), multiple: true %>
 						<%= f.submit "Save", class: "small" %>
