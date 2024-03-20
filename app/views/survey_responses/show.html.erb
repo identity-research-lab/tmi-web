@@ -20,7 +20,7 @@
 	<tbody>
 		<tr>
 			<td class="label">Themes</td>
-			<td><%= @response.get_themes.join(", ") %></td>
+			<td><%= @response.themes.join(", ") %></td>
 		</tr>
 		<% SurveyResponse::QUESTION_MAPPING.each do |field,label| %>
 			<tr>
