@@ -37,7 +37,7 @@ class SurveyResponsesController < ApplicationController
 		@response = SurveyResponse.find(params[:id])
 	
 		if @response.update(response_params)
-			redirect_to @response
+#			redirect_to @response
 		else
 			render :edit, status: :unprocessable_entity
 		end
