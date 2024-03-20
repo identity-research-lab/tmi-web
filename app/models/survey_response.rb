@@ -3,7 +3,13 @@ class SurveyResponse < ApplicationRecord
 	require 'csv'
 	require 'openai'
 
+	after_create :detect_themes, :detect_identities
+	
 	THEME_PROMPT = "What themes are present in the following text? Be specific. Please answer with a simple comma-separated list."
+	
+	IDENTITY_PROMPT = "Provide a single comma-separated list of all noun and adjectival phrases from the following text. Do not substitute any words. The text is as follows: "
+	
+	IDENTITY_ATTRIBUTES = [:age_given, :klass_given, :race_given, :religion_given, :disability_given, :neurodiversity_given, :gender_given, :lgbtq_given]
 	
 	QUESTION_MAPPING = {
 		age_given: "Age",
@@ -76,6 +82,12 @@ class SurveyResponse < ApplicationRecord
 		ThemeExtractorJob.perform_later self
 	end
 			
+	def detect_identities
+		IDENTITY_ATTRIBUTES.each do |attr|
+			IdentityExtractorJob.perform_later(self, attr)
+		end
+	end
+			
 	def next_response
 		SurveyResponse.where("created_at > ?", self.created_at).order("created_at ASC").limit(1).first
 	end
@@ -83,5 +95,5 @@ class SurveyResponse < ApplicationRecord
 	def previous_response
 		SurveyResponse.where("created_at < ?", self.created_at).order("created_at DESC").limit(1).first
 	end
-
+	
 end
