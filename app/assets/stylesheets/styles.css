@@ -502,6 +502,7 @@
 		position: fixed;
 		top: 50%;
 		background-color: var(--color-red);
+		opacity: 0.3;
 		color: var(--color-white);
 		padding: .75rem;
 	}
