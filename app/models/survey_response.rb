@@ -3,14 +3,18 @@ class SurveyResponse < ApplicationRecord
 	require 'csv'
 	require 'openai'
 
-	after_create :detect_themes, :detect_identities
+	after_create :detect_themes, :detect_identities, :detect_copings
 	
-	THEME_PROMPT = "What themes are present in the following text? Be specific. Please answer with a simple comma-separated list."
+	THEME_PROMPT = "Your role is that of a social science researcher. What themes are present in the following text? Be specific. Please answer with a simple comma-separated list. The text is as follows: "
 	
 	IDENTITY_PROMPT = "Provide a single comma-separated list of all noun and adjectival phrases from the following text. Do not substitute any words. The text is as follows: "
 	
+	COPING_PROMPT = "Your role is that of a social science researcher. What themes are present in the following text? Be specific. Please answer with a simple comma-separated list. The text is as follows: "
+		 
 	IDENTITY_ATTRIBUTES = [:age_given, :klass_given, :race_given, :religion_given, :disability_given, :neurodiversity_given, :gender_given, :lgbtq_given]
 	
+	COPING_ATTRIBUTES = [:age_cope, :klass_cope, :race_cope, :religion_cope, :disability_cope, :neurodiversity_cope, :gender_cope, :lgbtq_cope]
+		
 	QUESTION_MAPPING = {
 		age_given: "Age",
 		age_cope: "Experience with Age",
@@ -85,6 +89,12 @@ class SurveyResponse < ApplicationRecord
 	def detect_identities
 		IDENTITY_ATTRIBUTES.each do |attr|
 			IdentityExtractorJob.perform_later(self, attr)
+		end
+	end
+			
+	def detect_copings
+		COPING_ATTRIBUTES.each do |attr|
+			CopingExtractorJob.perform_later(self, attr)
 		end
 	end
 			
