@@ -33,4 +33,20 @@ class SurveyResponsesController < ApplicationController
 		@responses = SurveyResponse.all.order(:created_at)
 	end
 	
+	def update
+		@response = SurveyResponse.find(params[:id])
+	
+		if @response.update(response_params)
+			redirect_to @response
+		else
+			render :edit, status: :unprocessable_entity
+		end
+	end
+	
+	private
+
+		def response_params
+			params.require(:survey_response).permit(age_coping_themes: [], klass_coping_themes: [], race_coping_themes: [], religion_coping_themes: [], disability_coping_themes: [], neurodiversity_coping_themes: [], gender_coping_themes: [], lgbtq_coping_themes: [])
+		end
+
 end
