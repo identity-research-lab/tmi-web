@@ -19,8 +19,8 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td class="label">Themes</td>
-			<td><%= @response.themes.join(", ") %></td>
+			<td class="label"><a href="/question?q=themes">Themes</a></td>
+			<td><%= @response.themes.sort.join(", ") %></td>
 		</tr>
 		<% SurveyResponse::QUESTION_MAPPING.each do |field,label| %>
 			<tr>

@@ -498,12 +498,24 @@
 		flex: 70%;
 	}
 	
+	.jump-icon::after {
+		 content: "";
+		 width: .8em;
+		 height: .8em;
+		 margin: 0 -0.25rem 0 0.1em;
+		 background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxNiAxNiIgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2Ij48cGF0aCBkPSJNOSAyTDkgMyAxMi4zIDMgNiA5LjMgNi43IDEwIDEzIDMuNyAxMyA3IDE0IDcgMTQgMlpNNCA0QzIuOSA0IDIgNC45IDIgNkwyIDEyQzIgMTMuMSAyLjkgMTQgNCAxNEwxMCAxNEMxMS4xIDE0IDEyIDEzLjEgMTIgMTJMMTIgNyAxMSA4IDExIDEyQzExIDEyLjYgMTAuNiAxMyAxMCAxM0w0IDEzQzMuNCAxMyAzIDEyLjYgMyAxMkwzIDZDMyA1LjQgMy40IDUgNCA1TDggNSA5IDRaIi8+PC9zdmc+) no-repeat;
+		 background-size: contain;
+		 display: inline-block;
+		 vertical-align: baseline;
+	}
+	
 	.flip {
 		position: fixed;
 		top: 50%;
 		background-color: var(--color-red);
 		opacity: 0.3;
 		color: var(--color-white);
+		font-size: 3rem;
 		padding: .75rem;
 	}
 
@@ -512,11 +524,11 @@
 	}
 	
 	#flip-left {
-		left: 10%;
+		left: 8%;
 	}
 	
 	#flip-right {
-		right: 10%;
+		right: 8%;
 	}
 	
  @media (min-width: 300px) {
