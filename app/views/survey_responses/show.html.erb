@@ -18,6 +18,10 @@
 		</tr>
 	</thead>
 	<tbody>
+		<tr>
+			<td class="label">Themes</td>
+			<td><%= @response.get_themes.join(", ") %></td>
+		</tr>
 		<% SurveyResponse::QUESTION_MAPPING.each do |field,label| %>
 			<tr>
 				<td class="label"><a href="/question?q=<%= field %>"><%= label %></a></td>

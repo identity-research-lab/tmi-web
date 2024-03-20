@@ -45,7 +45,7 @@ class SurveyResponse < ApplicationRecord
 	
 	def self.create_from_record(record)
 		return unless record.to_hash.values.select(&:present?).count > 13
-		SurveyResponse.create!(
+		sr = SurveyResponse.create!(
 			age_given: record['Age1'],
 			age_cope: record['Age2cope'],
 			klass_given: record['Class1'],
@@ -70,18 +70,23 @@ class SurveyResponse < ApplicationRecord
 		)
 	end
 
-	def themes(attr)
-		txt = read_attribute(attr)
+	def set_themes
+		txt = "#{age_cope} #{klass_cope} #{race_cope} #{religion_cope} #{disability_cope} #{neurodiversity_cope} #{gender_cope} #{lgbtq_cope}"
 		client = OpenAI::Client.new
 		if response = client.chat( parameters: { model: "gpt-3.5-turbo", 
 			messages: [{ 
 				role: "user", 
 				content: "What themes are present in the following text? Please answer with a simple comma-separated list. #{txt}"
 			}], temperature: 0.7 } )	
-			return response.dig("choices", 0, "message", "content").split(", ")
+			update_attribute(:themes, response.dig("choices", 0, "message", "content").split(", "))
+			themes
 		end	
 	end
-		
+	
+	def get_themes
+		@themes ||= set_themes
+	end
+			
 	def next_response
 		SurveyResponse.where("created_at > ?", self.created_at).order("created_at ASC").limit(1).first
 	end
