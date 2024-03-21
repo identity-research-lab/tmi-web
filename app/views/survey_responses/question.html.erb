@@ -27,7 +27,7 @@
 						<% if @question_label.to_s.include?("cope") %>
 							<% fieldname = "#{fieldname.to_s.split("_").first}_coping_tags".to_sym %>
 						<% end %>
-						<%= f.text_area fieldname, value: response.read_attribute(fieldname).join(', '), multiple: true %>
+						<%= f.text_area fieldname, value: @response_value, multiple: true %>
 						<%= f.submit "Save", class: "small" %>
 					<% end %>
 				</td>
