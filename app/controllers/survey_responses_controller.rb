@@ -22,12 +22,8 @@ class SurveyResponsesController < ApplicationController
 	end
 	
 	def create
-		permitted = params.permit(:csv, :confirm)
-		Rails.logger.info permitted[:confirm]
-		if permitted[:confirm] != "0"
-			SurveyResponse.refresh_from_upload(permitted[:csv])
-			redirect_to survey_responses_path
-		end
+		SurveyResponse.refresh_from_upload(permitted[:csv])
+		redirect_to survey_responses_path
 	end
 	
 	def update
@@ -58,7 +54,7 @@ class SurveyResponsesController < ApplicationController
 	private
 
 		def response_params
-			params.require(:survey_response).permit(tags: [], age_coping_tags: [], klass_coping_tags: [], race_coping_tags: [], religion_coping_tags: [], disability_coping_tags: [], neurodiversity_coping_tags: [], gender_coping_tags: [], lgbtq_coping_tags: [])
+			params.require(:survey_response).permit(tags: [], age_exp_tags: [], klass_exp_tags: [], race_ethnicity_exp_tags: [], religion_exp_tags: [], disability_exp_tags: [], neurodiversity_exp_tags: [], gender_exp_tags: [], lgbtqia_exp_tags: [])
 		end
 
 end

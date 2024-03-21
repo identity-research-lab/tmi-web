@@ -3,7 +3,7 @@ require_relative "boot"
 require "rails/all"
 require 'active_graph'
 
-if ENV.fetch("RAILS_ENV") == "development"
+if ENV.fetch("RAILS_ENV", "development") == "development"
   require 'active_graph/railtie'
 end
 

@@ -6,39 +6,41 @@ class SurveyResponse < ApplicationRecord
 	before_validation :sanitize_array_values
 	after_create :detect_themes
 		
+	validates_presence_of :response_id
+	validates_uniqueness_of :response_id
+	
 	THEME_PROMPT = "What themes are present in the following text? Be specific. Please answer with a simple comma-separated list."
 	
 	IDENTITY_PROMPT = "Provide a single comma-separated list of all noun and adjectival phrases from the following text. Do not substitute any words. The text is as follows: "
 	
-	IDENTITY_ATTRIBUTES = [:age_given, :klass_given, :race_given, :religion_given, :disability_given, :neurodiversity_given, :gender_given, :lgbtq_given]
+	IDENTITY_ATTRIBUTES = [:age_given, :klass_given, :race_given, :religion_given, :disability_given, :neurodiversity_given, :gender_given, :lgbtqia_given]
 	
 	QUESTION_MAPPING = {
 		age_given: "Age",
-		age_cope: "Experience with Age",
+		age_exp: "Experience with Age",
 		klass_given: "Class",
-		klass_cope: "Experience with Class",
-		race_given: "Race/Ethnicity",
-		race_cope: "Experience with Race/Ethnicity",
+		klass_exp: "Experience with Class",
+		race_ethnicity_given: "Race/Ethnicity",
+		race_ethnicity_exp: "Experience with Race/Ethnicity",
 		religion_given: "Religion",
-		religion_cope: "Experience with Religion",
+		religion_exp: "Experience with Religion",
 		disability_given: "Disability",
-		disability_cope: "Experience with Disability",
+		disability_exp: "Experience with Disability",
 		neurodiversity_given: "Neurodiversity",
-		neurodiversity_cope: "Experience with Neurodiversity",
+		neurodiversity_exp: "Experience with Neurodiversity",
 		gender_given: "Gender",
-		gender_cope: "Experience with Gender",
-		lgbtq_given: "LGBTQIA+ Status",
-		lgbtq_cope: "Experience with LGBTQIA+",
+		gender_exp: "Experience with Gender",
+		lgbtqia_given: "LGBTQIA+ Status",
+		lgbtqia_exp: "Experience with LGBTQIA+",
 		pronouns_given: "Pronouns Given",
-		pronouns_feeling: "Pronoun Feelings",
-		pronouns_experience: "Experience with Pronouns",
+		pronouns_exp: "Experience with Pronouns",
+		pronouns_feel: "Pronoun Feelings",
 		affinity: "Identity Affinities",
-		additional_notes: "Identity Notes"
+		notes: "Other Notes"
 	}
 
 	def self.refresh_from_upload(file_handle)
 		return unless file_handle
-		SurveyResponse.destroy_all
 		CSV.read(file_handle, headers: true).each do |record|
 			next unless record['Progress'].to_i.to_s == record['Progress']
 			create_from_record(record)
@@ -47,28 +49,31 @@ class SurveyResponse < ApplicationRecord
 	
 	def self.create_from_record(record)
 		return unless record.to_hash.values.select(&:present?).count > 13
+		return if SurveyResponse.find_by(response_id: record['ResponseId'])
+
 		sr = SurveyResponse.create!(
-			age_given: record['Age1'],
-			age_cope: record['Age2cope'],
-			klass_given: record['Class1'],
-			klass_cope: record['Class2cope'],
-			race_given: record['RaceEthnicity1'],
-			race_cope: record['RaceEthnicity2cope'],
-			religion_given: record['religion1'],
-			religion_cope: record['religion2cope'],
-			disability_given: record['Disability1'],
-			disability_cope: record['Disability2cope'],
-			neurodiversity_given: record['Neurodiversity1'],
-			neurodiversity_cope: record['Neurodiversity2cope'],
-			gender_given: record['Gender1'],
-			gender_cope: record['Gender2cope'],
-			lgbtq_given: record['LGBTQIA+1'],
-			lgbtq_cope: record['LGBTQIA+2cope'],
-			pronouns_given: record['Pronouns1_5_TEXT'],
-			pronouns_feeling: record['Pronouns3feel'],
-			pronouns_experience: record['Pronouns2experience'],
-			affinity: record['IdentifyAffinity'],
-			additional_notes: record['IdentityMore']
+			response_id: record['ResponseId'],
+			age_given: record['age_given'],
+			age_exp: record['age_exp'],
+			klass_given: record['klass_given'],
+			klass_exp: record['klass_exp'],
+			race_ethnicity_given: record['race_ethnicity_given'],
+			race_ethnicity_exp: record['race_ethnicity_exp'],
+			religion_given: record['religion_given'],
+			religion_exp: record['religion_exp'],
+			disability_given: record['disability_given'],
+			disability_exp: record['disability_exp'],
+			neurodiversity_given: record['neurodiversity_given'],
+			neurodiversity_exp: record['neurodiversity_exp'],
+			gender_given: record['gender_given'],
+			gender_exp: record['gender_exp'],
+			lgbtqia_given: record['lgbtqia_given'],
+			lgbtqia_exp: record['lgbtqia_exp'],
+			pronouns_given: record['pronouns_given'],
+			pronouns_exp: record['pronouns_exp'],
+			pronouns_feel: record['pronouns_feel'],
+			affinity: record['affinity'],
+			notes: record['notes']
 		)
 	end
 
@@ -80,7 +85,7 @@ class SurveyResponse < ApplicationRecord
 	
 	def to_graph
 		p = Persona.find_or_create_by(name: "Persona #{id}", survey_response_id: id)
-		tags.each do |theme|
+		themes.each do |theme|
 			t = Theme.find_or_create_by(name: theme)
 			RelatesTo.create(from_node: p, to_node: t)
 		end
@@ -108,15 +113,15 @@ class SurveyResponse < ApplicationRecord
 	private
 	
 	def sanitize_array_values	
-		self.tags = tags.sort.reject(&:blank?)
-		self.age_coping_tags = age_coping_tags.sort.reject(&:blank?)
-		self.klass_coping_tags = klass_coping_tags.sort.reject(&:blank?)
-		self.race_coping_tags = race_coping_tags.sort.reject(&:blank?)
-		self.religion_coping_tags = religion_coping_tags.sort.reject(&:blank?)
-		self.disability_coping_tags = disability_coping_tags.sort.reject(&:blank?)
-		self.neurodiversity_coping_tags = neurodiversity_coping_tags.sort.reject(&:blank?)
-		self.gender_coping_tags = gender_coping_tags.sort.reject(&:blank?)
-		self.lgbtq_coping_tags = lgbtq_coping_tags.sort.reject(&:blank?)
+		self.themes = themes.sort.reject(&:blank?)
+		self.age_exp_tags = age_exp_tags.sort.reject(&:blank?)
+		self.klass_exp_tags = klass_exp_tags.sort.reject(&:blank?)
+		self.race_ethnicity_exp_tags = race_ethnicity_exp_tags.sort.reject(&:blank?)
+		self.religion_exp_tags = religion_exp_tags.sort.reject(&:blank?)
+		self.disability_exp_tags = disability_exp_tags.sort.reject(&:blank?)
+		self.neurodiversity_exp_tags = neurodiversity_exp_tags.sort.reject(&:blank?)
+		self.gender_exp_tags = gender_exp_tags.sort.reject(&:blank?)
+		self.lgbtqia_exp_tags = lgbtqia_exp_tags.sort.reject(&:blank?)
 	end
 	
 end
