@@ -1,8 +1,15 @@
 <h2>Export Data</h2>
 
-Export <%= SurveyResponse.count %> records to:
-
-<ul>
-	<li><a href="?destination=neo4j">Cypher</a></li>
-	<li><a href="#">CSV</a></li>
-</ul>
+<% if params[:destination] %>
+	<p>
+		Exported <%= SurveyResponse.count %> records to <%= params[:destination] %>.
+	</p>
+<% else %>
+	Export <%= SurveyResponse.count %> records to:
+	
+	<ul>
+		<li><a href="?destination=neo4j">Neo4j</a></li>
+		<li><a href="#">CSV</a></li>
+	</ul>
+	
+<% end %>

@@ -49,6 +49,8 @@ class SurveyResponsesController < ApplicationController
 	def export
 		if params[:destination] == "neo4j"
 			SurveyResponse.queue_export_to_neo4j
+			@exported = "neo4j"
+			render :export
 		end
 	end
 	
