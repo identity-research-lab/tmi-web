@@ -30,12 +30,6 @@ class SurveyResponsesController < ApplicationController
 		end
 	end
 	
-	def question
-		@question_label = params.permit(:q)[:q]
-		@question_readable = SurveyResponse::QUESTION_MAPPING[params.permit(:q)[:q].to_sym] || @question_label.to_sym
-		@responses = SurveyResponse.all.order(:created_at).reject{|sr| sr.read_attribute(@question_label).nil? }
-	end
-	
 	def update
 		@response = SurveyResponse.find(params[:id])
 	
@@ -45,6 +39,16 @@ class SurveyResponsesController < ApplicationController
 			render :edit, status: :unprocessable_entity
 		end
 	end
+
+	def question
+		@question_label = params.permit(:q)[:q]
+		@question_readable = SurveyResponse::QUESTION_MAPPING[params.permit(:q)[:q].to_sym] || @question_label.to_sym
+		@responses = SurveyResponse.all.order(:created_at).reject{|sr| sr.read_attribute(@question_label).nil? }
+	end
+	
+	def export
+	end
+	
 	
 	private
 

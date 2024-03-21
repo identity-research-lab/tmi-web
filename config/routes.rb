@@ -10,10 +10,11 @@ Rails.application.routes.draw do
   
   root "survey_responses#index"
 
+  get "question/", controller: "survey_responses", action: "question"
+  get "survey_responses/export", controller: "survey_responses", action: "export"
+  get "about", controller: "static", action: "about"
+  
   resources :survey_responses
 
-  get "question/", controller: "survey_responses", action: "question"
-  
-  get "about", controller: "static", action: "about"
   
 end

@@ -27,7 +27,7 @@
  }
  
  body {
-	 background: var(--color-primary);
+	 background: var(--color-black);
 	 color: var(--color-black);
 	 font: 300 1rem/1.75rem var(--font-body), sans-serif;
 	 margin: 0 auto 1rem auto;
