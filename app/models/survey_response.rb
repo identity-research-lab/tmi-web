@@ -72,6 +72,32 @@ class SurveyResponse < ApplicationRecord
 		)
 	end
 
+	def to_graph
+		session = Neo4jDriver.new.session
+		
+		unless session.run("MATCH (p:Persona) WHERE p.name='Persona #{id}' RETURN p")
+			session.run("CREATE (p:Persona { name:'Persona #{id}' }) RETURN p")
+		end
+		tags.each do |tag|
+			if existing = session.run("MATCH (t:Tag) WHERE t.name='#{tag.downcase}' RETURN t")
+				query = <<~QUERY 
+						MATCH (p:Persona) WHERE p.name='Persona #{id}'
+						MATCH (t:Tag) WHERE t.name='#{tag.downcase}'
+						CREATE (p)-[:RELATES_TO]->(t)
+					QUERY
+				session.run(query)
+			else
+				session.run do
+					<<-QUERY 
+						MATCH (p:Persona) WHERE p.name='Persona #{id}' RETURN p
+						CREATE (t:Tag { name:'#{tag}' }) }
+						CREATE (p)-[:RELATES_TO]->(t)
+					QUERY
+				end
+			end
+		end
+	end
+	
 	def detect_themes
 		ThemeExtractorJob.perform_later self
 	end
