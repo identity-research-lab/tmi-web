@@ -72,6 +72,12 @@ class SurveyResponse < ApplicationRecord
 		)
 	end
 
+	def self.queue_export_to_neo4j
+		all.each do |sr|
+			PersonaToGraphJob.perform_later sr
+		end
+	end
+	
 	def to_graph
 		p = Persona.find_or_create_by(name: "Persona #{id}", survey_response_id: id)
 		tags.each do |theme|
