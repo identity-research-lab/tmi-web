@@ -7,3 +7,6 @@ test:
   url: neo4j://localhost:7688
 
 production:
+  url: neo4j://127.0.0.1:7687/neo4j
+  username: neo4j
+  password: password
