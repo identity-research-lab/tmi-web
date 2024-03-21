@@ -1,6 +1,7 @@
 require_relative "boot"
 
 require "rails/all"
+require 'active_graph'
 
 if ENV.fetch("RAILS_ENV") == "development"
   require 'active_graph/railtie'
