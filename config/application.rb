@@ -2,7 +2,9 @@ require_relative "boot"
 
 require "rails/all"
 
-require 'active_graph/railtie'
+if ENV.fetch("RAILS_ENV") == "development"
+  require 'active_graph/railtie'
+end
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
