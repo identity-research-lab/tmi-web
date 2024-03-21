@@ -8,7 +8,8 @@ gem 'dotenv', groups: [:development, :test]
 gem 'ruby-openai'
 
 # Neo4j
-gem 'neo4j-ruby-driver', '~> 4.4.3'
+gem 'activegraph', '11.5.0.beta.3'
+gem 'neo4j-ruby-driver'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.3"

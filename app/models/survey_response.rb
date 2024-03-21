@@ -5,7 +5,7 @@ class SurveyResponse < ApplicationRecord
 
 	before_validation :sanitize_array_values
 	after_create :detect_themes
-	
+		
 	THEME_PROMPT = "What themes are present in the following text? Be specific. Please answer with a simple comma-separated list."
 	
 	IDENTITY_PROMPT = "Provide a single comma-separated list of all noun and adjectival phrases from the following text. Do not substitute any words. The text is as follows: "
@@ -73,29 +73,12 @@ class SurveyResponse < ApplicationRecord
 	end
 
 	def to_graph
-		session = Neo4jDriver.new.session
-		
-		unless session.run("MATCH (p:Persona) WHERE p.name='Persona #{id}' RETURN p")
-			session.run("CREATE (p:Persona { name:'Persona #{id}' }) RETURN p")
+		p = Persona.find_or_create_by(name: "Persona #{id}", survey_response_id: id)
+		tags.each do |theme|
+			t = Theme.find_or_create_by(name: theme)
+			RelatesTo.create(from_node: p, to_node: t)
 		end
-		tags.each do |tag|
-			if existing = session.run("MATCH (t:Tag) WHERE t.name='#{tag.downcase}' RETURN t")
-				query = <<~QUERY 
-						MATCH (p:Persona) WHERE p.name='Persona #{id}'
-						MATCH (t:Tag) WHERE t.name='#{tag.downcase}'
-						CREATE (p)-[:RELATES_TO]->(t)
-					QUERY
-				session.run(query)
-			else
-				session.run do
-					<<-QUERY 
-						MATCH (p:Persona) WHERE p.name='Persona #{id}' RETURN p
-						CREATE (t:Tag { name:'#{tag}' }) }
-						CREATE (p)-[:RELATES_TO]->(t)
-					QUERY
-				end
-			end
-		end
+		p.save
 	end
 	
 	def detect_themes
