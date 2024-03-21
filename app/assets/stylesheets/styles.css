@@ -600,7 +600,7 @@
 		 box-sizing: border-box;
 		 width: 100%;
 		 margin: 3rem auto 1rem auto;
-		 padding: 1rem 15% 0 15%;
+		 padding: 3rem 15% 0 15%;
 		 border-bottom: 23rem solid var(--color-black);
 	 }
  
@@ -739,7 +739,7 @@
 	 }
  
 	 footer {
-		 padding: 0 15% 1rem 15%;
+		 padding: 1rem 15% 1rem 15%;
 		 border-bottom: 5rem solid var(--color-black);
 	 }
  
