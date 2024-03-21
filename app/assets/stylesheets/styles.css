@@ -525,6 +525,14 @@
 		 vertical-align: baseline;
 	}
 	
+	.logo {
+		position: absolute;
+		top: 0;
+		left: 3rem;
+		opacity: 0.25;
+		width: 10rem;		
+	}
+	
 	.flip {
 		position: fixed;
 		top: 50%;
