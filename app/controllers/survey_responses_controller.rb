@@ -29,9 +29,7 @@ class SurveyResponsesController < ApplicationController
 	def update
 		@response = SurveyResponse.find(params[:id])
 	
-		if @response.update(response_params)
-#			redirect_to @response
-		else
+		unless @response.update(response_params)
 			render :edit, status: :unprocessable_entity
 		end
 	end
@@ -54,7 +52,7 @@ class SurveyResponsesController < ApplicationController
 	private
 
 		def response_params
-			params.require(:survey_response).permit(tags: [], age_exp_tags: [], klass_exp_tags: [], race_ethnicity_exp_tags: [], religion_exp_tags: [], disability_exp_tags: [], neurodiversity_exp_tags: [], gender_exp_tags: [], lgbtqia_exp_tags: [])
+			params.require(:survey_response).permit(themes: [], age_exp_tags: [], klass_exp_tags: [], race_ethnicity_exp_tags: [], religion_exp_tags: [], disability_exp_tags: [], neurodiversity_exp_tags: [], gender_exp_tags: [], lgbtqia_exp_tags: [])
 		end
 
 end

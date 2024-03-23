@@ -89,6 +89,10 @@ class SurveyResponse < ApplicationRecord
 			t = Theme.find_or_create_by(name: theme)
 			RelatesTo.create(from_node: p, to_node: t)
 		end
+		age_exp_tags.each do |exp_tag| 
+			tag = Tag.find_or_create_by(name: exp_tag)
+			Experiences.create(from_node: p, to_node: tag)
+		end
 		p.save
 	end
 	
@@ -101,7 +105,7 @@ class SurveyResponse < ApplicationRecord
 			IdentityExtractorJob.perform_later(self, attr)
 		end
 	end
-			
+		
 	def next_response
 		SurveyResponse.where("created_at > ?", self.created_at).order("created_at ASC").limit(1).first
 	end
@@ -113,15 +117,15 @@ class SurveyResponse < ApplicationRecord
 	private
 	
 	def sanitize_array_values	
-		self.themes = themes.sort.reject(&:blank?)
-		self.age_exp_tags = age_exp_tags.sort.reject(&:blank?)
-		self.klass_exp_tags = klass_exp_tags.sort.reject(&:blank?)
-		self.race_ethnicity_exp_tags = race_ethnicity_exp_tags.sort.reject(&:blank?)
-		self.religion_exp_tags = religion_exp_tags.sort.reject(&:blank?)
-		self.disability_exp_tags = disability_exp_tags.sort.reject(&:blank?)
-		self.neurodiversity_exp_tags = neurodiversity_exp_tags.sort.reject(&:blank?)
-		self.gender_exp_tags = gender_exp_tags.sort.reject(&:blank?)
-		self.lgbtqia_exp_tags = lgbtqia_exp_tags.sort.reject(&:blank?)
+		self.themes = themes.flatten.join(", ").split(", ")
+		self.age_exp_tags = age_exp_tags.join(", ").split(", ")
+		self.klass_exp_tags = klass_exp_tags.join(", ").split(", ")
+		self.race_ethnicity_exp_tags = race_ethnicity_exp_tags.join(", ").split(", ").flatten
+		self.religion_exp_tags = religion_exp_tags.join(", ").split(", ")
+		self.disability_exp_tags = disability_exp_tags.join(", ").split(", ")
+		self.neurodiversity_exp_tags = neurodiversity_exp_tags.join(", ").split(", ").flatten
+		self.gender_exp_tags = gender_exp_tags.join(", ").split(", ")
+		self.lgbtqia_exp_tags = lgbtqia_exp_tags.join(", ").split(", ")
 	end
-	
+
 end
