@@ -90,7 +90,7 @@ class SurveyResponse < ApplicationRecord
 			RelatesTo.create(from_node: p, to_node: t)
 		end
 		age_exp_tags.each do |exp_tag| 
-			tag = Tag.find_or_create_by(name: exp_tag)
+			tag = Tag.find_or_create_by(name: exp_tag, context: "age")
 			Experiences.create(from_node: p, to_node: tag)
 		end
 		p.save

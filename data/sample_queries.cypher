@@ -1,3 +1,10 @@
+// Show me all personas who use professionalism as a coping strategy in the context of ageism
+MATCH (th:Theme)<-[:RELATES_TO]-(p:Persona)-[:EXPERIENCES]->(tag:Tag) WHERE tag.name="professionalizes" AND tag.context="age" RETURN p,th, tag
+
+
+////////////////////////////////////////////////////////////////////////
+// LEGACY
+////////////////////////////////////////////////////////////////////////
 // 
 // What's there
 // 
