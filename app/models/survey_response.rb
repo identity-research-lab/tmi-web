@@ -93,6 +93,34 @@ class SurveyResponse < ApplicationRecord
 			tag = Tag.find_or_create_by(name: exp_tag, context: "age")
 			Experiences.create(from_node: p, to_node: tag)
 		end
+		klass_exp_tags.each do |exp_tag| 
+			tag = Tag.find_or_create_by(name: exp_tag, context: "class")
+			Experiences.create(from_node: p, to_node: tag)
+		end
+		race_ethnicity_exp_tags.each do |exp_tag| 
+			tag = Tag.find_or_create_by(name: exp_tag, context: "race-ethnicity")
+			Experiences.create(from_node: p, to_node: tag)
+		end
+		religion_exp_tags.each do |exp_tag| 
+			tag = Tag.find_or_create_by(name: exp_tag, context: "religion")
+			Experiences.create(from_node: p, to_node: tag)
+		end
+		disability_exp_tags.each do |exp_tag| 
+			tag = Tag.find_or_create_by(name: exp_tag, context: "disability")
+			Experiences.create(from_node: p, to_node: tag)
+		end
+		neurodiversity_exp_tags.each do |exp_tag| 
+			tag = Tag.find_or_create_by(name: exp_tag, context: "neurodiversity")
+			Experiences.create(from_node: p, to_node: tag)
+		end
+		gender_exp_tags.each do |exp_tag| 
+			tag = Tag.find_or_create_by(name: exp_tag, context: "gender")
+			Experiences.create(from_node: p, to_node: tag)
+		end
+		lgbtqia_exp_tags.each do |exp_tag| 
+			tag = Tag.find_or_create_by(name: exp_tag, context: "lgbtqia")
+			Experiences.create(from_node: p, to_node: tag)
+		end
 		p.save
 	end
 	
