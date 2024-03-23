@@ -10,6 +10,7 @@ capybara-*.html
 *.orig
 rerun.txt
 pickle-email-*.html
+latest.dump
 
 # Ignore all logfiles and tempfiles.
 /log/*
