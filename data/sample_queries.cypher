@@ -1,6 +1,15 @@
 // Show me all personas who use professionalism as a coping strategy in the context of ageism
 MATCH (th:Theme)<-[:RELATES_TO]-(p:Persona)-[:EXPERIENCES]->(tag:Tag) WHERE tag.name="professionalizes" AND tag.context="age" RETURN p,th, tag
 
+// Graph of tags shared by 2 or more personas
+MATCH (t:Tag)-[r:EXPERIENCES]-(p:Persona) WITH t, p, r WHERE count{(t)--() } > 1 return t, p
+
+// Most popular tag
+MATCH (t:Tag) WITH t, count{(t)--() } as cc ORDER BY cc DESC return t LIMIT 1
+
+// Top five most popular tags
+MATCH (t:Tag) WITH t, count{(t)--() } as cc ORDER BY cc DESC return t LIMIT 5
+
 
 ////////////////////////////////////////////////////////////////////////
 // LEGACY
