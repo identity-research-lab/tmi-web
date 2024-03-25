@@ -1,12 +1,12 @@
 development:
-  url: neo4j://127.0.0.1:7687/neo4j
-  username: neo4j
-  password: password
+  url: <%= ENV.fetch("NEO4J_URI") %>
+  username: <%= ENV.fetch("NEO4J_USERNAME") %>
+  password: <%= ENV.fetch("NEO4J_PASSWORD") %>
 
 test:
   url: neo4j://localhost:7688
 
 production:
-  url: neo4j://127.0.0.1:7687/neo4j
-  username: neo4j
-  password: password
+  url: <%= ENV.fetch("NEO4J_URI") %>
+  username: <%= ENV.fetch("NEO4J_USERNAME") %>
+  password: <%= ENV.fetch("NEO4J_PASSWORD") %>
