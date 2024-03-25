@@ -84,7 +84,7 @@ class SurveyResponse < ApplicationRecord
 	end
 	
 	def to_graph
-		p = Persona.find_or_create_by(name: "Persona #{id}", survey_response_id: id)
+		p = Persona.find_or_create_by(name: "Persona #{id}", survey_response_id: id, permalink: self.permalink)
 		themes.each do |theme|
 			t = Theme.find_or_create_by(name: theme)
 			RelatesTo.create(from_node: p, to_node: t)
@@ -133,7 +133,15 @@ class SurveyResponse < ApplicationRecord
 			IdentityExtractorJob.perform_later(self, attr)
 		end
 	end
-		
+
+	def permalink
+		if Rails.env == "development"
+			Rails.application.routes.url_helpers.url_for(controller: "survey_responses", action: "show", host: "localhost", port: 3000, id: self.id)
+		else
+			Rails.application.routes.url_helpers.url_for(controller: "survey_responses", action: "show", host: ENV.fetch("HOSTNAME", "localhost"), id: self.id)
+		end
+	end
+			
 	def next_response
 		SurveyResponse.where("created_at > ?", self.created_at).order("created_at ASC").limit(1).first
 	end

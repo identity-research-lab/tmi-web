@@ -10,6 +10,7 @@
   pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d tmi_web_development db/latest.dump
   
 ## Update neo4j schema
+
 Note: `noglob` required under zsh
 
   noglob rake neo4j:generate_schema_migration[constraint,Tag,uuid]
@@ -19,3 +20,16 @@ Note: `noglob` required under zsh
 
   https://console.neo4j.io
   
+## neo4j database constraints
+
+CREATE CONSTRAINT `constraint_651783b9` FOR (n:`Persona`) REQUIRE (n.`uuid`) IS
+UNIQUE OPTIONS {indexConfig: {}, indexProvider: 'range-1.0}
+
+CREATE CONSTRAINT `constraint_b3f651ab` FOR (n:`Tag`) REQUIRE (n.`uuid`) IS UNIQUE
+  OPTIONS {indexConfig: {}, indexProvider: 'range-1.0'}
+
+CREATE CONSTRAINT `constraint_dbcee0a4` FOR (n:`ActiveGraph::Migrations::SchemaMigration`)
+  REQUIRE (n.`migration_id`) IS UNIQUE OPTIONS {indexConfig: {}, indexProvider: 'range-1.0'}
+
+CREATE CONSTRAINT `constraint_dd2c112` FOR (n:`Theme`) REQUIRE (n.`uuid`) IS UNIQUE
+  OPTIONS {indexConfig: {}, indexProvider: 'range-1.0}
