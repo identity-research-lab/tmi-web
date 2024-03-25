@@ -121,6 +121,7 @@ class SurveyResponse < ApplicationRecord
 			tag = Tag.find_or_create_by(name: exp_tag, context: "lgbtqia")
 			Experiences.create(from_node: p, to_node: tag)
 		end
+		p.permalink = permalink
 		p.save
 	end
 	
@@ -133,7 +134,15 @@ class SurveyResponse < ApplicationRecord
 			IdentityExtractorJob.perform_later(self, attr)
 		end
 	end
-		
+
+	def permalink
+		if Rails.env == "development"
+			Rails.application.routes.url_helpers.url_for(controller: "survey_responses", action: "show", host: "localhost", port: 3000, id: self.id)
+		else
+			Rails.application.routes.url_helpers.url_for(controller: "survey_responses", action: "show", host: ENV.fetch("HOSTNAME", "localhost"), id: self.id)
+		end
+	end
+			
 	def next_response
 		SurveyResponse.where("created_at > ?", self.created_at).order("created_at ASC").limit(1).first
 	end

@@ -3,6 +3,7 @@ class Persona
 	
 	property :name
 	property :survey_response_id
+	property :permalink
 	
 	validates :name, presence: true
 	validates :survey_response_id, presence: true
