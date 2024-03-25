@@ -84,7 +84,7 @@ class SurveyResponse < ApplicationRecord
 	end
 	
 	def to_graph
-		p = Persona.find_or_create_by(name: "Persona #{id}", survey_response_id: id, permalink: self.permalink)
+		p = Persona.find_or_create_by(name: "Persona #{id}", survey_response_id: id)
 		themes.each do |theme|
 			t = Theme.find_or_create_by(name: theme)
 			RelatesTo.create(from_node: p, to_node: t)
@@ -121,6 +121,7 @@ class SurveyResponse < ApplicationRecord
 			tag = Tag.find_or_create_by(name: exp_tag, context: "lgbtqia")
 			Experiences.create(from_node: p, to_node: tag)
 		end
+		p.permalink = permalink
 		p.save
 	end
 	
