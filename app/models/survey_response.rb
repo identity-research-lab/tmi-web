@@ -121,6 +121,48 @@ class SurveyResponse < ApplicationRecord
 			tag = Tag.find_or_create_by(name: exp_tag, context: "lgbtqia")
 			Experiences.create(from_node: p, to_node: tag)
 		end
+		
+		age_id_tags.each do |exp_tag| 
+			identity = Identity.find_or_create_by(name: exp_tag, context: "age")
+			IdentifiesWith.create(from_node: p, to_node: tag)
+		end
+		
+		klass_id_tags.each do |exp_tag| 
+			identity = Identity.find_or_create_by(name: exp_tag, context: "class")
+			IdentifiesWith.create(from_node: p, to_node: tag)
+		end
+		
+		race_ethnicity_id_tags.each do |exp_tag| 
+			identity = Identity.find_or_create_by(name: exp_tag, context: "race/ethnicity")
+			IdentifiesWith.create(from_node: p, to_node: tag)
+		end
+		
+		religion_id_tags.each do |exp_tag| 
+			identity = Identity.find_or_create_by(name: exp_tag, context: "religion")
+			IdentifiesWith.create(from_node: p, to_node: tag)
+		end
+		
+		gender_id_tags.each do |exp_tag| 
+			identity = Identity.find_or_create_by(name: exp_tag, context: "gender")
+			IdentifiesWith.create(from_node: p, to_node: tag)
+		end
+		
+		disability_id_tags.each do |exp_tag| 
+			identity = Identity.find_or_create_by(name: exp_tag, context: "disability")
+			IdentifiesWith.create(from_node: p, to_node: tag)
+		end
+		
+		neurodiversity_id_tags.each do |exp_tag| 
+			identity = Identity.find_or_create_by(name: exp_tag, context: "neurodiversity")
+			IdentifiesWith.create(from_node: p, to_node: tag)
+		end
+		
+		lgbtqia_id_tags.each do |exp_tag| 
+			identity = Identity.find_or_create_by(name: exp_tag, context: "lgbtqia")
+			IdentifiesWith.create(from_node: p, to_node: tag)
+		end
+		
+		
 		p.permalink = permalink
 		p.save
 	end
@@ -155,6 +197,7 @@ class SurveyResponse < ApplicationRecord
 	
 	def sanitize_array_values	
 		self.themes = themes.flatten.join(", ").split(", ")
+
 		self.age_exp_tags = age_exp_tags.join(", ").split(", ")
 		self.klass_exp_tags = klass_exp_tags.join(", ").split(", ")
 		self.race_ethnicity_exp_tags = race_ethnicity_exp_tags.join(", ").split(", ").flatten
@@ -163,6 +206,15 @@ class SurveyResponse < ApplicationRecord
 		self.neurodiversity_exp_tags = neurodiversity_exp_tags.join(", ").split(", ").flatten
 		self.gender_exp_tags = gender_exp_tags.join(", ").split(", ")
 		self.lgbtqia_exp_tags = lgbtqia_exp_tags.join(", ").split(", ")
+
+		self.age_id_tags = age_id_tags.join(", ").split(", ")
+		self.klass_id_tags = klass_id_tags.join(", ").split(", ")
+		self.race_ethnicity_id_tags = race_ethnicity_id_tags.join(", ").split(", ").flatten
+		self.religion_id_tags = religion_id_tags.join(", ").split(", ")
+		self.disability_id_tags = disability_id_tags.join(", ").split(", ")
+		self.neurodiversity_id_tags = neurodiversity_id_tags.join(", ").split(", ").flatten
+		self.gender_id_tags = gender_id_tags.join(", ").split(", ")
+		self.lgbtqia_id_tags = lgbtqia_id_tags.join(", ").split(", ")
 	end
 
 end
