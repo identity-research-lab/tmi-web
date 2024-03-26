@@ -21,17 +21,4 @@ Note: `noglob` required under zsh
 ## neo4j hosting
 
   https://console.neo4j.io
-  
-## neo4j database constraints
 
-CREATE CONSTRAINT `constraint_651783b9` FOR (n:`Persona`) REQUIRE (n.`uuid`) IS
-UNIQUE OPTIONS {indexConfig: {}, indexProvider: 'range-1.0}
-
-CREATE CONSTRAINT `constraint_b3f651ab` FOR (n:`Tag`) REQUIRE (n.`uuid`) IS UNIQUE
-  OPTIONS {indexConfig: {}, indexProvider: 'range-1.0'}
-
-CREATE CONSTRAINT `constraint_dbcee0a4` FOR (n:`ActiveGraph::Migrations::SchemaMigration`)
-  REQUIRE (n.`migration_id`) IS UNIQUE OPTIONS {indexConfig: {}, indexProvider: 'range-1.0'}
-
-CREATE CONSTRAINT `constraint_dd2c112` FOR (n:`Theme`) REQUIRE (n.`uuid`) IS UNIQUE
-  OPTIONS {indexConfig: {}, indexProvider: 'range-1.0}
