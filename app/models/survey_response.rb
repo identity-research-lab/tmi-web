@@ -122,44 +122,44 @@ class SurveyResponse < ApplicationRecord
 			Experiences.create(from_node: p, to_node: tag)
 		end
 		
-		age_id_tags.each do |exp_tag| 
-			identity = Identity.find_or_create_by(name: exp_tag, context: "age")
-			IdentifiesWith.create(from_node: p, to_node: tag)
+		age_id_tags.each do |id_tag| 
+			identity = Identity.find_or_create_by(name: id_tag, context: "age")
+			IdentifiesWith.create(from_node: p, to_node: identity)
 		end
 		
-		klass_id_tags.each do |exp_tag| 
-			identity = Identity.find_or_create_by(name: exp_tag, context: "class")
-			IdentifiesWith.create(from_node: p, to_node: tag)
+		klass_id_tags.each do |id_tag| 
+			identity = Identity.find_or_create_by(name: id_tag, context: "class")
+			IdentifiesWith.create(from_node: p, to_node: identity)
 		end
 		
-		race_ethnicity_id_tags.each do |exp_tag| 
-			identity = Identity.find_or_create_by(name: exp_tag, context: "race/ethnicity")
-			IdentifiesWith.create(from_node: p, to_node: tag)
+		race_ethnicity_id_tags.each do |id_tag| 
+			identity = Identity.find_or_create_by(name: id_tag, context: "race/ethnicity")
+			IdentifiesWith.create(from_node: p, to_node: identity)
 		end
 		
-		religion_id_tags.each do |exp_tag| 
-			identity = Identity.find_or_create_by(name: exp_tag, context: "religion")
-			IdentifiesWith.create(from_node: p, to_node: tag)
+		religion_id_tags.each do |id_tag| 
+			identity = Identity.find_or_create_by(name: id_tag, context: "religion")
+			IdentifiesWith.create(from_node: p, to_node: identity)
 		end
 		
-		gender_id_tags.each do |exp_tag| 
-			identity = Identity.find_or_create_by(name: exp_tag, context: "gender")
-			IdentifiesWith.create(from_node: p, to_node: tag)
+		gender_id_tags.each do |id_tag| 
+			identity = Identity.find_or_create_by(name: id_tag, context: "gender")
+			IdentifiesWith.create(from_node: p, to_node: identity)
 		end
 		
-		disability_id_tags.each do |exp_tag| 
-			identity = Identity.find_or_create_by(name: exp_tag, context: "disability")
-			IdentifiesWith.create(from_node: p, to_node: tag)
+		disability_id_tags.each do |id_tag| 
+			identity = Identity.find_or_create_by(name: id_tag, context: "disability")
+			IdentifiesWith.create(from_node: p, to_node: identity)
 		end
 		
-		neurodiversity_id_tags.each do |exp_tag| 
-			identity = Identity.find_or_create_by(name: exp_tag, context: "neurodiversity")
-			IdentifiesWith.create(from_node: p, to_node: tag)
+		neurodiversity_id_tags.each do |id_tag| 
+			identity = Identity.find_or_create_by(name: id_tag, context: "neurodiversity")
+			IdentifiesWith.create(from_node: p, to_node: identity)
 		end
 		
-		lgbtqia_id_tags.each do |exp_tag| 
-			identity = Identity.find_or_create_by(name: exp_tag, context: "lgbtqia")
-			IdentifiesWith.create(from_node: p, to_node: tag)
+		lgbtqia_id_tags.each do |id_tag| 
+			identity = Identity.find_or_create_by(name: id_tag, context: "lgbtqia")
+			IdentifiesWith.create(from_node: p, to_node: identity)
 		end
 		
 		
