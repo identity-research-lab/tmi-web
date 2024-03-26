@@ -4,8 +4,8 @@ class SurveyResponse < ApplicationRecord
 	require 'openai'
 
 	before_validation :sanitize_array_values
-	after_create :detect_themes
-		
+	after_save_commit :detect_themes
+	
 	validates_presence_of :response_id
 	validates_uniqueness_of :response_id
 	
