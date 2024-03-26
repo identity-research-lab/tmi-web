@@ -22,13 +22,11 @@
 					<%= @response_value %>
 				</td>
 				<td class="form-entry">
-					<% if @question_label.to_s.include?("exp") %>
-						<%= form_with model: response do |f| %>
-							<% fieldname = @question_label.to_s %>
-							<% fieldname = "#{fieldname.to_s.split("_")[0..-2].join('_')}_exp_tags".to_sym %>
-							<%= f.text_area fieldname, value: response.read_attribute(fieldname).try(:sort).try(:join, ", "), multiple: true %>
-							<%= f.submit "Save", class: "small" %>
-						<% end %>
+					<%= form_with model: response do |f| %>
+						<% fieldname = @question_label.to_s %>
+						<% fieldname = "#{fieldname.to_s.split("_")[0..-2].join('_')}_exp_tags".to_sym %>
+						<%= f.text_area fieldname, value: response.read_attribute(fieldname).try(:sort).try(:join, ", "), multiple: true %>
+						<%= f.submit "Save", class: "small" %>
 					<% end %>
 				</td>
 			</tr>
