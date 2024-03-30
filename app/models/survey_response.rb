@@ -78,12 +78,10 @@ class SurveyResponse < ApplicationRecord
 		)
 	end
 
-	def self.queue_export_to_neo4j
-		all.each do |sr|
-			PersonaToGraphJob.perform_later sr
-		end
+	def detect_themes
+		ThemeExtractorJob.perform_later self
 	end
-	
+			
 	def to_graph
 		p = Persona.find_or_create_by(name: "Persona #{id}", survey_response_id: id)
 		themes.each do |theme|
@@ -163,21 +161,10 @@ class SurveyResponse < ApplicationRecord
 			IdentifiesWith.create(from_node: p, to_node: identity)
 		end
 		
-		
 		p.permalink = permalink
 		p.save
 	end
 	
-	def detect_themes
-		ThemeExtractorJob.perform_later self
-	end
-			
-	def detect_identities
-		IDENTITY_ATTRIBUTES.each do |attr|
-			IdentityExtractorJob.perform_later(self, attr)
-		end
-	end
-
 	def permalink
 		if Rails.env == "development"
 			Rails.application.routes.url_helpers.url_for(controller: "survey_responses", action: "show", host: "localhost", port: 3000, id: self.id)

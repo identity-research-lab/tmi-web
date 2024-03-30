@@ -39,16 +39,7 @@ class SurveyResponsesController < ApplicationController
 		@question_readable = SurveyResponse::QUESTION_MAPPING[params.permit(:q)[:q].to_sym] || @question_label.to_sym
 		@responses = SurveyResponse.all.order(:created_at).reject{|sr| sr.read_attribute(@question_label).nil? }
 	end
-	
-	def export
-		if params[:destination] == "neo4j"
-			SurveyResponse.queue_export_to_neo4j
-			@exported = "neo4j"
-			render :export
-		end
-	end
-	
-	
+		
 	private
 
 		def response_params
