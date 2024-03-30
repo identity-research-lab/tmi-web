@@ -186,14 +186,6 @@ class SurveyResponse < ApplicationRecord
 		end
 	end
 			
-	def next_response
-		SurveyResponse.where("created_at > ?", self.created_at).order("created_at ASC").limit(1).first
-	end
-	
-	def previous_response
-		SurveyResponse.where("created_at < ?", self.created_at).order("created_at DESC").limit(1).first
-	end
-
 	private
 	
 	def sanitize_array_values	
