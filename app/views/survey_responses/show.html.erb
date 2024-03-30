@@ -1,10 +1,10 @@
 <h2>Response <%= @response.id %></h2>
-<% if previous_response = @response.previous_response %>
+<% if previous_response = SurveyResponse.where("created_at < ?", self.created_at).order("created_at DESC").limit(1).first %>
 	<div class="flip" id="flip-left">
-		<%= link_to "<", previous_response %>
+    <%= link_to ">", previous_response %>
 	</div>
 <% end %>
-<% if next_response = @response.next_response %>
+<% if next_response = SurveyResponse.where("created_at > ?", self.created_at).order("created_at ASC").limit(1).first %>
 	<div class="flip" id="flip-right">
 		<%= link_to ">", next_response %>
 	</div>
@@ -27,7 +27,7 @@
 					<%= f.text_area :themes, value: @response.themes.sort.join(", "), multiple: true %>
 					<%= f.submit "Save", class: "small" %>
 				</td>
-			</tr>		
+			</tr>
 			<% SurveyResponse::QUESTION_MAPPING.each do |field,label| %>
 				<tr>
 					<td class="label"><a href="/question?q=<%= field %>" class="jump-link"><%= label %></a></td>
@@ -39,7 +39,7 @@
 						<% else %>
 							<% fieldname = "#{fieldname}_id_tags".to_sym %>
 						<% end %>
-						
+
 						<% if @response.respond_to?(fieldname) && @response.read_attribute(field).present?  %>
 							<%= f.text_area fieldname, value: @response.read_attribute(fieldname).try(:sort).try(:join, ', '), multiple: true %>
 							<%= f.submit "Save", class: "small" %>

@@ -6,16 +6,16 @@ class SurveyResponse < ApplicationRecord
 	before_validation :sanitize_array_values
 	after_create :detect_themes
 	after_save_commit :to_graph
-	
+
 	validates_presence_of :response_id
 	validates_uniqueness_of :response_id
-	
+
 	THEME_PROMPT = "Dear ChatGPT, as a qualitative researcher employing a narrative qualitative coding approach with a focus on intersectionality, your task is to identify and analyze themes within passages of text that reflect the multifaceted experiences of individuals across various social identities. Pay close attention to how different aspects of identity intersect and influence each other, and explore the complexities and nuances of lived experiences within diverse social contexts. Your analysis should aim to uncover underlying patterns, tensions, and intersections of power and oppression, shedding light on the interplay between social identities and shaping individuals' narratives. Please generate themes that represent the richness and depth of the data, highlighting the significance of intersectionality in understanding human experiences. Generated themes should be output as a single list of words or short phases separated by commas with no other punctuation."
-	
+
 	IDENTITY_PROMPT = "Provide a single comma-separated list of all noun and adjectival phrases from the following text. Do not substitute any words. The text is as follows: "
-	
+
 	IDENTITY_ATTRIBUTES = [:age_given, :klass_given, :race_given, :religion_given, :disability_given, :neurodiversity_given, :gender_given, :lgbtqia_given]
-	
+
 	QUESTION_MAPPING = {
 		age_given: "Age",
 		age_exp: "Experience with Age",
@@ -47,7 +47,7 @@ class SurveyResponse < ApplicationRecord
 			create_from_record(record)
 		end
 	end
-	
+
 	def self.create_from_record(record)
 		return unless record.to_hash.values.select(&:present?).count > 13
 		return if SurveyResponse.find_by(response_id: record['ResponseId'])
@@ -78,100 +78,93 @@ class SurveyResponse < ApplicationRecord
 		)
 	end
 
-	def self.queue_export_to_neo4j
-		all.each do |sr|
-			PersonaToGraphJob.perform_later sr
-		end
-	end
-	
 	def to_graph
 		p = Persona.find_or_create_by(name: "Persona #{id}", survey_response_id: id)
 		themes.each do |theme|
 			t = Theme.find_or_create_by(name: theme)
 			RelatesTo.create(from_node: p, to_node: t)
 		end
-		age_exp_tags.each do |exp_tag| 
+		age_exp_tags.each do |exp_tag|
 			tag = Tag.find_or_create_by(name: exp_tag, context: "age")
 			Experiences.create(from_node: p, to_node: tag)
 		end
-		klass_exp_tags.each do |exp_tag| 
+		klass_exp_tags.each do |exp_tag|
 			tag = Tag.find_or_create_by(name: exp_tag, context: "class")
 			Experiences.create(from_node: p, to_node: tag)
 		end
-		race_ethnicity_exp_tags.each do |exp_tag| 
+		race_ethnicity_exp_tags.each do |exp_tag|
 			tag = Tag.find_or_create_by(name: exp_tag, context: "race-ethnicity")
 			Experiences.create(from_node: p, to_node: tag)
 		end
-		religion_exp_tags.each do |exp_tag| 
+		religion_exp_tags.each do |exp_tag|
 			tag = Tag.find_or_create_by(name: exp_tag, context: "religion")
 			Experiences.create(from_node: p, to_node: tag)
 		end
-		disability_exp_tags.each do |exp_tag| 
+		disability_exp_tags.each do |exp_tag|
 			tag = Tag.find_or_create_by(name: exp_tag, context: "disability")
 			Experiences.create(from_node: p, to_node: tag)
 		end
-		neurodiversity_exp_tags.each do |exp_tag| 
+		neurodiversity_exp_tags.each do |exp_tag|
 			tag = Tag.find_or_create_by(name: exp_tag, context: "neurodiversity")
 			Experiences.create(from_node: p, to_node: tag)
 		end
-		gender_exp_tags.each do |exp_tag| 
+		gender_exp_tags.each do |exp_tag|
 			tag = Tag.find_or_create_by(name: exp_tag, context: "gender")
 			Experiences.create(from_node: p, to_node: tag)
 		end
-		lgbtqia_exp_tags.each do |exp_tag| 
+		lgbtqia_exp_tags.each do |exp_tag|
 			tag = Tag.find_or_create_by(name: exp_tag, context: "lgbtqia")
 			Experiences.create(from_node: p, to_node: tag)
 		end
-		
-		age_id_tags.each do |id_tag| 
+
+		age_id_tags.each do |id_tag|
 			identity = Identity.find_or_create_by(name: id_tag, context: "age")
 			IdentifiesWith.create(from_node: p, to_node: identity)
 		end
-		
-		klass_id_tags.each do |id_tag| 
+
+		klass_id_tags.each do |id_tag|
 			identity = Identity.find_or_create_by(name: id_tag, context: "class")
 			IdentifiesWith.create(from_node: p, to_node: identity)
 		end
-		
-		race_ethnicity_id_tags.each do |id_tag| 
+
+		race_ethnicity_id_tags.each do |id_tag|
 			identity = Identity.find_or_create_by(name: id_tag, context: "race/ethnicity")
 			IdentifiesWith.create(from_node: p, to_node: identity)
 		end
-		
-		religion_id_tags.each do |id_tag| 
+
+		religion_id_tags.each do |id_tag|
 			identity = Identity.find_or_create_by(name: id_tag, context: "religion")
 			IdentifiesWith.create(from_node: p, to_node: identity)
 		end
-		
-		gender_id_tags.each do |id_tag| 
+
+		gender_id_tags.each do |id_tag|
 			identity = Identity.find_or_create_by(name: id_tag, context: "gender")
 			IdentifiesWith.create(from_node: p, to_node: identity)
 		end
-		
-		disability_id_tags.each do |id_tag| 
+
+		disability_id_tags.each do |id_tag|
 			identity = Identity.find_or_create_by(name: id_tag, context: "disability")
 			IdentifiesWith.create(from_node: p, to_node: identity)
 		end
-		
-		neurodiversity_id_tags.each do |id_tag| 
+
+		neurodiversity_id_tags.each do |id_tag|
 			identity = Identity.find_or_create_by(name: id_tag, context: "neurodiversity")
 			IdentifiesWith.create(from_node: p, to_node: identity)
 		end
-		
-		lgbtqia_id_tags.each do |id_tag| 
+
+		lgbtqia_id_tags.each do |id_tag|
 			identity = Identity.find_or_create_by(name: id_tag, context: "lgbtqia")
 			IdentifiesWith.create(from_node: p, to_node: identity)
 		end
-		
-		
+
 		p.permalink = permalink
 		p.save
 	end
-	
+
 	def detect_themes
 		ThemeExtractorJob.perform_later self
 	end
-			
+
 	def detect_identities
 		IDENTITY_ATTRIBUTES.each do |attr|
 			IdentityExtractorJob.perform_later(self, attr)
@@ -185,18 +178,10 @@ class SurveyResponse < ApplicationRecord
 			Rails.application.routes.url_helpers.url_for(controller: "survey_responses", action: "show", host: ENV.fetch("HOSTNAME", "localhost"), id: self.id)
 		end
 	end
-			
-	def next_response
-		SurveyResponse.where("created_at > ?", self.created_at).order("created_at ASC").limit(1).first
-	end
-	
-	def previous_response
-		SurveyResponse.where("created_at < ?", self.created_at).order("created_at DESC").limit(1).first
-	end
 
 	private
-	
-	def sanitize_array_values	
+
+	def sanitize_array_values
 		self.themes = themes.flatten.join(", ").split(", ")
 
 		self.age_exp_tags = age_exp_tags.join(", ").split(", ")
