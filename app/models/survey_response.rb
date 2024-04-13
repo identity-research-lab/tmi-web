@@ -44,7 +44,7 @@ class SurveyResponse < ApplicationRecord
 		return unless file_handle
 		CSV.read(file_handle, headers: true).each do |record|
 			next unless record['Progress'].to_i.to_s == record['Progress']
-			next unless record['age_given '].present? #TODO this trailing space is garbage from survey software
+			next unless record['age_given'].present?
 			create_from_record(record)
 		end
 	end
@@ -54,8 +54,8 @@ class SurveyResponse < ApplicationRecord
 		sr = SurveyResponse.find_or_create_by(response_id: record['ResponseId'])
 
 		sr.update(
-			age_given: record['age_given '], #TODO this trailing space is garbage from survey software
-			age_exp: record['age_exp '], #TODO this trailing space is garbage from survey software
+			age_given: record['age_given'],
+			age_exp: record['age_exp'],
 			klass_given: record['klass_given'],
 			klass_exp: record['klass_exp'],
 			race_ethnicity_given: record['race_ethnicity_given'],
@@ -89,7 +89,7 @@ class SurveyResponse < ApplicationRecord
 
 	def to_graph
 		p = Persona.find_or_create_by(name: "Persona #{id}", survey_response_id: id)
-		themes.each do |thveme|
+		themes.each do |theme|
 			t = Theme.find_or_create_by(name: theme)
 			RelatesTo.create(from_node: p, to_node: t)
 		end
