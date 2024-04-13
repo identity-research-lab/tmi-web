@@ -7,6 +7,10 @@
   heroku pg:backups:capture --app tmi-web 
   heroku pg:backups:download --app tmi-web
   
+## Restore production postgres database to last db capture
+
+  heroku pg:backups:restore --app tmi-web
+  
 ## Load postgres database backup into local db
 
   pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d tmi_web_development db/latest.dump
@@ -22,3 +26,6 @@ Note: `noglob` required under zsh
 
   https://console.neo4j.io
 
+## ChatGPT API dashboard
+
+  htts://platform.openai.com

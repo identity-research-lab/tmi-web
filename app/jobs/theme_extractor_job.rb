@@ -12,6 +12,9 @@ class ThemeExtractorJob < ApplicationJob
   def set_themes
     txt = "#{self.survey_response.age_exp} #{self.survey_response.klass_exp} #{self.survey_response.race_ethnicity_exp} #{self.survey_response.religion_exp} #{self.survey_response.disability_exp} #{self.survey_response.neurodiversity_exp} #{self.survey_response.gender_exp} #{self.survey_response.lgbtqia_exp}"
 
+    # TODO this is a hack until sidekiq is set up
+    sleep(rand(0.2..2.0))
+
     client = OpenAI::Client.new
     if response = client.chat( parameters: { model: "gpt-3.5-turbo", 
       messages: [{ 
