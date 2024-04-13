@@ -10,8 +10,8 @@ class SurveyResponse < ApplicationRecord
 	validates_presence_of :response_id
 	validates_uniqueness_of :response_id
 	
-	THEME_PROMPT = "Dear ChatGPT, as a qualitative researcher employing a narrative qualitative coding approach with a focus on intersectionality, your task is to identify and analyze themes within passages of text that reflect the multifaceted experiences of individuals across various social identities. Pay close attention to how different aspects of identity intersect and influence each other, and explore the complexities and nuances of lived experiences within diverse social contexts. Your analysis should aim to uncover underlying patterns, tensions, and intersections of power and oppression, shedding light on the interplay between social identities and shaping individuals' narratives. Please generate themes that represent the richness and depth of the data, highlighting the significance of intersectionality in understanding human experiences. Generated themes should be output as a single list of words or short phases separated by commas with no other punctuation."
-	
+	THEME_PROMPT = "Dear ChatGPT, as a qualitative researcher employing a narrative qualitative coding approach with a focus on intersectionality, your task is to identify and analyze themes within passages of text that reflect the multifaceted experiences of individuals across various social identities. Pay close attention to how different aspects of identity intersect and influence each other, and explore the complexities and nuances of lived experiences within diverse social contexts. Your analysis should aim to uncover underlying patterns, tensions, and intersections of power and oppression, shedding light on the interplay between social identities and shaping individuals' narratives. Please generate themes that represent the richness and depth of the data, highlighting the significance of intersectionality in understanding human experiences. Generated themes should be output as a single list of words or short phrases separated by commas with no other punctuation."
+
 	IDENTITY_PROMPT = "Provide a single comma-separated list of all noun and adjectival phrases from the following text. Do not substitute any words. The text is as follows: "
 	
 	IDENTITY_ATTRIBUTES = [:age_given, :klass_given, :race_given, :religion_given, :disability_given, :neurodiversity_given, :gender_given, :lgbtqia_given]
@@ -78,12 +78,10 @@ class SurveyResponse < ApplicationRecord
 		)
 	end
 
-	def self.queue_export_to_neo4j
-		all.each do |sr|
-			PersonaToGraphJob.perform_later sr
-		end
+	def detect_themes
+		ThemeExtractorJob.perform_later self
 	end
-	
+			
 	def to_graph
 		p = Persona.find_or_create_by(name: "Persona #{id}", survey_response_id: id)
 		themes.each do |theme|
@@ -163,21 +161,10 @@ class SurveyResponse < ApplicationRecord
 			IdentifiesWith.create(from_node: p, to_node: identity)
 		end
 		
-		
 		p.permalink = permalink
 		p.save
 	end
 	
-	def detect_themes
-		ThemeExtractorJob.perform_later self
-	end
-			
-	def detect_identities
-		IDENTITY_ATTRIBUTES.each do |attr|
-			IdentityExtractorJob.perform_later(self, attr)
-		end
-	end
-
 	def permalink
 		if Rails.env == "development"
 			Rails.application.routes.url_helpers.url_for(controller: "survey_responses", action: "show", host: "localhost", port: 3000, id: self.id)
@@ -186,14 +173,6 @@ class SurveyResponse < ApplicationRecord
 		end
 	end
 			
-	def next_response
-		SurveyResponse.where("created_at > ?", self.created_at).order("created_at ASC").limit(1).first
-	end
-	
-	def previous_response
-		SurveyResponse.where("created_at < ?", self.created_at).order("created_at DESC").limit(1).first
-	end
-
 	private
 	
 	def sanitize_array_values	

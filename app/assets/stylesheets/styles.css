@@ -330,6 +330,11 @@
 	 text-align: right;
  }
  
+ figure {
+	 width: 80%;
+	 margin: 1rem auto;
+ }
+ 
  label {
 	 display: flex;
 	 margin-bottom: 1.5rem;

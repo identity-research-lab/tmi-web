@@ -1,10 +1,12 @@
 <h2>Response <%= @response.id %></h2>
-<% if previous_response = @response.previous_response %>
+
+<% if previous_response = SurveyResponse.where("created_at < ?", @response.created_at).order("created_at DESC").limit(1).first %>
 	<div class="flip" id="flip-left">
 		<%= link_to "<", previous_response %>
 	</div>
 <% end %>
-<% if next_response = @response.next_response %>
+<% if next_response = 	SurveyResponse.where("created_at > ?", @response.created_at).order("created_at ASC").limit(1).first
+ %>
 	<div class="flip" id="flip-right">
 		<%= link_to ">", next_response %>
 	</div>
