@@ -10,7 +10,7 @@ class ThemeExtractorJob < ApplicationJob
   end
 
   def set_themes
-    txt = "#{self.survey_response.age_exp} #{self.survey_response.klass_exp} #{self.survey_response.race_ethnicity_exp} #{self.survey_response.religion_exp} #{self.survey_response.disability_exp} #{self.survey_response.neurodiversity_exp} #{self.survey_response.gender_exp} #{self.survey_response.lgbtqia_exp}"
+    txt = survey_response.corpus
 
     # TODO this is a hack until sidekiq is set up
     sleep(rand(0.2..2.0))

@@ -4,8 +4,8 @@ class SurveyResponse < ApplicationRecord
 	require 'openai'
 
 	before_validation :sanitize_array_values
-	after_create :detect_themes
-	after_save_commit :to_graph
+	after_create :queue_detect_themes
+	after_save_commit :queue_export_to_graph
 	
 	validates_presence_of :response_id
 	validates_uniqueness_of :response_id
@@ -44,20 +44,16 @@ class SurveyResponse < ApplicationRecord
 		return unless file_handle
 		CSV.read(file_handle, headers: true).each do |record|
 			next unless record['Progress'].to_i.to_s == record['Progress']
+			next unless record['age_given'].present?
 			create_from_record(record)
 		end
 	end
 	
 	def self.create_from_record(record)
 
-		# There are 12 boilerplate fields in the CSV
-		return unless record.to_hash.values.select(&:present?).count > 11
-		
-		# Insert, not upsert
-		return if SurveyResponse.find_by(response_id: record['ResponseId'])
+		sr = SurveyResponse.find_or_create_by(response_id: record['ResponseId'])
 
-		sr = SurveyResponse.create!(
-			response_id: record['ResponseId'],
+		sr.update(
 			age_given: record['age_given'],
 			age_exp: record['age_exp'],
 			klass_given: record['klass_given'],
@@ -80,12 +76,17 @@ class SurveyResponse < ApplicationRecord
 			affinity: record['affinity'],
 			notes: record['notes']
 		)
+		sr.save
 	end
 
-	def detect_themes
+	def queue_detect_themes
 		ThemeExtractorJob.perform_later self
 	end
 			
+	def queue_export_to_graph
+		ExportToGraphJob.perform_later self
+	end
+
 	def to_graph
 		p = Persona.find_or_create_by(name: "Persona #{id}", survey_response_id: id)
 		themes.each do |theme|
@@ -176,7 +177,15 @@ class SurveyResponse < ApplicationRecord
 			Rails.application.routes.url_helpers.url_for(controller: "survey_responses", action: "show", host: ENV.fetch("HOSTNAME", "localhost"), id: self.id)
 		end
 	end
-			
+
+	def corpus
+		[self.age_exp, self.klass_exp, self.race_ethnicity_exp, self.religion_exp, self.disability_exp, self.neurodiversity_exp, self.gender_exp, self.lgbtqia_exp].join(' ')
+	end
+				
+	def complete_enough?
+		[self.age_given, self.klass_given, self.race_ethnicity_given, self.religion_given, self.disability_given, self.neurodiversity_given, self.gender_given, self.lgbtqia_given].reject(&:nil?).size > 0
+	end
+	
 	private
 	
 	def sanitize_array_values	
