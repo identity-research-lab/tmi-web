@@ -49,7 +49,11 @@ class SurveyResponse < ApplicationRecord
 	end
 	
 	def self.create_from_record(record)
-#		return unless record.to_hash.values.select(&:present?).count > 13
+
+		# There are 11 boilerplate fields in the CSV
+		return unless record.to_hash.values.select(&:present?).count > 11
+		
+		# Insert, not upsert
 		return if SurveyResponse.find_by(response_id: record['ResponseId'])
 
 		sr = SurveyResponse.create!(
