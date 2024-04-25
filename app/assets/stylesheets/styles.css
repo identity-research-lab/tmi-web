@@ -18,6 +18,7 @@
 	 --font-body: "Courier";
 	 --font-title: "Courier Bold";
 	 --font-header: "Courier";
+	 --font-size-small: .75rem;
  }
  
  /* Primary Elements */
@@ -539,7 +540,6 @@ th {
 		flex-wrap: wrap;
 		flex-direction: row;
 		list-style-type: none;
-		margin-left: 0rem;
 	}
 	
 	.word-cloud li {
@@ -547,6 +547,7 @@ th {
 		margin: .25rem;
 		background-color: var(--color-light-grey);
 		padding: .5rem;
+		font-size: var(--font-size-small);
 	}
 	
 	.jump-link::after {
