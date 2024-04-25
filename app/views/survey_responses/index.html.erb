@@ -1,7 +1,7 @@
-<h1><%= @responses.size %> Responses</h1>
+<h1><%= @responses.size %> Survey Responses</h1>
 
 <ol class="responses">
 <% @responses.each do |r| %>
-	<li><%= link_to r.id, r %></li>
+	<li><%= link_to r.identifier, r %></li>
 <% end %>
 </ol>

@@ -1,4 +1,4 @@
-<h2>Response <%= @response.id %></h2>
+<h2>Response <%= @response.identifier %></h2>
 
 <% if previous_response = SurveyResponse.where("created_at < ?", @response.created_at).order("created_at DESC").limit(1).first %>
 	<div class="flip" id="flip-left">

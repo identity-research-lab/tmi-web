@@ -79,6 +79,10 @@ class SurveyResponse < ApplicationRecord
 		sr.save
 	end
 
+	def identifier
+		self.id.to_s.rjust(4, "0")	
+	end
+	
 	def queue_detect_themes
 		ThemeExtractorJob.perform_later self
 	end
