@@ -12,26 +12,30 @@
 	</div>
 <% end %>
 
+<h3>Derived Themes:</h3>
+
+<ul class="word-cloud">
+	<% @response.themes.sort.each do |theme| %>
+		<li><%= theme %></li>
+	<% end %>
+</ul>
+
+
 <%= form_with model: @response do |f| %>
 	<table>
 		<thead>
 			<tr>
-				<th>Question</th>
-				<th>Answer</th>
+				<th>Survey Question</th>
+				<th>Response</th>
 				<th>Tags</th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td class="label"><a href="/question?q=themes" class="jump-link">Themes</a></td>
-				<td><%= @response.themes.sort.join(", ") %></td>
-				<td class="form-entry">
-					<%= f.text_area :themes, value: @response.themes.sort.join(", "), multiple: true %>
-					<%= f.submit "Save", class: "small" %>
-				</td>
-			</tr>		
+			<% counter = 0 %>
 			<% SurveyResponse::QUESTION_MAPPING.each do |field,label| %>
-				<tr>
+				<% alt = counter % 2 == 1 ? "" : "alt" %>
+				<% counter += 1 %>
+				<tr class="<%= alt %>">
 					<td class="label"><a href="/question?q=<%= field %>" class="jump-link"><%= label %></a></td>
 					<td><%= @response.read_attribute(field) %></td>
 					<td class="form-entry">

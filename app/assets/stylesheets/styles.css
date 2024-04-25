@@ -234,43 +234,45 @@
  
  table {
 	 width: 100%;
-	 border: 3px solid var(--color-black);
+	 border: 3px solid var(--color-light-grey);
  }
 
-	td {
-		border-bottom: 3px solid var(--color-medium-black);	 
-	} 
+tr {
+}
 
- td.label {
-	background: var(--color-light-grey);
-	width: 30%;
- }
+tr.alt {
+	background-color: var(--color-light-grey);	
+	border-top: 3px solid var(--color-medium-black);	 
+}
+
+td {
+	padding: 0rem 1rem;
+	vertical-align: top;
+}
  
- td.label a {
-	 text-decoration: none;
- }
- 
- td.label a:hover {
-		text-decoration: underline;
-	}
-
-	td.form-entry {
-	background: var(--color-light-grey);
+td.label {
 	width: 30%;
-	}
+}
+
+td.label a {
+	text-decoration: none;
+}
+
+td.label a:hover {
+	text-decoration: underline;
+}
+
+td.form-entry {
+	width: 30%;
+	padding: 1rem;
+}
 		
- th {
-	 text-align: left;
-	 padding: 1rem;
-	 background-color: var(--color-medium-black);
-	 color: var(--color-white);
- }
- 
- td {
-	 padding: 0rem 1rem;
-	 border-bottom: 1px solid var(--color-medium-black);	 
-	 vertical-align: top;
- }
+th {
+	text-align: left;
+	padding: 1rem;
+	background-color: var(--color-medium-black);
+	color: var(--color-white);
+}
  
  abbr {
 	 text-decoration: none;
@@ -517,6 +519,35 @@
 	
 	#colophon .colophon-copyright {
 		flex: 70%;
+	}
+	
+	.responses {
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: row;
+		list-style-type: none;
+		margin-left: 0rem;
+	}
+
+	.responses li {
+		width: 3.75rem;
+		text-align: left;
+		margin: .25rem;
+	}
+	
+	.word-cloud {
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: row;
+		list-style-type: none;
+		margin-left: 0rem;
+	}
+	
+	.word-cloud li {
+		text-align: center;
+		margin: .25rem;
+		background-color: var(--color-light-grey);
+		padding: .5rem;
 	}
 	
 	.jump-link::after {
