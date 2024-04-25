@@ -9,8 +9,11 @@
 		</tr>
 	</thead>
 	<tbody>
+		<% counter = 0 %>
 		<% @responses.each do |response| %>
-			<tr>
+			<% alt = counter % 2 == 1 ? "" : "alt" %>
+			<% counter += 1 %>
+			<tr class="<%= alt %>">
 				<td class="label">
 					<%= link_to response.id, response, class: "jump-link" %>
 				</td>

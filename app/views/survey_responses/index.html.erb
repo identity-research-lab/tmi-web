@@ -1,5 +1,7 @@
 <h1><%= @responses.size %> Responses</h1>
 
+<ol class="responses">
 <% @responses.each do |r| %>
-	[<%= link_to r.id, r %>]
+	<li><%= link_to r.id, r %></li>
 <% end %>
+</ol>
