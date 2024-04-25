@@ -603,7 +603,7 @@ th {
 		 margin: 0 auto 1rem auto;
 		 width: 100%;
 		 padding: 2rem 2rem;
-		 min-height: 13rem;
+		 min-height: 10rem;
 	 }
  
 	 nav {
@@ -756,7 +756,6 @@ th {
 	 }
  
 	 h3 {
-		 margin: 3.125rem 0rem 1.563rem 0rem;
 		 width: 100%;
 	 }
   
