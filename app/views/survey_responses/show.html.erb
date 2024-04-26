@@ -16,7 +16,7 @@
 
 <ul class="word-cloud">
 	<% @response.themes.sort.each do |theme| %>
-		<li><%= theme %></li>
+		<li><%= link_to theme, survey_responses_path(q: theme) %></li>
 	<% end %>
 </ul>
 

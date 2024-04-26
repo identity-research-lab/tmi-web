@@ -11,7 +11,11 @@ class SurveyResponsesController < ApplicationController
 	end
 
 	def index
-		@responses = SurveyResponse.all.order(:created_at)
+		if @theme = params.permit(:q)[:q]
+			@responses = SurveyResponse.where("? = ANY (themes)", @theme)
+		else
+			@responses = SurveyResponse.all.order(:created_at)
+		end
 	end
 	
 	def show
