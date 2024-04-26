@@ -7,7 +7,13 @@
 
 <ol class="responses">
 <% @responses.each do |r| %>
-	<li><%= link_to r.identifier, r %></li>
+	<li>
+		<% if @theme %>
+			<%= link_to r.identifier, survey_response_path(r, q: @theme) %>
+		<% else %>
+			<%= link_to r.identifier, r %>
+		<% end %>
+	</li>
 <% end %>
 </ol>
 

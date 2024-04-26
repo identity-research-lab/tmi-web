@@ -12,14 +12,22 @@ class SurveyResponsesController < ApplicationController
 
 	def index
 		if @theme = params.permit(:q)[:q]
-			@responses = SurveyResponse.where("? = ANY (themes)", @theme)
+			@responses = SurveyResponse.where("? = ANY (themes)", @theme).order(:created_at)
 		else
 			@responses = SurveyResponse.all.order(:created_at)
 		end
 	end
 	
 	def show
+		@theme = params.permit(:q)[:q]
 		@response = SurveyResponse.find(params[:id])
+		if @theme
+			@previous_response = SurveyResponse.where("? = ANY (themes)", @theme).where("created_at < ?", @response.created_at).order("created_at DESC").limit(1).first
+			@next_response = SurveyResponse.where("? = ANY (themes)", @theme).where("created_at > ?", @response.created_at).order("created_at ASC").limit(1).first
+		else
+			@previous_response = SurveyResponse.where("created_at < ?", @response.created_at).order("created_at DESC").limit(1).first
+			@next_response = SurveyResponse.where("created_at > ?", @response.created_at).order("created_at ASC").limit(1).first
+		end
 	end
 	
 	def new

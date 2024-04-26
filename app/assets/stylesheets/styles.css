@@ -14,6 +14,7 @@
 	 --color-light-grey: #eee;
 	 --color-red: #900;
 	 --color-red-tint: #600;
+	 --color-red-highlight: #eaa;
 	 --color-white: #FFFFFF;
 	 --font-body: "Courier";
 	 --font-title: "Courier Bold";
@@ -167,6 +168,10 @@
 	 letter-spacing: .125rem;
 	 line-height: 3rem;
 	 margin: 1.5rem;
+ }
+ 
+ h1 a:hover {
+	 text-decoration: none;
  }
  
  h2 {
@@ -548,6 +553,11 @@ th {
 		background-color: var(--color-light-grey);
 		padding: .5rem;
 		font-size: var(--font-size-small);
+	}
+	
+	.word-cloud li.active {
+		background-color: var(--color-red-highlight);
+		font-weight: bold;
 	}
 	
 	.jump-link::after {

@@ -1,14 +1,13 @@
 <h2>Response <%= @response.identifier %></h2>
 
-<% if previous_response = SurveyResponse.where("created_at < ?", @response.created_at).order("created_at DESC").limit(1).first %>
+<% if @previous_response %>
 	<div class="flip" id="flip-left">
-		<%= link_to "<", previous_response %>
+		<%= link_to "<", survey_response_path(@previous_response, q: @theme) %>
 	</div>
 <% end %>
-<% if next_response = 	SurveyResponse.where("created_at > ?", @response.created_at).order("created_at ASC").limit(1).first
- %>
+<% if @next_response %>
 	<div class="flip" id="flip-right">
-		<%= link_to ">", next_response %>
+		<%= link_to ">", survey_response_path(@next_response, q: @theme) %>
 	</div>
 <% end %>
 
@@ -16,7 +15,8 @@
 
 <ul class="word-cloud">
 	<% @response.themes.sort.each do |theme| %>
-		<li><%= link_to theme, survey_responses_path(q: theme) %></li>
+		<% active = theme == @theme ? "active" : "" %>
+		<li class="<%= active %>"><%= link_to theme, survey_responses_path(q: theme) %></li>
 	<% end %>
 </ul>
 
