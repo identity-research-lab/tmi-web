@@ -1,7 +1,18 @@
-<h1><%= @responses.size %> Survey Responses</h1>
+<h2>
+	<%= pluralize @responses.size, "survey response" %>
+	<% if @theme %>
+		 related to "<%= @theme %>"
+	<% end %>
+</h2>
 
 <ol class="responses">
 <% @responses.each do |r| %>
 	<li><%= link_to r.identifier, r %></li>
 <% end %>
 </ol>
+
+<% if @theme %>
+	<p>
+		Or, view <%= link_to "all survey responses", survey_responses_path %>.
+	</p>
+<% end %>
