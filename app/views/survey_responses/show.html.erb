@@ -20,6 +20,11 @@
 	<% end %>
 </ul>
 
+<h3>TMI-Graph Query</h3>
+<ul class="word-cloud">
+	<li><a href="#query" id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @response.graph_query %></a>
+	</li>
+</ul>
 
 <%= form_with model: @response do |f| %>
 	<table>
@@ -57,3 +62,15 @@
 	</table>
 	<%= f.submit "Save" %>
 <% end %>
+
+<script language="javascript">
+	function copyToClipboard(elementId) {
+		var element = document.getElementById(elementId);
+		var textarea = document.createElement('textarea');
+		textarea.value = element.textContent;
+		document.body.appendChild(textarea);
+		textarea.select();
+		document.execCommand('copy');
+		document.body.removeChild(textarea);
+	}
+</script>
