@@ -2,10 +2,11 @@
 	Codebook
 </h2>
 
-<ol class="responses">
-<% @contexts.each do |context| %>
+<h3>Contexts</h3>
+<ul class="list">
+<% @contexts.each do |k,v| %>
 	<li>
-		<%= link_to context, codebook_path(context) %>
+		<%= link_to v, codebook_path(k) %>
 	</li>
 <% end %>
-</ol>
+</ul>

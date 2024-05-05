@@ -11,12 +11,16 @@ class CodebooksController < ApplicationController
 	end
 
 	def index
-		@contexts = Tag.all.pluck(:context).uniq.sort
+		@contexts = SurveyResponse::QUESTION_MAPPING
 	end
 	
 	def show
 		@context = params[:id]
-		@frequencies = Tag.histogram(@context)
+		if params[:id].split('_').last == "given"
+			@frequencies = Identity.histogram(@context)
+		else
+			@frequencies = Tag.histogram(@context)
+		end
 		@section_name = SurveyResponse::QUESTION_MAPPING[@context.to_sym]
 	end
 	

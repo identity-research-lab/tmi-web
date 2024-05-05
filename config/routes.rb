@@ -16,5 +16,6 @@ Rails.application.routes.draw do
   
   resources :survey_responses
   resources :codebooks
+  resources :questions
   
 end

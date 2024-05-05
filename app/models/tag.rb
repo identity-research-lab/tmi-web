@@ -20,4 +20,5 @@ class Tag
 	def strip_whitespace
 		self.name.strip!
 	end
+
 end 
