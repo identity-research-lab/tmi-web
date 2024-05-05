@@ -1,0 +1,11 @@
+<h2>
+	Codebook
+</h2>
+
+<ol class="responses">
+<% @contexts.each do |context| %>
+	<li>
+		<%= link_to context, codebook_path(context) %>
+	</li>
+<% end %>
+</ol>
