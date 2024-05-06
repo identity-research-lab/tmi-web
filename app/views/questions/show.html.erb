@@ -2,7 +2,7 @@
 
 <h3>Reference</h3>
 	<ul class="word-cloud">
-		<li><%= link_to "Codes for #{@question_readable}", codebook_path(params[:q]), class: "jump-link" %></li>
+		<li><%= link_to "Codes for #{@question_readable}", codebook_path(@question_label), class: "jump-link" %></li>
 	</ul>
 
 <table>
@@ -10,7 +10,7 @@
 		<tr>
 			<th>Response</th>
 			<th>Answer</th>
-			<th><%= link_to "Tags", codebook_path(params[:q]), class: "jump-link-light" %></th>
+			<th><%= link_to "Tags", codebook_path(@question_label), class: "jump-link-light" %></th>
 		</tr>
 	</thead>
 	<tbody>

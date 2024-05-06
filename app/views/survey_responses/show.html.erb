@@ -41,7 +41,7 @@
 				<% alt = counter % 2 == 1 ? "" : "alt" %>
 				<% counter += 1 %>
 				<tr class="<%= alt %>">
-					<td class="label"><a href="/question?q=<%= field %>" class="jump-link"><%= label %></a></td>
+					<td class="label"><%= link_to label, question_path(field), class: "jump-link" %></td>
 					<td><%= @response.read_attribute(field) %></td>
 					<td class="form-entry">
 						<% fieldname = field.to_s.split("_")[0..-2].join('_') %>
