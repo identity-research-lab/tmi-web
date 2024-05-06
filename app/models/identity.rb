@@ -4,12 +4,12 @@ class Identity
 	property :name
 	property :context
 	
+	before_validation :strip_whitespace
+		
 	validates :name, presence: true
 	validates :context, presence: true
 
 	has_many :out, :personas, rel_class: :IdentifiesWith
-	
-	before_validation :strip_whitespace
 	
 	def self.histogram(context)
 		where(context: context).query_as(:i).with('i, count{(i)-[:IDENTIFIES_WITH]-()} AS c').where('c > 0').order('c DESC').return('i.name, c').inject({}) {|h,t| h[t.values[0]] = t.values[1]; h}

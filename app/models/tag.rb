@@ -4,10 +4,10 @@ class Tag
 	property :name
 	property :context
 	
+	before_validation :strip_whitespace
+
 	validates :name, presence: true
 	validates :context, presence: true
-
-	before_validation :strip_whitespace
 	
 	has_many :out, :personas, rel_class: :Experiences
 	

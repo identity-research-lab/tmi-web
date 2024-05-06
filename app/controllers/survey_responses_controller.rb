@@ -51,7 +51,6 @@ class SurveyResponsesController < ApplicationController
 		@question_readable = SurveyResponse::QUESTION_MAPPING[params.permit(:q)[:q].to_sym] || @question_label.to_sym
 		@question_field = "#{@question_label.gsub(/given/, 'id')}_tags".to_sym
 		@responses = SurveyResponse.all.order(:created_at).reject{|sr| sr.read_attribute(@question_label).nil? }
-		@frequencies = Tag.histogram(@question_readable)
 	end
 		
 	private
