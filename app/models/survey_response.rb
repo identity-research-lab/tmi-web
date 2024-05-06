@@ -98,35 +98,35 @@ class SurveyResponse < ApplicationRecord
 			RelatesTo.create(from_node: p, to_node: t)
 		end
 		age_exp_tags.each do |exp_tag| 
-			tag = Tag.find_or_create_by(name: exp_tag, context: "age")
+			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "age")
 			Experiences.create(from_node: p, to_node: tag)
 		end
 		klass_exp_tags.each do |exp_tag| 
-			tag = Tag.find_or_create_by(name: exp_tag, context: "class")
+			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "class")
 			Experiences.create(from_node: p, to_node: tag)
 		end
 		race_ethnicity_exp_tags.each do |exp_tag| 
-			tag = Tag.find_or_create_by(name: exp_tag, context: "race-ethnicity")
+			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "race-ethnicity")
 			Experiences.create(from_node: p, to_node: tag)
 		end
 		religion_exp_tags.each do |exp_tag| 
-			tag = Tag.find_or_create_by(name: exp_tag, context: "religion")
+			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "religion")
 			Experiences.create(from_node: p, to_node: tag)
 		end
 		disability_exp_tags.each do |exp_tag| 
-			tag = Tag.find_or_create_by(name: exp_tag, context: "disability")
+			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "disability")
 			Experiences.create(from_node: p, to_node: tag)
 		end
 		neurodiversity_exp_tags.each do |exp_tag| 
-			tag = Tag.find_or_create_by(name: exp_tag, context: "neurodiversity")
+			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "neurodiversity")
 			Experiences.create(from_node: p, to_node: tag)
 		end
 		gender_exp_tags.each do |exp_tag| 
-			tag = Tag.find_or_create_by(name: exp_tag, context: "gender")
+			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "gender")
 			Experiences.create(from_node: p, to_node: tag)
 		end
 		lgbtqia_exp_tags.each do |exp_tag| 
-			tag = Tag.find_or_create_by(name: exp_tag, context: "lgbtqia")
+			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "lgbtqia")
 			Experiences.create(from_node: p, to_node: tag)
 		end
 		
@@ -197,25 +197,25 @@ class SurveyResponse < ApplicationRecord
 	private
 	
 	def sanitize_array_values	
-		self.themes = themes.flatten.join(", ").split(", ")
+		self.themes = themes.flatten.join(", ").split(", ").map(&:strip)
 
-		self.age_exp_tags = age_exp_tags.join(", ").split(", ")
-		self.klass_exp_tags = klass_exp_tags.join(", ").split(", ")
-		self.race_ethnicity_exp_tags = race_ethnicity_exp_tags.join(", ").split(", ").flatten
-		self.religion_exp_tags = religion_exp_tags.join(", ").split(", ")
-		self.disability_exp_tags = disability_exp_tags.join(", ").split(", ")
-		self.neurodiversity_exp_tags = neurodiversity_exp_tags.join(", ").split(", ").flatten
-		self.gender_exp_tags = gender_exp_tags.join(", ").split(", ")
-		self.lgbtqia_exp_tags = lgbtqia_exp_tags.join(", ").split(", ")
+		self.age_exp_tags = age_exp_tags.join(", ").split(", ").map(&:strip)
+		self.klass_exp_tags = klass_exp_tags.join(", ").split(", ").map(&:strip)
+		self.race_ethnicity_exp_tags = race_ethnicity_exp_tags.join(", ").split(", ").map(&:strip)
+		self.religion_exp_tags = religion_exp_tags.join(", ").split(", ").map(&:strip)
+		self.disability_exp_tags = disability_exp_tags.join(", ").split(", ").map(&:strip)
+		self.neurodiversity_exp_tags = neurodiversity_exp_tags.join(", ").split(", ").map(&:strip)
+		self.gender_exp_tags = gender_exp_tags.join(", ").split(", ").map(&:strip)
+		self.lgbtqia_exp_tags = lgbtqia_exp_tags.join(", ").split(", ").map(&:strip)
 
-		self.age_id_tags = age_id_tags.join(", ").split(", ")
-		self.klass_id_tags = klass_id_tags.join(", ").split(", ")
-		self.race_ethnicity_id_tags = race_ethnicity_id_tags.join(", ").split(", ").flatten
-		self.religion_id_tags = religion_id_tags.join(", ").split(", ")
-		self.disability_id_tags = disability_id_tags.join(", ").split(", ")
-		self.neurodiversity_id_tags = neurodiversity_id_tags.join(", ").split(", ").flatten
-		self.gender_id_tags = gender_id_tags.join(", ").split(", ")
-		self.lgbtqia_id_tags = lgbtqia_id_tags.join(", ").split(", ")
+		self.age_id_tags = age_id_tags.join(", ").split(", ").map(&:strip)
+		self.klass_id_tags = klass_id_tags.join(", ").split(", ").map(&:strip)
+		self.race_ethnicity_id_tags = race_ethnicity_id_tags.join(", ").split(", ").map(&:strip)
+		self.religion_id_tags = religion_id_tags.join(", ").split(", ").map(&:strip)
+		self.disability_id_tags = disability_id_tags.join(", ").split(", ").map(&:strip)
+		self.neurodiversity_id_tags = neurodiversity_id_tags.join(", ").split(", ").map(&:strip)
+		self.gender_id_tags = gender_id_tags.join(", ").split(", ").map(&:strip)
+		self.lgbtqia_id_tags = lgbtqia_id_tags.join(", ").split(", ").map(&:strip)
 	end
 
 end
