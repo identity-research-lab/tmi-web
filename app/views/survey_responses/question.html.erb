@@ -1,5 +1,10 @@
 <h2><%= @responses.count %> Responses to "<%= @question_readable %>"</h2>
 
+<h3>Reference</h3>
+	<ul class="word-cloud">
+		<li><%= link_to "Codes for #{@question_readable}", codebook_path(params[:q]), class: "jump-link" %></li>
+	</ul>
+
 <table>
 	<thead>
 		<tr>

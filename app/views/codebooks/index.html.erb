@@ -1,0 +1,12 @@
+<h2>
+	Codebook
+</h2>
+
+<h3>Contexts</h3>
+<ul class="list">
+<% @contexts.each do |k,v| %>
+	<li>
+		<%= link_to v, codebook_path(k) %>
+	</li>
+<% end %>
+</ul>

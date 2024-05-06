@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get "about", controller: "static", action: "about"
   
   resources :survey_responses
-
+  resources :codebooks
+  resources :questions
   
 end
