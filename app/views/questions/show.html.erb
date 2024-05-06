@@ -1,8 +1,8 @@
-<h2><%= @responses.count %> Responses to "<%= @question_readable %>"</h2>
+<h2><%= @responses.count %> Responses to "<%= @question.humanize %>"</h2>
 
 <h3>Reference</h3>
 	<ul class="word-cloud">
-		<li><%= link_to "Codes for #{@question_readable}", codebook_path(@question_label), class: "jump-link" %></li>
+		<li><%= link_to "Codes for #{@question.humanize}", codebook_path(@question.key), class: "jump-link" %></li>
 	</ul>
 
 <table>
@@ -10,7 +10,7 @@
 		<tr>
 			<th>Response</th>
 			<th>Answer</th>
-			<th><%= link_to "Tags", codebook_path(@question_label), class: "jump-link-light" %></th>
+			<th><%= link_to "Tags", codebook_path(@question.key), class: "jump-link-light" %></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -23,7 +23,7 @@
 					<%= link_to response.id, response, class: "jump-link" %>
 				</td>
 				<td>
-					<% @response_value = response.read_attribute(@question_label) %>
+					<% @response_value = response.read_attribute(@question.key) %>
 					<% if @response_value.respond_to?(:join) %>
 						<% @response_value = @response_value.sort.join(", ") %>
 					<% end %>
@@ -31,7 +31,7 @@
 				</td>
 				<td class="form-entry">
 					<%= form_with model: response do |f| %>
-						<%= f.text_area @question_field, value: response.read_attribute(@question_field).try(:sort).try(:join, ", "), multiple: true %>
+						<%= f.text_area @question.tags_field, value: response.read_attribute(@question.tags_field).try(:sort).try(:join, ", "), multiple: true %>
 						<%= f.submit "Save", class: "small" %>
 					<% end %>
 				</td>
