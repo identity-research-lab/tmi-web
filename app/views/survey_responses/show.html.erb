@@ -41,11 +41,11 @@
 				<% alt = counter % 2 == 1 ? "" : "alt" %>
 				<% counter += 1 %>
 				<tr class="<%= alt %>">
-					<td class="label"><%= link_to question.humanize, question_path(question.field), class: "jump-link" %></td>
+					<td class="label"><%= link_to question.humanize, question_path(question.key), class: "jump-link" %></td>
 					<td><%= @response.read_attribute(question.key) %></td>
 					<td class="form-entry">
 						<% if @response.respond_to?(question.key) && @response.read_attribute(question.key).present?  %>
-							<%= f.text_area question.key, value: @response.read_attribute(question.tags_field).try(:sort).try(:join, ', '), multiple: true %>
+							<%= f.text_area question.tags_field, value: @response.read_attribute(question.tags_field).try(:sort).try(:join, ', '), multiple: true %>
 							<%= f.submit "Save", class: "small" %>
 						<% end %>
 					</td>
