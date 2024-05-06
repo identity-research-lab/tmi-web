@@ -1,5 +1,13 @@
 <h2>Codes for "<%= @section_name %>"</h2>
 
+<div class="flip" id="flip-left">
+	<%= link_to "<", codebook_path(@previous_section) %>
+</div>
+<div class="flip" id="flip-right">
+	<%= link_to ">", codebook_path(@next_section) %>
+</div>
+
+
 <div class="two-column">
 	<div class="column">
 		<h3>Alphabetically</h3>

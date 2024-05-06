@@ -673,6 +673,7 @@ th {
 		 width: 100%;
 		 margin: 0 auto 1rem auto;
 		 padding: 1.25rem;
+		 min-height: 26rem;
 	 }
  
 	 footer {
