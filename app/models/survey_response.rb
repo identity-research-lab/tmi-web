@@ -16,30 +16,6 @@ class SurveyResponse < ApplicationRecord
 	
 	IDENTITY_ATTRIBUTES = [:age_given, :klass_given, :race_given, :religion_given, :disability_given, :neurodiversity_given, :gender_given, :lgbtqia_given]
 	
-	QUESTION_MAPPING = {
-		age_given: "Age",
-		age_exp: "Experience with Age",
-		klass_given: "Class",
-		klass_exp: "Experience with Class",
-		race_ethnicity_given: "Race/Ethnicity",
-		race_ethnicity_exp: "Experience with Race/Ethnicity",
-		religion_given: "Religion",
-		religion_exp: "Experience with Religion",
-		disability_given: "Disability",
-		disability_exp: "Experience with Disability",
-		neurodiversity_given: "Neurodiversity",
-		neurodiversity_exp: "Experience with Neurodiversity",
-		gender_given: "Gender",
-		gender_exp: "Experience with Gender",
-		lgbtqia_given: "LGBTQIA+ Status",
-		lgbtqia_exp: "Experience with LGBTQIA+",
-		pronouns_given: "Pronouns Given",
-		pronouns_exp: "Experience with Pronouns",
-		pronouns_feel: "Pronoun Feelings",
-		affinity: "Identity Affinities",
-		notes: "Other Notes"
-	}
-
 	def self.refresh_from_upload(file_handle)
 		return unless file_handle
 		CSV.read(file_handle, headers: true).each do |record|

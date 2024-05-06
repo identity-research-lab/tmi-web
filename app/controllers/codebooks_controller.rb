@@ -11,7 +11,7 @@ class CodebooksController < ApplicationController
 	end
 
 	def index
-		@contexts = SurveyResponse::QUESTION_MAPPING
+		@contexts = Question::QUESTIONS
 	end
 	
 	def show
@@ -21,8 +21,8 @@ class CodebooksController < ApplicationController
 		else
 			@frequencies = Tag.histogram(@context.gsub("_exp","").gsub("klass","class").gsub("_","-"))
 		end
-		@section_name = SurveyResponse::QUESTION_MAPPING[@context.to_sym]
-		sections = SurveyResponse::QUESTION_MAPPING.keys
+		@section_name = Question::QUESTIONS[@context.to_sym]
+		sections = Question::QUESTIONS.keys
 		@previous_section = sections[sections.index(@context.to_sym) - 1]
 		@next_section = sections[sections.index(@context.to_sym) + 1]
 	end
