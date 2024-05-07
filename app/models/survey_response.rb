@@ -68,86 +68,96 @@ class SurveyResponse < ApplicationRecord
 	end
 
 	def to_graph
-		p = Persona.find_or_create_by(name: "Persona #{id}", survey_response_id: id)
+
+		if persona_to_flush = Persona.find_by(survey_response_id: id)
+			persona_to_flush.destroy
+		end
+		
+		persona = Persona.find_or_create_by(
+			name: "Persona #{id}", 
+			survey_response_id: id,
+			permalink: permalink
+		)
+		
 		themes.each do |theme|
 			t = Theme.find_or_create_by(name: theme)
-			RelatesTo.create(from_node: p, to_node: t)
+			RelatesTo.create(from_node: persona, to_node: t)
 		end
+
 		age_exp_tags.each do |exp_tag| 
 			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "age")
-			Experiences.create(from_node: p, to_node: tag)
+			Experiences.create(from_node: persona, to_node: tag)
 		end
+
 		klass_exp_tags.each do |exp_tag| 
 			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "class")
-			Experiences.create(from_node: p, to_node: tag)
+			Experiences.create(from_node: persona, to_node: tag)
 		end
 		race_ethnicity_exp_tags.each do |exp_tag| 
 			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "race-ethnicity")
-			Experiences.create(from_node: p, to_node: tag)
+			Experiences.create(from_node: persona, to_node: tag)
 		end
 		religion_exp_tags.each do |exp_tag| 
 			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "religion")
-			Experiences.create(from_node: p, to_node: tag)
+			Experiences.create(from_node: persona, to_node: tag)
 		end
 		disability_exp_tags.each do |exp_tag| 
 			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "disability")
-			Experiences.create(from_node: p, to_node: tag)
+			Experiences.create(from_node: persona, to_node: tag)
 		end
 		neurodiversity_exp_tags.each do |exp_tag| 
 			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "neurodiversity")
-			Experiences.create(from_node: p, to_node: tag)
+			Experiences.create(from_node: persona, to_node: tag)
 		end
 		gender_exp_tags.each do |exp_tag| 
 			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "gender")
-			Experiences.create(from_node: p, to_node: tag)
+			Experiences.create(from_node: persona, to_node: tag)
 		end
 		lgbtqia_exp_tags.each do |exp_tag| 
 			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "lgbtqia")
-			Experiences.create(from_node: p, to_node: tag)
+			Experiences.create(from_node: persona, to_node: tag)
 		end
 		
 		age_id_tags.each do |id_tag| 
 			identity = Identity.find_or_create_by(name: id_tag, context: "age")
-			IdentifiesWith.create(from_node: p, to_node: identity)
+			IdentifiesWith.create(from_node: persona, to_node: identity)
 		end
 		
 		klass_id_tags.each do |id_tag| 
 			identity = Identity.find_or_create_by(name: id_tag, context: "class")
-			IdentifiesWith.create(from_node: p, to_node: identity)
+			IdentifiesWith.create(from_node: persona, to_node: identity)
 		end
 		
 		race_ethnicity_id_tags.each do |id_tag| 
 			identity = Identity.find_or_create_by(name: id_tag, context: "race/ethnicity")
-			IdentifiesWith.create(from_node: p, to_node: identity)
+			IdentifiesWith.create(from_node: persona, to_node: identity)
 		end
 		
 		religion_id_tags.each do |id_tag| 
 			identity = Identity.find_or_create_by(name: id_tag, context: "religion")
-			IdentifiesWith.create(from_node: p, to_node: identity)
+			IdentifiesWith.create(from_node: persona, to_node: identity)
 		end
 		
 		gender_id_tags.each do |id_tag| 
 			identity = Identity.find_or_create_by(name: id_tag, context: "gender")
-			IdentifiesWith.create(from_node: p, to_node: identity)
+			IdentifiesWith.create(from_node: persona, to_node: identity)
 		end
 		
 		disability_id_tags.each do |id_tag| 
 			identity = Identity.find_or_create_by(name: id_tag, context: "disability")
-			IdentifiesWith.create(from_node: p, to_node: identity)
+			IdentifiesWith.create(from_node: persona, to_node: identity)
 		end
 		
 		neurodiversity_id_tags.each do |id_tag| 
 			identity = Identity.find_or_create_by(name: id_tag, context: "neurodiversity")
-			IdentifiesWith.create(from_node: p, to_node: identity)
+			IdentifiesWith.create(from_node: persona, to_node: identity)
 		end
 		
 		lgbtqia_id_tags.each do |id_tag| 
 			identity = Identity.find_or_create_by(name: id_tag, context: "lgbtqia")
-			IdentifiesWith.create(from_node: p, to_node: identity)
+			IdentifiesWith.create(from_node: persona, to_node: identity)
 		end
 		
-		p.permalink = permalink
-		p.save
 	end
 	
 	def permalink
@@ -159,7 +169,7 @@ class SurveyResponse < ApplicationRecord
 	end
 
 	def graph_query
-		"MATCH (p:Persona)-[]-(t) WHERE p.permalink=\"#{permalink}\" RETURN p,t"  
+		"MATCH (p:Persona)-[]-(t) WHERE p.permalink=\"#{permalink}\" RETURN persona,t"  
 	end
 
 	def corpus
@@ -193,5 +203,6 @@ class SurveyResponse < ApplicationRecord
 		self.gender_id_tags = gender_id_tags.join(", ").split(", ").map(&:strip)
 		self.lgbtqia_id_tags = lgbtqia_id_tags.join(", ").split(", ").map(&:strip)
 	end
+
 
 end
