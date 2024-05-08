@@ -112,12 +112,33 @@ class SurveyResponse < ApplicationRecord
 		gender_exp_tags.each do |exp_tag| 
 			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "gender")
 			Experiences.create(from_node: persona, to_node: tag)
+		
 		end
 		lgbtqia_exp_tags.each do |exp_tag| 
 			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "lgbtqia")
 			Experiences.create(from_node: persona, to_node: tag)
 		end
 		
+		pronouns_exp_tags.each do |exp_tag|
+			tag = Tag.find_or_create_by(name: exp_tag, context: "pronouns")
+			Experiences.create(from_node: persona, to_node: tag)
+		end
+		
+		pronouns_feel_tags.each do |exp_tag|
+			tag = Tag.find_or_create_by(name: exp_tag, context: "pronouns-feel")
+			Experiences.create(from_node: persona, to_node: tag)
+		end
+		
+		affinity_tags.each do |exp_tag|
+			tag = Tag.find_or_create_by(name: exp_tag, context: "affinity")
+			Experiences.create(from_node: persona, to_node: tag)
+		end
+		
+		notes_tags.each do |exp_tag|
+			tag = Tag.find_or_create_by(name: exp_tag, context: "notes")
+			Experiences.create(from_node: persona, to_node: tag)
+		end
+
 		age_id_tags.each do |id_tag| 
 			identity = Identity.find_or_create_by(name: id_tag, context: "age")
 			IdentifiesWith.create(from_node: persona, to_node: identity)
@@ -157,6 +178,12 @@ class SurveyResponse < ApplicationRecord
 			identity = Identity.find_or_create_by(name: id_tag, context: "lgbtqia")
 			IdentifiesWith.create(from_node: persona, to_node: identity)
 		end
+
+		pronouns_id_tags.each do |id_tag|
+			identity = Identity.find_or_create_by(name: id_tag, context: "pronouns")
+			IdentifiesWith.create(from_node: persona, to_node: identity)
+		end
+		
 		
 	end
 	
