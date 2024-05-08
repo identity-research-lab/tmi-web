@@ -49,7 +49,9 @@ class SurveyResponsesController < ApplicationController
 	private
 
 		def response_params
-			params.require(:survey_response).permit(themes: [], age_exp_tags: [], klass_exp_tags: [], race_ethnicity_exp_tags: [], religion_exp_tags: [], disability_exp_tags: [], neurodiversity_exp_tags: [], gender_exp_tags: [], lgbtqia_exp_tags: [], age_id_tags: [], klass_id_tags: [], race_ethnicity_id_tags: [], religion_id_tags: [], disability_id_tags: [], neurodiversity_id_tags: [], gender_id_tags: [], lgbtqia_id_tags: [])
+			params.require(:survey_response).permit(themes: [], age_exp_tags: [], klass_exp_tags: [], race_ethnicity_exp_tags: [], religion_exp_tags: [], disability_exp_tags: [], neurodiversity_exp_tags: [], gender_exp_tags: [], lgbtqia_exp_tags: [], age_id_tags: [], klass_id_tags: [], race_ethnicity_id_tags: [], religion_id_tags: [], disability_id_tags: [], neurodiversity_id_tags: [], gender_id_tags: [], lgbtqia_id_tags: [], pronouns_id_tags: [], pronouns_exp_tags: [], pronouns_feel_tags: [], affinity_tags: [], notes_tags: [])
 		end
 
 end
+
+

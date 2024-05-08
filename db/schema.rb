@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_25_231454) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_08_200222) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -85,6 +85,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_25_231454) do
     t.string "disability_id_tags", default: [], array: true
     t.string "neurodiversity_id_tags", default: [], array: true
     t.string "lgbtqia_id_tags", default: [], array: true
+    t.string "pronouns_id_tags", default: [], array: true
+    t.string "pronouns_exp_tags", default: [], array: true
+    t.string "pronouns_feel_tags", default: [], array: true
+    t.string "affinity_tags", default: [], array: true
+    t.string "notes_tags", default: [], array: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
