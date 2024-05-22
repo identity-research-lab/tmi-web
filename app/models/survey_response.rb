@@ -12,10 +12,6 @@ class SurveyResponse < ApplicationRecord
 	
 	THEME_PROMPT = "Dear ChatGPT, as a qualitative researcher employing a narrative qualitative coding approach with a focus on intersectionality, your task is to identify and analyze themes within passages of text that reflect the multifaceted experiences of individuals across various social identities. Pay close attention to how different aspects of identity intersect and influence each other, and explore the complexities and nuances of lived experiences within diverse social contexts. Your analysis should aim to uncover underlying patterns, tensions, and intersections of power and oppression, shedding light on the interplay between social identities and shaping individuals' narratives. Please generate themes that represent the richness and depth of the data, highlighting the significance of intersectionality in understanding human experiences. Generated themes should be output as a single list of words or short phrases separated by commas with no other punctuation."
 
-	IDENTITY_PROMPT = "Provide a single comma-separated list of all noun and adjectival phrases from the following text. Do not substitute any words. The text is as follows: "
-	
-	IDENTITY_ATTRIBUTES = [:age_given, :klass_given, :race_given, :religion_given, :disability_given, :neurodiversity_given, :gender_given, :lgbtqia_given]
-	
 	def self.refresh_from_upload(file_handle)
 		return unless file_handle
 		CSV.read(file_handle, headers: true).each do |record|
@@ -29,6 +25,8 @@ class SurveyResponse < ApplicationRecord
 
 		sr = SurveyResponse.find_or_create_by(response_id: record['ResponseId'])
 
+		pronouns_given = record['pronouns_given'] == "self-describe" ? "#{record['pronouns_given_5_TEXT']} (self-described)" : record['pronouns_given']
+		
 		sr.update(
 			age_given: record['age_given'],
 			age_exp: record['age_exp'],
@@ -46,7 +44,7 @@ class SurveyResponse < ApplicationRecord
 			gender_exp: record['gender_exp'],
 			lgbtqia_given: record['lgbtqia_given'],
 			lgbtqia_exp: record['lgbtqia_exp'],
-			pronouns_given: record['pronouns_given'],
+			pronouns_given: pronouns_given,
 			pronouns_exp: record['pronouns_exp'],
 			pronouns_feel: record['pronouns_feel'],
 			affinity: record['affinity'],
