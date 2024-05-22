@@ -17,9 +17,6 @@
   
 ## Update neo4j schema
 
-Note: `noglob` required under zsh
-
-  noglob rake neo4j:generate_schema_migration[constraint,Tag,uuid]
   rake neo4j:migrate
 
 ## neo4j hosting

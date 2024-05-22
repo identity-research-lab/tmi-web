@@ -7,7 +7,7 @@ class ExportToGraphJob < ApplicationJob
     return unless record
 
     # TODO this is a hack until sidekiq is set up
-    sleep(rand(0.2..2.0))
+    sleep(rand(0.5..2.0))
     
     record.to_graph
   end
