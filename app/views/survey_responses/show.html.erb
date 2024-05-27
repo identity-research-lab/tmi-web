@@ -14,17 +14,19 @@
 <h3>Derived Themes:</h3>
 
 <ul class="word-cloud">
-	<% @response.themes.sort.each do |theme| %>
+	<% @themes_histogram.keys.sort{|a,b| @themes_histogram[a] <=> @themes_histogram[b]}.reverse.each do |theme| %>
+		<% font_size = ((@themes_histogram[theme] / @total_responses.to_f) * 60).to_i + 5 %>
 		<% active = theme == @theme ? "active" : "" %>
-		<li class="<%= active %>"><%= link_to theme, survey_responses_path(q: theme) %></li>
+		<% percentage = ((@themes_histogram[theme]  / @total_responses.to_f) * 100).to_i %>
+		
+		<li class="<%= active %>" style="font-size: <%= font_size %>px;"><%= link_to theme, survey_responses_path(theme: theme) %> (<%= percentage < 1 ? "<1" : percentage %>%)</li>
 	<% end %>
 </ul>
 
 <h3>TMI-Graph Query</h3>
-<ul class="word-cloud">
-	<li><a href="#query" id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @response.graph_query %></a>
-	</li>
-</ul>
+<p class="code">
+	<a href="#query" id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @response.graph_query %></a>
+</p>
 
 <%= form_with model: @response do |f| %>
 	<table>
