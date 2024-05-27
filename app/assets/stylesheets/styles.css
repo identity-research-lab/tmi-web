@@ -16,16 +16,17 @@
 	 --color-red-tint: #600;
 	 --color-red-highlight: #eaa;
 	 --color-white: #FFFFFF;
-	 --font-body: "Courier";
-	 --font-title: "Courier Bold";
-	 --font-header: "Courier";
-	 --font-size-small: .75rem;
+	 --font-body: "KoHo Regular";
+	 --font-title: "KoHo Regular";
+	 --font-header: "KoHo Bold";
+	 --font-monospace: "Courier New";
+	 --font-size-small: 0.85rem;
  }
  
  /* Primary Elements */
  html {
 	 height: 100%;
-	 font-size: .75rem;
+	 font-size: .85rem;
  }
  
  body {
@@ -34,10 +35,6 @@
 	 font: 300 1rem/1.75rem var(--font-body), sans-serif;
 	 margin: 0 auto 1rem auto;
 	 font-synthesis: none;
-	 -moz-hanging-punctuation: first last allow-end;
-	 -ms-hanging-punctuation: first last allow-end;
-	 -webkit-hanging-punctuation: first last allow-end;
-	 hanging-punctuation: first last allow-end;
 	 min-height: 100%;
 	 -moz-text-size-adjust: 100%;
 	 -ms-text-size-adjust: 100%;
@@ -203,7 +200,6 @@
  /* Inline Elements */
  a {
 	 color: var(--color-red);
-	 font-family: var(--font-body);
 	 text-decoration: underline;
 	 text-decoration-color: var(--color-red);
 	 text-underline-offset: .25rem;
@@ -363,7 +359,7 @@ th a:hover {
 	 padding: .25rem .75rem .25rem;
 	 width: calc(25% - 1.5rem);
  }
- 
+
  input[type="file"] {
 	 margin-top: 0rem;
  }
@@ -375,7 +371,8 @@ th a:hover {
  textarea {
 	 border: .0625rem solid hsl(0, 0%, 60%);
 	 color: var(--color-black);
-	 font-family: var(--font-body);
+	 font-family: var(--font-monospace);
+	 font-size: var(--font-size-small);
 	 padding: .125rem .25rem;
  }
  
@@ -551,6 +548,7 @@ th a:hover {
 		flex-direction: row;
 		list-style-type: none;
 		margin-left: 0rem;
+		font-family: var(--font-monospace);
 	}
 
 	.responses li {
@@ -571,6 +569,7 @@ th a:hover {
 		background-color: var(--color-light-grey);
 		padding: .5rem;
 		font-size: var(--font-size-small);
+		font-family: var(--font-monospace);
 	}
 	
 	.word-cloud li.active {
@@ -636,15 +635,19 @@ th a:hover {
 	.flip {
 		position: fixed;
 		top: 50%;
+		width: 2rem;
+		height: 2rem;
+		text-align: center;
 		background-color: var(--color-red);
 		opacity: 0.3;
 		color: var(--color-white);
-		font-size: 3rem;
+		font-size: 2rem;
 		padding: .75rem;
-		border-radius: 5rem;
+		border-radius: 10rem;
 	}
 
 	.flip a {
+		font-family: var(--font-monospace);
 		color: var(--color-white);
 	}
 	
