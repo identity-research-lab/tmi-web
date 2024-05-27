@@ -194,7 +194,7 @@ class SurveyResponse < ApplicationRecord
 	end
 
 	def graph_query
-		"MATCH (p:Persona)-[]-(t) WHERE p.permalink=\"#{permalink}\" RETURN persona,t"  
+		"MATCH (p:Persona)-[]-(t) WHERE p.permalink=\"#{permalink}\" RETURN p,t"  
 	end
 
 	def corpus
