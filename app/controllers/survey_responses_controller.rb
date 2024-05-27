@@ -11,7 +11,7 @@ class SurveyResponsesController < ApplicationController
 	end
 
 	def index
-		if @theme = params.permit(:q)[:q]
+		if @theme = params.permit(:theme)[:theme]
 			@responses = SurveyResponse.where("? = ANY (themes)", @theme).order(:created_at)
 		else
 			@responses = SurveyResponse.all.order(:created_at)
@@ -19,8 +19,11 @@ class SurveyResponsesController < ApplicationController
 	end
 	
 	def show
-		@theme = params.permit(:q)[:q]
+		@theme = params.permit(:theme)[:theme]
 		@response = SurveyResponse.find(params[:id])
+		@total_responses = SurveyResponse.all.count
+		@themes_histogram = @response.themes.inject({}) { |acc, theme| acc[theme] = SurveyResponse.where("? = ANY (themes)", theme).count; acc }
+
 		if @theme
 			@previous_response = SurveyResponse.where("? = ANY (themes)", @theme).where("created_at < ?", @response.created_at).order("created_at DESC").limit(1).first
 			@next_response = SurveyResponse.where("? = ANY (themes)", @theme).where("created_at > ?", @response.created_at).order("created_at ASC").limit(1).first

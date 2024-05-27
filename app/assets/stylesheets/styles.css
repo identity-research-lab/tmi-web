@@ -541,6 +541,14 @@ th a:hover {
 	#copy-to-clipboard {
 		text-decoration: none;
 	}
+
+	.code {
+		margin: 0rem 2rem;
+		background-color: var(--color-light-grey);
+		padding: .5rem;
+		font-size: var(--font-size-small);
+		font-family: var(--font-monospace);
+	}
 	
 	.responses {
 		display: flex;
@@ -569,7 +577,6 @@ th a:hover {
 		background-color: var(--color-light-grey);
 		padding: .5rem;
 		font-size: var(--font-size-small);
-		font-family: var(--font-monospace);
 	}
 	
 	.word-cloud li.active {
