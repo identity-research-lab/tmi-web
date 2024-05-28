@@ -12,7 +12,10 @@
 	 --color-white: #fff;
 	 --color-medium-black: #353535;
 	 --color-light-grey: #eee;
-	 --color-red: #900;
+	 --color-red: #ff3333;
+	 --color-green: #99CC00;
+	 --color-yellow: #FFFF99;
+	 --color-blue: #CCFFFF;
 	 --color-red-tint: #600;
 	 --color-red-highlight: #eaa;
 	 --color-white: #FFFFFF;
@@ -239,12 +242,8 @@
 	 border: 3px solid var(--color-light-grey);
  }
 
-tr {
-}
-
 tr.alt {
 	background-color: var(--color-light-grey);	
-	border-top: 3px solid var(--color-medium-black);	 
 }
 
 td {
@@ -541,7 +540,7 @@ th a:hover {
 	#copy-to-clipboard {
 		text-decoration: none;
 	}
-
+	
 	.code {
 		margin: 0rem 2rem;
 		background-color: var(--color-light-grey);
