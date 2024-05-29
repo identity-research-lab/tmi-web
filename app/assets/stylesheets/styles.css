@@ -106,6 +106,7 @@
  
  li {
 	 margin-bottom: .375rem;
+	 position: relative;
  }
  
  strong {
@@ -547,6 +548,17 @@ th a:hover {
 		padding: .5rem;
 		font-size: var(--font-size-small);
 		font-family: var(--font-monospace);
+	}
+	
+	.stacked-bar {
+		display: block; 
+		position: absolute; 
+		left: 0; 
+		top: 0; 
+		height: 2.75rem; 
+		background-color: var(--color-green);
+		opacity: 0.25; 
+		border-right: 2px solid var(--color-black);
 	}
 	
 	.responses {

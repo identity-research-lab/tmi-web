@@ -12,7 +12,7 @@ class Tag
 	has_many :out, :personas, rel_class: :Experiences
 	
 	def self.histogram(context)
-		Tag.where(context: context).query_as(:t).with('t, count{(t)-[:EXPERIENCES]-()} AS c').where('c > 0').order('c DESC').return('t.name, c').inject({}) {|h,t| h[t.values[0]] = t.values[1]; h}
+		Tag.where(context: context).query_as(:t).with('t, count{(t)-[:EXPERIENCES]-()} AS c').where('c > 0').order('c DESC').return('t.name, c').inject({}) {|h,t| h[t.values[0]] ||= 0; h[t.values[0]] += t.values[1]; h}
 	end
 
 	private

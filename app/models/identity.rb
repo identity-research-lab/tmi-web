@@ -12,7 +12,7 @@ class Identity
 	has_many :out, :personas, rel_class: :IdentifiesWith
 	
 	def self.histogram(context)
-		where(context: context).query_as(:i).with('i, count{(i)-[:IDENTIFIES_WITH]-()} AS c').where('c > 0').order('c DESC').return('i.name, c').inject({}) {|h,i| h[i.values[0]] = i.values[1]; h}
+		where(context: context).query_as(:i).with('i, count{(i)-[:IDENTIFIES_WITH]-(p:Persona)} AS c').return('i.name, c').order('c DESC').inject({}) {|h,i| h[i.values[0]] ||= 0; h[i.values[0]] += i.values[1]; h}
 	end
 	
 	private
