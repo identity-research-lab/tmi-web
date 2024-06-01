@@ -644,10 +644,9 @@ th a:hover {
 	
 	.logo {
 		position: absolute;
-		top: 0;
+		top: 2rem;
 		left: 3rem;
-		opacity: 0.25;
-		width: 10rem;		
+		width: 15rem;		
 	}
 	
 	.flip {
@@ -688,7 +687,7 @@ th a:hover {
 		 margin: 0 auto 1rem auto;
 		 width: 100%;
 		 padding: 2rem 2rem;
-		 min-height: 10rem;
+		 min-height: 7rem;
 	 }
  
 	 nav {
@@ -847,7 +846,7 @@ th a:hover {
 	 }
   
 	 nav {
-		 top: 1.125rem;
+		 top: 2rem;
 		 margin-right: 0.5rem;
 	 }
  
