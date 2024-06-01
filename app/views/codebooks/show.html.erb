@@ -1,14 +1,10 @@
 <h2>Codes for "<%= @section_name %>"</h2>
 
 <% if @previous_section %>
-	<div class="flip" id="flip-left">
-		<%= link_to "<", codebook_path(@previous_section) %>
-	</div>
+	<%= link_to "<", codebook_path(@previous_section), class: "flip", id: "flip-left" %>
 <% end %>
 <% if @next_section %>
-	<div class="flip" id="flip-right">
-		<%= link_to ">", codebook_path(@next_section) %>
-	</div>
+	<%= link_to ">", codebook_path(@next_section), class: "flip", id: "flip-right" %>
 <% end %>
 
 <div class="two-column">

@@ -21,7 +21,7 @@
 	 --color-white: #FFFFFF;
 	 --font-body: "KoHo Regular";
 	 --font-title: "KoHo Regular";
-	 --font-header: "KoHo Bold";
+	 --font-header: "KoHo-Bold";
 	 --font-monospace: "Courier New";
 	 --font-size-small: 0.85rem;
  }
@@ -138,7 +138,7 @@
  
  footer p {
 	 clear: both;
-	 text-align: left;
+	 text-align: center;
 	 margin-top: 1.25rem;
 	 margin-left: 1rem;
  }
@@ -241,6 +241,7 @@
  table {
 	 width: 100%;
 	 border: 3px solid var(--color-light-grey);
+	 margin-top: 2em;
  }
 
 tr.alt {
@@ -262,6 +263,11 @@ td.label a {
 
 td.label a:hover {
 	text-decoration: underline;
+}
+
+td.response {
+	width: 30%;
+	padding: .5rem 1rem 1.25rem 1rem;
 }
 
 td.form-entry {
@@ -332,10 +338,6 @@ th a:hover {
 	 display: none;
  }
  
- form {
-	 margin-top: 2em;
- }
- 
  fieldset {
 	 border: 0;
  }
@@ -376,15 +378,30 @@ th a:hover {
 	 padding: .125rem .25rem;
  }
  
+ textarea {
+	 margin-top: -.25rem;
+ }
+ 
 	input[type="submit"] {
 		width: auto;
+		font-family: var(--font-body);
+		font-weight: bold;
+		text-transform: uppercase;
+		padding: 0rem 1rem;
+		cursor: pointer;
 	}
 
 	input[type="submit"].small {
-		padding: 0.25rem;
-		height: 1.5rem;
+		padding: 0.25rem .5rem;
+		height: 2rem;
 		float: right;
-		margin: -.25rem 0 1rem 1rem;
+		font-size: 70%;
+		margin: .25rem 0rem;
+	}
+	
+	.small:active {
+		border: 1px solid #000;
+		opacity: 0.75;
 	}
 	 
  .radio-form-group {
@@ -573,13 +590,25 @@ th a:hover {
 	.responses li {
 		text-align: left;
 		margin: .5rem;
+		padding: 1rem;
+		height: 2.25rem;
+		width: 2.25rem;
+		text-align: center;
+		background: var(--color-light-grey);
+		border-radius: 3rem;
+		color: #fff;
 	}
+
+	li.indented {
+		margin-left: 2rem;
+	}	
 	
 	.word-cloud {
 		display: flex;
 		flex-wrap: wrap;
 		flex-direction: row;
 		list-style-type: none;
+		text-align: center;
 	}
 	
 	.word-cloud li {
@@ -649,11 +678,11 @@ th a:hover {
 		width: 15rem;		
 	}
 	
-	.flip {
+	a.flip {
 		position: fixed;
 		top: 50%;
-		width: 2rem;
-		height: 2rem;
+		width: 1.75rem;
+		height: 1.75rem;
 		text-align: center;
 		background-color: var(--color-red);
 		opacity: 0.3;
@@ -661,9 +690,7 @@ th a:hover {
 		font-size: 2rem;
 		padding: .75rem;
 		border-radius: 10rem;
-	}
-
-	.flip a {
+		z-index: 3;
 		font-family: var(--font-monospace);
 		color: var(--color-white);
 	}
@@ -721,7 +748,7 @@ th a:hover {
 		 box-sizing: border-box;
 		 width: 100%;
 		 margin: 3rem auto 1rem auto;
-		 padding: 3rem 15% 0 15%;
+		 padding: 3rem;
 		 border-bottom: 23rem solid var(--color-black);
 	 }
  
@@ -860,7 +887,7 @@ th a:hover {
 	 }
  
 	 footer {
-		 padding: 1rem 15% 1rem 15%;
+		 padding: 1rem;
 		 border-bottom: 5rem solid var(--color-black);
 	 }
  
