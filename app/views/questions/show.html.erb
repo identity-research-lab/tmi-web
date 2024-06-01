@@ -1,6 +1,6 @@
-<h2><%= @responses.count %> Responses to "<%= @question.humanize %>"</h2>
+<h1><%= @responses.count %> Responses to "<%= @question.humanize %>".</h1>
 
-<h3>Reference</h3>
+<h2>Reference</h3>
 	<ul class="word-cloud">
 		<li><%= link_to "Codes for #{@question.humanize}", codebook_path(@question.key), class: "jump-link" %></li>
 	</ul>
