@@ -72,7 +72,7 @@ class SurveyResponse < ApplicationRecord
 		end
 		
 		persona = Persona.find_or_create_by(
-			name: "Persona #{id}", 
+			name: "Persona #{identifier}", 
 			survey_response_id: id,
 			permalink: permalink
 		)

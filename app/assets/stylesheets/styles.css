@@ -561,7 +561,7 @@ th a:hover {
 		position: absolute; 
 		left: 0; 
 		top: 0; 
-		height: 2.75rem; 
+		height: 100%; 
 		background-color: var(--color-green);
 		opacity: 0.25; 
 		border-right: 2px solid var(--color-black);
