@@ -7,7 +7,7 @@
 	<%= link_to ">", survey_response_path(@next_response, q: @theme), class: "flip", id: "flip-right" %>
 <% end %>
 
-<h2>Derived Themes:</h2>
+<h2>Derived themes:</h2>
 
 <ul class="word-cloud">
 	<% @themes_histogram.keys.sort{|a,b| @themes_histogram[a] <=> @themes_histogram[b]}.reverse.each do |theme| %>
@@ -19,7 +19,7 @@
 	<% end %>
 </ul>
 
-<h2>TMI-Graph Query</h2>
+<h2>tmi-graph query:</h2>
 <p class="code">
 	<a href="#query" id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @response.graph_query %></a>
 </p>
