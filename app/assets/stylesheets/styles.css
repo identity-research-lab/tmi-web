@@ -543,7 +543,7 @@ th a:hover {
 	}
 	
 	.code {
-		margin: 0rem 2rem;
+		margin: 2rem;
 		background-color: var(--color-light-grey);
 		padding: .5rem;
 		font-size: var(--font-size-small);
