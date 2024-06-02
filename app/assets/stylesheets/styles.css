@@ -567,7 +567,7 @@ th a:hover {
 		border-right: 2px solid var(--color-black);
 	}
 	
-	.responses {
+	.nodes {
 		display: flex;
 		flex-wrap: wrap;
 		flex-direction: row;
@@ -576,7 +576,7 @@ th a:hover {
 		font-family: var(--font-monospace);
 	}
 
-	.responses li {
+	.nodes li {
 		text-align: left;
 		margin: .5rem;
 		padding: 1rem;
