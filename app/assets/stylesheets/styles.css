@@ -26,7 +26,6 @@
 	 --font-size-small: 0.85rem;
  }
  
- /* Primary Elements */
  html {
 	 height: 100%;
 	 font-size: .85rem;
@@ -93,11 +92,6 @@
  ol {
 	 list-style-position: inside;
 	 margin: 1.5rem 0 1.5rem 1.5rem;
- }
- 
- [dir="rtl"] ul,
- [dir="rtl"] ol {
-	 margin: 1.5rem 1.5rem 1.5rem 0;
  }
  
  em {
@@ -588,10 +582,6 @@ th a:hover {
 		color: #fff;
 	}
 
-	li.indented {
-		margin-left: 2rem;
-	}	
-	
 	.word-cloud {
 		display: flex;
 		flex-wrap: wrap;
@@ -665,6 +655,12 @@ th a:hover {
 		top: 2rem;
 		left: 3rem;
 		width: 15rem;		
+		height: 5rem;
+		border: none;
+	}
+
+	.logo a {
+		text-decoration: none;
 	}
 	
 	a.flip {
