@@ -572,7 +572,7 @@ th a:hover {
 
 	.nodes li {
 		text-align: left;
-		margin: .5rem;
+		margin: .5rem 1rem .5rem 0;
 		padding: 1rem;
 		height: 2.25rem;
 		width: 2.25rem;
@@ -699,7 +699,7 @@ th a:hover {
 		 margin: 0 auto 1rem auto;
 		 width: 100%;
 		 padding: 2rem 2rem;
-		 min-height: 7rem;
+		 min-height: 11rem;
 	 }
  
 	 nav {
@@ -806,6 +806,7 @@ th a:hover {
 	 }
  
 	 header {
+		 min-height: 13rem;
 	 }
  
  }
@@ -833,6 +834,17 @@ th a:hover {
 		 margin: 0 auto 1rem auto;
 	 }
  
+	 nav {
+			top: 2rem;
+			margin-right: 0.5rem;
+		}
+	 
+		nav ul li {
+			float: left;
+			display: inline;
+			font-size: 1rem;
+		}
+	 
 	 nav ul li a {
 		 width: 100%;
 		 text-decoration: none;
@@ -856,18 +868,8 @@ th a:hover {
 		 margin-bottom: 1rem;
 	 }
   
-	 nav {
-		 top: 2rem;
-		 margin-right: 0.5rem;
-	 }
- 
-	 nav ul li {
-		 float: left;
-		 display: inline;
-		 font-size: 1rem;
-	 }
-
 	 header {
+		 min-height: 7rem;
 	 }
  
 	 footer {
