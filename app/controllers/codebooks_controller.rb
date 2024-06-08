@@ -21,6 +21,10 @@ class CodebooksController < ApplicationController
 		else
 			@frequencies = Tag.histogram(@context.gsub("_exp","").gsub("klass","class").gsub("_","-"))
 		end
+
+		@categories_histogram = Category.where(context: @context.gsub("_given","").gsub("_exp","").gsub("klass","class").gsub("_","-")).inject({}) { |acc, category| acc[category] = category.tags.count; acc }
+		@total_codes = @categories_histogram.values.sum
+
 		@section_name = Question::QUESTIONS[@context.to_sym]
 		sections = Question::QUESTIONS.keys
 		@previous_section = sections[sections.index(@context.to_sym) - 1]

@@ -11,12 +11,12 @@ class Category
 	has_many :in, :tags, rel_class: :CategorizesAs
 
 	PROMPT_INITIALIZE = %{ 
-		You are a social researcher doing data analysis. Please generate a list of the 20 most relevant categories from the following list of codes. The categories should be all lower case. Categories should be lower-case and contain no punctuation. Codes should be stripped of quotation marks. Return each code with an array of its categories in JSON format. Use this JSON as the format:
+		You are a social researcher doing data analysis. Please generate a list of the 20 most relevant themes from the following list of codes. The themes should be all lowercase and contain no punctuation. Codes should be stripped of quotation marks. Return each code with an array of its categories in JSON format. Use this JSON as the format:
 		
 		{ 
-			"categories" : [
+			"themes" : [
 				{ 
-					"category": "foo",
+					"theme": "foo",
 					"codes": [ "bar", "bat", "baz"]
 				}
 			]
@@ -43,13 +43,13 @@ class Category
 		)	
 
 		p response.dig("choices", 0, "message", "content")
-		data = JSON.parse(response.dig("choices", 0, "message", "content"))['categories']
+		data = JSON.parse(response.dig("choices", 0, "message", "content"))['themes']
 
 		Category.where(context: context).destroy_all
 
 		data.each do |record|
+			category = Category.find_or_create_by(name: record['theme'], context: context)
 			record['codes'].each do |v|
-				category = Category.find_or_create_by(name: record['category'], context: context)
 				tags.select{ |tag| record['codes'].include? tag.name }.each{ |tag| CategorizesAs.create(from_node: category, to_node: tag )}
 			end
 		end

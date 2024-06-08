@@ -7,6 +7,17 @@
 	<%= link_to ">", codebook_path(@next_section), class: "flip", id: "flip-right" %>
 <% end %>
 
+<h2>Derived categories:</h2>
+
+<ul class="word-cloud">
+	<% @categories_histogram.keys.sort{|a,b| @categories_histogram[a] <=> @categories_histogram[b]}.reverse.each do |category| %>
+		<% font_size = ((@categories_histogram[category] / @total_codes.to_f) * 60).to_i + 5 %>
+		<% percentage = ((@categories_histogram[category]  / @total_codes.to_f) * 100).to_i %>
+		<%= @total_codes %>
+		<li style="font-size: <%= font_size %>px;"><%= category.name %> (<%= percentage < 1 ? "<1" : percentage %>%)</li>
+	<% end %>
+</ul>
+
 <div class="two-column">
 	<div class="column">
 		<h3>Alphabetically</h3>
