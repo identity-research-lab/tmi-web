@@ -2,6 +2,8 @@ source "https://rubygems.org"
 
 ruby "3.3.0"
 
+gem 'sidekiq'
+
 gem 'pry', groups: [:development, :test]
 
 gem 'dotenv', groups: [:development, :test]
