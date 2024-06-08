@@ -1,7 +1,5 @@
 class ExportToGraphJob < ApplicationJob
 
-  include Sidekiq::Job
-  
   queue_as :default
 
   attr_accessor :survey_response
