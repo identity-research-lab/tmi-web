@@ -29,4 +29,4 @@ tmi-web is a social science research tool for managing, analyzing, coding, and v
 
 ### ChatGPT API dashboard
 
-  htts://platform.openai.com
+  https://platform.openai.com

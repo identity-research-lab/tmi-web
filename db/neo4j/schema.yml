@@ -14,6 +14,8 @@
 :constraints:
 - 'CREATE CONSTRAINT `constraint_2e9488d8` FOR (n:`Identity`) REQUIRE (n.`uuid`) IS
   UNIQUE OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `constraint_302a3d92` FOR (n:`Category`) REQUIRE (n.`uuid`) IS
+  UNIQUE OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `constraint_651783b9` FOR (n:`Persona`) REQUIRE (n.`uuid`) IS
   UNIQUE OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `constraint_b3f651ab` FOR (n:`Tag`) REQUIRE (n.`uuid`) IS UNIQUE
@@ -28,3 +30,4 @@
 - '20240323195422'
 - '20240325234413'
 - '20240522013044'
+- '20240607210627'

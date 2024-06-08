@@ -22,6 +22,6 @@ class ThemeExtractorJob < ApplicationJob
         content: "#{SurveyResponse::THEME_PROMPT} #{txt}"
       }], temperature: 0.7 } )	
       survey_response.update_attribute( :themes, response.dig("choices", 0, "message", "content").downcase.split(/[\,\.][\s]*/))
-      end	
+    end	
   end
 end
