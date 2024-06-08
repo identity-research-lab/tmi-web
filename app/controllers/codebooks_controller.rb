@@ -16,6 +16,13 @@ class CodebooksController < ApplicationController
 	
 	def show
 		@context = params[:id]
+		@enqueued_at = params[:enqueued_at]
+
+		sections = Question::QUESTIONS.keys
+		@section_name = Question::QUESTIONS[@context.to_sym]
+		@previous_section = sections[sections.index(@context.to_sym) - 1]
+		@next_section = sections[sections.index(@context.to_sym) + 1]
+		
 		if params[:id].split('_').last == "given"
 			@frequencies = Identity.histogram(@context.gsub("_given","").gsub("klass","class").gsub("_","/"))
 		else
@@ -25,10 +32,11 @@ class CodebooksController < ApplicationController
 		@categories_histogram = Category.where(context: @context.gsub("_given","").gsub("_exp","").gsub("klass","class").gsub("_","-")).inject({}) { |acc, category| acc[category.name] = category.tags.count; acc }
 		@total_codes = @categories_histogram.values.sum
 
-		sections = Question::QUESTIONS.keys
-		@section_name = Question::QUESTIONS[@context.to_sym]
-		@previous_section = sections[sections.index(@context.to_sym) - 1]
-		@next_section = sections[sections.index(@context.to_sym) + 1]
+	end
+	
+	def enqueue_categories
+		CategoryExtractorJob.new.perform_async(Question::QUESTIONS[params[:codebook_id]])
+		redirect_to( action: :show, id: params[:codebook_id], params: {enqueued_at: Time.now.to_s} )
 	end
 	
 end
