@@ -14,7 +14,9 @@ Rails.application.routes.draw do
   get "about", controller: "static", action: "about"
   
   resources :survey_responses
-  resources :codebooks
+  resources :codebooks do
+    post "enqueue_categories", action: "enqueue_categories"
+  end
   resources :questions
   
 end
