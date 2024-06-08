@@ -52,15 +52,3 @@
 		</tbody>
 	</table>
 <% end %>
-
-<script language="javascript">
-	function copyToClipboard(elementId) {
-		var element = document.getElementById(elementId);
-		var textarea = document.createElement('textarea');
-		textarea.value = element.textContent;
-		document.body.appendChild(textarea);
-		textarea.select();
-		document.execCommand('copy');
-		document.body.removeChild(textarea);
-	}
-</script>

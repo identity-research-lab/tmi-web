@@ -16,6 +16,7 @@ class CodebooksController < ApplicationController
 	
 	def show
 		@context = params[:id]
+		@context_key = @context.gsub("_given","").gsub("_exp","").gsub("klass","class").gsub("_","-")
 		@enqueued_at = params[:enqueued_at]
 
 		sections = Question::QUESTIONS.keys
@@ -29,13 +30,15 @@ class CodebooksController < ApplicationController
 			@frequencies = Tag.histogram(@context.gsub("_exp","").gsub("klass","class").gsub("_","-"))
 		end
 
-		@categories_histogram = Category.where(context: @context.gsub("_given","").gsub("_exp","").gsub("klass","class").gsub("_","-")).inject({}) { |acc, category| acc[category.name] = category.tags.count; acc }
-		@total_codes = @categories_histogram.values.sum
-
+		if @context.include?("_exp")		
+			@categories_histogram = Category.where(context: @context_key).inject({}) { |acc, category| acc[category.name] = category.tags.count; acc }
+			@total_codes = @categories_histogram.values.sum
+		end
+		
 	end
 	
 	def enqueue_categories
-		CategoryExtractorJob.perform_async(params[:codebook_id].gsub("_given","").gsub("_exp","").gsub("klass","class").gsub("_","-"))
+		Category.enqueue_category_extractor_job(params[:codebook_id].gsub("_given","").gsub("_exp","").gsub("klass","class").gsub("_","-"))
 		redirect_to( action: :show, id: params[:codebook_id], params: {enqueued_at: Time.now.strftime("%I:%M:%S %P (%Z)")} )
 	end
 	
