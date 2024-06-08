@@ -8,7 +8,7 @@ class Category
 	validates :name, presence: true
 	validates :context, presence: true
 
-	has_many :in, :tags, rel_class: :CategorizesAs
+	has_many :out, :tags, rel_class: :CategorizesAs
 
 	PROMPT_INITIALIZE = %{ 
 		You are a social researcher doing data analysis. Please generate a list of the 20 most relevant themes from the following list of codes. The themes should be all lowercase and contain no punctuation. Codes should be stripped of quotation marks. Return each code with an array of its categories in JSON format. Use this JSON as the format:
@@ -42,7 +42,6 @@ class Category
 			}
 		)	
 
-		p response.dig("choices", 0, "message", "content")
 		data = JSON.parse(response.dig("choices", 0, "message", "content"))['themes']
 
 		Category.where(context: context).destroy_all

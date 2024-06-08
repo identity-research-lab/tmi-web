@@ -10,7 +10,7 @@ class Tag
 	validates :context, presence: true
 	
 	has_many :out, :personas, rel_class: :Experiences
-	has_many :out, :categories, rel_class: :CategorizesAs
+	has_many :in, :categories, rel_class: :CategorizesAs
 
 	def self.histogram(context)
 		where(context: context).query_as(:t).with('t, count{(t)-[:EXPERIENCES]-()} AS c').where('c > 0').order('c DESC').return('t.name, c').inject({}) {|h,t| h[t.values[0]] ||= 0; h[t.values[0]] += t.values[1]; h}
