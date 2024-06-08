@@ -7,9 +7,9 @@
 	<%= link_to ">", codebook_path(@next_section), class: "flip", id: "flip-right" %>
 <% end %>
 
-<% if @categories_histogram %>
-	<h2>Derived categories:</h2>
+<h2>Derived categories:</h2>
 	
+<% if @categories_histogram %>
 	<% if @enqueued_at %>
 		Category derivation was started at <%= @enqueued_at %>. Please allow up to 2 minutes for the process to complete. You can reload the page to monitor progress. 
 	<% end %>
@@ -28,8 +28,13 @@
 	
 	<h2>tmi-graph query:</h2>
 	<p class="code">
-		<a href="#query" id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= Codebook.graph_query(@context_key) %></a>
+		<%= Codebook.category_query_explainer(@context_key) %><br />
+		<a href="#query" id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= Codebook.category_query(@context_key) %></a>
 	</p>
+
+<% else %>
+
+	<p>By design, identities are not categorized.</p>
 
 <% end %>
 	
