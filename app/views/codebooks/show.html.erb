@@ -7,24 +7,32 @@
 	<%= link_to ">", codebook_path(@next_section), class: "flip", id: "flip-right" %>
 <% end %>
 
-<h2>Derived categories:</h2>
-
-<% if @enqueued_at %>
-	Category derivation was started at <%= @enqueued_at %>. Please allow up to 2 minutes for the process to complete. You can reload the page to monitor progress. 
-<% end %>
-
-<ul class="word-cloud">
-	<% @categories_histogram.keys.sort{|a,b| @categories_histogram[a] <=> @categories_histogram[b]}.reverse.each do |category| %>
-		<% font_size = ((@categories_histogram[category] / @total_codes.to_f) * 100).to_i + 5 %>
-		<% percentage = ((@categories_histogram[category]  / @total_codes.to_f) * 100).to_i %>
-		<li style="font-size: <%= font_size %>px;"><%= category %> (<%= percentage < 1 ? "<1" : percentage %>%)</li>
+<% if @categories_histogram %>
+	<h2>Derived categories:</h2>
+	
+	<% if @enqueued_at %>
+		Category derivation was started at <%= @enqueued_at %>. Please allow up to 2 minutes for the process to complete. You can reload the page to monitor progress. 
 	<% end %>
-</ul>
+	
+	<ul class="word-cloud">
+		<% @categories_histogram.keys.sort{|a,b| @categories_histogram[a] <=> @categories_histogram[b]}.reverse.each do |category| %>
+			<% font_size = ((@categories_histogram[category] / @total_codes.to_f) * 60).to_i + 5 %>
+			<% percentage = ((@categories_histogram[category]  / @total_codes.to_f) * 100).to_i %>
+			<li style="font-size: <%= font_size %>px;"><%= category %> (<%= percentage < 1 ? "<1" : percentage %>%)</li>
+		<% end %>
+	</ul>
+	
+	<% unless @enqueued_at %>
+		<%= button_to "Derive Categories", codebook_enqueue_categories_path(@context, params: { enqueued: true }, method: :put ) %>
+	<% end %>
+	
+	<h2>tmi-graph query:</h2>
+	<p class="code">
+		<a href="#query" id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= Codebook.graph_query(@context_key) %></a>
+	</p>
 
-<% unless @enqueued_at %>
-	<%= button_to "Reconstruct Categories", codebook_enqueue_categories_path(@context, params: { enqueued: true }, method: :put ) %>
 <% end %>
-
+	
 <div class="two-column">
 	<div class="column">
 		<h3>Alphabetically</h3>

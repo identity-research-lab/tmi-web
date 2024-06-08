@@ -3,6 +3,10 @@
   <head>
     <title>TMIWeb</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <%= favicon_link_tag 'favico/apple-touch-icon.png', rel: 'apple-touch-icon', type: 'image/png' %>
+    <%= favicon_link_tag 'favico/favicon-32x32.png', rel: 'icon', type: 'image/png' %>
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
@@ -17,5 +21,18 @@
       </section>
       <%= render "shared/footer" %>
     </div>
+    
+    <script language="javascript">
+      function copyToClipboard(elementId) {
+        var element = document.getElementById(elementId);
+        var textarea = document.createElement('textarea');
+        textarea.value = element.textContent;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
+    </script>
+    
   </body>
 </html>

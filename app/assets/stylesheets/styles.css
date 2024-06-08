@@ -361,6 +361,10 @@ th a:hover {
 	 padding: .125rem .25rem;
  }
  
+ button {
+	 margin: 1rem;
+ }
+ 
  textarea {
 	 margin-top: -.25rem;
  }
