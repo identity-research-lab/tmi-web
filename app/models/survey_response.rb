@@ -11,10 +11,8 @@ class SurveyResponse < ApplicationRecord
 	validates_uniqueness_of :response_id
 	
 	THEME_PROMPT = "Dear ChatGPT, as a qualitative researcher employing a narrative qualitative coding approach with a focus on intersectionality, your task is to identify and analyze themes within passages of text that reflect the multifaceted experiences of individuals across various social identities. Pay close attention to how different aspects of identity intersect and influence each other, and explore the complexities and nuances of lived experiences within diverse social contexts. Your analysis should aim to uncover underlying patterns, tensions, and intersections of power and oppression, shedding light on the interplay between social identities and shaping individuals' narratives. Please generate themes that represent the richness and depth of the data, highlighting the significance of intersectionality in understanding human experiences. Generated themes should be output as a single list of words or short phrases separated by commas with no other punctuation."
-
-	## TODO move this to a background job, pass CSV as string
-	def self.refresh_from_upload(file_handle)
-		return unless file_handle
+	
+	def self.import(file_handle)
 		CSV.read(file_handle, headers: true).each do |record|
 			next unless record['Progress'].to_i.to_s == record['Progress']
 			next unless record['age_given'].present?
