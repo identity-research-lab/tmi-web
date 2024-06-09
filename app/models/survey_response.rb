@@ -218,7 +218,10 @@ class SurveyResponse < ApplicationRecord
 		self.neurodiversity_exp_tags = neurodiversity_exp_tags.join(", ").split(", ").map(&:strip)
 		self.gender_exp_tags = gender_exp_tags.join(", ").split(", ").map(&:strip)
 		self.lgbtqia_exp_tags = lgbtqia_exp_tags.join(", ").split(", ").map(&:strip)
+		self.pronouns_exp_tags =  pronouns_exp_tags.join(", ").split(", ").map(&:strip)
+		self.pronouns_feel_tags =  pronouns_feel_tags.join(", ").split(", ").map(&:strip)
 
+		self.pronouns_id_tags = pronouns_id_tags.join(", ").split(", ").map(&:strip)
 		self.age_id_tags = age_id_tags.join(", ").split(", ").map(&:strip)
 		self.klass_id_tags = klass_id_tags.join(", ").split(", ").map(&:strip)
 		self.race_ethnicity_id_tags = race_ethnicity_id_tags.join(", ").split(", ").map(&:strip)
