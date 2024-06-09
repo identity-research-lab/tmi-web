@@ -564,6 +564,7 @@ th a:hover {
 		background-color: var(--color-green);
 		opacity: 0.25; 
 		border-right: 2px solid var(--color-black);
+		z-index: -1;
 	}
 	
 	.nodes {
@@ -630,6 +631,7 @@ th a:hover {
 	ul.list li {
 		text-align: left;
 		background-color: var(--color-light-grey);
+		opacity: 0.75;
 		padding: .5rem;
 	}
 
