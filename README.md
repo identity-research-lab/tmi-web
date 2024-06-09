@@ -6,6 +6,10 @@ tmi-web is a social science research tool for managing, analyzing, coding, and v
 
 ## Dev concerns
 
+### Start local sidekiq
+
+  bundle exec sidekiq
+  
 ### Backup production postgres database
 
   heroku pg:backups:capture --app tmi-web 

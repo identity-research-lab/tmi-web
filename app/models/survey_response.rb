@@ -4,14 +4,15 @@ class SurveyResponse < ApplicationRecord
 	require 'openai'
 
 	before_validation :sanitize_array_values
-	after_create :queue_detect_themes
-	after_save_commit :queue_export_to_graph
+	after_create :enqueue_detect_themes
+	after_save_commit :enqueue_export_to_graph
 	
 	validates_presence_of :response_id
 	validates_uniqueness_of :response_id
 	
 	THEME_PROMPT = "Dear ChatGPT, as a qualitative researcher employing a narrative qualitative coding approach with a focus on intersectionality, your task is to identify and analyze themes within passages of text that reflect the multifaceted experiences of individuals across various social identities. Pay close attention to how different aspects of identity intersect and influence each other, and explore the complexities and nuances of lived experiences within diverse social contexts. Your analysis should aim to uncover underlying patterns, tensions, and intersections of power and oppression, shedding light on the interplay between social identities and shaping individuals' narratives. Please generate themes that represent the richness and depth of the data, highlighting the significance of intersectionality in understanding human experiences. Generated themes should be output as a single list of words or short phrases separated by commas with no other punctuation."
 
+	## TODO move this to a background job, pass CSV as string
 	def self.refresh_from_upload(file_handle)
 		return unless file_handle
 		CSV.read(file_handle, headers: true).each do |record|
@@ -57,12 +58,24 @@ class SurveyResponse < ApplicationRecord
 		self.id.to_s.rjust(4, "0")	
 	end
 	
-	def queue_detect_themes
-		ThemeExtractorJob.perform_later self
+	def enqueue_detect_themes
+		ThemeExtractorJob.perform_async(self.id)
 	end
 			
-	def queue_export_to_graph
-		ExportToGraphJob.perform_later self
+	def enqueue_export_to_graph
+		ExportToGraphJob.perform_async(self.id)
+	end
+
+	def set_themes
+		client = OpenAI::Client.new
+		if response = client.chat( parameters: { 
+			model: "gpt-4o", 
+			messages: [{ 
+				role: "user", 
+				content: "#{SurveyResponse::THEME_PROMPT} #{corpus}"
+			}], temperature: 0.7 } )	
+			update_attribute( :themes, response.dig("choices", 0, "message", "content").downcase.split(/[\,\.][\s]*/))
+		end	
 	end
 
 	def to_graph
