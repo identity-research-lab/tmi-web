@@ -11,7 +11,7 @@
 	
 <% if @categories_histogram %>
 	<% if @enqueued_at %>
-		Category derivation was started at <%= @enqueued_at %>. Please allow up to 2 minutes for the process to complete. You can reload the page to monitor progress. 
+		<p>Category derivation was started at <%= @enqueued_at %>. Please allow up to 2 minutes for the process to complete. You can reload the page to monitor progress.</p>
 	<% end %>
 	
 	<% if @total_codes.to_i > 0 %>
