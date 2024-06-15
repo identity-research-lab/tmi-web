@@ -4,13 +4,10 @@ class SurveyResponse < ApplicationRecord
 	require 'openai'
 
 	before_validation :sanitize_array_values
-	after_create :enqueue_detect_themes
 	after_save_commit :enqueue_export_to_graph
 	
 	validates_presence_of :response_id
 	validates_uniqueness_of :response_id
-	
-	THEME_PROMPT = "Dear ChatGPT, as a qualitative researcher employing a narrative qualitative coding approach with a focus on intersectionality, your task is to identify and analyze themes within passages of text that reflect the multifaceted experiences of individuals across various social identities. Pay close attention to how different aspects of identity intersect and influence each other, and explore the complexities and nuances of lived experiences within diverse social contexts. Your analysis should aim to uncover underlying patterns, tensions, and intersections of power and oppression, shedding light on the interplay between social identities and shaping individuals' narratives. Please generate themes that represent the richness and depth of the data, highlighting the significance of intersectionality in understanding human experiences. Generated themes should be output as a single list of words or short phrases separated by commas with no other punctuation."
 	
 	def self.import(file_handle)
 		CSV.read(file_handle, headers: true).each do |record|
@@ -56,24 +53,8 @@ class SurveyResponse < ApplicationRecord
 		self.id.to_s.rjust(4, "0")	
 	end
 	
-	def enqueue_detect_themes
-		ThemeExtractorJob.perform_async(self.id)
-	end
-			
 	def enqueue_export_to_graph
 		ExportToGraphJob.perform_async(self.id)
-	end
-
-	def set_themes
-		client = OpenAI::Client.new
-		if response = client.chat( parameters: { 
-			model: "gpt-4o", 
-			messages: [{ 
-				role: "user", 
-				content: "#{SurveyResponse::THEME_PROMPT} #{corpus}"
-			}], temperature: 0.7 } )	
-			update_attribute( :themes, response.dig("choices", 0, "message", "content").downcase.split(/[\,\.][\s]*/))
-		end	
 	end
 
 	def to_graph
@@ -88,11 +69,6 @@ class SurveyResponse < ApplicationRecord
 			permalink: permalink
 		)
 		
-		themes.each do |theme|
-			t = Theme.find_or_create_by(name: theme)
-			RelatesTo.create(from_node: persona, to_node: t)
-		end
-
 		age_exp_codes.each do |exp_code| 
 			code = Code.find_or_create_by(name: exp_code.strip, context: "age")
 			Experiences.create(from_node: persona, to_node: code)
@@ -219,8 +195,6 @@ class SurveyResponse < ApplicationRecord
 	private
 	
 	def sanitize_array_values	
-		self.themes = themes.flatten.join(", ").split(", ").map(&:strip)
-
 		self.age_exp_codes = age_exp_codes.join(", ").split(", ").map(&:strip)
 		self.klass_exp_codes = klass_exp_codes.join(", ").split(", ").map(&:strip)
 		self.race_ethnicity_exp_codes = race_ethnicity_exp_codes.join(", ").split(", ").map(&:strip)

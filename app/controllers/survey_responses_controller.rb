@@ -22,15 +22,9 @@ class SurveyResponsesController < ApplicationController
 		@theme = params.permit(:theme)[:theme]
 		@response = SurveyResponse.find(params[:id])
 		@total_responses = SurveyResponse.all.count
-		@themes_histogram = @response.themes.inject({}) { |acc, theme| acc[theme] = SurveyResponse.where("? = ANY (themes)", theme).count; acc }
-
-		if @theme
-			@previous_response = SurveyResponse.where("? = ANY (themes)", @theme).where("created_at < ?", @response.created_at).order("created_at DESC").limit(1).first
-			@next_response = SurveyResponse.where("? = ANY (themes)", @theme).where("created_at > ?", @response.created_at).order("created_at ASC").limit(1).first
-		else
-			@previous_response = SurveyResponse.where("created_at < ?", @response.created_at).order("created_at DESC").limit(1).first
-			@next_response = SurveyResponse.where("created_at > ?", @response.created_at).order("created_at ASC").limit(1).first
-		end
+		@previous_response = SurveyResponse.where("created_at < ?", @response.created_at).order("created_at DESC").limit(1).first
+		@next_response = SurveyResponse.where("created_at > ?", @response.created_at).order("created_at ASC").limit(1).first
+		@categories = Persona.find_or_initialize_by(survey_response_id: @response.id).categories.sort{ |a,b| "#{a.context}.#{a.name}" <=> "#{b.context}.#{b.name}" }
 	end
 	
 	def new
