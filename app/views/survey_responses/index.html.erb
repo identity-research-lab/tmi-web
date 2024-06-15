@@ -1,27 +1,13 @@
-<h1>
-	<%= pluralize @responses.size, "survey response" %><% if @theme %>related to "<%= @theme %>"<% end %>.
-</h1>
+<%- title "Responses" %>
 
-<% if @theme %>
-	<p>
-		Or, view <%= link_to "all survey responses", survey_responses_path %>.
-	</p>
-<% end %>
+<h1>
+	<%= pluralize @responses.size, "survey response" %>.
+</h1>
 
 <ol class="nodes">
 <% @responses.each do |r| %>
 	<li>
-		<% if @theme %>
-			<%= link_to r.identifier, survey_response_path(r, q: @theme) %>
-		<% else %>
-			<%= link_to r.identifier, r %>
-		<% end %>
+		<%= link_to r.identifier, r %>
 	</li>
 <% end %>
 </ol>
-
-<% if @theme %>
-	<p>
-		Or, view <%= link_to "all survey responses", survey_responses_path %>.
-	</p>
-<% end %>

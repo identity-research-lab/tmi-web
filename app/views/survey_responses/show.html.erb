@@ -1,28 +1,32 @@
+<%- title "Response #{@response.identifier}" %>
+
 <h1>Response <%= @response.identifier %>.</h1>
 
 <% if @previous_response %>
-	<%= link_to "<", survey_response_path(@previous_response, q: @theme), class: "flip", id: "flip-left" %>
+	<%= link_to "<", survey_response_path(@previous_response), class: "flip", id: "flip-left" %>
 <% end %>
 <% if @next_response %>
-	<%= link_to ">", survey_response_path(@next_response, q: @theme), class: "flip", id: "flip-right" %>
+	<%= link_to ">", survey_response_path(@next_response), class: "flip", id: "flip-right" %>
 <% end %>
 
-<h2>Derived themes:</h2>
+<h2>Derived categories of experiences:</h2>
 
-<ul class="word-cloud">
-	<% @themes_histogram.keys.sort{|a,b| @themes_histogram[a] <=> @themes_histogram[b]}.reverse.each do |theme| %>
-		<% font_size = ((@themes_histogram[theme] / @total_responses.to_f) * 60).to_i + 5 %>
-		<% active = theme == @theme ? "active" : "" %>
-		<% percentage = ((@themes_histogram[theme]  / @total_responses.to_f) * 100).to_i %>
-		
-		<li class="<%= active %>" style="font-size: <%= font_size %>px;"><%= link_to theme, survey_responses_path(theme: theme) %> (<%= percentage < 1 ? "<1" : percentage %>%)</li>
-	<% end %>
-</ul>
+<% if @categories.any? %>
+	<ul class="word-cloud">
+		<% @categories.each do |category| %>
+			<li><%= category.name %> | <%= link_to category.context, codebook_path("#{category.context}_exp"), class:"jump-link" %></li>
+		<% end %>
+	</ul>
+<% else %>
+	<p>No derived categories could be found. Have you generated them from the <%= link_to "codebook", codebooks_path %>?</p>
+<% end %>
 
-<h2>tmi-graph query:</h2>
+<h2>TMI-Graph query:</h2>
 <p class="code">
 	<a href="#query" id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @response.graph_query %></a>
 </p>
+
+<h2>Questions and responses:</h2>
 
 <%= form_with model: @response do |f| %>
 	<table>

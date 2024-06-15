@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_15_022256) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_15_184138) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -67,7 +67,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_15_022256) do
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "themes", default: [], array: true
     t.string "age_exp_codes", default: [], array: true
     t.string "klass_exp_codes", default: [], array: true
     t.string "race_ethnicity_exp_codes", default: [], array: true
