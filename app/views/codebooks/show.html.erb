@@ -14,13 +14,15 @@
 		Category derivation was started at <%= @enqueued_at %>. Please allow up to 2 minutes for the process to complete. You can reload the page to monitor progress. 
 	<% end %>
 	
-	<ul class="word-cloud">
-		<% @categories_histogram.keys.sort{|a,b| @categories_histogram[a] <=> @categories_histogram[b]}.reverse.each do |category| %>
-			<% font_size = ((@categories_histogram[category] / @total_codes.to_f) * 60).to_i + 5 %>
-			<% percentage = ((@categories_histogram[category]  / @total_codes.to_f) * 100).to_i %>
-			<li style="font-size: <%= font_size %>px;"><%= category %> (<%= percentage < 1 ? "<1" : percentage %>%)</li>
-		<% end %>
-	</ul>
+	<% if @total_codes.to_i > 0 %>
+		<ul class="word-cloud">
+			<% @categories_histogram.keys.sort{|a,b| @categories_histogram[a] <=> @categories_histogram[b]}.reverse.each do |category| %>
+				<% font_size = ((@categories_histogram[category] / @total_codes.to_f) * 60).to_i + 5 %>
+				<% percentage = ((@categories_histogram[category]  / @total_codes.to_f) * 100).to_i %>
+				<li style="font-size: <%= font_size %>px;"><%= category %> (<%= percentage < 1 ? "<1" : percentage %>%)</li>
+			<% end %>
+		</ul>
+	<% end %>
 	
 	<% unless @enqueued_at %>
 		<%= button_to "Derive Categories", codebook_enqueue_categories_path(@context, params: { enqueued: true }, method: :put ) %>

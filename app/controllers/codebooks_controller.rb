@@ -27,11 +27,11 @@ class CodebooksController < ApplicationController
 		if params[:id].split('_').last == "given"
 			@frequencies = Identity.histogram(@context.gsub("_given","").gsub("klass","class").gsub("_","/"))
 		else
-			@frequencies = Tag.histogram(@context.gsub("_exp","").gsub("klass","class").gsub("_","-"))
+			@frequencies = Code.histogram(@context.gsub("_exp","").gsub("klass","class").gsub("_","-"))
 		end
 
 		if @context.include?("_exp")		
-			@categories_histogram = Category.where(context: @context_key).inject({}) { |acc, category| acc[category.name] = category.tags.count; acc }
+			@categories_histogram = Category.where(context: @context_key).inject({}) { |acc, category| acc[category.name] = category.codes.count; acc }
 			@total_codes = @categories_histogram.values.sum
 		end
 		

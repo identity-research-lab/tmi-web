@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_08_200222) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_15_022256) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -68,28 +68,28 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_08_200222) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "themes", default: [], array: true
-    t.string "age_exp_tags", default: [], array: true
-    t.string "klass_exp_tags", default: [], array: true
-    t.string "race_ethnicity_exp_tags", default: [], array: true
-    t.string "religion_exp_tags", default: [], array: true
-    t.string "gender_exp_tags", default: [], array: true
-    t.string "disability_exp_tags", default: [], array: true
-    t.string "neurodiversity_exp_tags", default: [], array: true
-    t.string "lgbtqia_exp_tags", default: [], array: true
+    t.string "age_exp_codes", default: [], array: true
+    t.string "klass_exp_codes", default: [], array: true
+    t.string "race_ethnicity_exp_codes", default: [], array: true
+    t.string "religion_exp_codes", default: [], array: true
+    t.string "gender_exp_codes", default: [], array: true
+    t.string "disability_exp_codes", default: [], array: true
+    t.string "neurodiversity_exp_codes", default: [], array: true
+    t.string "lgbtqia_exp_codes", default: [], array: true
     t.string "response_id"
-    t.string "age_id_tags", default: [], array: true
-    t.string "klass_id_tags", default: [], array: true
-    t.string "race_ethnicity_id_tags", default: [], array: true
-    t.string "religion_id_tags", default: [], array: true
-    t.string "gender_id_tags", default: [], array: true
-    t.string "disability_id_tags", default: [], array: true
-    t.string "neurodiversity_id_tags", default: [], array: true
-    t.string "lgbtqia_id_tags", default: [], array: true
-    t.string "pronouns_id_tags", default: [], array: true
-    t.string "pronouns_exp_tags", default: [], array: true
-    t.string "pronouns_feel_tags", default: [], array: true
-    t.string "affinity_tags", default: [], array: true
-    t.string "notes_tags", default: [], array: true
+    t.string "age_id_codes", default: [], array: true
+    t.string "klass_id_codes", default: [], array: true
+    t.string "race_ethnicity_id_codes", default: [], array: true
+    t.string "religion_id_codes", default: [], array: true
+    t.string "gender_id_codes", default: [], array: true
+    t.string "disability_id_codes", default: [], array: true
+    t.string "neurodiversity_id_codes", default: [], array: true
+    t.string "lgbtqia_id_codes", default: [], array: true
+    t.string "pronouns_id_codes", default: [], array: true
+    t.string "pronouns_exp_codes", default: [], array: true
+    t.string "pronouns_feel_codes", default: [], array: true
+    t.string "affinity_codes", default: [], array: true
+    t.string "notes_codes", default: [], array: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
