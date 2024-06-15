@@ -12,4 +12,9 @@ class Persona
 	has_many :out, :codes, rel_class: :Experiences, dependent: :delete_orphans
 	has_many :out, :identities, rel_class: :IdentifiesWith, dependent: :delete_orphans
 	
-end 
+	
+	def categories
+		self.codes.map(&:categories).flatten.uniq
+	end
+	
+end
