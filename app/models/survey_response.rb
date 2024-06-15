@@ -56,6 +56,7 @@ class SurveyResponse < ApplicationRecord
 		ExportToGraphJob.perform_async(self.id)
 	end
 
+	# TODO this should be Persona.from(survey_response_id)
 	def to_graph
 
 		if persona_to_flush = Persona.find_by(survey_response_id: id)

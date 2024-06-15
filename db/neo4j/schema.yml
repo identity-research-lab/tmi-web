@@ -20,6 +20,8 @@
   UNIQUE OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `constraint_6beeaf37` FOR (n:`Code`) REQUIRE (n.`uuid`) IS UNIQUE
   OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
+- 'CREATE CONSTRAINT `constraint_6e98d5ab` FOR (n:`Keyword`) REQUIRE (n.`uuid`) IS
+  UNIQUE OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `constraint_b3f651ab` FOR (n:`Tag`) REQUIRE (n.`uuid`) IS UNIQUE
   OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `constraint_dbcee0a4` FOR (n:`ActiveGraph::Migrations::SchemaMigration`)
@@ -34,3 +36,4 @@
 - '20240522013044'
 - '20240607210627'
 - '20240615023034'
+- '20240615212620'

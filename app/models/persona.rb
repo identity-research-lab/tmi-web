@@ -11,6 +11,7 @@ class Persona
 	has_many :out, :themes, rel_class: :RelatesTo, dependent: :delete_orphans
 	has_many :out, :codes, rel_class: :Experiences, dependent: :delete_orphans
 	has_many :out, :identities, rel_class: :IdentifiesWith, dependent: :delete_orphans
+	has_many :out, :keywords, rel_class: :DescribesWith, dependent: :delete_orphans
 	
 	
 	def categories
