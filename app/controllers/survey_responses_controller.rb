@@ -24,7 +24,10 @@ class SurveyResponsesController < ApplicationController
 		@total_responses = SurveyResponse.all.count
 		@previous_response = SurveyResponse.where("created_at < ?", @response.created_at).order("created_at DESC").limit(1).first
 		@next_response = SurveyResponse.where("created_at > ?", @response.created_at).order("created_at ASC").limit(1).first
-		@categories = Persona.find_or_initialize_by(survey_response_id: @response.id).categories.sort{ |a,b| "#{a.context}.#{a.name}" <=> "#{b.context}.#{b.name}" }
+		
+		persona = Persona.find_or_initialize_by(survey_response_id: @response.id)
+		@categories = persona.categories.sort{ |a,b| "#{a.context}.#{a.name}" <=> "#{b.context}.#{b.name}" }
+		@keywords = persona.keywords.sort{ |a,b| a.name <=> b.name }
 	end
 	
 	def new
