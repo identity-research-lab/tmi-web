@@ -52,7 +52,7 @@ class SurveyResponsesController < ApplicationController
 	private
 
 		def response_params
-			params.require(:survey_response).permit(themes: [], age_exp_tags: [], klass_exp_tags: [], race_ethnicity_exp_tags: [], religion_exp_tags: [], disability_exp_tags: [], neurodiversity_exp_tags: [], gender_exp_tags: [], lgbtqia_exp_tags: [], age_id_tags: [], klass_id_tags: [], race_ethnicity_id_tags: [], religion_id_tags: [], disability_id_tags: [], neurodiversity_id_tags: [], gender_id_tags: [], lgbtqia_id_tags: [], pronouns_id_tags: [], pronouns_exp_tags: [], pronouns_feel_tags: [], affinity_tags: [], notes_tags: [])
+			params.require(:survey_response).permit(themes: [], age_exp_codes: [], klass_exp_codes: [], race_ethnicity_exp_codes: [], religion_exp_codes: [], disability_exp_codes: [], neurodiversity_exp_codes: [], gender_exp_codes: [], lgbtqia_exp_codes: [], age_id_codes: [], klass_id_codes: [], race_ethnicity_id_codes: [], religion_id_codes: [], disability_id_codes: [], neurodiversity_id_codes: [], gender_id_codes: [], lgbtqia_id_codes: [], pronouns_id_codes: [], pronouns_exp_codes: [], pronouns_feel_codes: [], affinity_codes: [], notes_codes: [])
 		end
 
 end

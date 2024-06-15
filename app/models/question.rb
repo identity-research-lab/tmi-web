@@ -40,8 +40,8 @@ class Question
     self.value.gsub("class","klass").gsub("id","given")  
   end
   
-  def tags_field
-    "#{self.key}_tags".gsub("given","id")
+  def codes_field
+    "#{self.key}_codes".gsub("given","id")
   end
   
   def humanize

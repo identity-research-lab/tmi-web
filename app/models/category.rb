@@ -8,7 +8,7 @@ class Category
 	validates :name, presence: true
 	validates :context, presence: true
 
-	has_many :out, :tags, rel_class: :CategorizesAs
+	has_many :out, :codes, rel_class: :CategorizedAs, dependent: :delete_orphans
 
 	PROMPT_INITIALIZE = %{ 
 		You are a social researcher doing data analysis. Please generate a list of the 20 most relevant themes from the following list of codes. The themes should be all lowercase and contain no punctuation. Codes should be stripped of quotation marks. Return each code with an array of its categories in JSON format. Use this JSON as the format:
@@ -30,14 +30,14 @@ class Category
 	end
 
 	def self.from_context(context)
-		tags = Tag.where(context: context)
+		codes = Code.where(context: context)
 		client = OpenAI::Client.new
 	
 		response = client.chat(
 			parameters: {
 				model: "gpt-4o",
 				response_format: { type: "json_object" },
-				messages: [{ role: "user", content: "#{PROMPT_INITIALIZE} #{tags.map(&:name).join(",")}" }],
+				messages: [{ role: "user", content: "#{PROMPT_INITIALIZE} #{codes.map(&:name).join(",")}" }],
 				temperature: 0.7,
 			}
 		)	
@@ -49,7 +49,7 @@ class Category
 		data.each do |record|
 			category = Category.find_or_create_by(name: record['theme'], context: context)
 			record['codes'].each do |v|
-				tags.select{ |tag| record['codes'].include? tag.name }.each{ |tag| CategorizesAs.create(from_node: category, to_node: tag )}
+				codes.select{ |code| record['codes'].include? code.name }.each{ |code| CategorizedAs.create(from_node: category, to_node: code )}
 			end
 		end
 

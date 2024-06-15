@@ -93,103 +93,103 @@ class SurveyResponse < ApplicationRecord
 			RelatesTo.create(from_node: persona, to_node: t)
 		end
 
-		age_exp_tags.each do |exp_tag| 
-			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "age")
-			Experiences.create(from_node: persona, to_node: tag)
+		age_exp_codes.each do |exp_code| 
+			code = Code.find_or_create_by(name: exp_code.strip, context: "age")
+			Experiences.create(from_node: persona, to_node: code)
 		end
 
-		klass_exp_tags.each do |exp_tag| 
-			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "class")
-			Experiences.create(from_node: persona, to_node: tag)
+		klass_exp_codes.each do |exp_code| 
+			code = Code.find_or_create_by(name: exp_code.strip, context: "class")
+			Experiences.create(from_node: persona, to_node: code)
 		end
-		race_ethnicity_exp_tags.each do |exp_tag| 
-			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "race-ethnicity")
-			Experiences.create(from_node: persona, to_node: tag)
+		race_ethnicity_exp_codes.each do |exp_code| 
+			code = Code.find_or_create_by(name: exp_code.strip, context: "race-ethnicity")
+			Experiences.create(from_node: persona, to_node: code)
 		end
-		religion_exp_tags.each do |exp_tag| 
-			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "religion")
-			Experiences.create(from_node: persona, to_node: tag)
+		religion_exp_codes.each do |exp_code| 
+			code = Code.find_or_create_by(name: exp_code.strip, context: "religion")
+			Experiences.create(from_node: persona, to_node: code)
 		end
-		disability_exp_tags.each do |exp_tag| 
-			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "disability")
-			Experiences.create(from_node: persona, to_node: tag)
+		disability_exp_codes.each do |exp_code| 
+			code = Code.find_or_create_by(name: exp_code.strip, context: "disability")
+			Experiences.create(from_node: persona, to_node: code)
 		end
-		neurodiversity_exp_tags.each do |exp_tag| 
-			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "neurodiversity")
-			Experiences.create(from_node: persona, to_node: tag)
+		neurodiversity_exp_codes.each do |exp_code| 
+			code = Code.find_or_create_by(name: exp_code.strip, context: "neurodiversity")
+			Experiences.create(from_node: persona, to_node: code)
 		end
-		gender_exp_tags.each do |exp_tag| 
-			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "gender")
-			Experiences.create(from_node: persona, to_node: tag)
+		gender_exp_codes.each do |exp_code| 
+			code = Code.find_or_create_by(name: exp_code.strip, context: "gender")
+			Experiences.create(from_node: persona, to_node: code)
 		
 		end
-		lgbtqia_exp_tags.each do |exp_tag| 
-			tag = Tag.find_or_create_by(name: exp_tag.strip, context: "lgbtqia")
-			Experiences.create(from_node: persona, to_node: tag)
+		lgbtqia_exp_codes.each do |exp_code| 
+			code = Code.find_or_create_by(name: exp_code.strip, context: "lgbtqia")
+			Experiences.create(from_node: persona, to_node: code)
 		end
 		
-		pronouns_exp_tags.each do |exp_tag|
-			tag = Tag.find_or_create_by(name: exp_tag, context: "pronouns")
-			Experiences.create(from_node: persona, to_node: tag)
+		pronouns_exp_codes.each do |exp_code|
+			code = Code.find_or_create_by(name: exp_code, context: "pronouns")
+			Experiences.create(from_node: persona, to_node: code)
 		end
 		
-		pronouns_feel_tags.each do |exp_tag|
-			tag = Tag.find_or_create_by(name: exp_tag, context: "pronouns-feel")
-			Experiences.create(from_node: persona, to_node: tag)
+		pronouns_feel_codes.each do |exp_code|
+			code = Code.find_or_create_by(name: exp_code, context: "pronouns-feel")
+			Experiences.create(from_node: persona, to_node: code)
 		end
 		
-		affinity_tags.each do |exp_tag|
-			tag = Tag.find_or_create_by(name: exp_tag, context: "affinity")
-			Experiences.create(from_node: persona, to_node: tag)
+		affinity_codes.each do |exp_code|
+			code = Code.find_or_create_by(name: exp_code, context: "affinity")
+			Experiences.create(from_node: persona, to_node: code)
 		end
 		
-		notes_tags.each do |exp_tag|
-			tag = Tag.find_or_create_by(name: exp_tag, context: "notes")
-			Experiences.create(from_node: persona, to_node: tag)
+		notes_codes.each do |exp_code|
+			code = Code.find_or_create_by(name: exp_code, context: "notes")
+			Experiences.create(from_node: persona, to_node: code)
 		end
 
-		age_id_tags.each do |id_tag| 
-			identity = Identity.find_or_create_by(name: id_tag, context: "age")
+		age_id_codes.each do |id_code| 
+			identity = Identity.find_or_create_by(name: id_code, context: "age")
 			IdentifiesWith.create(from_node: persona, to_node: identity)
 		end
 		
-		klass_id_tags.each do |id_tag| 
-			identity = Identity.find_or_create_by(name: id_tag, context: "class")
+		klass_id_codes.each do |id_code| 
+			identity = Identity.find_or_create_by(name: id_code, context: "class")
 			IdentifiesWith.create(from_node: persona, to_node: identity)
 		end
 		
-		race_ethnicity_id_tags.each do |id_tag| 
-			identity = Identity.find_or_create_by(name: id_tag, context: "race/ethnicity")
+		race_ethnicity_id_codes.each do |id_code| 
+			identity = Identity.find_or_create_by(name: id_code, context: "race/ethnicity")
 			IdentifiesWith.create(from_node: persona, to_node: identity)
 		end
 		
-		religion_id_tags.each do |id_tag| 
-			identity = Identity.find_or_create_by(name: id_tag, context: "religion")
+		religion_id_codes.each do |id_code| 
+			identity = Identity.find_or_create_by(name: id_code, context: "religion")
 			IdentifiesWith.create(from_node: persona, to_node: identity)
 		end
 		
-		gender_id_tags.each do |id_tag| 
-			identity = Identity.find_or_create_by(name: id_tag, context: "gender")
+		gender_id_codes.each do |id_code| 
+			identity = Identity.find_or_create_by(name: id_code, context: "gender")
 			IdentifiesWith.create(from_node: persona, to_node: identity)
 		end
 		
-		disability_id_tags.each do |id_tag| 
-			identity = Identity.find_or_create_by(name: id_tag, context: "disability")
+		disability_id_codes.each do |id_code| 
+			identity = Identity.find_or_create_by(name: id_code, context: "disability")
 			IdentifiesWith.create(from_node: persona, to_node: identity)
 		end
 		
-		neurodiversity_id_tags.each do |id_tag| 
-			identity = Identity.find_or_create_by(name: id_tag, context: "neurodiversity")
+		neurodiversity_id_codes.each do |id_code| 
+			identity = Identity.find_or_create_by(name: id_code, context: "neurodiversity")
 			IdentifiesWith.create(from_node: persona, to_node: identity)
 		end
 		
-		lgbtqia_id_tags.each do |id_tag| 
-			identity = Identity.find_or_create_by(name: id_tag, context: "lgbtqia")
+		lgbtqia_id_codes.each do |id_code| 
+			identity = Identity.find_or_create_by(name: id_code, context: "lgbtqia")
 			IdentifiesWith.create(from_node: persona, to_node: identity)
 		end
 
-		pronouns_id_tags.each do |id_tag|
-			identity = Identity.find_or_create_by(name: id_tag, context: "pronouns")
+		pronouns_id_codes.each do |id_code|
+			identity = Identity.find_or_create_by(name: id_code, context: "pronouns")
 			IdentifiesWith.create(from_node: persona, to_node: identity)
 		end
 		
@@ -221,26 +221,26 @@ class SurveyResponse < ApplicationRecord
 	def sanitize_array_values	
 		self.themes = themes.flatten.join(", ").split(", ").map(&:strip)
 
-		self.age_exp_tags = age_exp_tags.join(", ").split(", ").map(&:strip)
-		self.klass_exp_tags = klass_exp_tags.join(", ").split(", ").map(&:strip)
-		self.race_ethnicity_exp_tags = race_ethnicity_exp_tags.join(", ").split(", ").map(&:strip)
-		self.religion_exp_tags = religion_exp_tags.join(", ").split(", ").map(&:strip)
-		self.disability_exp_tags = disability_exp_tags.join(", ").split(", ").map(&:strip)
-		self.neurodiversity_exp_tags = neurodiversity_exp_tags.join(", ").split(", ").map(&:strip)
-		self.gender_exp_tags = gender_exp_tags.join(", ").split(", ").map(&:strip)
-		self.lgbtqia_exp_tags = lgbtqia_exp_tags.join(", ").split(", ").map(&:strip)
-		self.pronouns_exp_tags =  pronouns_exp_tags.join(", ").split(", ").map(&:strip)
-		self.pronouns_feel_tags =  pronouns_feel_tags.join(", ").split(", ").map(&:strip)
+		self.age_exp_codes = age_exp_codes.join(", ").split(", ").map(&:strip)
+		self.klass_exp_codes = klass_exp_codes.join(", ").split(", ").map(&:strip)
+		self.race_ethnicity_exp_codes = race_ethnicity_exp_codes.join(", ").split(", ").map(&:strip)
+		self.religion_exp_codes = religion_exp_codes.join(", ").split(", ").map(&:strip)
+		self.disability_exp_codes = disability_exp_codes.join(", ").split(", ").map(&:strip)
+		self.neurodiversity_exp_codes = neurodiversity_exp_codes.join(", ").split(", ").map(&:strip)
+		self.gender_exp_codes = gender_exp_codes.join(", ").split(", ").map(&:strip)
+		self.lgbtqia_exp_codes = lgbtqia_exp_codes.join(", ").split(", ").map(&:strip)
+		self.pronouns_exp_codes =  pronouns_exp_codes.join(", ").split(", ").map(&:strip)
+		self.pronouns_feel_codes =  pronouns_feel_codes.join(", ").split(", ").map(&:strip)
 
-		self.pronouns_id_tags = pronouns_id_tags.join(", ").split(", ").map(&:strip)
-		self.age_id_tags = age_id_tags.join(", ").split(", ").map(&:strip)
-		self.klass_id_tags = klass_id_tags.join(", ").split(", ").map(&:strip)
-		self.race_ethnicity_id_tags = race_ethnicity_id_tags.join(", ").split(", ").map(&:strip)
-		self.religion_id_tags = religion_id_tags.join(", ").split(", ").map(&:strip)
-		self.disability_id_tags = disability_id_tags.join(", ").split(", ").map(&:strip)
-		self.neurodiversity_id_tags = neurodiversity_id_tags.join(", ").split(", ").map(&:strip)
-		self.gender_id_tags = gender_id_tags.join(", ").split(", ").map(&:strip)
-		self.lgbtqia_id_tags = lgbtqia_id_tags.join(", ").split(", ").map(&:strip)
+		self.pronouns_id_codes = pronouns_id_codes.join(", ").split(", ").map(&:strip)
+		self.age_id_codes = age_id_codes.join(", ").split(", ").map(&:strip)
+		self.klass_id_codes = klass_id_codes.join(", ").split(", ").map(&:strip)
+		self.race_ethnicity_id_codes = race_ethnicity_id_codes.join(", ").split(", ").map(&:strip)
+		self.religion_id_codes = religion_id_codes.join(", ").split(", ").map(&:strip)
+		self.disability_id_codes = disability_id_codes.join(", ").split(", ").map(&:strip)
+		self.neurodiversity_id_codes = neurodiversity_id_codes.join(", ").split(", ").map(&:strip)
+		self.gender_id_codes = gender_id_codes.join(", ").split(", ").map(&:strip)
+		self.lgbtqia_id_codes = lgbtqia_id_codes.join(", ").split(", ").map(&:strip)
 	end
 
 

@@ -1,7 +1,7 @@
 class Codebook
   
   def self.category_query(context)
-    "MATCH (c:Category)-[:CATEGORIZES_AS]-(t:Tag) WHERE c.context=\"#{context}\" RETURN c,t"  
+    "MATCH (cat:Category)-[:CATEGORIZES_AS]-(c:Code) WHERE cat.context=\"#{context}\" RETURN cat,c"  
   end
 
   def self.category_query_explainer(context)
