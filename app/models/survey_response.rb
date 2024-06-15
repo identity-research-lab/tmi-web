@@ -54,8 +54,10 @@ class SurveyResponse < ApplicationRecord
 	
 	def enqueue_export_to_graph
 		ExportToGraphJob.perform_async(self.id)
+		KeywordExtractorJob.perform_async(self.id)
 	end
 
+	# TODO this should be Persona.from(survey_response_id)
 	def to_graph
 
 		if persona_to_flush = Persona.find_by(survey_response_id: id)

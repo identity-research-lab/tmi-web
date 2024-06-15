@@ -30,6 +30,18 @@ class Question
     new(key: key, value: QUESTIONS[key.to_sym])
   end
 
+  def self.experience_questions
+    QUESTIONS.keys.select{|k| k.to_s.include?("_exp")}
+  end
+
+  def self.identity_questions
+    QUESTIONS.keys.select{|k| k.to_s.include?("_given")}
+  end
+  
+  def self.freeform_questions
+    [:pronouns_feel, :affinity, :notes]
+  end
+  
   def initialize(attrs={})
     self.key = attrs[:key]
     self.value = attrs[:value]
