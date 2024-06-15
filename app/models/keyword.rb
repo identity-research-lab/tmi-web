@@ -1,16 +1,14 @@
 class Keyword
 
-	# Keywords are the nouns that are present in an "experiences" response. 
-	# They are extracted from a 'corpus' consisting of the exact text of the response
+	# Keywords are the nouns that are present in the "reflective" or freeform responses. 
+	# They are extracted from a 'corpus' consisting of the exact text of these responses.
 	# The extraction is performed using AI assistance.
 
 	include ActiveGraph::Node
 	
 	property :name
-	property :context
 	
 	validates :name, presence: true
-	validates :context, presence: true
 
 	has_many :in, :personas, rel_class: :DescribesWith, dependent: :delete_orphans
 
@@ -18,15 +16,11 @@ class Keyword
 		Given a text, extract just the nouns and return them using this JSON example as the format:
 		
 		{ 
-			"nouns" : ["foo", "bar", "baz", "bat]
+			"words" : ["foo", "bar", "baz", "bat]
 		}
 		
 		The text is as follows: 
 	}
-
-	def self.enqueue_keyword_extractor_job(survey_response_id)
-		KeywordExtractorJob.perform_async(survey_response_id)
-	end
 
 	def self.from(survey_response_id)
 		survey_response = SurveyResponse.find(survey_response_id)
@@ -34,7 +28,7 @@ class Keyword
 		
 		client = OpenAI::Client.new
 
-		questions = Question.experience_questions + Question.freeform_questions
+		questions = Question.freeform_questions
 		
 		questions.each do |question|
 			
@@ -49,11 +43,12 @@ class Keyword
 				}
 			)	
 	
-			data = JSON.parse(response.dig("choices", 0, "message", "content"))['nouns']
+			data = JSON.parse(response.dig("choices", 0, "message", "content"))['words']
 	
-			data.each do |noun|
-				keyword = Keyword.find_or_create_by(name: noun, context: question)
-				DescribesWith.create(from_node: persona, to_node: keyword )
+			data.compact.uniq.each do |word|
+				if keyword = Keyword.find_or_create_by(name: word.downcase)
+					DescribesWith.create(from_node: persona, to_node: keyword )
+				end
 			end
 
 		end
