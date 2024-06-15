@@ -19,7 +19,7 @@ class SurveyResponse < ApplicationRecord
 	
 	def self.create_from_record(record)
 
-		sr = SurveyResponse.find_or_create_by(response_id: record['ResponseId'])
+		sr = SurveyResponse.find_or_initialize_by(response_id: record['ResponseId'])
 
 		pronouns_given = record['pronouns_given'] == "self-describe" ? "#{record['pronouns_given_5_TEXT']} (self-described)" : record['pronouns_given']
 		
@@ -46,7 +46,6 @@ class SurveyResponse < ApplicationRecord
 			affinity: record['affinity'],
 			notes: record['notes']
 		)
-		sr.save
 	end
 
 	def identifier
@@ -181,11 +180,10 @@ class SurveyResponse < ApplicationRecord
 	end
 
 	def graph_query
-		"MATCH (p:Persona)-[]-(t) WHERE p.permalink=\"#{permalink}\" RETURN p,t"  
-	end
-
-	def corpus
-		[self.age_exp, self.klass_exp, self.race_ethnicity_exp, self.religion_exp, self.disability_exp, self.neurodiversity_exp, self.gender_exp, self.lgbtqia_exp].join(' ')
+		{ 
+			explainer: "// Return the persona (and all of its relations) that corresponds to this survey response.",
+			query: "MATCH (p:Persona)-[]-(n) WHERE p.permalink=\"#{permalink}\" RETURN p,n"
+		}
 	end
 				
 	def complete_enough?

@@ -32,8 +32,8 @@
 	
 	<h2>tmi-graph query:</h2>
 	<p class="code">
-		<%= Codebook.category_query_explainer(@context_key) %><br />
-		<a href="#query" id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= Codebook.category_query(@context_key) %></a>
+		<%= Codebook.category_query(@context_key)[:explainer] %><br />
+		<a href="#query" id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= Codebook.category_query(@context_key)[:query] %></a>
 	</p>
 
 <% else %>
