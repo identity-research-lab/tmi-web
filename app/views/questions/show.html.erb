@@ -1,10 +1,10 @@
-<%- title "Responses to #{@question.humanize} Question" %>
+<%- title "Responses to #{@question.label} Question" %>
 
-<h1><%= @responses.count %> Responses to "<%= @question.humanize %>".</h1>
+<h1><%= @responses.count %> Responses to "<%= @question.label %>".</h1>
 
 <h2>Reference</h3>
 	<ul class="word-cloud">
-		<li><%= link_to "Codes for #{@question.humanize}", codebook_path(@question.key), class: "jump-link" %></li>
+		<li><%= link_to "Codes for #{@question.label}", codebook_path(@question.key), class: "jump-link" %></li>
 	</ul>
 
 <table>

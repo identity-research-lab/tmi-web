@@ -47,4 +47,8 @@ class Category
 
 	end
 
+	def self.histogram(context)
+		where(context: context).inject({}) { |acc, category| acc[category.name] = category.codes.count; acc }
+	end
+	
 end 

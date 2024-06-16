@@ -31,7 +31,7 @@ class CodebooksController < ApplicationController
 		end
 
 		if @context.include?("_exp")		
-			@categories_histogram = Category.where(context: @context_key).inject({}) { |acc, category| acc[category.name] = category.codes.count; acc }
+			@categories_histogram = Category.histogram(@context_key)
 			@total_codes = @categories_histogram.values.sum
 		end
 		
