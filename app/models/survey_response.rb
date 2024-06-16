@@ -21,7 +21,6 @@ class SurveyResponse < ApplicationRecord
 	
 	def self.from(record)
 		pronouns_given = record['pronouns_given'] == "self-describe" ? "#{record['pronouns_given_5_TEXT']} (self-described)" : record['pronouns_given']
-			
 		survey_response = SurveyResponse.find_or_initialize_by(response_id: record['ResponseId'])
 		survey_response.update(
 			age_given: record['age_given'],
