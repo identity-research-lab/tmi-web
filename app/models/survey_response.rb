@@ -8,22 +8,22 @@ class SurveyResponse < ApplicationRecord
 	
 	validates_presence_of :response_id
 	validates_uniqueness_of :response_id
+
+	REQUIRED_FIELDS = [:age_given]	
 	
 	def self.import(file_handle)
 		CSV.read(file_handle, headers: true).each do |record|
 			next unless record['Progress'].to_i.to_s == record['Progress']
-			next unless record['age_given'].present?
+			next unless REQUIRED_FIELDS.select{ |field| record[field.to_s].present? }.any?
 			create_from_record(record)
 		end
 	end
 	
 	def self.create_from_record(record)
-
-		sr = SurveyResponse.find_or_initialize_by(response_id: record['ResponseId'])
-
 		pronouns_given = record['pronouns_given'] == "self-describe" ? "#{record['pronouns_given_5_TEXT']} (self-described)" : record['pronouns_given']
-		
-		sr.update(
+			
+		survey_response = SurveyResponse.find_or_initialize_by(response_id: record['ResponseId'])
+		survey_response.update(
 			age_given: record['age_given'],
 			age_exp: record['age_exp'],
 			klass_given: record['klass_given'],
@@ -57,120 +57,18 @@ class SurveyResponse < ApplicationRecord
 		KeywordExtractorJob.perform_async(self.id)
 	end
 
-	# TODO this should be Persona.from(survey_response_id)
-	def to_graph
-
-		if persona_to_flush = Persona.find_by(survey_response_id: id)
-			persona_to_flush.destroy
-		end
-		
-		persona = Persona.find_or_create_by(
+	def persona
+		@persona ||= Persona.find_or_create_by(
 			name: "Persona #{identifier}", 
 			survey_response_id: id,
 			permalink: permalink
 		)
-		
-		age_exp_codes.each do |exp_code| 
-			code = Code.find_or_create_by(name: exp_code.strip, context: "age")
-			Experiences.create(from_node: persona, to_node: code)
-		end
-
-		klass_exp_codes.each do |exp_code| 
-			code = Code.find_or_create_by(name: exp_code.strip, context: "class")
-			Experiences.create(from_node: persona, to_node: code)
-		end
-		race_ethnicity_exp_codes.each do |exp_code| 
-			code = Code.find_or_create_by(name: exp_code.strip, context: "race-ethnicity")
-			Experiences.create(from_node: persona, to_node: code)
-		end
-		religion_exp_codes.each do |exp_code| 
-			code = Code.find_or_create_by(name: exp_code.strip, context: "religion")
-			Experiences.create(from_node: persona, to_node: code)
-		end
-		disability_exp_codes.each do |exp_code| 
-			code = Code.find_or_create_by(name: exp_code.strip, context: "disability")
-			Experiences.create(from_node: persona, to_node: code)
-		end
-		neurodiversity_exp_codes.each do |exp_code| 
-			code = Code.find_or_create_by(name: exp_code.strip, context: "neurodiversity")
-			Experiences.create(from_node: persona, to_node: code)
-		end
-		gender_exp_codes.each do |exp_code| 
-			code = Code.find_or_create_by(name: exp_code.strip, context: "gender")
-			Experiences.create(from_node: persona, to_node: code)
-		
-		end
-		lgbtqia_exp_codes.each do |exp_code| 
-			code = Code.find_or_create_by(name: exp_code.strip, context: "lgbtqia")
-			Experiences.create(from_node: persona, to_node: code)
-		end
-		
-		pronouns_exp_codes.each do |exp_code|
-			code = Code.find_or_create_by(name: exp_code, context: "pronouns")
-			Experiences.create(from_node: persona, to_node: code)
-		end
-		
-		pronouns_feel_codes.each do |exp_code|
-			code = Code.find_or_create_by(name: exp_code, context: "pronouns-feel")
-			Experiences.create(from_node: persona, to_node: code)
-		end
-		
-		affinity_codes.each do |exp_code|
-			code = Code.find_or_create_by(name: exp_code, context: "affinity")
-			Experiences.create(from_node: persona, to_node: code)
-		end
-		
-		notes_codes.each do |exp_code|
-			code = Code.find_or_create_by(name: exp_code, context: "notes")
-			Experiences.create(from_node: persona, to_node: code)
-		end
-
-		age_id_codes.each do |id_code| 
-			identity = Identity.find_or_create_by(name: id_code, context: "age")
-			IdentifiesWith.create(from_node: persona, to_node: identity)
-		end
-		
-		klass_id_codes.each do |id_code| 
-			identity = Identity.find_or_create_by(name: id_code, context: "class")
-			IdentifiesWith.create(from_node: persona, to_node: identity)
-		end
-		
-		race_ethnicity_id_codes.each do |id_code| 
-			identity = Identity.find_or_create_by(name: id_code, context: "race/ethnicity")
-			IdentifiesWith.create(from_node: persona, to_node: identity)
-		end
-		
-		religion_id_codes.each do |id_code| 
-			identity = Identity.find_or_create_by(name: id_code, context: "religion")
-			IdentifiesWith.create(from_node: persona, to_node: identity)
-		end
-		
-		gender_id_codes.each do |id_code| 
-			identity = Identity.find_or_create_by(name: id_code, context: "gender")
-			IdentifiesWith.create(from_node: persona, to_node: identity)
-		end
-		
-		disability_id_codes.each do |id_code| 
-			identity = Identity.find_or_create_by(name: id_code, context: "disability")
-			IdentifiesWith.create(from_node: persona, to_node: identity)
-		end
-		
-		neurodiversity_id_codes.each do |id_code| 
-			identity = Identity.find_or_create_by(name: id_code, context: "neurodiversity")
-			IdentifiesWith.create(from_node: persona, to_node: identity)
-		end
-		
-		lgbtqia_id_codes.each do |id_code| 
-			identity = Identity.find_or_create_by(name: id_code, context: "lgbtqia")
-			IdentifiesWith.create(from_node: persona, to_node: identity)
-		end
-
-		pronouns_id_codes.each do |id_code|
-			identity = Identity.find_or_create_by(name: id_code, context: "pronouns")
-			IdentifiesWith.create(from_node: persona, to_node: identity)
-		end
-		
-		
+	end
+	
+	def to_graph
+		Persona.find_or_initialize_by(survey_response_id: id).destroy
+		populate_experience_codes
+		populate_id_codes
 	end
 	
 	def permalink
@@ -188,12 +86,54 @@ class SurveyResponse < ApplicationRecord
 		}
 	end
 				
+	private
+	
 	def complete_enough?
 		[self.age_given, self.klass_given, self.race_ethnicity_given, self.religion_given, self.disability_given, self.neurodiversity_given, self.gender_given, self.lgbtqia_given].reject(&:nil?).size > 0
 	end
 	
-	private
+	def populate_experience_codes
+		{
+			"age" => age_exp_codes,
+			"class" => klass_exp_codes,
+			"race-ethnicity" => race_ethnicity_exp_codes,
+			"religion" => religion_exp_codes,
+			"disability" => disability_exp_codes,
+			"neurodiversity" => neurodiversity_exp_codes,
+			"gender" => gender_exp_codes,
+			"lgbtqia" => lgbtqia_exp_codes,
+			"pronouns" => pronouns_exp_codes,
+			"pronouns-feel" => pronouns_feel_codes,
+			"affinity" => affinity_codes,
+			"notes" => notes_codes
+		}.each do |context, codes|
+			codes.each do |name|
+		 		code = Code.find_or_create_by(name: name, context: context)
+				Experiences.create(from_node: persona, to_node: code)
+			end
+		end
 	
+	end
+
+	def populate_id_codes
+		{
+			"age" => age_id_codes,
+			"class" => klass_id_codes,
+			"race-ethnicity" => race_ethnicity_id_codes,
+			"religion" => religion_id_codes,
+			"disability" => disability_id_codes,
+			"neurodiversity" => neurodiversity_id_codes,
+			"gender" => gender_id_codes,
+			"lgbtqia" => lgbtqia_id_codes,
+			"pronouns" => pronouns_id_codes
+		}.each do |context, codes|
+			codes.each do |name|
+				identity = Identity.find_or_create_by(name: name, context: context)
+				IdentifiesWith.create(from_node: persona, to_node: identity)
+			end
+		end
+	end
+
 	def sanitize_array_values	
 		self.age_exp_codes = age_exp_codes.join(", ").split(", ").map(&:strip)
 		self.klass_exp_codes = klass_exp_codes.join(", ").split(", ").map(&:strip)

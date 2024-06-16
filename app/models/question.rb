@@ -1,6 +1,6 @@
 class Question
 
-  attr_accessor :key, :value
+  attr_accessor :key, :label
   
   QUESTIONS = {
     age_given: "Age",
