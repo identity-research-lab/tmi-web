@@ -25,6 +25,14 @@ jobs:
     env:
       RAILS_ENV: test
       DATABASE_URL: "postgres://rails:password@localhost:5432/rails_test"
+      OPENAI_ACCESS_TOKEN: "123456789"
+      GENERAL_ADMISSION_USERNAME: "foo"
+      GENERAL_ADMISSION_PASSWORD: "bar"
+      NEO4J_URI: neo4j://127.0.0.1:7687/neo4j
+      NEO4J_USERNAME: neo4j
+      NEO4J_PASSWORD: password
+      REDIS_URL: redis://localhost:6379
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
