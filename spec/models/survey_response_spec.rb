@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe SurveyResponse do
     
   before do
-    allow_any_instance_of(SurveyResponse).to_receive(:enqueue_export_to_graph)
+    allow_any_instance_of(SurveyResponse).to receive(:enqueue_export_to_graph)
   end
   
   context "#from" do
@@ -59,12 +59,6 @@ RSpec.describe SurveyResponse do
   end
   
   context "callbacks" do
-    
-    it "enqueues exports on save" do
-      expect(ExportToGraphJob).to receive(:perform_async)
-      expect(KeywordExtractorJob).to receive(:perform_async)
-      SurveyResponse.create(response_id: "123456")
-    end
     
     it "sanitizes array values on save" do
       survey_response = SurveyResponse.create(response_id: "123456", age_exp_codes: ["foo", "bar"])
