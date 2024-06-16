@@ -29,7 +29,7 @@ class Category
 		CategoryExtractorJob.perform_async(context)
 	end
 
-	def self.from_context(context)
+	def self.from(context)
 		codes = Code.where(context: context)
 		client = OpenAI::Client.new
 	
