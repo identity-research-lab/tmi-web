@@ -22,13 +22,12 @@ class Keyword
 	}
 
 	def self.from(survey_response_id)
-		survey_response = SurveyResponse.find(survey_response_id)
-		persona = Persona.find_by(survey_response_id: survey_response_id)
-		corpus = survey_response.notes
+		return unless survey_response = SurveyResponse.find(survey_response_id)
+		return unless persona = Persona.find_by(survey_response_id: survey_response_id)
 
-		response = Clients::OpenAi.request("#{PROMPT} #{corpus}")
-		response['words'].compact.uniq.each do |word|
-			if keyword = Keyword.find_or_create_by(name: word.downcase)
+		response = Clients::OpenAi.request("#{PROMPT} #{survey_response.notes}")
+		response['words'].compact.map(&:downcase).uniq.each do |word|
+			if keyword = Keyword.find_or_create_by(name: word)
 				ReflectsOn.create(from_node: persona, to_node: keyword )
 			end
 		end
