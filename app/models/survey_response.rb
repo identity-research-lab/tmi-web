@@ -14,12 +14,12 @@ class SurveyResponse < ApplicationRecord
 	def self.import(file_handle)
 		CSV.read(file_handle, headers: true).each do |record|
 			next unless record['Progress'].to_i.to_s == record['Progress']
-			next unless REQUIRED_FIELDS.select{ |field| record[field.to_s].present? }.any?
-			create_from_record(record)
+			next unless REQUIRED_FIELDS.select{ |field| record[field.to_s].present? }.count == REQUIRED_FIELDS.count
+			from(record)
 		end
 	end
 	
-	def self.create_from_record(record)
+	def self.from(record)
 		pronouns_given = record['pronouns_given'] == "self-describe" ? "#{record['pronouns_given_5_TEXT']} (self-described)" : record['pronouns_given']
 			
 		survey_response = SurveyResponse.find_or_initialize_by(response_id: record['ResponseId'])
@@ -57,14 +57,6 @@ class SurveyResponse < ApplicationRecord
 		KeywordExtractorJob.perform_async(self.id)
 	end
 
-	def persona
-		@persona ||= Persona.find_or_create_by(
-			name: "Persona #{identifier}", 
-			survey_response_id: id,
-			permalink: permalink
-		)
-	end
-	
 	def to_graph
 		Persona.find_or_initialize_by(survey_response_id: id).destroy
 		populate_experience_codes
@@ -88,9 +80,14 @@ class SurveyResponse < ApplicationRecord
 				
 	private
 	
-	def complete_enough?
-		[self.age_given, self.klass_given, self.race_ethnicity_given, self.religion_given, self.disability_given, self.neurodiversity_given, self.gender_given, self.lgbtqia_given].reject(&:nil?).size > 0
+	def persona
+		@persona ||= Persona.find_or_create_by(
+			name: "Persona #{identifier}", 
+			survey_response_id: id,
+			permalink: permalink
+		)
 	end
+	
 	
 	def populate_experience_codes
 		{
