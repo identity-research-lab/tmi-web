@@ -5,7 +5,7 @@ class CategoryExtractorJob
   queue_as :default
   
   def perform(context)
-    Category.from_context(context)
+    Category.from(context)
   end
   
 end

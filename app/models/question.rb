@@ -1,6 +1,6 @@
 class Question
 
-  attr_accessor :key, :value
+  attr_accessor :key, :label
   
   QUESTIONS = {
     age_given: "Age",
@@ -27,7 +27,7 @@ class Question
   }
   
   def self.from(key)
-    new(key: key, value: QUESTIONS[key.to_sym])
+    new(key: key, label: QUESTIONS[key.to_sym])
   end
 
   def self.experience_questions
@@ -44,20 +44,16 @@ class Question
   
   def initialize(attrs={})
     self.key = attrs[:key]
-    self.value = attrs[:value]
+    self.label = attrs[:label]
     self
   end
   
   def field
-    self.value.gsub("class","klass").gsub("id","given")  
+    self.label.gsub("class","klass").gsub("id","given")  
   end
   
   def codes_field
     "#{self.key}_codes".gsub("given","id")
   end
-  
-  def humanize
-    self.value
-  end
-  
+    
 end

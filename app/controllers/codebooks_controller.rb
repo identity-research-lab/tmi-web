@@ -31,14 +31,15 @@ class CodebooksController < ApplicationController
 		end
 
 		if @context.include?("_exp")		
-			@categories_histogram = Category.where(context: @context_key).inject({}) { |acc, category| acc[category.name] = category.codes.count; acc }
+			@categories_histogram = Category.histogram(@context_key)
 			@total_codes = @categories_histogram.values.sum
 		end
 		
 	end
 	
 	def enqueue_categories
-		Category.enqueue_category_extractor_job(params[:codebook_id].gsub("_given","").gsub("_exp","").gsub("klass","class").gsub("_","-"))
+		context = params[:codebook_id].gsub("_given","").gsub("_exp","").gsub("klass","class").gsub("_","-")
+		CategoryExtractorJob.perform_async(context)
 		redirect_to( action: :show, id: params[:codebook_id], params: {enqueued_at: Time.now.strftime("%I:%M:%S %P (%Z)")} )
 	end
 	
