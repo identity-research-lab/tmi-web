@@ -14,12 +14,13 @@ class SurveyResponse < ApplicationRecord
 	def self.import(file_handle)
 		CSV.read(file_handle, headers: true).each do |record|
 			next unless record['Progress'].to_i.to_s == record['Progress']
-			next unless REQUIRED_FIELDS.select{ |field| record[field.to_s].present? }.count == REQUIRED_FIELDS.count
 			from(record)
 		end
 	end
 	
 	def self.from(record)
+ 		return unless REQUIRED_FIELDS.select{ |field| record[field.to_s].present? }.count == REQUIRED_FIELDS.count
+
 		pronouns_given = record['pronouns_given'] == "self-describe" ? "#{record['pronouns_given_5_TEXT']} (self-described)" : record['pronouns_given']
 		survey_response = SurveyResponse.find_or_initialize_by(response_id: record['ResponseId'])
 		survey_response.update(
