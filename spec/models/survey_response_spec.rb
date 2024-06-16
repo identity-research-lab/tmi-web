@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe SurveyResponse do
-
+    
+  before do
+    allow_any_instance_of(SurveyResponse).to_receive(:enqueue_export_to_graph)
+  end
+  
   context "#from" do
     
     let(:complete_record) {
