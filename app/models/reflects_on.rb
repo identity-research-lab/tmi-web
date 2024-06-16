@@ -1,4 +1,4 @@
-class DescribesWith
+class ReflectsOn
   
   include ActiveGraph::Relationship
   
