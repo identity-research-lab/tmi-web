@@ -30,7 +30,7 @@ class CodebooksController < ApplicationController
 			@frequencies = Code.histogram(@context.gsub("_exp","").gsub("klass","class").gsub("_","-"))
 		end
 
-		if @context.include?("_exp")		
+		if @context.include?("_exp") || @context.include?("_feel")		
 			@categories_histogram = Category.histogram(@context_key)
 			@total_codes = @categories_histogram.values.sum
 		end
