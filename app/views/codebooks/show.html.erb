@@ -3,68 +3,68 @@
 <h1><%= pluralize(@frequencies.count, "Code") %> for "<%= @section_name %>".</h1>
 
 <% if @previous_section %>
-	<%= link_to "<", codebook_path(@previous_section), class: "flip", id: "flip-left" %>
+  <%= link_to "<", codebook_path(@previous_section), class: "flip", id: "flip-left" %>
 <% end %>
 <% if @next_section %>
-	<%= link_to ">", codebook_path(@next_section), class: "flip", id: "flip-right" %>
+  <%= link_to ">", codebook_path(@next_section), class: "flip", id: "flip-right" %>
 <% end %>
 
 <h2>Derived categories:</h2>
-	
+  
 <% if @categories_histogram %>
-	<% if @enqueued_at %>
-		<p>Category derivation was started at <%= @enqueued_at %>. Please allow up to 2 minutes for the process to complete. You can reload the page to monitor progress.</p>
-	<% end %>
-	
-	<% if @total_codes.to_i > 0 %>
-		<ul class="word-cloud">
-			<% @categories_histogram.keys.sort{|a,b| @categories_histogram[a] <=> @categories_histogram[b]}.reverse.each do |category| %>
-				<% font_size = ((@categories_histogram[category] / @total_codes.to_f) * 60).to_i + 5 %>
-				<% percentage = ((@categories_histogram[category]  / @total_codes.to_f) * 100).to_i %>
-				<li style="font-size: <%= font_size %>px;"><%= category %> (<%= percentage < 1 ? "<1" : percentage %>%)</li>
-			<% end %>
-		</ul>
-	<% end %>
-	
-	<% unless @enqueued_at %>
-		<%= button_to "Derive Categories", codebook_enqueue_categories_path(@context, params: { enqueued: true }, method: :put ) %>
-	<% end %>
-	
-	<h2>tmi-graph query:</h2>
-	<p class="code">
-		<%= Codebook.category_query(@context_key)[:explainer] %><br />
-		<a href="#query" id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= Codebook.category_query(@context_key)[:query] %></a>
-	</p>
+  <% if @enqueued_at %>
+    <p>Category derivation was started at <%= @enqueued_at %>. Please allow up to 2 minutes for the process to complete. You can reload the page to monitor progress.</p>
+  <% end %>
+  
+  <% if @total_codes.to_i > 0 %>
+    <ul class="word-cloud">
+      <% @categories_histogram.keys.sort{|a,b| @categories_histogram[a] <=> @categories_histogram[b]}.reverse.each do |category| %>
+        <% font_size = ((@categories_histogram[category] / @total_codes.to_f) * 60).to_i + 5 %>
+        <% percentage = ((@categories_histogram[category]  / @total_codes.to_f) * 100).to_i %>
+        <li style="font-size: <%= font_size %>px;"><%= category %> (<%= percentage < 1 ? "<1" : percentage %>%)</li>
+      <% end %>
+    </ul>
+  <% end %>
+  
+  <% unless @enqueued_at %>
+    <%= button_to "Derive Categories", codebook_enqueue_categories_path(@context, params: { enqueued: true }, method: :put ) %>
+  <% end %>
+  
+  <h2>tmi-graph query:</h2>
+  <p class="code">
+    <%= Codebook.category_query(@context_key)[:explainer] %><br />
+    <a href="#query" id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= Codebook.category_query(@context_key)[:query] %></a>
+  </p>
 
 <% else %>
 
-	<p>By design, identities are not categorized.</p>
+  <p>By design, identities are not categorized.</p>
 
 <% end %>
-	
+  
 <div class="two-column">
-	<div class="column">
-		<h3>Alphabetically</h3>
-		<ul class="list">
-			<% @frequencies.sort{|f1, f2| f1[0] <=> f2[0]}.each do |k,v| %>
-				<li>
-					<div>
-						<div class="stacked-bar" style="width: <%= (v / @frequencies.values.max.to_f) * 100 %>%"></div>
-						<%= "#{k}: #{v}" %>
-					</div>
-				</li>
-			<% end %>
-		</ul>
-	</div>
-	<div class="column">
-		<h3>By Frequency</h3>
-		<ul class="column list">
-			<% @frequencies.sort{|f1, f2| f1[1] <=> f2[1]}.reverse.each do |k,v| %>
-				<li>
-					<%= "#{k}: #{v}" %>
-					<div class="stacked-bar" style="width: <%= (v / @frequencies.values.max.to_f) * 100 %>%"></div>
-				</li>
-			<% end %>
-		</ul>
-	</div>
+  <div class="column">
+    <h3>Alphabetically</h3>
+    <ul class="list">
+      <% @frequencies.sort{|f1, f2| f1[0] <=> f2[0]}.each do |k,v| %>
+        <li>
+          <div>
+            <div class="stacked-bar" style="width: <%= (v / @frequencies.values.max.to_f) * 100 %>%"></div>
+            <%= "#{k}: #{v}" %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="column">
+    <h3>By Frequency</h3>
+    <ul class="column list">
+      <% @frequencies.sort{|f1, f2| f1[1] <=> f2[1]}.reverse.each do |k,v| %>
+        <li>
+          <%= "#{k}: #{v}" %>
+          <div class="stacked-bar" style="width: <%= (v / @frequencies.values.max.to_f) * 100 %>%"></div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
 </div>

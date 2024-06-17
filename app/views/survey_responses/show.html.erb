@@ -3,66 +3,66 @@
 <h1>Response <%= @response.identifier %></h1>
 
 <% if @previous_response %>
-	<%= link_to "<", survey_response_path(@previous_response), class: "flip", id: "flip-left" %>
+  <%= link_to "<", survey_response_path(@previous_response), class: "flip", id: "flip-left" %>
 <% end %>
 <% if @next_response %>
-	<%= link_to ">", survey_response_path(@next_response), class: "flip", id: "flip-right" %>
+  <%= link_to ">", survey_response_path(@next_response), class: "flip", id: "flip-right" %>
 <% end %>
 
 <% if @keywords.any? %>
-	<h2>Keywords:</h2>
-	<ul class="word-cloud">
-		<% @keywords.each do |keyword| %>
-			<li><%= keyword.name %></li>
-		<% end %>
-	</ul>
+  <h2>Keywords:</h2>
+  <ul class="word-cloud">
+    <% @keywords.each do |keyword| %>
+      <li><%= keyword.name %></li>
+    <% end %>
+  </ul>
 <% end %>
 
 <h2>Derived categories of experiences:</h2>
 
 <% if @categories.any? %>
-	<ul class="word-cloud">
-		<% @categories.each do |category| %>
-			<li><%= category.name %> | <%= link_to category.context, codebook_path("#{category.context}_exp"), class:"jump-link" %></li>
-		<% end %>
-	</ul>
+  <ul class="word-cloud">
+    <% @categories.each do |category| %>
+      <li><%= category.name %> | <%= link_to category.context, codebook_path("#{category.context}_exp"), class:"jump-link" %></li>
+    <% end %>
+  </ul>
 <% else %>
-	<p>No derived categories could be found. Have you generated them from the <%= link_to "codebook", codebooks_path %>?</p>
+  <p>No derived categories could be found. Have you generated them from the <%= link_to "codebook", codebooks_path %>?</p>
 <% end %>
 
 <h2>TMI-Graph query:</h2>
 <p class="code">
-	<%= @response.graph_query[:explainer] %><br />
-	<a href="#query" id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @response.graph_query[:query] %></a>
+  <%= @response.graph_query[:explainer] %><br />
+  <a href="#query" id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @response.graph_query[:query] %></a>
 </p>
 
 <h2>Questions and responses:</h2>
 
 <%= form_with model: @response do |f| %>
-	<table>
-		<thead>
-			<tr>
-				<th>Survey Question</th>
-				<th>Response</th>
-				<th>Codes</th>
-			</tr>
-		</thead>
-		<tbody>
-			<% counter = 0 %>
-			<% Question::QUESTIONS.keys.map{|k| Question.from(k) }.each do |question| %>
-				<% alt = counter % 2 == 1 ? "" : "alt" %>
-				<% counter += 1 %>
-				<tr class="<%= alt %>">
-					<td class="label"><%= link_to question.label, question_path(question.key), class: "jump-link" %></td>
-					<td	class="response"><%= @response.read_attribute(question.key) %></td>
-					<td class="form-entry">
-						<% if @response.respond_to?(question.key) && @response.read_attribute(question.key).present?  %>
-							<%= f.text_area question.codes_field, value: @response.read_attribute(question.codes_field).try(:sort).try(:join, ', '), multiple: true %>
-							<%= f.submit "Save", class: "small" %>
-						<% end %>
-					</td>
-				</tr>
-			<% end %>
-		</tbody>
-	</table>
+  <table>
+    <thead>
+      <tr>
+        <th>Survey Question</th>
+        <th>Response</th>
+        <th>Codes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% counter = 0 %>
+      <% Question::QUESTIONS.keys.map{|k| Question.from(k) }.each do |question| %>
+        <% alt = counter % 2 == 1 ? "" : "alt" %>
+        <% counter += 1 %>
+        <tr class="<%= alt %>">
+          <td class="label"><%= link_to question.label, question_path(question.key), class: "jump-link" %></td>
+          <td  class="response"><%= @response.read_attribute(question.key) %></td>
+          <td class="form-entry">
+            <% if @response.respond_to?(question.key) && @response.read_attribute(question.key).present?  %>
+              <%= f.text_area question.codes_field, value: @response.read_attribute(question.codes_field).try(:sort).try(:join, ', '), multiple: true %>
+              <%= f.submit "Save", class: "small" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% end %>
