@@ -52,9 +52,12 @@ class SurveyResponse < ApplicationRecord
 		self.id.to_s.rjust(4, "0")	
 	end
 	
+	def enqueue_keyword_extraction
+		KeywordExtractorJob.perform_async(self.id)
+	end
+	
 	def enqueue_export_to_graph
 		ExportToGraphJob.perform_async(self.id)
-		KeywordExtractorJob.perform_async(self.id)
 	end
 
 	def to_graph
