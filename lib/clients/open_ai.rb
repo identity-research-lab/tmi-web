@@ -4,7 +4,7 @@ class Clients::OpenAi
     client = OpenAI::Client.new
     response = client.chat(
       parameters: {
-        model: "gpt-4o",
+        model: ENV.fetch("OPENAI_MODEL"),
         response_format: { type: "json_object" },
         messages: [{ role: "user", content: prompt }],
         temperature: 0.7,
