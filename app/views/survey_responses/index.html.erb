@@ -1,13 +1,13 @@
 <%- title "Responses" %>
 
 <h1>
-	<%= pluralize @responses.size, "survey response" %>.
+  <%= pluralize @responses.size, "survey response" %>.
 </h1>
 
 <ol class="nodes">
 <% @responses.each do |r| %>
-	<li>
-		<%= link_to r.identifier, r %>
-	</li>
+  <li>
+    <%= link_to r.identifier, r %>
+  </li>
 <% end %>
 </ol>

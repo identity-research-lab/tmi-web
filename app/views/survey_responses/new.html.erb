@@ -5,10 +5,10 @@
 <p>Note that this will merge new responses from the file you select with existing survey responses. In other words, you will not overwrite or duplicate data by uploading a file.</p>
 
 <%= form_with url: survey_responses_path, method: :post do |f| %>
-	<label>
-		CSV:
-		<%= f.file_field :csv, direct_upload: true %>
-	</label>
+  <label>
+    CSV:
+    <%= f.file_field :csv, direct_upload: true %>
+  </label>
 
-	<%= f.submit "Upload and Merge" %>
-<% end  %>	
+  <%= f.submit "Upload and Merge" %>
+<% end  %>  
