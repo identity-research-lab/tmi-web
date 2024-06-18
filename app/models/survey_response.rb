@@ -3,7 +3,7 @@ class SurveyResponse < ApplicationRecord
   require 'csv'
   require 'openai'
 
-  before_validation :sanitize_array_values
+  before_save :sanitize_array_values
   after_save_commit :enqueue_export_to_graph
   
   validates_presence_of :response_id
