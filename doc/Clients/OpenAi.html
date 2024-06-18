@@ -99,7 +99,18 @@
   
 </div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>A wrapper class for the OpenAI API.</p>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -117,7 +128,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#request-class_method" title="request (class method)">.<strong>request</strong>(prompt)  &#x21d2; Object </a>
+      <a href="#request-class_method" title="request (class method)">.<strong>request</strong>(prompt)  &#x21d2; String </a>
     
 
     
@@ -131,7 +142,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Sends a prompt to the configured model and returns the relevant portion of the response.</p>
+</div></span>
   
 </li>
 
@@ -148,33 +161,82 @@
       <div class="method_details first">
   <h3 class="signature first" id="request-class_method">
   
-    .<strong>request</strong>(prompt)  &#x21d2; <tt>Object</tt> 
+    .<strong>request</strong>(prompt)  &#x21d2; <tt>String</tt> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Sends a prompt to the configured model and returns the relevant portion of the response.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>prompt</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the text of the prompt to send to the model.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the JSON response returned by the API.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-3
-4
-5
-6
-7
 8
 9
 10
 11
 12
 13
-14</pre>
+14
+15
+16
+17
+18
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/clients/open_ai.rb', line 3</span>
+      <pre class="code"><span class="info file"># File 'lib/clients/open_ai.rb', line 8</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_request'>request</span><span class='lparen'>(</span><span class='id identifier rubyid_prompt'>prompt</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'>OpenAI</span><span class='op'>::</span><span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -198,7 +260,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sun Jun 16 23:14:05 2024 by
+  Generated on Sun Jun 16 23:22:26 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.36 (ruby-3.2.2).
 </div>
