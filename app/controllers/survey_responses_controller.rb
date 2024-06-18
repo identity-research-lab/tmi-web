@@ -40,7 +40,7 @@ class SurveyResponsesController < ApplicationController
   
   def update
     @response = SurveyResponse.find(params[:id])
-  
+
     unless @response.update(response_params)
       render :edit, status: :unprocessable_entity
     end

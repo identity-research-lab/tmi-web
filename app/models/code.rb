@@ -5,7 +5,8 @@ class Code
   property :context
   
   before_validation :strip_whitespace
-
+  before_validation :downcase
+  
   validates :name, presence: true
   validates :context, presence: true
   validates_uniqueness_of :name, :scope => :context
@@ -23,4 +24,7 @@ class Code
     self.name.strip!
   end
 
+  def downcase
+    self.name.downcase!
+  end
 end 
