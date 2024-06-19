@@ -9,13 +9,21 @@
   <%= link_to ">", survey_response_path(@next_response), class: "flip", id: "flip-right" %>
 <% end %>
 
+<h2>Keywords:</h2>
+<% if @enqueued_at %>
+  <p>Keyword derivation was started at <%= @enqueued_at %>. Please allow up to 1 minute for the process to complete. You can reload this page to monitor progress.</p>
+<% end %>
+
 <% if @keywords.any? %>
-  <h2>Keywords:</h2>
   <ul class="word-cloud">
     <% @keywords.each do |keyword| %>
       <li><%= keyword.name %></li>
     <% end %>
   </ul>
+<% end %>
+
+<% unless @enqueued_at %>
+  <%= button_to "Regenerate Keywords", survey_response_enqueue_keywords_path(@response, params: { enqueued: true }, method: :put ) %>
 <% end %>
 
 <h2>Derived categories of experiences:</h2>
