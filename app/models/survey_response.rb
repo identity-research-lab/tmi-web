@@ -91,7 +91,6 @@ class SurveyResponse < ApplicationRecord
     )
   end
   
-  
   def populate_experience_codes
     {
       "age" => age_exp_codes,
