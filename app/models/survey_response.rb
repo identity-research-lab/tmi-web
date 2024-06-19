@@ -5,19 +5,19 @@ class SurveyResponse < ApplicationRecord
 
   before_save :sanitize_array_values
   after_save_commit :enqueue_export_to_graph
-  
+
   validates_presence_of :response_id
   validates_uniqueness_of :response_id
 
-  REQUIRED_FIELDS = [:age_given]  
-  
+  REQUIRED_FIELDS = [:age_given]
+
   def self.import(file_handle)
     CSV.read(file_handle, headers: true).each do |record|
       next unless record['Progress'].to_i.to_s == record['Progress']
       from(record)
     end
   end
-  
+
   def self.from(record)
      return unless REQUIRED_FIELDS.select{ |field| record[field.to_s].present? }.count == REQUIRED_FIELDS.count
 
@@ -49,13 +49,13 @@ class SurveyResponse < ApplicationRecord
   end
 
   def identifier
-    self.id.to_s.rjust(4, "0")  
+    self.id.to_s.rjust(4, "0")
   end
-  
+
   def enqueue_keyword_extraction
     KeywordExtractorJob.perform_async(self.id)
   end
-  
+
   def enqueue_export_to_graph
     ExportToGraphJob.perform_async(self.id)
   end
@@ -64,8 +64,9 @@ class SurveyResponse < ApplicationRecord
     Persona.find_or_initialize_by(survey_response_id: id).destroy
     populate_experience_codes
     populate_id_codes
+    enqueue_keyword_extraction
   end
-  
+
   def permalink
     if Rails.env == "development"
       Rails.application.routes.url_helpers.url_for(controller: "survey_responses", action: "show", host: "localhost", port: 3000, id: self.id)
@@ -75,22 +76,22 @@ class SurveyResponse < ApplicationRecord
   end
 
   def graph_query
-    { 
+    {
       explainer: "// Return the persona (and all of its relations) that corresponds to this survey response.",
       query: "MATCH (p:Persona)-[]-(n) WHERE p.permalink=\"#{permalink}\" RETURN p,n"
     }
   end
-        
+
   private
-  
+
   def persona
     @persona ||= Persona.find_or_create_by(
-      name: "Persona #{identifier}", 
+      name: "Persona #{identifier}",
       survey_response_id: id,
       permalink: permalink
     )
   end
-  
+
   def populate_experience_codes
     {
       "age" => age_exp_codes,
@@ -111,7 +112,7 @@ class SurveyResponse < ApplicationRecord
         Experiences.create(from_node: persona, to_node: code)
       end
     end
-  
+
   end
 
   def populate_id_codes
@@ -133,7 +134,7 @@ class SurveyResponse < ApplicationRecord
     end
   end
 
-  def sanitize_array_values  
+  def sanitize_array_values
     self.age_exp_codes = age_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
     self.klass_exp_codes = klass_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
     self.race_ethnicity_exp_codes = race_ethnicity_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)

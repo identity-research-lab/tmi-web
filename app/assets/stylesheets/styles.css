@@ -1,10 +1,10 @@
 /* Pixel-to-rem calculator: https://nekocalc.com/px-to-rem-converter */
- 
+
  * {
    margin: 0;
    padding: 0;
  }
- 
+
  /* Variables */
  :root {
    --color-primary: #fff;
@@ -25,12 +25,12 @@
    --font-monospace: "Courier New";
    --font-size-small: 0.85rem;
  }
- 
+
  html {
    height: 100%;
    font-size: .85rem;
  }
- 
+
  body {
    background: var(--color-black);
    color: var(--color-black);
@@ -43,75 +43,75 @@
    -webkit-text-size-adjust: 100%;
    text-size-adjust: 100%;
  }
- 
+
  header,
  section {
    box-sizing: border-box;
  }
- 
+
  nav a {
    color: var(--color-white);
    display: block;
    padding: 0;
    text-decoration: none;
  }
- 
+
  nav a:focus,
  nav a:hover {
    color: var(--color-white);
    text-decoration-color: var(--color-white);
  }
- 
+
  nav.subpage a {
    color: var(--color-black);
  }
- 
+
  nav.subpage a:focus,
  nav.subpage a:hover {
    color: var(--color-black);
    text-decoration-color: var(--color-black);
  }
- 
+
  footer ul {
    list-style: none;
    margin: 0;
  }
- 
+
  footer ul li {
    font-size: 1rem;
    margin-bottom: .75rem;
  }
- 
+
  footer a {
    color: var(--color-white);
    font-family: var(--font-body);
    text-decoration: none;
  }
- 
+
  ul,
  ol {
    list-style-position: inside;
    margin: 1.5rem 0 1.5rem 1.5rem;
  }
- 
+
  em {
    font-family: var(--font-body);
  }
- 
+
  li {
    margin-bottom: .375rem;
    position: relative;
  }
- 
+
  strong {
    font-weight: 600 !important;
  }
- 
+
  header {
    color: var(--color-white);
    background: var(--color-black);
  }
- 
+
  footer {
    box-sizing: border-box;
    color: var(--color-white);
@@ -120,42 +120,42 @@
    clear: both;
    font-family: var(--font-body);
  }
- 
+
  footer h2 {
    font-family: var(--font-body);
    margin: 1.25rem;
  }
- 
+
  footer h2 {
    margin: 1.25rem;
  }
- 
+
  footer p {
    clear: both;
    text-align: center;
    margin-top: 1.25rem;
    margin-left: 1rem;
  }
- 
+
  footer a {
    color: var(--color-white);
    text-decoration: none;
  }
- 
+
  footer a:focus,
  footer a:hover {
    color: var(--color-white);
    text-decoration-color: var(--color-white);
    text-decoration: underline;
  }
- 
+
  blockquote {
    border-left: .75rem solid var(--color-light-grey);
    margin-left: 1.25rem;
    padding-left: 2.25rem;
    font-family: var(--font-body);
  }
- 
+
  /* Headers */
 
  h1 {
@@ -165,25 +165,25 @@
    width: 75%;
    margin-bottom: 2rem;
  }
- 
+
  * + h1 {
    margin-top: 3rem;
  }
- 
+
  h2 {
    font-family: var(--font-header);
  }
- 
+
  h3 {
    font-family: var(--font-header);
    font-size: 1.25rem;
    margin-top: 1.25rem;
  }
- 
+
  p {
    margin: 1.5rem 0;
  }
- 
+
  /* Inline Elements */
  a {
    color: var(--color-red);
@@ -191,36 +191,36 @@
    text-decoration-color: var(--color-red);
    text-underline-offset: .25rem;
  }
- 
+
  a:focus,
  a:hover {
    color: var(--color-red);
    text-decoration: underline;
  }
- 
+
  a span {
    color: var(--color-white);
    font-weight: 300;
  }
- 
+
  strong {
    font-weight: 400;
  }
- 
+
  code,
  kbd {
    font-family: "Courier", monospace;
    letter-spacing: .0625rem;
  }
- 
+
  cite {
    font-style: italic;
  }
- 
+
  cite::before {
    content: "— ";
  }
- 
+
  table {
    width: 100%;
    border: 3px solid var(--color-light-grey);
@@ -228,14 +228,14 @@
  }
 
 tr.alt {
-  background-color: var(--color-light-grey);  
+  background-color: var(--color-light-grey);
 }
 
 td {
   padding: 0rem 1rem;
   vertical-align: top;
 }
- 
+
 td.label {
   width: 30%;
 }
@@ -257,7 +257,7 @@ td.form-entry {
   width: 30%;
   padding: 1rem;
 }
-    
+
 th {
   text-align: left;
   padding: 1rem;
@@ -268,7 +268,7 @@ th {
 th a {
   color: var(--color-white);
   text-decoration: none;
-} 
+}
 
 th a:hover {
   color: var(--color-white);
@@ -278,21 +278,21 @@ th a:hover {
  abbr {
    text-decoration: none;
  }
- 
+
  #veil {
    background: var(--color-white);
    width: auto;
  }
- 
+
  /* Utility Classes */
- 
+
  .error,
  .important {
    color: var(--color-red);
    font-weight: 600;
  }
- 
- 
+
+
  header figure {
    line-height: 3rem;
    padding-top: 1rem;
@@ -300,46 +300,46 @@ th a:hover {
    margin-bottom: .25rem;
    width: 50%;
  }
- 
+
  header figure a {
    color: #fff;
  }
- 
+
  header a {
    color: var(--color-white);
    font-weight: 500;
    text-decoration: none;
  }
- 
+
  header a:focus,
  header a:hover {
    color: #fff;
    font-weight: 500;
  }
- 
+
  .hidden {
    display: none;
  }
- 
+
  fieldset {
    border: 0;
  }
- 
+
  fieldset:last-child {
    text-align: right;
  }
- 
+
  figure {
    width: 80%;
    margin: 1rem auto;
  }
- 
+
  label {
    display: flex;
    margin-bottom: 1.5rem;
    font-weight: bold;
  }
- 
+
  label > :first-child {
    padding: .25rem .75rem .25rem;
    width: calc(25% - 1.5rem);
@@ -360,16 +360,17 @@ th a:hover {
    font-size: var(--font-size-small);
    padding: .125rem .25rem;
  }
- 
+
  button {
+   margin-top: 1rem;
    margin-bottom: 1rem;
    margin-left: 1.75rem;
  }
- 
+
  textarea {
    margin-top: -.25rem;
  }
- 
+
   input[type="submit"] {
     width: auto;
     font-family: var(--font-body);
@@ -386,52 +387,52 @@ th a:hover {
     font-size: 70%;
     margin: .25rem 0rem;
   }
-  
+
   .small:active {
     border: 1px solid #000;
     opacity: 0.75;
   }
-   
+
  .radio-form-group {
    float: left;
    text-align: left;
    clear: both;
  }
- 
+
  .radio-form-group label {
    padding: 0em;
    float: left;
    font-weight: normal;
    margin: -2rem 1rem 2rem 1rem;
  }
- 
+
  .radio-form-group input[type="radio"] {
    border: 0em;
    padding: 0em;
    margin: -.75em 2em 0em -1em;
  }
- 
+
  .checkbox-form-group input[type="checkbox"] {
    margin: -.6rem 1rem 0 0;
    float: left;
    width: 1rem;
  }
- 
+
  .checkbox-form-group label {
    font-weight: normal;
  }
- 
+
  .checkbox-form-group label > :first-child {
    padding: 0em;
    margin-left: 1rem;
    margin-top: 1rem;
  }
- 
+
  input[type="checkbox"] {
    float: right;
    margin-left: 5em;
  }
- 
+
  input[type="submit"],
  button {
    background-color: var(--color-red);
@@ -439,34 +440,34 @@ th a:hover {
    color: #fff;
    border-radius: 5px;
  }
- 
+
  button:hover {
    background-color: var(--color-red-tint);
  }
- 
+
  button {
    transition: background-color 0.5s;
  }
- 
+
  input {
    margin-top: 1rem;
    height: 3rem;
  }
- 
+
  input,
  textarea {
    width: 100%;
  }
- 
+
  textarea {
    min-height: 6.25rem;
    resize: none;
  }
- 
+
  section img {
    max-width: 100%;
  }
-  
+
  a.button {
    display: block;
    width: 9rem;
@@ -479,7 +480,7 @@ th a:hover {
    border-radius: 13px;
    text-align: center;
  }
- 
+
  address.byline {
    text-align: center;
    border-top: 1px solid var(--color-black);
@@ -487,11 +488,11 @@ th a:hover {
    margin: 0rem auto;
    padding: 1.25rem 0;
  }
- 
+
  address.byline time {
    font-size: 1rem;
  }
- 
+
  article h2 {
    color: var(--color-black);
    font-family: var(--font-body);
@@ -499,11 +500,11 @@ th a:hover {
    padding: 1.25rem 0 0 0;
    margin-bottom: -1.25rem;
  }
- 
+
  article h1 {
    padding-top: 1.25rem;
  }
- 
+
  a[target='_blank']::after {
    content: "";
    width: .8em;
@@ -524,21 +525,21 @@ th a:hover {
     flex-wrap: wrap;
     column-gap: 10%;
   }
-  
+
   #colophon .colophon-logo {
     flex: 25%;
   }
-  
+
   #colophon .logo {
     height: 8rem;
     display: inline-block;
     margin: -1.65rem;
   }
-  
+
   #colophon .colophon-copyright {
     flex: 70%;
   }
-  
+
   #copy-to-clipboard:after {
      content: "";
      width: 1.5rem;
@@ -549,11 +550,11 @@ th a:hover {
      display: inline-block;
      vertical-align: baseline;
   }
-  
+
   #copy-to-clipboard {
     text-decoration: none;
   }
-  
+
   .code {
     margin: 2rem;
     background-color: var(--color-light-grey);
@@ -561,19 +562,19 @@ th a:hover {
     font-size: var(--font-size-small);
     font-family: var(--font-monospace);
   }
-  
+
   .stacked-bar {
-    display: block; 
-    position: absolute; 
-    left: 0; 
-    top: 0; 
-    height: 100%; 
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
     background-color: var(--color-green);
-    opacity: 0.25; 
+    opacity: 0.25;
     border-right: 2px solid var(--color-black);
     z-index: -1;
   }
-  
+
   .nodes {
     display: flex;
     flex-wrap: wrap;
@@ -602,7 +603,7 @@ th a:hover {
     list-style-type: none;
     text-align: center;
   }
-  
+
   .word-cloud li {
     text-align: center;
     margin: .25rem;
@@ -610,18 +611,18 @@ th a:hover {
     padding: .5rem;
     font-size: var(--font-size-small);
   }
-  
+
   .word-cloud li.active {
     background-color: var(--color-red-highlight);
     font-weight: bold;
   }
-  
+
   .two-column {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
   }
-  
+
   .column {
     display: flex;
     flex-direction: column;
@@ -633,7 +634,7 @@ th a:hover {
   ul.list {
     margin: 1rem 1rem 0 0rem;
     list-style-type: none;
-  }  
+  }
 
   ul.list li {
     text-align: left;
@@ -652,7 +653,7 @@ th a:hover {
      display: inline-block;
      vertical-align: baseline;
   }
-  
+
   .jump-link-light::after {
      content: "";
      width: .8em;
@@ -663,12 +664,12 @@ th a:hover {
      display: inline-block;
      vertical-align: baseline;
   }
-  
+
   .logo {
     position: absolute;
     top: 2rem;
     left: 3rem;
-    width: 15rem;    
+    width: 15rem;
     height: 5rem;
     border: none;
   }
@@ -676,7 +677,7 @@ th a:hover {
   .logo a {
     text-decoration: none;
   }
-  
+
   a.flip {
     position: fixed;
     top: 50%;
@@ -693,21 +694,21 @@ th a:hover {
     font-family: var(--font-monospace);
     color: var(--color-white);
   }
-  
+
   #flip-left {
     left: 8%;
   }
-  
+
   #flip-right {
     right: 8%;
   }
-  
+
  @media (min-width: 300px) {
- 
+
    body {
      width: 100%;
    }
- 
+
    header {
      box-sizing: border-box;
      margin: 0 auto 1rem auto;
@@ -715,26 +716,26 @@ th a:hover {
      padding: 2rem 2rem;
      min-height: 11rem;
    }
- 
+
    nav {
      position: absolute;
      top: 1.25rem;
      right: 0.5rem;
    }
- 
+
    nav ul {
      list-style: none;
      margin: 1.25rem 0 0 0;
      padding: 0;
      text-align: left;
    }
- 
+
    nav ul li {
      float: none;
      display: block;
      font-size: 1rem;
    }
- 
+
    section {
      box-sizing: border-box;
      width: 100%;
@@ -742,7 +743,7 @@ th a:hover {
      padding: 1.25rem;
      min-height: 26rem;
    }
- 
+
    footer {
      box-sizing: border-box;
      width: 100%;
@@ -750,7 +751,7 @@ th a:hover {
      padding: 3rem;
      border-bottom: 23rem solid var(--color-black);
    }
- 
+
    .footer-nav {
      display: flex;
      flex-direction: row;
@@ -758,7 +759,7 @@ th a:hover {
      column-count: 3;
      width: 100%;
    }
- 
+
    .footer-nav ul {
      list-style: none;
      margin: 1.25rem 0 0 0;
@@ -770,127 +771,127 @@ th a:hover {
      margin-top: 1.25rem;
      margin-left: 0rem;
    }
- 
+
    h2 {
    }
- 
+
  }
- 
+
  /* end @media (min-width: 300px) */
- 
+
  @media (min-width: 414px) {
- 
+
    .page-title {
      margin-top: 22.5rem;
      width: 50%;
    }
- 
+
    nav {
      position: absolute;
      top: 1.25rem;
      right: 0.5rem;
    }
- 
+
    nav li {
      margin-left: 3.125rem;
    }
- 
+
  }
- 
+
  /* end @media (min-width: 414px) */
- 
+
  @media (min-width: 640px) {
    html {
      font-size: 1rem;
    }
- 
+
    body {
      width: 100%;
    }
- 
+
    .page-title {
      margin-top: 22.5rem;
      width: 60%;
    }
- 
+
    nav {
      position: absolute;
      top: 1.5rem;
      right: 4.375rem;
    }
- 
+
    header {
      min-height: 13rem;
    }
- 
+
  }
  /* end @media (min-width: 640px) */
- 
+
  @media (min-width: 1000px) {
- 
+
    html {
      font-size: 1rem;
    }
- 
+
    body {
      width: 100%;
    }
- 
+
    .page-title h1 {
      font-size: 5.5rem;
      line-height: 5rem;
      width: 100%;
    }
- 
+
    section {
      box-sizing: border-box;
      width: 60rem;
      margin: 0 auto 1rem auto;
    }
- 
+
    nav {
       top: 2rem;
       margin-right: 0.5rem;
     }
-   
+
     nav ul li {
       float: left;
       display: inline;
       font-size: 1rem;
     }
-   
+
    nav ul li a {
      width: 100%;
      text-decoration: none;
    }
- 
+
    nav ul li a {
      transition: color .5s, background-color .5s
    }
- 
+
    h2 {
    }
- 
+
    section h2 {
      margin-left: 0em;
      margin-top: 0em;
      width: 100%;
    }
- 
+
    h3 {
      width: 100%;
      margin-bottom: 1rem;
    }
-  
+
    header {
      min-height: 7rem;
    }
- 
+
    footer {
      padding: 1rem;
      border-bottom: 5rem solid var(--color-black);
    }
- 
+
  }
- 
+
  /* end @media (min-width: 1024px) */

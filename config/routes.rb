@@ -10,13 +10,16 @@ Rails.application.routes.draw do
   
   root "survey_responses#index"
 
-  get "survey_responses/export", controller: "survey_responses", action: "export"
   get "about", controller: "static", action: "about"
   
-  resources :survey_responses
+  resources :survey_responses do
+    post "enqueue_keywords", action: "enqueue_keywords"
+  end
+  
   resources :codebooks do
     post "enqueue_categories", action: "enqueue_categories"
   end
+  
   resources :questions
   
 end

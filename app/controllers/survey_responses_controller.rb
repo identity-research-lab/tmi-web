@@ -22,6 +22,8 @@ class SurveyResponsesController < ApplicationController
     @theme = params.permit(:theme)[:theme]
     @response = SurveyResponse.find(params[:id])
     @total_responses = SurveyResponse.all.count
+    @enqueued_at = params[:enqueued_at]
+
     @previous_response = SurveyResponse.where("created_at < ?", @response.created_at).order("created_at DESC").limit(1).first
     @next_response = SurveyResponse.where("created_at > ?", @response.created_at).order("created_at ASC").limit(1).first
     
@@ -44,6 +46,11 @@ class SurveyResponsesController < ApplicationController
     unless @response.update(response_params)
       render :edit, status: :unprocessable_entity
     end
+  end
+  
+  def enqueue_keywords
+    KeywordExtractorJob.perform_async(params[:survey_response_id])
+    redirect_to( action: :show, id: params[:survey_response_id], params: {enqueued_at: Time.now.strftime("%I:%M:%S %P (%Z)")} )
   end
 
   private
