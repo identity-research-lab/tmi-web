@@ -17,7 +17,7 @@ class CodebooksController < ApplicationController
   def show
     @context = params[:id]
     @context_key = @context.gsub("_given","").gsub("_exp","").gsub("klass","class").gsub("_","-")
-    @enqueued_at = params[:enqueued_at]
+    @enqueued_at = params[:enqueued_at].present? ? Time.at(params[:enqueued_at].to_i).strftime("%T %Z") : nil
 
     sections = Question::QUESTIONS.keys
     @section_name = Question::QUESTIONS[@context.to_sym]
@@ -40,7 +40,7 @@ class CodebooksController < ApplicationController
   def enqueue_categories
     context = params[:codebook_id].gsub("_given","").gsub("_exp","").gsub("klass","class").gsub("_","-")
     CategoryExtractorJob.perform_async(context)
-    redirect_to( action: :show, id: params[:codebook_id], params: {enqueued_at: Time.now.strftime("%I:%M:%S %P (%Z)")} )
+    redirect_to( action: :show, id: params[:codebook_id], params: {enqueued_at: Time.now.strftime("%s")} )
   end
   
 end
