@@ -4,6 +4,7 @@ RSpec.describe SurveyResponse do
     
   before do
     allow_any_instance_of(SurveyResponse).to receive(:enqueue_export_to_graph)
+    allow_any_instance_of(SurveyResponse).to receive(:enqueue_keyword_extraction)
   end
   
   context "#from" do
