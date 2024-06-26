@@ -109,7 +109,7 @@ class SurveyResponse < ApplicationRecord
       "notes" => notes_codes
     }.each do |context, codes|
       codes.each do |name|
-         code = Code.find_or_create_by(name: name, context: context)
+        code = Code.find_or_create_by(name: name, context: context)
         Experiences.create(from_node: persona, to_node: code)
       end
     end
