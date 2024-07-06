@@ -25,9 +25,9 @@ class CodebooksController < ApplicationController
     @next_section = sections[sections.index(@context.to_sym) + 1]
 
     if params[:id].split('_').last == "given"
-      @frequencies = Identity.histogram(@context.gsub("_given","").gsub("klass","class").gsub("_","-"))
+      @frequencies = Identity.histogram(@context)
     else
-      @frequencies = Code.histogram(@context.gsub("_exp","").gsub("klass","class").gsub("_","-"))
+      @frequencies = Code.histogram(@context)
     end
 
     if @context.include?("_exp") || @context.include?("_feel")
