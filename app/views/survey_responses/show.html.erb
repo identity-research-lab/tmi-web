@@ -23,7 +23,7 @@
 <% if @categories.any? %>
   <ul class="word-cloud">
     <% @categories.each do |category| %>
-      <li><%= category.name %> | <%= link_to category.context, codebook_path("#{category.context}_exp"), class:"jump-link" %></li>
+      <li><%= category.name %> | <%= link_to category.context, codebook_path("#{category.context.gsub("-","_")}_exp"), class:"jump-link" %></li>
     <% end %>
   </ul>
 <% else %>
