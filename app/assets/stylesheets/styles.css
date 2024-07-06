@@ -584,8 +584,7 @@ th a:hover {
     font-family: var(--font-monospace);
   }
 
-  .nodes li {
-    text-align: left;
+  .nodes li div {
     margin: .5rem 1rem .5rem 0;
     padding: 1rem;
     height: 2.25rem;
@@ -593,7 +592,12 @@ th a:hover {
     text-align: center;
     background: var(--color-light-grey);
     border-radius: 3rem;
-    color: #fff;
+  }
+
+  .nodes li div:hover {
+    background: var(--color-red);
+    opacity: 0.5;
+    color: var(--color-white);
   }
 
   .word-cloud {
