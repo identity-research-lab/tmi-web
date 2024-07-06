@@ -354,11 +354,11 @@ th a:hover {
  input[type="email"],
  input[type="submit"],
  textarea {
-   border: .0625rem solid hsl(0, 0%, 60%);
    color: var(--color-black);
    font-family: var(--font-monospace);
    font-size: var(--font-size-small);
    padding: .125rem .25rem;
+   border: none;
  }
 
  button {
@@ -369,6 +369,7 @@ th a:hover {
 
  textarea {
    margin-top: -.25rem;
+   border: 0.125px solid var(--color-black);
  }
 
   input[type="submit"] {
@@ -388,6 +389,7 @@ th a:hover {
     margin: .25rem 0rem;
   }
 
+  button:active,
   .small:active {
     border: 1px solid #000;
     opacity: 0.75;
@@ -439,14 +441,6 @@ th a:hover {
    padding: .25rem 1rem;
    color: #fff;
    border-radius: 5px;
- }
-
- button:hover {
-   background-color: var(--color-red-tint);
- }
-
- button {
-   transition: background-color 0.5s;
  }
 
  input {
