@@ -7,7 +7,9 @@
 <ol class="nodes">
 <% @responses.each do |r| %>
   <li>
-    <%= link_to r.identifier, r %>
+    <a href="/survey_responses/<%= r.id %>">
+      <div><%= r.id %></div>
+    </a>
   </li>
 <% end %>
 </ol>
