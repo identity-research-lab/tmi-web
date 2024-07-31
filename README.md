@@ -10,7 +10,7 @@ tmi-web is a social science research tool for managing, analyzing, coding, and v
 
   bundle exec sidekiq
 
-### Clear sidekiq queue
+### Clear sidekiq (background job) queue
 
   Sidekiq.redis(&:flushdb)
 
@@ -30,6 +30,12 @@ tmi-web is a social science research tool for managing, analyzing, coding, and v
 ### Update neo4j schema
 
   rake neo4j:migrate
+
+### Generate rdocs
+
+  rdoc -op doc
+
+## Dashboards
 
 ### neo4j hosting
 
