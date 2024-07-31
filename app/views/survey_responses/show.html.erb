@@ -1,21 +1,12 @@
-<%- title "Response #{@response.identifier}" %>
+<%- title "Participant Survey Response #{@response.identifier}" %>
 
-<h1>Response <%= @response.identifier %></h1>
+<h1>Participant Survey Response <%= @response.identifier %></h1>
 
 <% if @previous_response %>
   <%= link_to "<", survey_response_path(@previous_response), class: "flip", id: "flip-left" %>
 <% end %>
 <% if @next_response %>
   <%= link_to ">", survey_response_path(@next_response), class: "flip", id: "flip-right" %>
-<% end %>
-
-<% if @keywords.any? %>
-  <h2>Keywords:</h2>
-  <ul class="word-cloud">
-    <% @keywords.each do |keyword| %>
-      <li><%= keyword.name %></li>
-    <% end %>
-  </ul>
 <% end %>
 
 <h2>Derived categories of experiences:</h2>
@@ -30,9 +21,9 @@
   <p>No derived categories could be found. Have you generated them from the <%= link_to "codebook", codebooks_path %>?</p>
 <% end %>
 
-<h2>TMI-Graph query:</h2>
+<h2>Interactive persona:</h2>
+<p><%= @response.graph_query[:explainer] %></p>
 <p class="code">
-  <%= @response.graph_query[:explainer] %><br />
   <a href="#query" id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @response.graph_query[:query] %></a>
 </p>
 
@@ -65,4 +56,13 @@
       <% end %>
     </tbody>
   </table>
+<% end %>
+
+<% if @keywords.any? %>
+  <h2>Identity Reflection Generated Keywords:</h2>
+  <ul class="word-cloud">
+    <% @keywords.each do |keyword| %>
+      <li><%= keyword.name %></li>
+    <% end %>
+  </ul>
 <% end %>

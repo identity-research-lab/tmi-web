@@ -224,7 +224,7 @@
  table {
    width: 100%;
    border: 3px solid var(--color-light-grey);
-   margin-top: 2em;
+   margin: 2em 0em;
  }
 
 tr.alt {

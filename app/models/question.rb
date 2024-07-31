@@ -23,7 +23,7 @@ class Question
     pronouns_exp: "Experience with Pronouns",
     pronouns_feel: "Pronoun Feelings",
     affinity: "Identity Affinities",
-    notes: "Other Notes"
+    notes: "Identity Reflection"
   }
   
   def self.from(key)
