@@ -1,8 +1,8 @@
-<%- title "Responses to #{@question.label} Question" %>
+<%- title "Participant Survey Responses to #{@question.label} Question" %>
 
-<h1><%= @responses.count %> Responses to "<%= @question.label %>".</h1>
+<h1><%= @responses.count %> Participant Survey Responses to "<%= @question.label %>".</h1>
 
-<h2>Reference</h3>
+<h2>Reference:</h3>
   <ul class="word-cloud">
     <li><%= link_to "Codes for #{@question.label}", codebook_path(@question.key), class: "jump-link" %></li>
   </ul>
@@ -10,7 +10,7 @@
 <table>
   <thead>
     <tr>
-      <th>Response</th>
+      <th>Survey Response</th>
       <th>Answer</th>
       <th><%= link_to "Codes", codebook_path(@question.key), class: "jump-link-light" %></th>
     </tr>

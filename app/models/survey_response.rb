@@ -78,7 +78,7 @@ class SurveyResponse < ApplicationRecord
 
   def graph_query
     {
-      explainer: "// Return the persona (and all of its relations) that corresponds to this survey response.",
+      explainer: "Access and explore this participant's response data (and all of its relationships) as an Interactive Persona in the TMI-Graph app.",
       query: "MATCH (p:Persona)-[]-(n) WHERE p.permalink=\"#{permalink}\" RETURN p,n"
     }
   end
