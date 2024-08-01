@@ -1,3 +1,5 @@
+# Experiences defines the unique relation (edge) between a Persona and a Code.
+
 class Experiences
   
   include ActiveGraph::Relationship

@@ -1,3 +1,4 @@
+# This background job performs the Category derivation process.
 class CategoryExtractorJob
     
   include Sidekiq::Job
