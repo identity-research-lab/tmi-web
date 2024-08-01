@@ -94,6 +94,8 @@
 
   <section class="description">
     
+<p>A <a href="Persona.html"><code>Persona</code></a> is a composite entity linking survey responses, codes, identities, and keywords. Each <a href="Persona.html"><code>Persona</code></a> reflects the unique characteristics captured about a specific study participant.</p>
+
   </section>
 
   <section id="5Buntitled-5D" class="documentation-section">
@@ -117,10 +119,10 @@
         </div>
 
         <div class="method-description">
-          
+          <p>Traverses the codes-[]-categories relationship to return a list of unique Categories.</p>
 
           <div class="method-source-code" id="categories-source">
-            <pre><span class="ruby-comment"># File app/models/persona.rb, line 15</span>
+            <pre><span class="ruby-comment"># File app/models/persona.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">categories</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">codes</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:categories</span>).<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">uniq</span>
 <span class="ruby-keyword">end</span></pre>

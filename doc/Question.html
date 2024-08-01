@@ -92,6 +92,8 @@
 
   <section class="description">
     
+<p>A <a href="Question.html"><code>Question</code></a> is a representation of a survey question. This class provides convenience methods for navigating question keys and labels, as well as selecting topical subsets of questions. For now, Questions are hardcoded and not persisted.</p>
+
   </section>
 
   <section id="5Buntitled-5D" class="documentation-section">
@@ -153,7 +155,7 @@
           
 
           <div class="method-source-code" id="experience_questions-source">
-            <pre><span class="ruby-comment"># File app/models/question.rb, line 33</span>
+            <pre><span class="ruby-comment"># File app/models/question.rb, line 36</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">experience_questions</span>
   <span class="ruby-constant">QUESTIONS</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">select</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">k</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-string">&quot;_exp&quot;</span>)}
 <span class="ruby-keyword">end</span></pre>
@@ -176,7 +178,7 @@
           
 
           <div class="method-source-code" id="freeform_questions-source">
-            <pre><span class="ruby-comment"># File app/models/question.rb, line 41</span>
+            <pre><span class="ruby-comment"># File app/models/question.rb, line 44</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">freeform_questions</span>
   [<span class="ruby-value">:pronouns_feel</span>, <span class="ruby-value">:affinity</span>, <span class="ruby-value">:notes</span>]
 <span class="ruby-keyword">end</span></pre>
@@ -199,7 +201,7 @@
           
 
           <div class="method-source-code" id="from-source">
-            <pre><span class="ruby-comment"># File app/models/question.rb, line 29</span>
+            <pre><span class="ruby-comment"># File app/models/question.rb, line 32</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">from</span>(<span class="ruby-identifier">key</span>)
   <span class="ruby-identifier">new</span>(<span class="ruby-value">key:</span> <span class="ruby-identifier">key</span>, <span class="ruby-value">label:</span> <span class="ruby-constant">QUESTIONS</span>[<span class="ruby-identifier">key</span>.<span class="ruby-identifier">to_sym</span>])
 <span class="ruby-keyword">end</span></pre>
@@ -222,7 +224,7 @@
           
 
           <div class="method-source-code" id="identity_questions-source">
-            <pre><span class="ruby-comment"># File app/models/question.rb, line 37</span>
+            <pre><span class="ruby-comment"># File app/models/question.rb, line 40</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">identity_questions</span>
   <span class="ruby-constant">QUESTIONS</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">select</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">k</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-string">&quot;_given&quot;</span>)}
 <span class="ruby-keyword">end</span></pre>
@@ -245,7 +247,7 @@
           
 
           <div class="method-source-code" id="new-source">
-            <pre><span class="ruby-comment"># File app/models/question.rb, line 45</span>
+            <pre><span class="ruby-comment"># File app/models/question.rb, line 48</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">attrs</span>={})
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">key</span> = <span class="ruby-identifier">attrs</span>[<span class="ruby-value">:key</span>]
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">label</span> = <span class="ruby-identifier">attrs</span>[<span class="ruby-value">:label</span>]
@@ -277,7 +279,7 @@
           
 
           <div class="method-source-code" id="codes_field-source">
-            <pre><span class="ruby-comment"># File app/models/question.rb, line 55</span>
+            <pre><span class="ruby-comment"># File app/models/question.rb, line 58</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">codes_field</span>
   <span class="ruby-node">&quot;#{self.key}_codes&quot;</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;given&quot;</span>,<span class="ruby-string">&quot;id&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -300,7 +302,7 @@
           
 
           <div class="method-source-code" id="field-source">
-            <pre><span class="ruby-comment"># File app/models/question.rb, line 51</span>
+            <pre><span class="ruby-comment"># File app/models/question.rb, line 54</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">field</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">label</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;class&quot;</span>,<span class="ruby-string">&quot;klass&quot;</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;id&quot;</span>,<span class="ruby-string">&quot;given&quot;</span>)  
 <span class="ruby-keyword">end</span></pre>

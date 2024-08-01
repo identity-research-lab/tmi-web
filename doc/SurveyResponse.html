@@ -93,6 +93,8 @@
 
   <section class="description">
     
+<p>A <a href="SurveyResponse.html"><code>SurveyResponse</code></a> is a complete collection of answers given in response to the survey Questions. <a href="SurveyResponse.html"><code>SurveyResponse</code></a> objects are upserted when a survey data CSV file is imported.</p>
+
   </section>
 
   <section id="5Buntitled-5D" class="documentation-section">
@@ -125,12 +127,12 @@
         </div>
 
         <div class="method-description">
-          
+          <p>Hydrates a <a href="SurveyResponse.html"><code>SurveyResponse</code></a> object from a record in the imported CSV data file.</p>
 
           <div class="method-source-code" id="from-source">
-            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 22</span>
+            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 26</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">from</span>(<span class="ruby-identifier">record</span>)
-   <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">REQUIRED_FIELDS</span>.<span class="ruby-identifier">select</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">field</span><span class="ruby-operator">|</span> <span class="ruby-identifier">record</span>[<span class="ruby-identifier">field</span>.<span class="ruby-identifier">to_s</span>].<span class="ruby-identifier">present?</span> }.<span class="ruby-identifier">count</span> <span class="ruby-operator">==</span> <span class="ruby-constant">REQUIRED_FIELDS</span>.<span class="ruby-identifier">count</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">REQUIRED_FIELDS</span>.<span class="ruby-identifier">select</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">field</span><span class="ruby-operator">|</span> <span class="ruby-identifier">record</span>[<span class="ruby-identifier">field</span>.<span class="ruby-identifier">to_s</span>].<span class="ruby-identifier">present?</span> }.<span class="ruby-identifier">count</span> <span class="ruby-operator">==</span> <span class="ruby-constant">REQUIRED_FIELDS</span>.<span class="ruby-identifier">count</span>
 
   <span class="ruby-identifier">pronouns_given</span> = <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;pronouns_given&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;self-describe&quot;</span> <span class="ruby-operator">?</span> <span class="ruby-node">&quot;#{record[&#39;pronouns_given_5_TEXT&#39;]} (self-described)&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;pronouns_given&#39;</span>]
   <span class="ruby-identifier">survey_response</span> = <span class="ruby-constant">SurveyResponse</span>.<span class="ruby-identifier">find_or_initialize_by</span>(<span class="ruby-value">response_id:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;ResponseId&#39;</span>])
@@ -174,10 +176,10 @@
         </div>
 
         <div class="method-description">
-          
+          <p>Given a file handle to a data file, parse the filel contents as CSV and hydrate <a href="SurveyResponse.html"><code>SurveyResponse</code></a> records in serial.</p>
 
           <div class="method-source-code" id="import-source">
-            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 15</span>
+            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 18</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">import</span>(<span class="ruby-identifier">file_handle</span>)
   <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">file_handle</span>, <span class="ruby-value">headers:</span> <span class="ruby-keyword">true</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">record</span><span class="ruby-operator">|</span>
     <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;Progress&#39;</span>].<span class="ruby-identifier">to_i</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;Progress&#39;</span>]
@@ -207,10 +209,10 @@
         </div>
 
         <div class="method-description">
-          
+          <p>Creates an <a href="ExportToGraphJob.html"><code>ExportToGraphJob</code></a> and pushes it into the background job queue.</p>
 
           <div class="method-source-code" id="enqueue_export_to_graph-source">
-            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 60</span>
+            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 67</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">enqueue_export_to_graph</span>
   <span class="ruby-constant">ExportToGraphJob</span>.<span class="ruby-identifier">perform_async</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -230,10 +232,10 @@
         </div>
 
         <div class="method-description">
-          
+          <p>Creates a <a href="KeywordExtractorJob.html"><code>KeywordExtractorJob</code></a> and pushes it into the background job queue.</p>
 
           <div class="method-source-code" id="enqueue_keyword_extraction-source">
-            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 56</span>
+            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 62</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">enqueue_keyword_extraction</span>
   <span class="ruby-constant">KeywordExtractorJob</span>.<span class="ruby-identifier">perform_async</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -253,10 +255,10 @@
         </div>
 
         <div class="method-description">
-          
+          <p>Displays the query and its explanation for locating the SurveyResponse’s associated <a href="Persona.html"><code>Persona</code></a> in the graph.</p>
 
           <div class="method-source-code" id="graph_query-source">
-            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 79</span>
+            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 90</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">graph_query</span>
   {
     <span class="ruby-value">explainer:</span> <span class="ruby-string">&quot;// Return the persona (and all of its relations) that corresponds to this survey response.&quot;</span>,
@@ -279,10 +281,10 @@
         </div>
 
         <div class="method-description">
-          
+          <p>Convenience method to pad ID.</p>
 
           <div class="method-source-code" id="identifier-source">
-            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 52</span>
+            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 57</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">identifier</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">rjust</span>(<span class="ruby-value">4</span>, <span class="ruby-string">&quot;0&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -302,10 +304,10 @@
         </div>
 
         <div class="method-description">
-          
+          <p>Calculates the permanent URL of the <a href="SurveyResponse.html"><code>SurveyResponse</code></a>, which is stored as a property on the associated <a href="Persona.html"><code>Persona</code></a>.</p>
 
           <div class="method-source-code" id="permalink-source">
-            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 71</span>
+            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 81</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">permalink</span>
   <span class="ruby-keyword">if</span> <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">env</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;development&quot;</span>
     <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">application</span>.<span class="ruby-identifier">routes</span>.<span class="ruby-identifier">url_helpers</span>.<span class="ruby-identifier">url_for</span>(<span class="ruby-value">controller:</span> <span class="ruby-string">&quot;survey_responses&quot;</span>, <span class="ruby-value">action:</span> <span class="ruby-string">&quot;show&quot;</span>, <span class="ruby-value">host:</span> <span class="ruby-string">&quot;localhost&quot;</span>, <span class="ruby-value">port:</span> <span class="ruby-value">3000</span>, <span class="ruby-value">id:</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>)
@@ -329,10 +331,10 @@
         </div>
 
         <div class="method-description">
-          
+          <p>Hydrates the associated <a href="Persona.html"><code>Persona</code></a> with data from the <a href="SurveyResponse.html"><code>SurveyResponse</code></a>. Note that this operation is destructive to a <a href="Persona.html"><code>Persona</code></a> that already exists.</p>
 
           <div class="method-source-code" id="to_graph-source">
-            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 64</span>
+            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 73</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_graph</span>
   <span class="ruby-constant">Persona</span>.<span class="ruby-identifier">find_or_initialize_by</span>(<span class="ruby-value">survey_response_id:</span> <span class="ruby-identifier">id</span>).<span class="ruby-identifier">destroy</span>
   <span class="ruby-identifier">populate_experience_codes</span>

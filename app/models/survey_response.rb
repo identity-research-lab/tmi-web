@@ -1,3 +1,5 @@
+# A SurveyResponse is a complete collection of answers given in response to the survey Questions.
+# SurveyResponse objects are upserted when a survey data CSV file is imported.
 class SurveyResponse < ApplicationRecord
 
   require 'csv'
@@ -12,6 +14,7 @@ class SurveyResponse < ApplicationRecord
 
   REQUIRED_FIELDS = [:age_given]
 
+  # Given a file handle to a data file, parse the filel contents as CSV and hydrate SurveyResponse records in serial.
   def self.import(file_handle)
     CSV.read(file_handle, headers: true).each do |record|
       next unless record['Progress'].to_i.to_s == record['Progress']
@@ -19,8 +22,9 @@ class SurveyResponse < ApplicationRecord
     end
   end
 
+  # Hydrates a SurveyResponse object from a record in the imported CSV data file.
   def self.from(record)
-     return unless REQUIRED_FIELDS.select{ |field| record[field.to_s].present? }.count == REQUIRED_FIELDS.count
+    return unless REQUIRED_FIELDS.select{ |field| record[field.to_s].present? }.count == REQUIRED_FIELDS.count
 
     pronouns_given = record['pronouns_given'] == "self-describe" ? "#{record['pronouns_given_5_TEXT']} (self-described)" : record['pronouns_given']
     survey_response = SurveyResponse.find_or_initialize_by(response_id: record['ResponseId'])
@@ -49,18 +53,23 @@ class SurveyResponse < ApplicationRecord
     )
   end
 
+  # Convenience method to pad ID.
   def identifier
     self.id.to_s.rjust(4, "0")
   end
 
+  # Creates a KeywordExtractorJob and pushes it into the background job queue.
   def enqueue_keyword_extraction
     KeywordExtractorJob.perform_async(self.id)
   end
 
+  # Creates an ExportToGraphJob and pushes it into the background job queue.
   def enqueue_export_to_graph
     ExportToGraphJob.perform_async(self.id)
   end
 
+  # Hydrates the associated Persona with data from the SurveyResponse.
+  # Note that this operation is destructive to a Persona that already exists.
   def to_graph
     Persona.find_or_initialize_by(survey_response_id: id).destroy
     populate_experience_codes
@@ -68,6 +77,7 @@ class SurveyResponse < ApplicationRecord
     enqueue_keyword_extraction
   end
 
+  # Calculates the permanent URL of the SurveyResponse, which is stored as a property on the associated Persona.
   def permalink
     if Rails.env == "development"
       Rails.application.routes.url_helpers.url_for(controller: "survey_responses", action: "show", host: "localhost", port: 3000, id: self.id)
@@ -76,6 +86,7 @@ class SurveyResponse < ApplicationRecord
     end
   end
 
+  # Displays the query and its explanation for locating the SurveyResponse's associated Persona in the graph.
   def graph_query
     {
       explainer: "// Return the persona (and all of its relations) that corresponds to this survey response.",

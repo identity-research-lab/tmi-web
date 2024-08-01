@@ -94,6 +94,8 @@
 
   <section class="description">
     
+<p>Keywords are the nouns extracted from a ‘corpus’ consisting of the exact text of certain freeform response fields. The extraction is performed using AI assistance, so results are nondeterminative and must be assessed for bias by the researchers.</p>
+
   </section>
 
   <section id="5Buntitled-5D" class="documentation-section">
@@ -105,7 +107,7 @@
       </header>
       <dl>
         <dt id="PROMPT">PROMPT
-        <dd>
+        <dd><p>This is the prompt passed to the AI agent to serve as instructions for extracting Keywords.</p>
       </dl>
     </section>
 
@@ -126,10 +128,10 @@
         </div>
 
         <div class="method-description">
-          
+          <p>Regenerates <a href="Keyword.html"><code>Keyword</code></a> objects based on a the “identity reflection / notes” field. This method uses the Clients::OpenAi client passing the codes as an argument to the prompt. The agent returns an array of nouns, which are then captured as <a href="Keyword.html"><code>Keyword</code></a> objects.</p>
 
           <div class="method-source-code" id="from-source">
-            <pre><span class="ruby-comment"># File app/models/keyword.rb, line 24</span>
+            <pre><span class="ruby-comment"># File app/models/keyword.rb, line 29</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">from</span>(<span class="ruby-identifier">survey_response_id</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">survey_response</span> = <span class="ruby-constant">SurveyResponse</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">survey_response_id</span>.<span class="ruby-identifier">to_i</span>)
   <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">persona</span> = <span class="ruby-constant">Persona</span>.<span class="ruby-identifier">find_by</span>(<span class="ruby-value">survey_response_id:</span> <span class="ruby-identifier">survey_response_id</span>.<span class="ruby-identifier">to_i</span>)

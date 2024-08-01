@@ -1,5 +1,4 @@
 # ReflectsOn defines the unique relation (edge) between a Persona and a Keyword.
-
 class ReflectsOn
   
   include ActiveGraph::Relationship

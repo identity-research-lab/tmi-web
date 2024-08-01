@@ -94,6 +94,8 @@
 
   <section class="description">
     
+<p>An <a href="Identity.html"><code>Identity</code></a> is a word or phrase used by a survey participant to self-describe. Identities have associated contexts.</p>
+
   </section>
 
   <section id="5Buntitled-5D" class="documentation-section">
@@ -117,10 +119,10 @@
         </div>
 
         <div class="method-description">
-          
+          <p>Generates a hash consisting of Identities and their number of occurrences.</p>
 
           <div class="method-source-code" id="histogram-source">
-            <pre><span class="ruby-comment"># File app/models/identity.rb, line 14</span>
+            <pre><span class="ruby-comment"># File app/models/identity.rb, line 16</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">histogram</span>(<span class="ruby-identifier">context</span>)
   <span class="ruby-identifier">context</span> = <span class="ruby-identifier">context</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;_given&quot;</span>,<span class="ruby-string">&quot;&quot;</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;klass&quot;</span>,<span class="ruby-string">&quot;class&quot;</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;_&quot;</span>,<span class="ruby-string">&quot;-&quot;</span>)
   <span class="ruby-identifier">where</span>(<span class="ruby-value">context:</span> <span class="ruby-identifier">context</span>).<span class="ruby-identifier">query_as</span>(<span class="ruby-value">:i</span>).<span class="ruby-identifier">with</span>(<span class="ruby-string">&#39;i, count{(i)-[:IDENTIFIES_WITH]-(p:Persona)} AS c&#39;</span>).<span class="ruby-identifier">return</span>(<span class="ruby-string">&#39;i.name, c&#39;</span>).<span class="ruby-identifier">order</span>(<span class="ruby-string">&#39;c DESC&#39;</span>).<span class="ruby-identifier">inject</span>({}) {<span class="ruby-operator">|</span><span class="ruby-identifier">h</span>,<span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">i</span>.<span class="ruby-identifier">values</span>[<span class="ruby-value">0</span>]] <span class="ruby-operator">||=</span> <span class="ruby-value">0</span>; <span class="ruby-identifier">h</span>[<span class="ruby-identifier">i</span>.<span class="ruby-identifier">values</span>[<span class="ruby-value">0</span>]] <span class="ruby-operator">+=</span> <span class="ruby-identifier">i</span>.<span class="ruby-identifier">values</span>[<span class="ruby-value">1</span>]; <span class="ruby-identifier">h</span>}
