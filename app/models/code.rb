@@ -1,3 +1,6 @@
+# A Code is a label applied to a group of related responses within a provided context.
+# For example, a Code like "self-reflects" may be be applied to one or more responses to the Age Experience question.
+
 class Code
   include ActiveGraph::Node
 
@@ -14,6 +17,7 @@ class Code
   has_many :out, :personas, rel_class: :Experiences
   has_many :in, :categories, rel_class: :CategorizedAs
 
+  # Given a context, generates a hash with unique Codes as keys and the counts of its uses as values.
   def self.histogram(context)
     context = context.gsub("_exp","").gsub("klass","class").gsub("_","-")
     where(context: context).query_as(:t).with('t, count{(t)-[:EXPERIENCES]-()} AS c').where('c > 0').order('c DESC').return('t.name, c').inject({}) {|h,t| h[t.values[0]] ||= 0; h[t.values[0]] += t.values[1]; h}

@@ -1,3 +1,4 @@
+# This background job hydrates the graph from a SurveyResponse.
 class ExportToGraphJob
 
   include Sidekiq::Job

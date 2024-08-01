@@ -1,3 +1,6 @@
+# A Question is a representation of a survey question. 
+# This class provides convenience methods for navigating question keys and labels, as well as selecting topical subsets of questions.
+# For now, Questions are hardcoded and not persisted.
 class Question
 
   attr_accessor :key, :label
