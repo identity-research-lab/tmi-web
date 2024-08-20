@@ -1,4 +1,4 @@
-# This background job hydrates the graph from a SurveyResponse.
+# This background job triggers sentiment analysis on the identified SurveyResponse.
 class SentimentAnalysisJob
 
   include Sidekiq::Job
