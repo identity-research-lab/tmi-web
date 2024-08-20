@@ -14,6 +14,19 @@ class SurveyResponse < ApplicationRecord
 
   REQUIRED_FIELDS = [:age_given]
 
+  # This is the prompt passed to the AI agent to serve as instructions for sentiment analysis.
+  SENTIMENT_PROMPT = %{
+    You are a social researcher doing textual analysis. Perform sentiment analysis against the provided text, classifying it as "positive", "negative", or "neutral". Return the classification encoded as JSON in the following format:
+
+    {
+      "sentiment" : "positive"
+    }
+
+    The text to perform sentiment analysis on is as follows:
+
+  }
+
+
   # Given a file handle to a data file, parse the filel contents as CSV and hydrate SurveyResponse records in serial.
   def self.import(file_handle)
     CSV.read(file_handle, headers: true).each do |record|
@@ -102,6 +115,18 @@ class SurveyResponse < ApplicationRecord
       survey_response_id: id,
       permalink: permalink
     )
+  end
+
+  # Calculates and sets the sentiment based on a the "identity reflection / notes" field.
+  # This method uses the Clients::OpenAi client passing the text of the reflection as an
+  # argument to the prompt. The agent returns a classification, which is written to the
+  # SurveyResponse record.
+  def classify_sentiment
+    response = Clients::OpenAi.request("#{SENTIMENT_PROMPT} #{self.notes}")
+    return unless response['sentiment'].present?
+    classification = response['sentiment'].strip.downcase
+    update_attribute(:sentiment, classification)
+    return classification
   end
 
   def populate_experience_codes
