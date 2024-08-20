@@ -14,6 +14,7 @@
    --color-light-grey: #eee;
    --color-red: #ff3333;
    --color-green: #99CC00;
+   --color-green-highlight: #aea;
    --color-yellow: #FFFF99;
    --color-blue: #CCFFFF;
    --color-red-tint: #600;
@@ -592,6 +593,21 @@ th a:hover {
     background: var(--color-red);
     opacity: 0.5;
     color: var(--color-white);
+  }
+
+  .sentiment {
+  }
+
+  .sentiment-positive {
+    background-color: var(--color-green-highlight);
+  }
+
+  .sentiment-neutral {
+    background-color: var(--color-light-grey);
+  }
+
+  .sentiment-negative {
+    background-color: var(--color-red-highlight);
   }
 
   .word-cloud {

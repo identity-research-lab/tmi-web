@@ -8,11 +8,25 @@ class SurveyResponse < ApplicationRecord
   before_save :sanitize_array_values
   after_save_commit :enqueue_export_to_graph
   after_create :enqueue_keyword_extraction
+  after_create :enqueue_sentiment_analysis
 
   validates_presence_of :response_id
   validates_uniqueness_of :response_id
 
   REQUIRED_FIELDS = [:age_given]
+
+  # This is the prompt passed to the AI agent to serve as instructions for sentiment analysis.
+  SENTIMENT_PROMPT = %{
+    You are a social science researcher doing textual analysis on survey data. Perform sentiment analysis against the provided text, classifying it as "positive", "negative", or "neutral". Return the classification encoded as JSON in the following format:
+
+    {
+      "sentiment" : "positive"
+    }
+
+    The text to perform sentiment analysis on is as follows:
+
+  }
+
 
   # Given a file handle to a data file, parse the filel contents as CSV and hydrate SurveyResponse records in serial.
   def self.import(file_handle)
@@ -68,6 +82,11 @@ class SurveyResponse < ApplicationRecord
     ExportToGraphJob.perform_async(self.id)
   end
 
+  # Creates a SentimentAnalysisJob and pushes it into the background job queue.
+  def enqueue_sentiment_analysis
+    SentimentAnalysisJob.perform_async(self.id)
+  end
+
   # Hydrates the associated Persona with data from the SurveyResponse.
   # Note that this operation is destructive to a Persona that already exists.
   def to_graph
@@ -75,6 +94,18 @@ class SurveyResponse < ApplicationRecord
     populate_experience_codes
     populate_id_codes
     enqueue_keyword_extraction
+  end
+
+  # Calculates and sets the sentiment based on a the "identity reflection / notes" field.
+  # This method uses the Clients::OpenAi client passing the text of the reflection as an
+  # argument to the prompt. The agent returns a classification, which is written to the
+  # SurveyResponse record.
+  def classify_sentiment
+    response = Clients::OpenAi.request("#{SENTIMENT_PROMPT} #{self.notes}")
+    return unless response['sentiment'].present?
+    classification = response['sentiment'].strip.downcase
+    update_attribute(:sentiment, classification)
+    return classification
   end
 
   # Calculates the permanent URL of the SurveyResponse, which is stored as a property on the associated Persona.

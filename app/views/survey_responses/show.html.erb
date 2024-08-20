@@ -58,8 +58,15 @@
   </table>
 <% end %>
 
+<% if @response.sentiment.present? %>
+  <h2>Sentiment analysis</h2>
+  <p>
+    The overall sentiment of the identity reflection response is <span class="sentiment sentiment-<%= @response.sentiment %>"><%= @response.sentiment %></span>.
+  </p>
+<% end %>
+
 <% if @keywords.any? %>
-  <h2>Identity Reflection Generated Keywords:</h2>
+  <h2>Generated keywords from identity reflection:</h2>
   <ul class="word-cloud">
     <% @keywords.each do |keyword| %>
       <li><%= keyword.name %></li>

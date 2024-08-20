@@ -1,10 +1,10 @@
-# A Question is a representation of a survey question. 
+# A Question is a representation of a survey question.
 # This class provides convenience methods for navigating question keys and labels, as well as selecting topical subsets of questions.
 # For now, Questions are hardcoded and not persisted.
 class Question
 
   attr_accessor :key, :label
-  
+
   QUESTIONS = {
     age_given: "Age",
     age_exp: "Experience with Age",
@@ -28,7 +28,7 @@ class Question
     affinity: "Identity Affinities",
     notes: "Identity Reflection"
   }
-  
+
   def self.from(key)
     new(key: key, label: QUESTIONS[key.to_sym])
   end
@@ -40,23 +40,23 @@ class Question
   def self.identity_questions
     QUESTIONS.keys.select{|k| k.to_s.include?("_given")}
   end
-  
+
   def self.freeform_questions
     [:pronouns_feel, :affinity, :notes]
   end
-  
+
   def initialize(attrs={})
     self.key = attrs[:key]
     self.label = attrs[:label]
     self
   end
-  
+
   def field
-    self.label.gsub("class","klass").gsub("id","given")  
+    self.label.gsub("class","klass").gsub("id","given")
   end
-  
+
   def codes_field
     "#{self.key}_codes".gsub("given","id")
   end
-    
+
 end
