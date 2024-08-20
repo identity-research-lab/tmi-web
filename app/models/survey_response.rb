@@ -74,7 +74,6 @@ class SurveyResponse < ApplicationRecord
     Persona.find_or_initialize_by(survey_response_id: id).destroy
     populate_experience_codes
     populate_id_codes
-    enqueue_keyword_extraction
   end
 
   # Calculates the permanent URL of the SurveyResponse, which is stored as a property on the associated Persona.
