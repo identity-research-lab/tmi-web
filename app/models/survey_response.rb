@@ -8,7 +8,7 @@ class SurveyResponse < ApplicationRecord
   before_save :sanitize_array_values
   after_save_commit :enqueue_export_to_graph
   after_create :enqueue_keyword_extraction
-  after_create :classify_sentiment
+  after_create :enqueue_sentiment_analysis
 
   validates_presence_of :response_id
   validates_uniqueness_of :response_id
