@@ -93,6 +93,7 @@ class SurveyResponse < ApplicationRecord
     Persona.find_or_initialize_by(survey_response_id: id).destroy
     populate_experience_codes
     populate_id_codes
+    enqueue_keyword_extraction
   end
 
   # Calculates and sets the sentiment based on a the "identity reflection / notes" field.
