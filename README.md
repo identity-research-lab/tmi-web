@@ -6,7 +6,11 @@ TMI-Web is a social science research tool for managing, analyzing, coding, and v
 
 ## Setting up your local development environment
 
-TMI-Web has three primary components: the web application, the survey response database, and the persona database. Instructions for installing and running TMI-Web locally are provided below.
+TMI-Web has three primary components: the web application, the survey response database, and the persona database. 
+
+![image](https://github.com/CoralineAda/tmi-web/blob/main/diagrams/tmi-architecture.jpg)
+
+Instructions for installing and running TMI-Web locally are provided below.
  
 ### Install Ruby
 
