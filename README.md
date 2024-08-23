@@ -4,11 +4,15 @@ TMI-Web is a social science research tool for managing, analyzing, coding, and v
 
 [![Hippocratic License HL3-CORE](https://img.shields.io/static/v1?label=Hippocratic%20License&message=HL3-CORE&labelColor=5e2751&color=bc8c3d)](https://firstdonoharm.dev/version/3/0/core.html)
 
-## Setting up your local development environment
+## High-level architecture
 
 TMI-Web has three primary components: the web application, the survey response database, and the persona database. 
 
 ![image](https://github.com/CoralineAda/tmi-web/blob/main/diagrams/tmi-architecture.png)
+
+Survey data is exported from your survey platform as a comma-separated-value (CSV) file, then imported into TMI-Web using the browser interface. TMI-Web stores the survey response data in a relational database, and creates personas in a graph database as the survey data is analyzed.
+
+## Setting up your local development environment
 
 Instructions for installing and running TMI-Web locally are provided below.
  
@@ -34,6 +38,10 @@ You can install Neo4j from https://neo4j.com/product/neo4j-graph-database/
 
 Once installed, you will need to start Neo4j, most easily using the native application. Use the application to create an empty database called `tmi_graph`. You will need to manually start the database from the application each time prior to starting the Rails application.
 
+### Install Redis
+
+Use the package manager of your choice to install and run Redis. (Redis is used by TMI-Web as a queue for background jobs.) You can find instructions at https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/
+
 ### Install the Rails application
 
 TMI-Web uses Ruby on Rails as a web application framework. It also uses a number of specialized Ruby libraries called gems. To install everything that the web application needs, navigate in your terminal to the tmi-web directory that you cloned from Github. Then type
@@ -57,9 +65,9 @@ If you get an error, check that postgres is running on your system.
 
 From your local terminal, type:
 
-  rake neo4j:migrate
+    rake neo4j:migrate
 
-If you get an error, make sure that Neo4j is running and the tmi-web is started.
+If you get an error, make sure that Neo4j is running and that the `tmi_graph` database is started.
 
 ### Set environment variables
 
@@ -72,6 +80,14 @@ To create your local `.env` file, make a copy of `.env.example`. (Since this fil
     cp .env.example .env
     
 When you open the file in your editor, you'll see a list of key/value pairs that need filling in. Most of these are the API keys that TMI-Web needs to communicate with third-party services. Follow the instructions provided in the file to register for the appropriate API keys.
+
+### Start the background job runner
+
+From the root directory of tmi-web, launch Sidekiq by typing
+
+  bundle exec sidekiq
+
+You will see the log files for Sidekiq scroll into view. Sidekiq will continue running in the background until you terminate it with control-c.
 
 ### Start the application
 
@@ -98,26 +114,28 @@ To update the Neo4j database, type
 
     rake neo4j:migrate
     
-## Dev concerns
+## Developer tips
 
-### Start local sidekiq
-
-  bundle exec sidekiq
-
-### Clear sidekiq (background job) queue
+### Clear the sidekiq (background job) queue
 
   Sidekiq.redis(&:flushdb)
 
-### Backup production postgres database
+### Back up production postgresql database
+
+Navigate in your terminal to the `db` directory and run these commands
 
   heroku pg:backups:capture --app tmi-web
   heroku pg:backups:download --app tmi-web
 
-### Restore production postgres database to last db capture
+### Restore production postgresql database to last db capture
+
+Navigate in your terminal to the `db` directory and run these commands
 
   heroku pg:backups:restore --app tmi-web
 
-### Load postgres database backup into local db
+### Load postgresql database backup into local db
+
+Navigate in your terminal to the `db` directory and type
 
   pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d tmi_web_development db/latest.dump
 
@@ -129,12 +147,12 @@ To update the Neo4j database, type
 
   rdoc -op doc
 
-## Dashboards
+## Links
 
 ### neo4j hosting
 
   https://console.neo4j.io
 
-### ChatGPT API dashboard
+### OpenAI API dashboard
 
   https://platform.openai.com
