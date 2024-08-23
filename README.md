@@ -8,7 +8,7 @@ TMI-Web is a social science research tool for managing, analyzing, coding, and v
 
 TMI-Web has three primary components: the web application, the survey response database, and the persona database. 
 
-![image](https://github.com/CoralineAda/tmi-web/blob/main/diagrams/tmi-architecture.jpg)
+![image](https://github.com/CoralineAda/tmi-web/blob/main/diagrams/tmi-architecture.png)
 
 Instructions for installing and running TMI-Web locally are provided below.
  
