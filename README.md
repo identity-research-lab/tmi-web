@@ -63,6 +63,7 @@ You should see the output logs from the application begin to scroll into view. T
 
 Now that the application has been started, visit `localhost:3000` in your web browser.
 
+
 ## Dev concerns
 
 ### Start local sidekiq
