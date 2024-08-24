@@ -1,6 +1,7 @@
 # A Code is a label applied to a group of related responses within a provided context.
 # For example, a Code like "self-reflects" may be be applied to one or more responses to the Age Experience question.
-
+# Since codes are contextual, they are not unique. If "self-reflects" is coded for both Gender Experience and Age Experience,
+# there will be two distinct Codes, each with the apppropriate context.
 class Code
   include ActiveGraph::Node
 
