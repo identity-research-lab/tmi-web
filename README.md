@@ -91,11 +91,11 @@ If you get an error, make sure that Neo4j is running and that the `tmi_graph` da
 
 ### Set environment variables
 
-Before you start the application for the first time, there are some global environment variables that you need to set. Rails will look for them in a file named `.env` in the root tmi-web directory. 
+Before you start the application for the first time, there are some global environment variables that you need to set. Rails will look for them in a file named `.env` in the root `tmi-web` directory. 
 
-*IMPORTANT* This file will contain your sensitive API keys, so you want to keep it secure. Do not commit the `.env` to a source code repository, even a private one.
+*IMPORTANT!* This file will contain your sensitive API keys, so you want to keep it secure. Do not commit the `.env` file to a source code repository, even a private one.
 
-To create your local `.env` file, make a copy of `.env.example`. (Since this filename starts with a `.`, it will be hidden by default. Use `ls -a` in your terminal to list all files in the directory, including invisible ones.) In the root directory of tmi-web, type:
+To create your local `.env` file, make a copy of `.env.example`. (This filename starts with a "." so it will be hidden by default. Use `ls -a` in your terminal to list all files in the directory, including invisible ones.) To make a copy of the example file, type:
 
     cp .env.example .env
     
@@ -115,7 +115,7 @@ To start TMI-web, type
 
     bin/rails server
     
-You should see the output logs from the application begin to scroll into view. The application will continue running in that terminal shell until you interrupt the process (with cmd-c) or otherwise terminate the application. Shutting down the application can be safely done at any time.
+You should see the output logs from the application begin to scroll into view. The application will continue running in that terminal shell until you interrupt the process (with `control-c`) or otherwise terminate the application. Shutting down the application can be safely done at any time.
 
 Now that the application has been started, visit [http://localhost:3000](http://localhost:3000) in your web browser.
 
