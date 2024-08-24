@@ -28,7 +28,7 @@ In your terminal, navigate to the folder you use to store your other code projec
 
 Make a local copy of this repository by typing:
 
-    git clone git@github.com:CoralineAda/tmi-web.git
+    git clone git@github.com:identity-research-lab/tmi-web.git
     
 Navigate to the `tmi-web` directory with:
     
