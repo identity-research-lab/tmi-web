@@ -93,7 +93,7 @@ If you get an error, make sure that Neo4j is running and that the `tmi_graph` da
 
 Before you start the application for the first time, there are some global environment variables that you need to set. Rails will look for them in a file named `.env` in the root `tmi-web` directory. 
 
-*IMPORTANT* This file will contain your sensitive API keys, so you want to keep it secure. Do not commit the `.env` to a source code repository, even a private one.
+*IMPORTANT!* This file will contain your sensitive API keys, so you want to keep it secure. Do not commit the `.env` file to a source code repository, even a private one.
 
 To create your local `.env` file, make a copy of `.env.example`. (This filename starts with a "." so it will be hidden by default. Use `ls -a` in your terminal to list all files in the directory, including invisible ones.) To make a copy of the example file, type:
 
