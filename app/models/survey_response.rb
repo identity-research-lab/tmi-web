@@ -6,7 +6,7 @@ class SurveyResponse < ApplicationRecord
   require 'openai'
 
   before_save :sanitize_array_values
-  after_save_commit :enqueue_export_to_graph
+  after_save_commit :export_to_graph
   after_create :enqueue_keyword_extraction
   after_create :enqueue_sentiment_analysis
 
@@ -77,25 +77,17 @@ class SurveyResponse < ApplicationRecord
     KeywordExtractorJob.perform_async(self.id)
   end
 
-  # Creates an ExportToGraphJob and pushes it into the background job queue.
-  def enqueue_export_to_graph
-    ExportToGraphJob.perform_async(self.id)
-  end
-
   # Creates a SentimentAnalysisJob and pushes it into the background job queue.
   def enqueue_sentiment_analysis
     SentimentAnalysisJob.perform_async(self.id)
   end
 
-  # Hydrates the associated Persona with data from the SurveyResponse.
-  # Note that this operation is destructive to a Persona that already exists.
-  def to_graph
-    Persona.find_or_initialize_by(survey_response_id: id).destroy
-    populate_experience_codes
-    populate_id_codes
-    enqueue_keyword_extraction
+  # Invokes a service to update the graph databases from this SurveyResponse object.
+  def export_to_graph
+    ExportToGraph.perform(self.id)
   end
-
+  
+  # TODO move this to a service worker
   # Calculates and sets the sentiment based on a the "identity reflection / notes" field.
   # This method uses the Clients::OpenAi client passing the text of the reflection as an
   # argument to the prompt. The agent returns a classification, which is written to the
@@ -117,6 +109,7 @@ class SurveyResponse < ApplicationRecord
     end
   end
 
+  # TODO this belongs on the Persona
   # Displays the query and its explanation for locating the SurveyResponse's associated Persona in the graph.
   def graph_query
     {
@@ -127,56 +120,7 @@ class SurveyResponse < ApplicationRecord
 
   private
 
-  def persona
-    @persona ||= Persona.find_or_create_by(
-      name: "Persona #{identifier}",
-      survey_response_id: id,
-      permalink: permalink
-    )
-  end
-
-  def populate_experience_codes
-    {
-      "age" => age_exp_codes,
-      "class" => klass_exp_codes,
-      "race-ethnicity" => race_ethnicity_exp_codes,
-      "religion" => religion_exp_codes,
-      "disability" => disability_exp_codes,
-      "neurodiversity" => neurodiversity_exp_codes,
-      "gender" => gender_exp_codes,
-      "lgbtqia" => lgbtqia_exp_codes,
-      "pronouns" => pronouns_exp_codes,
-      "pronouns-feel" => pronouns_feel_codes,
-      "affinity" => affinity_codes,
-      "notes" => notes_codes
-    }.each do |context, codes|
-      codes.each do |name|
-        code = Code.find_or_create_by(name: name, context: context)
-        Experiences.create(from_node: persona, to_node: code)
-      end
-    end
-
-  end
-
-  def populate_id_codes
-    {
-      "age" => age_id_codes,
-      "class" => klass_id_codes,
-      "race-ethnicity" => race_ethnicity_id_codes,
-      "religion" => religion_id_codes,
-      "disability" => disability_id_codes,
-      "neurodiversity" => neurodiversity_id_codes,
-      "gender" => gender_id_codes,
-      "lgbtqia" => lgbtqia_id_codes,
-      "pronouns" => pronouns_id_codes
-    }.each do |context, codes|
-      codes.each do |name|
-        identity = Identity.find_or_create_by(name: name, context: context)
-        IdentifiesWith.create(from_node: persona, to_node: identity)
-      end
-    end
-  end
-
+  # TODO Clean this up
   def sanitize_array_values
     self.age_exp_codes = age_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
     self.klass_exp_codes = klass_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
