@@ -115,7 +115,7 @@ To start TMI-web, type
 
     bin/rails server
     
-You should see the output logs from the application begin to scroll into view. The application will continue running in that terminal shell until you interrupt the process (with cmd-c) or otherwise terminate the application. Shutting down the application can be safely done at any time.
+You should see the output logs from the application begin to scroll into view. The application will continue running in that terminal shell until you interrupt the process (with `control-c`) or otherwise terminate the application. Shutting down the application can be safely done at any time.
 
 Now that the application has been started, visit [http://localhost:3000](http://localhost:3000) in your web browser.
 
