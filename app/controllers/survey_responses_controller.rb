@@ -50,11 +50,7 @@ class SurveyResponsesController < ApplicationController
     @response.update(sanitized_params)
     @question = Question.from(params["question"])
 
-    response do |format|
-      format.turbo_stream { 
-        turbostream.replace("#{@question.key}_frame", partial: "/survey_responses/form", locals: { response: @response, question: @question })
-      }
-    end
+    render turbo_stream: turbo_stream.replace("#{@question.key}_frame", partial: "/survey_responses/form", locals: { response: @response, question: @question })
   end
   
   def enqueue_keywords
