@@ -12,6 +12,7 @@ class ExportToGraph
 
 	def perform
 		return false unless survey_response
+		Persona.find_or_initialize_by(survey_response_id: survey_response.id).destroy
 		populate_experience_codes
 		populate_id_codes
 		return true
@@ -22,9 +23,7 @@ class ExportToGraph
 	# Hydrates the associated Persona with data from the SurveyResponse.
 	# Note that this operation is destructive to a Persona that already exists.
 	def persona
-		return @persona if @persona
-		Persona.find_or_initialize_by(survey_response_id: survey_response.id).destroy
-		@persona = Persona.create(
+		@persona ||= Persona.create(
 			name: "Persona #{survey_response.identifier}",
 			survey_response_id: survey_response.id,
 			permalink: survey_response.permalink
@@ -49,7 +48,7 @@ class ExportToGraph
 		}.each do |context, codes|
 			codes.each do |name|
 				code = Code.find_or_create_by(name: name, context: context)
-				Experiences.create(from_node: persona, to_node: code)
+#				Experiences.create(from_node: persona, to_node: code)
 			end
 		end
 	
@@ -70,7 +69,7 @@ class ExportToGraph
 		}.each do |context, codes|
 			codes.each do |name|
 				identity = Identity.find_or_create_by(name: name, context: context)
-				IdentifiesWith.create(from_node: persona, to_node: identity)
+#				IdentifiesWith.create(from_node: persona, to_node: identity)
 			end
 		end
 	end
