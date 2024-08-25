@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Trashes</h1>
+
+<div id="trashes">
+  <% @trashes.each do |trash| %>
+    <%= render trash %>
+    <p>
+      <%= link_to "Show this trash", trash %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New trash", new_trash_path %>

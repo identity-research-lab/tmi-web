@@ -48,13 +48,14 @@ class SurveyResponsesController < ApplicationController
       sanitized_params[key] = value.join(",").split(",").reject(&:empty?).compact.map(&:strip).map(&:downcase)
     end
     @response.update(sanitized_params)
-    Rails.logger.info("!!! params = #{params}")
-    render partial: "/survey_responses/form", 
-      locals: { 
-        response: @response, 
-        question: Question.from(params["question"])
+    @question = Question.from(params["question"])
+
+    response do |format|
+      format.turbo_stream { 
+        turbostream.replace("#{@question.key}_frame", partial: "/survey_responses/form", locals: { response: @response, question: @question })
       }
     end
+  end
   
   def enqueue_keywords
     KeywordExtractorJob.perform_async(params[:survey_response_id])

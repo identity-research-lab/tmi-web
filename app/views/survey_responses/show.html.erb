@@ -28,9 +28,7 @@
 </p>
 
 <% Question::QUESTIONS.keys.map{|k| Question.from(k) }.each do |question| %>
-<%= turbo_frame_tag "#{question.key}_frame" do %>
-    <%= render "form", response: @response, question: question %>
-  <% end %>
+  <%= render "form", response: @response, question: question %>
 <% end %>
 
 <h2>Questions and responses:</h2>

@@ -1,0 +1,2 @@
+class Trash < ApplicationRecord
+end

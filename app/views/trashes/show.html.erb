@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @trash %>
+
+<div>
+  <%= link_to "Edit this trash", edit_trash_path(@trash) %> |
+  <%= link_to "Back to trashes", trashes_path %>
+
+  <%= button_to "Destroy this trash", @trash, method: :delete %>
+</div>
