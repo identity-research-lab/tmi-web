@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ImportFromCsv do
 
 	before do
-		allow_any_instance_of(SurveyResponse).to receive(:export_to_graph)
+		allow_any_instance_of(SurveyResponse).to receive(:enqueue_export_to_graph)
 		allow_any_instance_of(SurveyResponse).to receive(:enqueue_keyword_extraction)
 		allow_any_instance_of(SurveyResponse).to receive(:enqueue_sentiment_analysis)
 	end
