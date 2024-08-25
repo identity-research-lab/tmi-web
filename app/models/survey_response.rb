@@ -13,8 +13,6 @@ class SurveyResponse < ApplicationRecord
   validates_presence_of :response_id
   validates_uniqueness_of :response_id
 
-  REQUIRED_FIELDS = [:age_given]
-
   # This is the prompt passed to the AI agent to serve as instructions for sentiment analysis.
   SENTIMENT_PROMPT = %{
     You are a social science researcher doing textual analysis on survey data. Perform sentiment analysis against the provided text, classifying it as "positive", "negative", or "neutral". Return the classification encoded as JSON in the following format:
@@ -26,46 +24,6 @@ class SurveyResponse < ApplicationRecord
     The text to perform sentiment analysis on is as follows:
 
   }
-
-
-  # Given a file handle to a data file, parse the filel contents as CSV and hydrate SurveyResponse records in serial.
-  def self.import(file_handle)
-    CSV.read(file_handle, headers: true).each do |record|
-      next unless record['Progress'].to_i.to_s == record['Progress']
-      from(record)
-    end
-  end
-
-  # Hydrates a SurveyResponse object from a record in the imported CSV data file.
-  def self.from(record)
-    return unless REQUIRED_FIELDS.select{ |field| record[field.to_s].present? }.count == REQUIRED_FIELDS.count
-
-    pronouns_given = record['pronouns_given'] == "self-describe" ? "#{record['pronouns_given_5_TEXT']} (self-described)" : record['pronouns_given']
-    survey_response = SurveyResponse.find_or_initialize_by(response_id: record['ResponseId'])
-    survey_response.update(
-      age_given: record['age_given'],
-      age_exp: record['age_exp'],
-      klass_given: record['klass_given'],
-      klass_exp: record['klass_exp'],
-      race_ethnicity_given: record['race_ethnicity_given'],
-      race_ethnicity_exp: record['race_ethnicity_exp'],
-      religion_given: record['religion_given'],
-      religion_exp: record['religion_exp'],
-      disability_given: record['disability_given'],
-      disability_exp: record['disability_exp'],
-      neurodiversity_given: record['neurodiversity_given'],
-      neurodiversity_exp: record['neurodiversity_exp'],
-      gender_given: record['gender_given'],
-      gender_exp: record['gender_exp'],
-      lgbtqia_given: record['lgbtqia_given'],
-      lgbtqia_exp: record['lgbtqia_exp'],
-      pronouns_given: pronouns_given,
-      pronouns_exp: record['pronouns_exp'],
-      pronouns_feel: record['pronouns_feel'],
-      affinity: record['affinity'],
-      notes: record['notes']
-    )
-  end
 
   # Convenience method to pad ID.
   def identifier
