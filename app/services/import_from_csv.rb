@@ -1,3 +1,4 @@
+# SurveyResponse objects are upserted when a survey data CSV file is imported.
 class ImportFromCsv
 
 	attr_accessor :record, :survey_response

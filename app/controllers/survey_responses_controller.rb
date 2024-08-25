@@ -3,7 +3,7 @@ class SurveyResponsesController < ApplicationController
   USERS = { ENV['GENERAL_ADMISSION_USERNAME'] => ENV['GENERAL_ADMISSION_PASSWORD'] }
   
   before_action :authenticate
-  
+    
   def authenticate
     authenticate_or_request_with_http_digest("Application") do |name|
       USERS[name]
@@ -47,8 +47,14 @@ class SurveyResponsesController < ApplicationController
     response_params.each do |key, value| 
       sanitized_params[key] = value.join(",").split(",").reject(&:empty?).compact.map(&:strip).map(&:downcase)
     end
-    unless @response.update(sanitized_params)
-      render :edit, status: :unprocessable_entity
+    if @response.update(sanitized_params)
+      respond_to do |format|
+        format.html
+        format.turbo_stream
+      end
+#      render turbo_stream: turbo_stream.prepend "q_1", "HEY HEY HEY HEY HEY"
+    else
+      render :new, status: 422
     end
   end
   

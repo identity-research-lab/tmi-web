@@ -30,9 +30,8 @@ class ExportToGraph
 		)
 	end
 			
-	# TODO this is messy
 	def populate_experience_codes
-		{
+		contexts_and_codes = {
 			"age" => survey_response.age_exp_codes,
 			"class" => survey_response.klass_exp_codes,
 			"race-ethnicity" => survey_response.race_ethnicity_exp_codes,
@@ -45,7 +44,8 @@ class ExportToGraph
 			"pronouns-feel" => survey_response.pronouns_feel_codes,
 			"affinity" => survey_response.affinity_codes,
 			"notes" => survey_response.notes_codes
-		}.each do |context, codes|
+		}
+		contexts_and_codes.each do |context, codes|
 			codes.each do |name|
 				code = Code.find_or_create_by(name: name, context: context)
 				Experiences.create(from_node: persona, to_node: code)
@@ -54,9 +54,8 @@ class ExportToGraph
 	
 	end
 	
-	# TODO this is messy
 	def populate_id_codes
-		{
+		contexts_and_codes = {
 			"age" => survey_response.age_id_codes,
 			"class" => survey_response.klass_id_codes,
 			"race-ethnicity" => survey_response.race_ethnicity_id_codes,
@@ -66,7 +65,8 @@ class ExportToGraph
 			"gender" => survey_response.gender_id_codes,
 			"lgbtqia" => survey_response.lgbtqia_id_codes,
 			"pronouns" => survey_response.pronouns_id_codes
-		}.each do |context, codes|
+		}
+		contexts_and_codes.each do |context, codes|
 			codes.each do |name|
 				identity = Identity.find_or_create_by(name: name, context: context)
 				IdentifiesWith.create(from_node: persona, to_node: identity)
