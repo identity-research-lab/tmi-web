@@ -36,10 +36,11 @@ class SurveyResponsesController < ApplicationController
   end
   
   def create
-    SurveyResponse.import(params.permit(:csv)[:csv])
+    ImportFromCsv.perform(params.permit(:csv)[:csv])
     redirect_to survey_responses_path
   end
-  
+
+  # TODO this needs to be a JS call with a proper response to the page to indicate success/failure  
   def update
     @response = SurveyResponse.find(params[:id])
 
