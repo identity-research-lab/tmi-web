@@ -48,7 +48,7 @@ class ExportToGraph
 		}.each do |context, codes|
 			codes.each do |name|
 				code = Code.find_or_create_by(name: name, context: context)
-#				Experiences.create(from_node: persona, to_node: code)
+				Experiences.create(from_node: persona, to_node: code)
 			end
 		end
 	
@@ -69,7 +69,7 @@ class ExportToGraph
 		}.each do |context, codes|
 			codes.each do |name|
 				identity = Identity.find_or_create_by(name: name, context: context)
-#				IdentifiesWith.create(from_node: persona, to_node: identity)
+				IdentifiesWith.create(from_node: persona, to_node: identity)
 			end
 		end
 	end
