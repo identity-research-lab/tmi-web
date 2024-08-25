@@ -27,6 +27,12 @@
   <a href="#query" id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @response.graph_query[:query] %></a>
 </p>
 
+<% Question::QUESTIONS.keys.map{|k| Question.from(k) }.each do |question| %>
+<%= turbo_frame_tag "#{question.key}_frame" do %>
+    <%= render "form", response: @response, question: question %>
+  <% end %>
+<% end %>
+
 <h2>Questions and responses:</h2>
 <table>
   <thead>
@@ -38,7 +44,8 @@
   </thead>
   <tbody>
     <% counter = 0 %>
-    <% Question::QUESTIONS.keys.map{|k| Question.from(k) }.each do |question| %>
+    <% # Question::QUESTIONS.keys.map{|k| Question.from(k) }.each do |question| %>
+    <% [].each do |question| %>
       <% alt = counter % 2 == 1 ? "" : "alt" %>
       <% counter += 1 %>
       <tr class="<%= alt %>">

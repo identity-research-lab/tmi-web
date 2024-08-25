@@ -47,16 +47,14 @@ class SurveyResponsesController < ApplicationController
     response_params.each do |key, value| 
       sanitized_params[key] = value.join(",").split(",").reject(&:empty?).compact.map(&:strip).map(&:downcase)
     end
-    if @response.update(sanitized_params)
-      respond_to do |format|
-        format.html
-        format.turbo_stream
-      end
-#      render turbo_stream: turbo_stream.prepend "q_1", "HEY HEY HEY HEY HEY"
-    else
-      render :new, status: 422
+    @response.update(sanitized_params)
+    Rails.logger.info("!!! params = #{params}")
+    render partial: "/survey_responses/form", 
+      locals: { 
+        response: @response, 
+        question: Question.from(params["question"])
+      }
     end
-  end
   
   def enqueue_keywords
     KeywordExtractorJob.perform_async(params[:survey_response_id])
@@ -68,7 +66,7 @@ class SurveyResponsesController < ApplicationController
     def response_params
       params.require(:survey_response).permit(themes: [], age_exp_codes: [], klass_exp_codes: [], race_ethnicity_exp_codes: [], religion_exp_codes: [], disability_exp_codes: [], neurodiversity_exp_codes: [], gender_exp_codes: [], lgbtqia_exp_codes: [], age_id_codes: [], klass_id_codes: [], race_ethnicity_id_codes: [], religion_id_codes: [], disability_id_codes: [], neurodiversity_id_codes: [], gender_id_codes: [], lgbtqia_id_codes: [], pronouns_id_codes: [], pronouns_exp_codes: [], pronouns_feel_codes: [], affinity_codes: [], notes_codes: [])
     end
-
+    
 end
 
 

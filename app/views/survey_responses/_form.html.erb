@@ -1,10 +1,5 @@
-<td class="label"><%= link_to question.label, question_path(question.key), class: "jump-link" %></td>
-<td  class="response"><%= response.read_attribute(question.key) || "(Not answered)" %></td>
-<td class="form-entry">
-	<%= form_with model: response, remote: true do |f| %>
-		<% if response.respond_to?(question.key) && response.read_attribute(question.key).present? || response.read_attribute(question.codes_field).any? %>
-			<%= f.text_area question.codes_field, value: response.read_attribute(question.codes_field).try(:sort).try(:join, ', '), multiple: true %>
-			<%= f.submit "Save", class: "small", data: { turbo_frame: "coding_frame" } %>
-		<% end %>
-	<% end %>
-</td>
+<%= form_with model: response do |f| %>
+	<%= f.text_area question.codes_field, value: response.read_attribute(question.codes_field).try(:sort).try(:join, ', '), multiple: true %>
+	<%= hidden_field_tag "question", "#{question.key}" %>
+	<%= f.submit "Save", class: "small", data: { turbo_frame: "#{question.key}_frame" } %>
+<% end %>
