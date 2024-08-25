@@ -43,7 +43,9 @@ class SurveyResponsesController < ApplicationController
   # TODO this needs to be a JS call with a proper response to the page to indicate success/failure  
   def update
     @response = SurveyResponse.find(params[:id])
-
+    response_params.each do |key, value| 
+      response_params[key] = value.join(", ").split(", ").map(&:strip).map(&:downcase)
+    end
     unless @response.update(response_params)
       render :edit, status: :unprocessable_entity
     end

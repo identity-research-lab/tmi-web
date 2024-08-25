@@ -5,7 +5,7 @@ class SurveyResponse < ApplicationRecord
   require 'csv'
   require 'openai'
 
-  before_save :sanitize_array_values
+#  before_save :sanitize_array_values
   after_save_commit :export_to_graph
   after_create :enqueue_keyword_extraction
   after_create :enqueue_sentiment_analysis
@@ -78,29 +78,28 @@ class SurveyResponse < ApplicationRecord
 
   private
 
-  # TODO Clean this up
-  def sanitize_array_values
-    self.age_exp_codes = age_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
-    self.klass_exp_codes = klass_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
-    self.race_ethnicity_exp_codes = race_ethnicity_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
-    self.religion_exp_codes = religion_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
-    self.disability_exp_codes = disability_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
-    self.neurodiversity_exp_codes = neurodiversity_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
-    self.gender_exp_codes = gender_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
-    self.lgbtqia_exp_codes = lgbtqia_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
-    self.pronouns_exp_codes =  pronouns_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
-    self.pronouns_feel_codes =  pronouns_feel_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
-
-    self.pronouns_id_codes = pronouns_id_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
-    self.age_id_codes = age_id_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
-    self.klass_id_codes = klass_id_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
-    self.race_ethnicity_id_codes = race_ethnicity_id_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
-    self.religion_id_codes = religion_id_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
-    self.disability_id_codes = disability_id_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
-    self.neurodiversity_id_codes = neurodiversity_id_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
-    self.gender_id_codes = gender_id_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
-    self.lgbtqia_id_codes = lgbtqia_id_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
-  end
-
+#   # TODO Clean this up
+#   def sanitize_array_values
+#     self.age_exp_codes = age_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
+#     self.klass_exp_codes = klass_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
+#     self.race_ethnicity_exp_codes = race_ethnicity_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
+#     self.religion_exp_codes = religion_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
+#     self.disability_exp_codes = disability_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
+#     self.neurodiversity_exp_codes = neurodiversity_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
+#     self.gender_exp_codes = gender_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
+#     self.lgbtqia_exp_codes = lgbtqia_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
+#     self.pronouns_exp_codes =  pronouns_exp_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
+#     self.pronouns_feel_codes =  pronouns_feel_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
+# 
+#     self.pronouns_id_codes = pronouns_id_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
+#     self.age_id_codes = age_id_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
+#     self.klass_id_codes = klass_id_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
+#     self.race_ethnicity_id_codes = race_ethnicity_id_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
+#     self.religion_id_codes = religion_id_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
+#     self.disability_id_codes = disability_id_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
+#     self.neurodiversity_id_codes = neurodiversity_id_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
+#     self.gender_id_codes = gender_id_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
+#     self.lgbtqia_id_codes = lgbtqia_id_codes.join(", ").split(", ").map(&:strip).map(&:downcase)
+#   end
 
 end
