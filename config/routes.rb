@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :trashes
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -15,6 +16,7 @@ Rails.application.routes.draw do
   resources :survey_responses do
     post "enqueue_keywords", action: "enqueue_keywords"
   end
+  
   
   resources :codebooks do
     post "enqueue_categories", action: "enqueue_categories"

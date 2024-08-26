@@ -2,8 +2,8 @@ class SurveyResponsesController < ApplicationController
   
   USERS = { ENV['GENERAL_ADMISSION_USERNAME'] => ENV['GENERAL_ADMISSION_PASSWORD'] }
   
-  before_action :authenticate
-  
+#  before_action :authenticate
+    
   def authenticate
     authenticate_or_request_with_http_digest("Application") do |name|
       USERS[name]
@@ -40,16 +40,21 @@ class SurveyResponsesController < ApplicationController
     redirect_to survey_responses_path
   end
 
-  # TODO this needs to be a JS call with a proper response to the page to indicate success/failure  
   def update
     @response = SurveyResponse.find(params[:id])
     sanitized_params = {}
     response_params.each do |key, value| 
       sanitized_params[key] = value.join(",").split(",").reject(&:empty?).compact.map(&:strip).map(&:downcase)
     end
-    unless @response.update(sanitized_params)
-      render :edit, status: :unprocessable_entity
+    success = @response.update(sanitized_params)
+    @question = Question.from(params["question"])
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace("#{@question.key}", partial: "/survey_responses/form", locals: { response: @response, question: @question, success: success  })
+      end
     end
+
   end
   
   def enqueue_keywords
@@ -62,7 +67,7 @@ class SurveyResponsesController < ApplicationController
     def response_params
       params.require(:survey_response).permit(themes: [], age_exp_codes: [], klass_exp_codes: [], race_ethnicity_exp_codes: [], religion_exp_codes: [], disability_exp_codes: [], neurodiversity_exp_codes: [], gender_exp_codes: [], lgbtqia_exp_codes: [], age_id_codes: [], klass_id_codes: [], race_ethnicity_id_codes: [], religion_id_codes: [], disability_id_codes: [], neurodiversity_id_codes: [], gender_id_codes: [], lgbtqia_id_codes: [], pronouns_id_codes: [], pronouns_exp_codes: [], pronouns_feel_codes: [], affinity_codes: [], notes_codes: [])
     end
-
+    
 end
 
 

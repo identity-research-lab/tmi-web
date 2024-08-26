@@ -1,5 +1,4 @@
 # A SurveyResponse is a complete collection of answers given in response to the survey Questions.
-# SurveyResponse objects are upserted when a survey data CSV file is imported.
 class SurveyResponse < ApplicationRecord
 
   require 'csv'
@@ -12,7 +11,7 @@ class SurveyResponse < ApplicationRecord
   validates_presence_of :response_id
   validates_uniqueness_of :response_id
 
-  # This is the prompt passed to the AI agent to serve as instructions for sentiment analysis.
+  # This is the prompt passed to the LLM agent to serve as instructions for sentiment analysis.
   SENTIMENT_PROMPT = %{
     You are a social science researcher doing textual analysis on survey data. Perform sentiment analysis against the provided text, classifying it as "positive", "negative", or "neutral". Return the classification encoded as JSON in the following format:
 
@@ -21,7 +20,6 @@ class SurveyResponse < ApplicationRecord
     }
 
     The text to perform sentiment analysis on is as follows:
-
   }
 
   # Convenience method to pad ID.
@@ -44,7 +42,6 @@ class SurveyResponse < ApplicationRecord
     ExportToGraphJob.perform_async(self.id)
   end
   
-  # TODO move this to a service worker
   # Calculates and sets the sentiment based on a the "identity reflection / notes" field.
   # This method uses the Clients::OpenAi client passing the text of the reflection as an
   # argument to the prompt. The agent returns a classification, which is written to the
@@ -66,7 +63,6 @@ class SurveyResponse < ApplicationRecord
     end
   end
 
-  # TODO this belongs on the Persona
   # Displays the query and its explanation for locating the SurveyResponse's associated Persona in the graph.
   def graph_query
     {
