@@ -20,11 +20,11 @@ class CodebooksController < ApplicationController
     @enqueued_at = params[:enqueued_at].present? ? Time.at(params[:enqueued_at].to_i).strftime("%T %Z") : nil
 
     sections = Question::QUESTIONS.keys
-    @section_name = Question::QUESTIONS[@context.to_sym]
+    @section_name = Question::QUESTIONS[@context.gsub("class","klass").to_sym]
     
     # These modulo gymnastics allow the previous/next arrows to wrap around
-    previous_index = (sections.index(@context.to_sym) - 1) % sections.length
-    next_index = (sections.index(@context.to_sym) + 1) % sections.length
+    previous_index = (sections.index(@context.gsub("class","klass").to_sym) - 1) % sections.length
+    next_index = (sections.index(@context.gsub("class","klass").to_sym) + 1) % sections.length
     @previous_section = sections[previous_index]
     @next_section = sections[next_index]
 
