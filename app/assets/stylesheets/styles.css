@@ -650,28 +650,28 @@ th a:hover {
      animation: fadeSuccessBackground 1s;
    }
    
-   @keyframes fadeSuccessBackground {
-     0% {
-       background-color: var(--color-green-highlight);
-     }
-     100% {
-       background-color: white;
-     }
-   }  
-
+  @keyframes fadeSuccessBackground {
+   0% {
+     background-color: var(--color-green-highlight);
+   }
+   100% {
+     background-color: white;
+   }
+  }  
+  
   .form-error {
-      background-color: var(--color-white);
-      animation: fadeErrorBackground 1s;
+    background-color: var(--color-white);
+    animation: fadeErrorBackground 1s;
+  }
+  
+  @keyframes fadeErrorBackground {
+    0% {
+      background-color: var(--color-red-highlight);
     }
-    
-   @keyframes fadeErrorBackground {
-      0% {
-        background-color: var(--color-red-highlight);
-      }
-      100% {
-        background-color: white;
-      }
-    }  
+    100% {
+      background-color: white;
+    }
+  }  
     
   ul.list {
     margin: 1rem 1rem 0 0rem;

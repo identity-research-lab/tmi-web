@@ -1,2 +1,0 @@
-class Trash < ApplicationRecord
-end
