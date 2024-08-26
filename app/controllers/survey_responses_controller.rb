@@ -2,7 +2,7 @@ class SurveyResponsesController < ApplicationController
   
   USERS = { ENV['GENERAL_ADMISSION_USERNAME'] => ENV['GENERAL_ADMISSION_PASSWORD'] }
   
-  before_action :authenticate
+#  before_action :authenticate
     
   def authenticate
     authenticate_or_request_with_http_digest("Application") do |name|
@@ -40,17 +40,23 @@ class SurveyResponsesController < ApplicationController
     redirect_to survey_responses_path
   end
 
-  # TODO this needs to be a JS call with a proper response to the page to indicate success/failure  
   def update
     @response = SurveyResponse.find(params[:id])
     sanitized_params = {}
     response_params.each do |key, value| 
       sanitized_params[key] = value.join(",").split(",").reject(&:empty?).compact.map(&:strip).map(&:downcase)
     end
-    @response.update(sanitized_params)
-    @question = Question.from(params["question"])
-
-    render turbo_stream: turbo_stream.replace("#{@question.key}_frame", partial: "/survey_responses/form", locals: { response: @response, question: @question })
+    if @response.update(sanitized_params)
+      @question = Question.from(params["question"])
+      respond_to do |format|
+        format.turbo_stream
+        #  do
+        #   turbo_stream.replace("#{@question.key}", partial: "/survey_responses/form", locals: { response: @response, question: @question })
+        # end
+      end
+    else
+      redirect_to :index
+    end
   end
   
   def enqueue_keywords
