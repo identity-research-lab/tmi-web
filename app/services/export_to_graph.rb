@@ -1,7 +1,7 @@
 class ExportToGraph
 
 	attr_accessor :survey_response
-		
+
 	def self.perform(survey_response_id)
 		new(survey_response_id).perform
 	end
@@ -19,7 +19,7 @@ class ExportToGraph
 	end
 
 	private
-	
+
 	# Hydrates the associated Persona with data from the SurveyResponse.
 	# Note that this operation is destructive to a Persona that already exists.
 	def persona
@@ -29,7 +29,7 @@ class ExportToGraph
 			permalink: survey_response.permalink
 		)
 	end
-			
+
 	def populate_experience_codes
 		contexts_and_codes = {
 			"age" => survey_response.age_exp_codes,
@@ -51,9 +51,9 @@ class ExportToGraph
 				Experiences.create(from_node: persona, to_node: code)
 			end
 		end
-	
+
 	end
-	
+
 	def populate_id_codes
 		contexts_and_codes = {
 			"age" => survey_response.age_id_codes,
@@ -73,5 +73,5 @@ class ExportToGraph
 			end
 		end
 	end
-	
+
 end
