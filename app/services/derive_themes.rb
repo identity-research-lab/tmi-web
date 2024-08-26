@@ -31,10 +31,8 @@ class DeriveThemes
 		return false unless text.present?
 
 		response = Clients::OpenAi.request("#{PROMPT} #{self.text}")
-		return false unless response['sentiment'].present?
-
-		classification = response['sentiment'].strip.downcase
-		return classification
+		return false unless response['themes'].present?
+		return response['themes']
  	end
 
 

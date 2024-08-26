@@ -29,7 +29,7 @@ class Category
     Category.where(context: context).destroy_all
 
     themes.each do |theme|
-      category = Category.find_or_create_by(name: theme['theme'], context: context)
+      category = Category.find_or_create_by(name: theme['theme'].strip.downcase, context: context)
       codes.each do |code|
         next unless theme['codes'].include?(code.name)
         CategorizedAs.create(from_node: category, to_node: code)
