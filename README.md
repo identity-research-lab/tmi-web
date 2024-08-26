@@ -135,6 +135,14 @@ To update the Neo4j database, type:
     
 ## Developer tips
 
+### Run the test suite
+
+    rspec --format documentation spec/
+    
+To always run rspec with the documentation flag:
+
+    echo "--format documentation" > .rspec
+    
 ### Clear the Sidekiq (background job) queue
 
 Launch the local interactive Rails console:
