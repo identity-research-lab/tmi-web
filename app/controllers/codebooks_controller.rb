@@ -21,8 +21,12 @@ class CodebooksController < ApplicationController
 
     sections = Question::QUESTIONS.keys
     @section_name = Question::QUESTIONS[@context.to_sym]
-    @previous_section = sections[sections.index(@context.to_sym) - 1]
-    @next_section = sections[sections.index(@context.to_sym) + 1]
+    
+    # These modulo gymnastics allow the previous/next arrows to wrap around
+    previous_index = (sections.index(@context.to_sym) - 1) % sections.length
+    next_index = (sections.index(@context.to_sym) + 1) % sections.length
+    @previous_section = sections[previous_index]
+    @next_section = sections[next_index]
 
     if params[:id].split('_').last == "given"
       @frequencies = Identity.histogram(@context)
