@@ -49,10 +49,9 @@ class SurveyResponsesController < ApplicationController
     if @response.update(sanitized_params)
       @question = Question.from(params["question"])
       respond_to do |format|
-        format.turbo_stream
-        #  do
-        #   turbo_stream.replace("#{@question.key}", partial: "/survey_responses/form", locals: { response: @response, question: @question })
-        # end
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace("#{@question.key}", partial: "/survey_responses/form", locals: { response: @response, question: @question })
+        end
       end
     else
       redirect_to :index
