@@ -27,10 +27,6 @@
   <a href="#query" id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @response.graph_query[:query] %></a>
 </p>
 
-<% Question::QUESTIONS.keys.map{|k| Question.from(k) }.each do |question| %>
-  <%= render "form", response: @response, question: question %>
-<% end %>
-
 <h2>Questions and responses:</h2>
 <table>
   <thead>
@@ -42,14 +38,17 @@
   </thead>
   <tbody>
     <% counter = 0 %>
-    <% # Question::QUESTIONS.keys.map{|k| Question.from(k) }.each do |question| %>
-    <% [].each do |question| %>
+    <% Question::QUESTIONS.keys.map{|k| Question.from(k) }.each do |question| %>
       <% alt = counter % 2 == 1 ? "" : "alt" %>
       <% counter += 1 %>
       <tr class="<%= alt %>">
-        <%= turbo_frame_tag "q_#{counter}" do %>
-          <%= render "form", response: @response, question: question %>
-        <% end %>
+        <td class="label"><%= link_to question.label, question_path(question.key), class: "jump-link" %></td>
+        <td  class="response"><%= @response.read_attribute(question.key) || "(Not answered)" %></td>
+        <td class="form-entry">
+          <% if @response.respond_to?(question.key) && @response.read_attribute(question.key).present? || @response.read_attribute(question.codes_field).any? %>
+            <%= render "form", response: @response, question: question, success: nil %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

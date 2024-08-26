@@ -46,16 +46,15 @@ class SurveyResponsesController < ApplicationController
     response_params.each do |key, value| 
       sanitized_params[key] = value.join(",").split(",").reject(&:empty?).compact.map(&:strip).map(&:downcase)
     end
-    if @response.update(sanitized_params)
-      @question = Question.from(params["question"])
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace("#{@question.key}", partial: "/survey_responses/form", locals: { response: @response, question: @question })
-        end
+    success = @response.update(sanitized_params)
+    @question = Question.from(params["question"])
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace("#{@question.key}", partial: "/survey_responses/form", locals: { response: @response, question: @question, success: success  })
       end
-    else
-      redirect_to :index
     end
+
   end
   
   def enqueue_keywords
