@@ -15,36 +15,23 @@ class Category
 
   has_many :out, :codes, rel_class: :CategorizedAs, dependent: :delete_orphans
 
-  # This is the prompt sent to the selected AI agent to provide instructions on category derivision.
-  PROMPT = %{
-    You are a social researcher doing data analysis. Please generate a list of the 20 most relevant themes from the following list of codes. The themes should be all lowercase and contain no punctuation. Codes should be stripped of quotation marks. Return each code with an array of its categories in JSON format. Use this JSON as the format:
-
-    {
-      "themes" : [
-        {
-          "theme": "foo",
-          "codes": [ "bar", "bat", "baz"]
-        }
-      ]
-    }
-
-    The codes are as follows:
-  }
-
   # Regenerates Category objects based on codes within a given context.
   # This method uses the Clients::OpenAi client passing the codes as an argument to the prompt.
   # The agent returns an array of themes, which are then captured as Category objects.
   def self.from(context)
     codes = Code.where(context: context)
-    response = Clients::OpenAi.request("#{PROMPT} #{codes.map(&:name).join(',')}")
-    return unless response['themes']
+    return unless codes.any?
+
+    text = codes.map(&:name).join(',')
+    return unless text.present?
+    return unless themes = DeriveThemes.perform(text)
 
     Category.where(context: context).destroy_all
 
-    response['themes'].each do |record|
-      category = Category.find_or_create_by(name: record['theme'], context: context)
+    themes.each do |theme|
+      category = Category.find_or_create_by(name: theme['theme'].strip.downcase, context: context)
       codes.each do |code|
-        next unless record['codes'].include?(code.name)
+        next unless theme['codes'].include?(code.name)
         CategorizedAs.create(from_node: category, to_node: code)
       end
     end

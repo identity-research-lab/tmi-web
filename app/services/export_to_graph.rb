@@ -23,7 +23,7 @@ class ExportToGraph
 	# Hydrates the associated Persona with data from the SurveyResponse.
 	# Note that this operation is destructive to a Persona that already exists.
 	def persona
-		@persona ||= Persona.create(
+		@persona ||= Persona.find_or_create_by(
 			name: "Persona #{survey_response.identifier}",
 			survey_response_id: survey_response.id,
 			permalink: survey_response.permalink
@@ -46,9 +46,11 @@ class ExportToGraph
 			"notes" => survey_response.notes_codes
 		}
 		contexts_and_codes.each do |context, codes|
-			codes.each do |name|
-				code = Code.find_or_create_by(name: name, context: context)
-				Experiences.create(from_node: persona, to_node: code)
+			codes.compact.uniq.each do |name|
+				if code = Code.find_or_create_by(name: name, context: context)
+					next unless code.valid?
+					Experiences.create(from_node: persona, to_node: code)
+				end
 			end
 		end
 
@@ -67,9 +69,11 @@ class ExportToGraph
 			"pronouns" => survey_response.pronouns_id_codes
 		}
 		contexts_and_codes.each do |context, codes|
-			codes.each do |name|
-				identity = Identity.find_or_create_by(name: name, context: context)
-				IdentifiesWith.create(from_node: persona, to_node: identity)
+			codes.compact.uniq.each do |name|
+				if identity = Identity.find_or_create_by(name: name.strip, context: context)
+					next unless identity.valid?
+					IdentifiesWith.create(from_node: persona, to_node: identity)
+				end
 			end
 		end
 	end

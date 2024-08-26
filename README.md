@@ -101,6 +101,14 @@ To create your local `.env` file, make a copy of `.env.example`. (This filename 
     
 Now, when you open the `.env` file in your text editor, you'll see a list of key/value pairs that need filling in. These are configuration options including database credentials, customizations, and the API keys that TMI-Web needs to communicate with third-party services. Follow the instructions provided in the file to register for the appropriate API keys.
 
+### Run the test suite
+
+    rspec --format documentation spec/
+    
+To always run rspec with the documentation flag:
+
+    echo "--format documentation" > .rspec
+    
 ### Start the background job runner
 
 From the root directory of tmi-web, launch Sidekiq by typing:
@@ -135,14 +143,6 @@ To update the Neo4j database, type:
     
 ## Developer tips
 
-### Run the test suite
-
-    rspec --format documentation spec/
-    
-To always run rspec with the documentation flag:
-
-    echo "--format documentation" > .rspec
-    
 ### Clear the Sidekiq (background job) queue
 
 Launch the local interactive Rails console:
