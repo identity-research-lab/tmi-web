@@ -40,8 +40,9 @@ class Category
 
   # Generates a hash with the unique category name as the key and the count of its associated codes as a value.
   def self.histogram(context)
-    categories = where(context: context)
-    categories.inject({}) { |accumulator, category| accumulator[category.name] = category.codes.count; accumulator }
+    context = Question.from(context).context
+    categories = where(context: context).query_as(:c).with('c, count{(c)-[:CATEGORIZED_AS]-(code:Code)} AS count').return("c.name, count").order('count DESC')
+    categories.inject({}) {|accumulator,category| accumulator[category.values[0]] ||= 0; accumulator[category.values[0]] += category.values[1]; accumulator}
   end
 
 end
