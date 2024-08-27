@@ -8,26 +8,25 @@ class CodebooksController < ApplicationController
 
   def show
     @context = params[:id]
-    @context_key = Question.from(@context).context
+    @question = Question.from(@context)
+    @context_key = @question.context
     @enqueued_at = params[:enqueued_at].present? ? Time.at(params[:enqueued_at].to_i).strftime("%T %Z") : nil
 
-    sections = Question::QUESTIONS.keys
-    @section_name = Question::QUESTIONS[@context.gsub("class","klass").to_sym]
-    
-    # These modulo gymnastics allow the previous/next arrows to wrap around
-    previous_index = (sections.index(@context.gsub("class","klass").to_sym) - 1) % sections.length
-    next_index = (sections.index(@context.gsub("class","klass").to_sym) + 1) % sections.length
+    # Support the previous/next navigation controls
+    sections = Question::QUESTIONS.keys.map(&:to_s)
+    previous_index = (sections.index(@question.key) - 1)
+    next_index = (sections.index(@question.key) + 1) % sections.length
+    @section_name = @question.label
     @previous_section = sections[previous_index]
     @next_section = sections[next_index]
 
-    if params[:id].split('_').last == "given"
+    if @question.identity_field?
+      # Identity fields have associated Identity objects.
       @frequencies = Identity.histogram(@context)
-    else
-      @frequencies = Code.histogram(@context_key)
-    end
-
-    if @context.include?("_exp") || @context.include?("_feel")
-      @categories_histogram = Category.histogram(@context_key)
+    elsif @question.experience_field?
+      # Experience fields have associated Code and Category objects.
+      @frequencies = Code.histogram(@context)
+      @categories_histogram = Category.histogram(@context)
       @total_codes = @categories_histogram.values.sum
     end
 
@@ -36,7 +35,7 @@ class CodebooksController < ApplicationController
   def enqueue_categories
     context = Question.from(params[:codebook_id]).context
     CategoryExtractorJob.perform_async(context)
-    redirect_to( action: :show, id: params[:codebook_id], params: {enqueued_at: Time.now.strftime("%s")} )
+    redirect_to(action: :show, id: params[:codebook_id], params: {enqueued_at: Time.now.strftime("%s")})
   end
 
 end
