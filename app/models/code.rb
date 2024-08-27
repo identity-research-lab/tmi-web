@@ -21,7 +21,8 @@ class Code
   # Given a context, generates a hash with unique Codes as keys and the counts of its uses as values.
   def self.histogram(context)
     context = context.gsub("_exp","").gsub("klass","class").gsub("_","-")
-    where(context: context).query_as(:t).with('t, count{(t)-[:EXPERIENCES]-()} AS c').where('c > 0').order('c DESC').return('t.name, c').inject({}) {|h,t| h[t.values[0]] ||= 0; h[t.values[0]] += t.values[1]; h}
+    codes = where(context: context).query_as(:c).with('c, count{(c)-[:EXPERIENCES]-()} AS ct').where('ct > 0').order('c DESC').return('c.name, ct')
+    codes.inject({}) {|accumulator,code| accumulator[code.values[0]] ||= 0; accumulator[code.values[0]] += code.values[1]; accumulator}
   end
 
   private

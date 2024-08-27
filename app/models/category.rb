@@ -40,7 +40,8 @@ class Category
 
   # Generates a hash with the unique category name as the key and the count of its associated codes as a value.
   def self.histogram(context)
-    where(context: context).inject({}) { |acc, category| acc[category.name] = category.codes.count; acc }
+    categories = where(context: context)
+    categories.inject({}) { |accumulator, category| accumulator[category.name] = category.codes.count; accumulator }
   end
 
 end
