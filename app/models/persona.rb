@@ -1,5 +1,5 @@
 # A Persona is a composite entity linking survey responses, codes, identities, and keywords.
-# Each Persona reflects the unique characteristics captured about a specific study participant.
+# Each Persona embodies the unique characteristics captured about a specific study participant as a data avatar.
 
 class Persona
   include ActiveGraph::Node

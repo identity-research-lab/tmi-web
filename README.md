@@ -156,7 +156,7 @@ At the prompt, type:
 To exit the console:
 
     exit
-    
+
 ### Back up production PostgresSQL database
 
 Navigate in your terminal to the `db` directory and run these commands:
@@ -182,6 +182,31 @@ Navigate in your terminal to the `db` directory and type
 
     rdoc -op doc
 
+## Graph data model
+    
+There are four types of nodes in the graph database. They all center on the `Persona`. Each pair of nodes is connected by a uniquely labeled edge.
+
+![image](https://github.com/CoralineAda/tmi-web/blob/main/diagrams/tmi-data-model.png)
+    
+### Persona
+A `Persona` is a representation or data avatar of someone who completed the survey.
+
+### Category
+A `Category` is a label applied to a group of related Codes within a provided context. For example, a category may refer to a subset of the codes related to "age". 
+
+Categories are machine-derived. As such, they are influenced by biases in external training data. Careful human discernment of categories is required to identify and address these biases.
+
+### Code 
+A `Code` is a label applied to a group of related responses within a provided context. For example, a Code like "self-reflects" may be be applied to one or more responses to the Age Experience question.
+
+Since codes are contextual, they are not unique. If "self-reflects" is coded for both Gender Experience and Age Experience, there will be two distinct Codes, each with the appropriate context.
+
+### Identity
+An `Identity` is a word or phrase used by a survey participant to self-describe. Identities have associated contexts.
+
+### Keyword
+Keywords are the nouns extracted from a 'corpus' consisting of the exact text of certain freeform response fields. The extraction is performed using AI assistance, so results are non-determinate and must be assessed for bias by the researchers.
+        
 ## Reference links
 
 * [https://console.neo4j.io](https://console.neo4j.io)
