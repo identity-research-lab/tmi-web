@@ -141,7 +141,7 @@ To update the Neo4j database, type:
 
     rake neo4j:migrate
     
-## Developer tips
+## The code
 
 ### Reading the code
 
@@ -151,8 +151,12 @@ The code in TMI-Web is thoroughly commented, and the test suite is not only func
 
 ### Read the docs
 
+You can explore code documentation in your browser by typing:
+
     open doc/index.html 
 
+## Common tasks
+    
 ### Clear the Sidekiq (background job) queue
 
 Launch the local interactive Rails console:
