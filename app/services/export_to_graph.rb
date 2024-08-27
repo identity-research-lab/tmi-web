@@ -1,3 +1,4 @@
+# Translates data from a SurveyResponse into nodes in the graph database.
 class ExportToGraph
 
 	attr_accessor :survey_response
@@ -12,16 +13,20 @@ class ExportToGraph
 
 	def perform
 		return false unless survey_response
+
+		# Destroy the existing persona so that neo4j will reap orphaned nodes like Codes and Identities.
 		Persona.find_or_initialize_by(survey_response_id: survey_response.id).destroy
+
+		# Build the codes and identities
 		populate_experience_codes
 		populate_id_codes
+
 		return true
 	end
 
 	private
 
-	# Hydrates the associated Persona with data from the SurveyResponse.
-	# Note that this operation is destructive to a Persona that already exists.
+	# Hydrates a new Persona with data from the SurveyResponse.
 	def persona
 		@persona ||= Persona.find_or_create_by(
 			name: "Persona #{survey_response.identifier}",
@@ -30,6 +35,7 @@ class ExportToGraph
 		)
 	end
 
+	# Creates Code nodes and connects them to the associated Persona.
 	def populate_experience_codes
 		contexts_and_codes = {
 			"age" => survey_response.age_exp_codes,
@@ -56,6 +62,7 @@ class ExportToGraph
 
 	end
 
+	# Creates Identity nodes and connects them to the associated Persona.
 	def populate_id_codes
 		contexts_and_codes = {
 			"age" => survey_response.age_id_codes,
