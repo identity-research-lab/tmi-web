@@ -356,7 +356,7 @@ th a:hover {
  input[type="submit"],
  textarea {
    color: var(--color-black);
-   font-family: var(--font-monospace);
+   font-family: var(--font-body);
    font-size: var(--font-size-small);
    padding: .125rem .25rem;
    border: none;
@@ -373,6 +373,10 @@ th a:hover {
    border: 0.125px solid var(--color-black);
  }
 
+ textarea:focus {
+   font-family: var(--font-monospace);
+ }
+ 
   input[type="submit"] {
     width: auto;
     font-family: var(--font-body);
