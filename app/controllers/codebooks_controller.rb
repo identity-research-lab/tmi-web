@@ -24,11 +24,8 @@ class CodebooksController < ApplicationController
       # Identity fields have associated Identity objects.
       @frequencies = Identity.histogram(@context)
     elsif @question.experience_field?
-      # Experience fields have associated Code objects.
+      # Experience fields have associated Code and Category objects.
       @frequencies = Code.histogram(@context_key)
-    end
-
-    if @question.experience_field?
       @categories_histogram = Category.histogram(@context_key)
       @total_codes = @categories_histogram.values.sum
     end
