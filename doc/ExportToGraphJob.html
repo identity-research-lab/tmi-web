@@ -94,7 +94,7 @@
 
   <section class="description">
     
-<p>This background job hydrates the graph from a <a href="SurveyResponse.html"><code>SurveyResponse</code></a>.</p>
+<p>This background job performs the graph export process.</p>
 
   </section>
 
@@ -124,9 +124,8 @@
           <div class="method-source-code" id="perform-source">
             <pre><span class="ruby-comment"># File app/jobs/export_to_graph_job.rb, line 8</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">perform</span>(<span class="ruby-identifier">id</span>)
-  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">record</span> = <span class="ruby-constant">SurveyResponse</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>)
-  <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span>(<span class="ruby-node">&quot;ExportToGraphJob running with survey response ID #{id}&quot;</span>)
-  <span class="ruby-identifier">record</span>.<span class="ruby-identifier">to_graph</span>
+        <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span>(<span class="ruby-node">&quot;ExportToGraphJob running with survey response #{id}&quot;</span>)
+        <span class="ruby-constant">ExportToGraph</span>.<span class="ruby-identifier">perform</span>(<span class="ruby-identifier">id</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
         </div>

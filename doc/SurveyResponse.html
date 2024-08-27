@@ -72,14 +72,10 @@
   <h3>Methods</h3>
 
   <ul class="link-list" role="directory">
-    <li ><a href="#method-c-from">::from</a>
-    <li ><a href="#method-c-import">::import</a>
-    <li ><a href="#method-i-enqueue_export_to_graph">#enqueue_export_to_graph</a>
-    <li ><a href="#method-i-enqueue_keyword_extraction">#enqueue_keyword_extraction</a>
+    <li ><a href="#method-i-classify_sentiment">#classify_sentiment</a>
     <li ><a href="#method-i-graph_query">#graph_query</a>
     <li ><a href="#method-i-identifier">#identifier</a>
     <li ><a href="#method-i-permalink">#permalink</a>
-    <li ><a href="#method-i-to_graph">#to_graph</a>
   </ul>
 </div>
 
@@ -93,151 +89,41 @@
 
   <section class="description">
     
-<p>A <a href="SurveyResponse.html"><code>SurveyResponse</code></a> is a complete collection of answers given in response to the survey Questions. <a href="SurveyResponse.html"><code>SurveyResponse</code></a> objects are upserted when a survey data CSV file is imported.</p>
+<p>A <a href="SurveyResponse.html"><code>SurveyResponse</code></a> is a complete collection of answers given in response to the survey Questions.</p>
 
   </section>
 
   <section id="5Buntitled-5D" class="documentation-section">
 
 
-    <section class="constants-list">
-      <header>
-        <h3>Constants</h3>
-      </header>
-      <dl>
-        <dt id="REQUIRED_FIELDS">REQUIRED_FIELDS
-        <dd>
-      </dl>
-    </section>
 
 
-
-     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
-       <header>
-         <h3>Public Class Methods</h3>
-       </header>
-
-      <div id="method-c-from" class="method-detail ">
-        <div class="method-header">
-          <div class="method-heading">
-            <span class="method-name">from</span><span
-              class="method-args">(record)</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-        </div>
-
-        <div class="method-description">
-          <p>Hydrates a <a href="SurveyResponse.html"><code>SurveyResponse</code></a> object from a record in the imported CSV data file.</p>
-
-          <div class="method-source-code" id="from-source">
-            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 26</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">from</span>(<span class="ruby-identifier">record</span>)
-  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-constant">REQUIRED_FIELDS</span>.<span class="ruby-identifier">select</span>{ <span class="ruby-operator">|</span><span class="ruby-identifier">field</span><span class="ruby-operator">|</span> <span class="ruby-identifier">record</span>[<span class="ruby-identifier">field</span>.<span class="ruby-identifier">to_s</span>].<span class="ruby-identifier">present?</span> }.<span class="ruby-identifier">count</span> <span class="ruby-operator">==</span> <span class="ruby-constant">REQUIRED_FIELDS</span>.<span class="ruby-identifier">count</span>
-
-  <span class="ruby-identifier">pronouns_given</span> = <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;pronouns_given&#39;</span>] <span class="ruby-operator">==</span> <span class="ruby-string">&quot;self-describe&quot;</span> <span class="ruby-operator">?</span> <span class="ruby-node">&quot;#{record[&#39;pronouns_given_5_TEXT&#39;]} (self-described)&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;pronouns_given&#39;</span>]
-  <span class="ruby-identifier">survey_response</span> = <span class="ruby-constant">SurveyResponse</span>.<span class="ruby-identifier">find_or_initialize_by</span>(<span class="ruby-value">response_id:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;ResponseId&#39;</span>])
-  <span class="ruby-identifier">survey_response</span>.<span class="ruby-identifier">update</span>(
-    <span class="ruby-value">age_given:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;age_given&#39;</span>],
-    <span class="ruby-value">age_exp:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;age_exp&#39;</span>],
-    <span class="ruby-value">klass_given:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;klass_given&#39;</span>],
-    <span class="ruby-value">klass_exp:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;klass_exp&#39;</span>],
-    <span class="ruby-value">race_ethnicity_given:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;race_ethnicity_given&#39;</span>],
-    <span class="ruby-value">race_ethnicity_exp:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;race_ethnicity_exp&#39;</span>],
-    <span class="ruby-value">religion_given:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;religion_given&#39;</span>],
-    <span class="ruby-value">religion_exp:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;religion_exp&#39;</span>],
-    <span class="ruby-value">disability_given:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;disability_given&#39;</span>],
-    <span class="ruby-value">disability_exp:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;disability_exp&#39;</span>],
-    <span class="ruby-value">neurodiversity_given:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;neurodiversity_given&#39;</span>],
-    <span class="ruby-value">neurodiversity_exp:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;neurodiversity_exp&#39;</span>],
-    <span class="ruby-value">gender_given:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;gender_given&#39;</span>],
-    <span class="ruby-value">gender_exp:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;gender_exp&#39;</span>],
-    <span class="ruby-value">lgbtqia_given:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;lgbtqia_given&#39;</span>],
-    <span class="ruby-value">lgbtqia_exp:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;lgbtqia_exp&#39;</span>],
-    <span class="ruby-value">pronouns_given:</span> <span class="ruby-identifier">pronouns_given</span>,
-    <span class="ruby-value">pronouns_exp:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;pronouns_exp&#39;</span>],
-    <span class="ruby-value">pronouns_feel:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;pronouns_feel&#39;</span>],
-    <span class="ruby-value">affinity:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;affinity&#39;</span>],
-    <span class="ruby-value">notes:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;notes&#39;</span>]
-  )
-<span class="ruby-keyword">end</span></pre>
-          </div>
-        </div>
-
-
-      </div>
-
-      <div id="method-c-import" class="method-detail ">
-        <div class="method-header">
-          <div class="method-heading">
-            <span class="method-name">import</span><span
-              class="method-args">(file_handle)</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-        </div>
-
-        <div class="method-description">
-          <p>Given a file handle to a data file, parse the filel contents as CSV and hydrate <a href="SurveyResponse.html"><code>SurveyResponse</code></a> records in serial.</p>
-
-          <div class="method-source-code" id="import-source">
-            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 18</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">import</span>(<span class="ruby-identifier">file_handle</span>)
-  <span class="ruby-constant">CSV</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">file_handle</span>, <span class="ruby-value">headers:</span> <span class="ruby-keyword">true</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">record</span><span class="ruby-operator">|</span>
-    <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;Progress&#39;</span>].<span class="ruby-identifier">to_i</span>.<span class="ruby-identifier">to_s</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;Progress&#39;</span>]
-    <span class="ruby-identifier">from</span>(<span class="ruby-identifier">record</span>)
-  <span class="ruby-keyword">end</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-        </div>
-
-
-      </div>
-
-    </section>
 
      <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
          <h3>Public Instance Methods</h3>
        </header>
 
-      <div id="method-i-enqueue_export_to_graph" class="method-detail ">
+      <div id="method-i-classify_sentiment" class="method-detail ">
         <div class="method-header">
           <div class="method-heading">
-            <span class="method-name">enqueue_export_to_graph</span><span
+            <span class="method-name">classify_sentiment</span><span
               class="method-args">()</span>
             <span class="method-click-advice">click to toggle source</span>
           </div>
         </div>
 
         <div class="method-description">
-          <p>Creates an <a href="ExportToGraphJob.html"><code>ExportToGraphJob</code></a> and pushes it into the background job queue.</p>
+          <p>Calculates and sets the sentiment based on a the “identity reflection / notes” field. This method uses the <a href="SentimentAnalysis.html"><code>SentimentAnalysis</code></a> service, passing the text of the reflection as an argument. The service returns a classification, which is written to the <a href="SurveyResponse.html"><code>SurveyResponse</code></a> record.</p>
 
-          <div class="method-source-code" id="enqueue_export_to_graph-source">
-            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 67</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">enqueue_export_to_graph</span>
-  <span class="ruby-constant">ExportToGraphJob</span>.<span class="ruby-identifier">perform_async</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>)
-<span class="ruby-keyword">end</span></pre>
-          </div>
-        </div>
-
-
-      </div>
-
-      <div id="method-i-enqueue_keyword_extraction" class="method-detail ">
-        <div class="method-header">
-          <div class="method-heading">
-            <span class="method-name">enqueue_keyword_extraction</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-        </div>
-
-        <div class="method-description">
-          <p>Creates a <a href="KeywordExtractorJob.html"><code>KeywordExtractorJob</code></a> and pushes it into the background job queue.</p>
-
-          <div class="method-source-code" id="enqueue_keyword_extraction-source">
-            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 62</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">enqueue_keyword_extraction</span>
-  <span class="ruby-constant">KeywordExtractorJob</span>.<span class="ruby-identifier">perform_async</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>)
+          <div class="method-source-code" id="classify_sentiment-source">
+            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 39</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">classify_sentiment</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">response</span> = <span class="ruby-constant">SentimentAnalysis</span>.<span class="ruby-identifier">perform</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">notes</span>)
+    <span class="ruby-identifier">update_attribute</span> <span class="ruby-value">:sentiment</span>, <span class="ruby-identifier">response</span>
+    <span class="ruby-keyword">return</span> <span class="ruby-identifier">response</span>
+  <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">false</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
         </div>
@@ -258,10 +144,10 @@
           <p>Displays the query and its explanation for locating the SurveyResponse’s associated <a href="Persona.html"><code>Persona</code></a> in the graph.</p>
 
           <div class="method-source-code" id="graph_query-source">
-            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 90</span>
+            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 15</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">graph_query</span>
   {
-    <span class="ruby-value">explainer:</span> <span class="ruby-string">&quot;// Return the persona (and all of its relations) that corresponds to this survey response.&quot;</span>,
+    <span class="ruby-value">explainer:</span> <span class="ruby-string">&quot;Access and explore this participant&#39;s response data (and all of its relationships) as an Interactive Persona in the TMI-Graph app.&quot;</span>,
     <span class="ruby-value">query:</span> <span class="ruby-node">&quot;MATCH (p:Persona)-[]-(n) WHERE p.permalink=\&quot;#{permalink}\&quot; RETURN p,n&quot;</span>
   }
 <span class="ruby-keyword">end</span></pre>
@@ -284,7 +170,7 @@
           <p>Convenience method to pad ID.</p>
 
           <div class="method-source-code" id="identifier-source">
-            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 57</span>
+            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 23</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">identifier</span>
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">rjust</span>(<span class="ruby-value">4</span>, <span class="ruby-string">&quot;0&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -307,39 +193,13 @@
           <p>Calculates the permanent URL of the <a href="SurveyResponse.html"><code>SurveyResponse</code></a>, which is stored as a property on the associated <a href="Persona.html"><code>Persona</code></a>.</p>
 
           <div class="method-source-code" id="permalink-source">
-            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 81</span>
+            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 28</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">permalink</span>
   <span class="ruby-keyword">if</span> <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">env</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;development&quot;</span>
     <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">application</span>.<span class="ruby-identifier">routes</span>.<span class="ruby-identifier">url_helpers</span>.<span class="ruby-identifier">url_for</span>(<span class="ruby-value">controller:</span> <span class="ruby-string">&quot;survey_responses&quot;</span>, <span class="ruby-value">action:</span> <span class="ruby-string">&quot;show&quot;</span>, <span class="ruby-value">host:</span> <span class="ruby-string">&quot;localhost&quot;</span>, <span class="ruby-value">port:</span> <span class="ruby-value">3000</span>, <span class="ruby-value">id:</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>)
   <span class="ruby-keyword">else</span>
     <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">application</span>.<span class="ruby-identifier">routes</span>.<span class="ruby-identifier">url_helpers</span>.<span class="ruby-identifier">url_for</span>(<span class="ruby-value">controller:</span> <span class="ruby-string">&quot;survey_responses&quot;</span>, <span class="ruby-value">action:</span> <span class="ruby-string">&quot;show&quot;</span>, <span class="ruby-value">host:</span> <span class="ruby-constant">ENV</span>.<span class="ruby-identifier">fetch</span>(<span class="ruby-string">&quot;HOSTNAME&quot;</span>, <span class="ruby-string">&quot;localhost&quot;</span>), <span class="ruby-value">id:</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">id</span>)
   <span class="ruby-keyword">end</span>
-<span class="ruby-keyword">end</span></pre>
-          </div>
-        </div>
-
-
-      </div>
-
-      <div id="method-i-to_graph" class="method-detail ">
-        <div class="method-header">
-          <div class="method-heading">
-            <span class="method-name">to_graph</span><span
-              class="method-args">()</span>
-            <span class="method-click-advice">click to toggle source</span>
-          </div>
-        </div>
-
-        <div class="method-description">
-          <p>Hydrates the associated <a href="Persona.html"><code>Persona</code></a> with data from the <a href="SurveyResponse.html"><code>SurveyResponse</code></a>. Note that this operation is destructive to a <a href="Persona.html"><code>Persona</code></a> that already exists.</p>
-
-          <div class="method-source-code" id="to_graph-source">
-            <pre><span class="ruby-comment"># File app/models/survey_response.rb, line 73</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">to_graph</span>
-  <span class="ruby-constant">Persona</span>.<span class="ruby-identifier">find_or_initialize_by</span>(<span class="ruby-value">survey_response_id:</span> <span class="ruby-identifier">id</span>).<span class="ruby-identifier">destroy</span>
-  <span class="ruby-identifier">populate_experience_codes</span>
-  <span class="ruby-identifier">populate_id_codes</span>
-  <span class="ruby-identifier">enqueue_keyword_extraction</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
         </div>

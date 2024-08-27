@@ -124,7 +124,7 @@
         </div>
 
         <div class="method-description">
-          
+          <p>before_action :authenticate</p>
 
           <div class="method-source-code" id="authenticate-source">
             <pre><span class="ruby-comment"># File app/controllers/survey_responses_controller.rb, line 7</span>
@@ -154,7 +154,7 @@
           <div class="method-source-code" id="create-source">
             <pre><span class="ruby-comment"># File app/controllers/survey_responses_controller.rb, line 38</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">create</span>
-  <span class="ruby-constant">SurveyResponse</span>.<span class="ruby-identifier">import</span>(<span class="ruby-identifier">params</span>.<span class="ruby-identifier">permit</span>(<span class="ruby-value">:csv</span>)[<span class="ruby-value">:csv</span>])
+  <span class="ruby-constant">ImportFromCsv</span>.<span class="ruby-identifier">perform</span>(<span class="ruby-identifier">params</span>.<span class="ruby-identifier">permit</span>(<span class="ruby-value">:csv</span>)[<span class="ruby-value">:csv</span>])
   <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">survey_responses_path</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -176,7 +176,7 @@
           
 
           <div class="method-source-code" id="enqueue_keywords-source">
-            <pre><span class="ruby-comment"># File app/controllers/survey_responses_controller.rb, line 51</span>
+            <pre><span class="ruby-comment"># File app/controllers/survey_responses_controller.rb, line 60</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">enqueue_keywords</span>
   <span class="ruby-constant">KeywordExtractorJob</span>.<span class="ruby-identifier">perform_async</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:survey_response_id</span>])
   <span class="ruby-identifier">redirect_to</span>( <span class="ruby-value">action:</span> <span class="ruby-value">:show</span>, <span class="ruby-value">id:</span> <span class="ruby-identifier">params</span>[<span class="ruby-value">:survey_response_id</span>], <span class="ruby-value">params:</span> {<span class="ruby-value">enqueued_at:</span> <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>.<span class="ruby-identifier">strftime</span>(<span class="ruby-string">&quot;%I:%M:%S %P (%Z)&quot;</span>)} )
@@ -285,10 +285,19 @@
             <pre><span class="ruby-comment"># File app/controllers/survey_responses_controller.rb, line 43</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">update</span>
   <span class="ruby-ivar">@response</span> = <span class="ruby-constant">SurveyResponse</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
-
-  <span class="ruby-keyword">unless</span> <span class="ruby-ivar">@response</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">response_params</span>)
-    <span class="ruby-identifier">render</span> <span class="ruby-value">:edit</span>, <span class="ruby-value">status:</span> <span class="ruby-value">:unprocessable_entity</span>
+  <span class="ruby-identifier">sanitized_params</span> = {}
+  <span class="ruby-identifier">response_params</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span><span class="ruby-operator">|</span> 
+    <span class="ruby-identifier">sanitized_params</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">value</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;,&quot;</span>).<span class="ruby-identifier">split</span>(<span class="ruby-string">&quot;,&quot;</span>).<span class="ruby-identifier">reject</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:empty?</span>).<span class="ruby-identifier">compact</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:strip</span>).<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:downcase</span>)
   <span class="ruby-keyword">end</span>
+  <span class="ruby-identifier">success</span> = <span class="ruby-ivar">@response</span>.<span class="ruby-identifier">update</span>(<span class="ruby-identifier">sanitized_params</span>)
+  <span class="ruby-ivar">@question</span> = <span class="ruby-constant">Question</span>.<span class="ruby-identifier">from</span>(<span class="ruby-identifier">params</span>[<span class="ruby-string">&quot;question&quot;</span>])
+
+  <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">format</span>.<span class="ruby-identifier">turbo_stream</span> <span class="ruby-keyword">do</span>
+      <span class="ruby-identifier">render</span> <span class="ruby-value">turbo_stream:</span> <span class="ruby-identifier">turbo_stream</span>.<span class="ruby-identifier">replace</span>(<span class="ruby-node">&quot;#{@question.key}&quot;</span>, <span class="ruby-value">partial:</span> <span class="ruby-string">&quot;/survey_responses/form&quot;</span>, <span class="ruby-value">locals:</span> { <span class="ruby-value">response:</span> <span class="ruby-ivar">@response</span>, <span class="ruby-value">question:</span> <span class="ruby-ivar">@question</span>, <span class="ruby-value">success:</span> <span class="ruby-identifier">success</span>  })
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+
 <span class="ruby-keyword">end</span></pre>
           </div>
         </div>

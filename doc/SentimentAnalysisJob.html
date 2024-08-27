@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>class Codebook - RDoc Documentation</title>
+<title>class SentimentAnalysisJob - RDoc Documentation</title>
 
 <script type="text/javascript">
   var rdoc_rel_prefix = "./";
@@ -65,6 +65,14 @@
 </div>
 
     
+<div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+    <li><span class="include">Sidekiq::Job</span>
+  </ul>
+</div>
+
     
     
 <!-- Method Quickref -->
@@ -72,21 +80,21 @@
   <h3>Methods</h3>
 
   <ul class="link-list" role="directory">
-    <li ><a href="#method-c-category_query">::category_query</a>
+    <li ><a href="#method-i-perform">#perform</a>
   </ul>
 </div>
 
   </div>
 </nav>
 
-<main role="main" aria-labelledby="class-Codebook">
-  <h1 id="class-Codebook" class="class">
-    class Codebook
+<main role="main" aria-labelledby="class-SentimentAnalysisJob">
+  <h1 id="class-SentimentAnalysisJob" class="class">
+    class SentimentAnalysisJob
   </h1>
 
   <section class="description">
     
-<p>A <a href="Codebook.html"><code>Codebook</code></a> is a collection of codes applied to a given context.</p>
+<p>This background job triggers sentiment analysis on the identified <a href="SurveyResponse.html"><code>SurveyResponse</code></a>.</p>
 
   </section>
 
@@ -96,30 +104,29 @@
 
 
 
-     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
        <header>
-         <h3>Public Class Methods</h3>
+         <h3>Public Instance Methods</h3>
        </header>
 
-      <div id="method-c-category_query" class="method-detail ">
+      <div id="method-i-perform" class="method-detail ">
         <div class="method-header">
           <div class="method-heading">
-            <span class="method-name">category_query</span><span
-              class="method-args">(context)</span>
+            <span class="method-name">perform</span><span
+              class="method-args">(id)</span>
             <span class="method-click-advice">click to toggle source</span>
           </div>
         </div>
 
         <div class="method-description">
-          <p>Used to label and display a <a href="Category.html"><code>Category</code></a> query.</p>
+          
 
-          <div class="method-source-code" id="category_query-source">
-            <pre><span class="ruby-comment"># File app/models/codebook.rb, line 5</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">category_query</span>(<span class="ruby-identifier">context</span>)
-  {
-    <span class="ruby-value">explainer:</span> <span class="ruby-node">&quot;// Show me a graph of \&quot;#{context}\&quot;-related categories and their associated codes.&quot;</span>,
-    <span class="ruby-value">query:</span> <span class="ruby-node">&quot;MATCH (cat:Category)-[:CATEGORIZED_AS]-(c:Code) WHERE cat.context=\&quot;#{context}\&quot; RETURN cat,c&quot;</span>
-  }
+          <div class="method-source-code" id="perform-source">
+            <pre><span class="ruby-comment"># File app/jobs/sentiment_analysis_job.rb, line 8</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">perform</span>(<span class="ruby-identifier">id</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">record</span> = <span class="ruby-constant">SurveyResponse</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>)
+  <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span>(<span class="ruby-node">&quot;SentimentAnalysisJob running with survey response ID #{id}&quot;</span>)
+  <span class="ruby-identifier">record</span>.<span class="ruby-identifier">classify_sentiment</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
         </div>

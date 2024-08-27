@@ -102,15 +102,6 @@
   <section id="5Buntitled-5D" class="documentation-section">
 
 
-    <section class="constants-list">
-      <header>
-        <h3>Constants</h3>
-      </header>
-      <dl>
-        <dt id="PROMPT">PROMPT
-        <dd><p>This is the prompt sent to the selected AI agent to provide instructions on category derivision.</p>
-      </dl>
-    </section>
 
 
 
@@ -132,18 +123,21 @@
           <p>Regenerates <a href="Category.html"><code>Category</code></a> objects based on codes within a given context. This method uses the Clients::OpenAi client passing the codes as an argument to the prompt. The agent returns an array of themes, which are then captured as <a href="Category.html"><code>Category</code></a> objects.</p>
 
           <div class="method-source-code" id="from-source">
-            <pre><span class="ruby-comment"># File app/models/category.rb, line 37</span>
+            <pre><span class="ruby-comment"># File app/models/category.rb, line 20</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">from</span>(<span class="ruby-identifier">context</span>)
   <span class="ruby-identifier">codes</span> = <span class="ruby-constant">Code</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">context:</span> <span class="ruby-identifier">context</span>)
-  <span class="ruby-identifier">response</span> = <span class="ruby-constant">Clients</span><span class="ruby-operator">::</span><span class="ruby-constant">OpenAi</span>.<span class="ruby-identifier">request</span>(<span class="ruby-node">&quot;#{PROMPT} #{codes.map(&amp;:name).join(&#39;,&#39;)}&quot;</span>)
-  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">response</span>[<span class="ruby-string">&#39;themes&#39;</span>]
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">codes</span>.<span class="ruby-identifier">any?</span>
+
+  <span class="ruby-identifier">text</span> = <span class="ruby-identifier">codes</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-value">:name</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">&#39;,&#39;</span>)
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">text</span>.<span class="ruby-identifier">present?</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">themes</span> = <span class="ruby-constant">DeriveThemes</span>.<span class="ruby-identifier">perform</span>(<span class="ruby-identifier">text</span>)
 
   <span class="ruby-constant">Category</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">context:</span> <span class="ruby-identifier">context</span>).<span class="ruby-identifier">destroy_all</span>
 
-  <span class="ruby-identifier">response</span>[<span class="ruby-string">&#39;themes&#39;</span>].<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">record</span><span class="ruby-operator">|</span>
-    <span class="ruby-identifier">category</span> = <span class="ruby-constant">Category</span>.<span class="ruby-identifier">find_or_create_by</span>(<span class="ruby-value">name:</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;theme&#39;</span>], <span class="ruby-value">context:</span> <span class="ruby-identifier">context</span>)
+  <span class="ruby-identifier">themes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">theme</span><span class="ruby-operator">|</span>
+    <span class="ruby-identifier">category</span> = <span class="ruby-constant">Category</span>.<span class="ruby-identifier">find_or_create_by</span>(<span class="ruby-value">name:</span> <span class="ruby-identifier">theme</span>[<span class="ruby-string">&#39;theme&#39;</span>].<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">downcase</span>, <span class="ruby-value">context:</span> <span class="ruby-identifier">context</span>)
     <span class="ruby-identifier">codes</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">code</span><span class="ruby-operator">|</span>
-      <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">record</span>[<span class="ruby-string">&#39;codes&#39;</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">code</span>.<span class="ruby-identifier">name</span>)
+      <span class="ruby-keyword">next</span> <span class="ruby-keyword">unless</span> <span class="ruby-identifier">theme</span>[<span class="ruby-string">&#39;codes&#39;</span>].<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">code</span>.<span class="ruby-identifier">name</span>)
       <span class="ruby-constant">CategorizedAs</span>.<span class="ruby-identifier">create</span>(<span class="ruby-value">from_node:</span> <span class="ruby-identifier">category</span>, <span class="ruby-value">to_node:</span> <span class="ruby-identifier">code</span>)
     <span class="ruby-keyword">end</span>
   <span class="ruby-keyword">end</span>
@@ -168,9 +162,11 @@
           <p>Generates a hash with the unique category name as the key and the count of its associated codes as a value.</p>
 
           <div class="method-source-code" id="histogram-source">
-            <pre><span class="ruby-comment"># File app/models/category.rb, line 55</span>
+            <pre><span class="ruby-comment"># File app/models/category.rb, line 41</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">histogram</span>(<span class="ruby-identifier">context</span>)
-  <span class="ruby-identifier">where</span>(<span class="ruby-value">context:</span> <span class="ruby-identifier">context</span>).<span class="ruby-identifier">inject</span>({}) { <span class="ruby-operator">|</span><span class="ruby-identifier">acc</span>, <span class="ruby-identifier">category</span><span class="ruby-operator">|</span> <span class="ruby-identifier">acc</span>[<span class="ruby-identifier">category</span>.<span class="ruby-identifier">name</span>] = <span class="ruby-identifier">category</span>.<span class="ruby-identifier">codes</span>.<span class="ruby-identifier">count</span>; <span class="ruby-identifier">acc</span> }
+  <span class="ruby-identifier">context</span> = <span class="ruby-constant">Question</span>.<span class="ruby-identifier">from</span>(<span class="ruby-identifier">context</span>).<span class="ruby-identifier">context</span>
+  <span class="ruby-identifier">categories</span> = <span class="ruby-identifier">where</span>(<span class="ruby-value">context:</span> <span class="ruby-identifier">context</span>).<span class="ruby-identifier">query_as</span>(<span class="ruby-value">:c</span>).<span class="ruby-identifier">with</span>(<span class="ruby-string">&#39;c, count{(c)-[:CATEGORIZED_AS]-(code:Code)} AS count&#39;</span>).<span class="ruby-identifier">return</span>(<span class="ruby-string">&quot;c.name, count&quot;</span>).<span class="ruby-identifier">order</span>(<span class="ruby-string">&#39;count DESC&#39;</span>)
+  <span class="ruby-identifier">categories</span>.<span class="ruby-identifier">inject</span>({}) {<span class="ruby-operator">|</span><span class="ruby-identifier">accumulator</span>,<span class="ruby-identifier">category</span><span class="ruby-operator">|</span> <span class="ruby-identifier">accumulator</span>[<span class="ruby-identifier">category</span>.<span class="ruby-identifier">values</span>[<span class="ruby-value">0</span>]] <span class="ruby-operator">||=</span> <span class="ruby-value">0</span>; <span class="ruby-identifier">accumulator</span>[<span class="ruby-identifier">category</span>.<span class="ruby-identifier">values</span>[<span class="ruby-value">0</span>]] <span class="ruby-operator">+=</span> <span class="ruby-identifier">category</span>.<span class="ruby-identifier">values</span>[<span class="ruby-value">1</span>]; <span class="ruby-identifier">accumulator</span>}
 <span class="ruby-keyword">end</span></pre>
           </div>
         </div>

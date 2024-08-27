@@ -94,7 +94,7 @@
 
   <section class="description">
     
-<p>A <a href="Code.html"><code>Code</code></a> is a label applied to a group of related responses within a provided context. For example, a <a href="Code.html"><code>Code</code></a> like “self-reflects” may be be applied to one or more responses to the Age Experience question.</p>
+<p>A <a href="Code.html"><code>Code</code></a> is a label applied to a group of related responses within a provided context. For example, a <a href="Code.html"><code>Code</code></a> like “self-reflects” may be be applied to one or more responses to the Age Experience question. Since codes are contextual, they are not unique. If “self-reflects” is coded for both Gender Experience and Age Experience, there will be two distinct Codes, each with the appropriate context.</p>
 
   </section>
 
@@ -119,13 +119,14 @@
         </div>
 
         <div class="method-description">
-          <p>Given a context, generates a hash with unique Codes as keys and the counts of its uses as values.</p>
+          <p>Given a context, generates a hash with each unique Codes as a key and the counts of its uses as a value.</p>
 
           <div class="method-source-code" id="histogram-source">
             <pre><span class="ruby-comment"># File app/models/code.rb, line 21</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">histogram</span>(<span class="ruby-identifier">context</span>)
-  <span class="ruby-identifier">context</span> = <span class="ruby-identifier">context</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;_exp&quot;</span>,<span class="ruby-string">&quot;&quot;</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;klass&quot;</span>,<span class="ruby-string">&quot;class&quot;</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;_&quot;</span>,<span class="ruby-string">&quot;-&quot;</span>)
-  <span class="ruby-identifier">where</span>(<span class="ruby-value">context:</span> <span class="ruby-identifier">context</span>).<span class="ruby-identifier">query_as</span>(<span class="ruby-value">:t</span>).<span class="ruby-identifier">with</span>(<span class="ruby-string">&#39;t, count{(t)-[:EXPERIENCES]-()} AS c&#39;</span>).<span class="ruby-identifier">where</span>(<span class="ruby-string">&#39;c &gt; 0&#39;</span>).<span class="ruby-identifier">order</span>(<span class="ruby-string">&#39;c DESC&#39;</span>).<span class="ruby-identifier">return</span>(<span class="ruby-string">&#39;t.name, c&#39;</span>).<span class="ruby-identifier">inject</span>({}) {<span class="ruby-operator">|</span><span class="ruby-identifier">h</span>,<span class="ruby-identifier">t</span><span class="ruby-operator">|</span> <span class="ruby-identifier">h</span>[<span class="ruby-identifier">t</span>.<span class="ruby-identifier">values</span>[<span class="ruby-value">0</span>]] <span class="ruby-operator">||=</span> <span class="ruby-value">0</span>; <span class="ruby-identifier">h</span>[<span class="ruby-identifier">t</span>.<span class="ruby-identifier">values</span>[<span class="ruby-value">0</span>]] <span class="ruby-operator">+=</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">values</span>[<span class="ruby-value">1</span>]; <span class="ruby-identifier">h</span>}
+  <span class="ruby-identifier">context</span> = <span class="ruby-constant">Question</span>.<span class="ruby-identifier">from</span>(<span class="ruby-identifier">context</span>).<span class="ruby-identifier">context</span>
+  <span class="ruby-identifier">codes</span> = <span class="ruby-identifier">where</span>(<span class="ruby-value">context:</span> <span class="ruby-identifier">context</span>).<span class="ruby-identifier">query_as</span>(<span class="ruby-value">:c</span>).<span class="ruby-identifier">with</span>(<span class="ruby-string">&#39;c, count{(c)-[:EXPERIENCES]-()} AS ct&#39;</span>).<span class="ruby-identifier">where</span>(<span class="ruby-string">&#39;ct &gt; 0&#39;</span>).<span class="ruby-identifier">order</span>(<span class="ruby-string">&#39;c DESC&#39;</span>).<span class="ruby-identifier">return</span>(<span class="ruby-string">&#39;c.name, ct&#39;</span>)
+  <span class="ruby-identifier">codes</span>.<span class="ruby-identifier">inject</span>({}) {<span class="ruby-operator">|</span><span class="ruby-identifier">accumulator</span>,<span class="ruby-identifier">code</span><span class="ruby-operator">|</span> <span class="ruby-identifier">accumulator</span>[<span class="ruby-identifier">code</span>.<span class="ruby-identifier">values</span>[<span class="ruby-value">0</span>]] <span class="ruby-operator">||=</span> <span class="ruby-value">0</span>; <span class="ruby-identifier">accumulator</span>[<span class="ruby-identifier">code</span>.<span class="ruby-identifier">values</span>[<span class="ruby-value">0</span>]] <span class="ruby-operator">+=</span> <span class="ruby-identifier">code</span>.<span class="ruby-identifier">values</span>[<span class="ruby-value">1</span>]; <span class="ruby-identifier">accumulator</span>}
 <span class="ruby-keyword">end</span></pre>
           </div>
         </div>
