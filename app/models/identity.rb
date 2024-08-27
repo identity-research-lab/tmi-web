@@ -14,7 +14,7 @@ class Identity
 
   # Generates a hash consisting of Identities and their number of occurrences.
   def self.histogram(context)
-    context = context.gsub("_given","").gsub("klass","class").gsub("_","-")
+    context = Question.from(context).context
     identities = where(context: context).query_as(:i).with('i, count{(i)-[:IDENTIFIES_WITH]-(p:Persona)} AS c').return('i.name, c').order('c DESC')
     identities.inject({}) {|accumulator,identity| accumulator[identity.values[0]] ||= 0; accumulator[identity.values[0]] += identity.values[1]; accumulator}
   end
