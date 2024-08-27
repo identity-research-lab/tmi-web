@@ -8,15 +8,15 @@ class CodebooksController < ApplicationController
 
   def show
     @context = params[:id]
-    @context_key = Question.from(@context).context
-    @enqueued_at = params[:enqueued_at].present? ? Time.at(params[:enqueued_at].to_i).strftime("%T %Z") : nil
-    @section_name = Question::QUESTIONS[@context.gsub("class","klass").to_sym]
     @question = Question.from(@context)
-    
-    # These modulo gymnastics allow the previous/next arrows to wrap around
-    sections = Question::QUESTIONS.keys
-    previous_index = (sections.index(@context.gsub("class","klass").to_sym) - 1) % sections.length
-    next_index = (sections.index(@context.gsub("class","klass").to_sym) + 1) % sections.length
+    @context_key = @question.context
+    @enqueued_at = params[:enqueued_at].present? ? Time.at(params[:enqueued_at].to_i).strftime("%T %Z") : nil
+
+    # Support the previous/next navigation controls
+    sections = Question::QUESTIONS.keys.map(&:to_s)
+    previous_index = (sections.index(@question.key) - 1)
+    next_index = (sections.index(@question.key) + 1) % sections.length
+    @section_name = @question.label
     @previous_section = sections[previous_index]
     @next_section = sections[next_index]
 
@@ -25,8 +25,8 @@ class CodebooksController < ApplicationController
       @frequencies = Identity.histogram(@context)
     elsif @question.experience_field?
       # Experience fields have associated Code and Category objects.
-      @frequencies = Code.histogram(@context_key)
-      @categories_histogram = Category.histogram(@context_key)
+      @frequencies = Code.histogram(@context)
+      @categories_histogram = Category.histogram(@context)
       @total_codes = @categories_histogram.values.sum
     end
 
