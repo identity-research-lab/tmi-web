@@ -21,7 +21,7 @@ class SentimentAnalysis
 		@text = text
 	end
 
-	# Uses the OpenAI client to pass the prompt and text through the API for sentiment analysis.
+	# Uses the OpenAI client to pass the prompt and valid text through the API for sentiment analysis.
 	def perform
 		return false unless text.present?
 

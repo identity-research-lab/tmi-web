@@ -1,26 +1,26 @@
-# SurveyResponse objects are upserted when a survey data CSV file is imported.
+# Upserts SurveyResponse objects CSV file is imported. This operation is non-destructive.
 class ImportFromCsv
 
-	attr_accessor :record, :survey_response
+	attr_accessor :record
 
 	REQUIRED_FIELDS = [:age_given]
-			
+
 	# Given a file handle to a data file, parse the file contents as CSV and hydrate SurveyResponse records in serial.
 	def self.perform(file_handle)
 		CSV.read(file_handle, headers: true).each do |record|
-			new(record).import
+			new(record).perform
 		end
 	end
-	
+
 	def initialize(record)
 		@record = record
-		@survey_response ||= SurveyResponse.find_or_initialize_by(response_id: record['ResponseId'])
 	end
 
-	# Hydrates a SurveyResponse object from a record in the imported CSV data file.
-	def import
+	# Hydrates a sufficiently complete SurveyResponse object from a row in the imported CSV data file.
+	def perform
 		return unless record_valid?
-		
+		survey_response = SurveyResponse.find_or_initialize_by(response_id: record['ResponseId'])
+
 		survey_response.update(
 			age_given: record['age_given'],
 			age_exp: record['age_exp'],
@@ -47,14 +47,17 @@ class ImportFromCsv
 	end
 
 	private
-		
+
+	# Pronoun data can come from a radio button or a freeform text field. We want to distinguish between the two by
+	# flagging freeform answers as "self-described".
 	def pronouns
 		return "#{record['pronouns_given_5_TEXT']} (self-described)" if record['pronouns_given'] == "self-describe"
 		return record['pronouns_given']
 	end
-	
+
+	# If a SurveyResponse doesn't contain a response for the required fields, it will be considered invalid.
 	def record_valid?
 		REQUIRED_FIELDS.select{ |field| record[field.to_s].present? }.count == REQUIRED_FIELDS.count
 	end
-	
+
 end

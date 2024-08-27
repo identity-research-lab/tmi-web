@@ -25,8 +25,8 @@ RSpec.describe ImportFromCsv do
 	}
 
 	before do
-		ImportFromCsv.new(complete_record).import
-		ImportFromCsv.new(incomplete_record).import
+		ImportFromCsv.new(complete_record).perform
+		ImportFromCsv.new(incomplete_record).perform
 	end
 
 	it 'creates from a valid record' do
