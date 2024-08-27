@@ -143,6 +143,10 @@ To update the Neo4j database, type:
     
 ## Developer tips
 
+### Read the docs
+
+    open doc/index.html 
+
 ### Clear the Sidekiq (background job) queue
 
 Launch the local interactive Rails console:

@@ -78,7 +78,7 @@
     <li ><a href="#method-c-identity_questions">::identity_questions</a>
     <li ><a href="#method-c-new">::new</a>
     <li ><a href="#method-i-codes_field">#codes_field</a>
-    <li ><a href="#method-i-field">#field</a>
+    <li ><a href="#method-i-context">#context</a>
   </ul>
 </div>
 
@@ -251,7 +251,6 @@
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">initialize</span>(<span class="ruby-identifier">attrs</span>={})
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">key</span> = <span class="ruby-identifier">attrs</span>[<span class="ruby-value">:key</span>]
   <span class="ruby-keyword">self</span>.<span class="ruby-identifier">label</span> = <span class="ruby-identifier">attrs</span>[<span class="ruby-value">:label</span>]
-  <span class="ruby-keyword">self</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
         </div>
@@ -279,7 +278,7 @@
           
 
           <div class="method-source-code" id="codes_field-source">
-            <pre><span class="ruby-comment"># File app/models/question.rb, line 58</span>
+            <pre><span class="ruby-comment"># File app/models/question.rb, line 57</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">codes_field</span>
   <span class="ruby-node">&quot;#{self.key}_codes&quot;</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;given&quot;</span>,<span class="ruby-string">&quot;id&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -289,10 +288,10 @@
 
       </div>
 
-      <div id="method-i-field" class="method-detail ">
+      <div id="method-i-context" class="method-detail ">
         <div class="method-header">
           <div class="method-heading">
-            <span class="method-name">field</span><span
+            <span class="method-name">context</span><span
               class="method-args">()</span>
             <span class="method-click-advice">click to toggle source</span>
           </div>
@@ -301,10 +300,10 @@
         <div class="method-description">
           
 
-          <div class="method-source-code" id="field-source">
-            <pre><span class="ruby-comment"># File app/models/question.rb, line 54</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">field</span>
-  <span class="ruby-keyword">self</span>.<span class="ruby-identifier">label</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;class&quot;</span>,<span class="ruby-string">&quot;klass&quot;</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;id&quot;</span>,<span class="ruby-string">&quot;given&quot;</span>)  
+          <div class="method-source-code" id="context-source">
+            <pre><span class="ruby-comment"># File app/models/question.rb, line 53</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">context</span>
+  <span class="ruby-node">&quot;#{self.key}&quot;</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;_given&quot;</span>,<span class="ruby-string">&quot;&quot;</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;klass&quot;</span>,<span class="ruby-string">&quot;class&quot;</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;_exp&quot;</span>, <span class="ruby-string">&quot;&quot;</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-string">&quot;_&quot;</span>,<span class="ruby-string">&quot;-&quot;</span>)  
 <span class="ruby-keyword">end</span></pre>
           </div>
         </div>

@@ -97,6 +97,7 @@
   --color-light-grey: #eee;
   --color-red: #ff3333;
   --color-green: #99CC00;
+  --color-green-highlight: #aea;
   --color-yellow: #FFFF99;
   --color-blue: #CCFFFF;
   --color-red-tint: #600;
@@ -307,7 +308,7 @@ cite::before {
 table {
   width: 100%;
   border: 3px solid var(--color-light-grey);
-  margin-top: 2em;
+  margin: 2em 0em;
 }</pre>
 
 <p>tr.alt {</p>
@@ -697,6 +698,21 @@ a[target=&#39;_blank&#39;]::after {
    color: var(--color-white);
  }
 
+ .sentiment {
+ }
+
+ .sentiment-positive {
+   background-color: var(--color-green-highlight);
+ }
+
+ .sentiment-neutral {
+   background-color: var(--color-light-grey);
+ }
+
+ .sentiment-negative {
+   background-color: var(--color-red-highlight);
+ }
+
  .word-cloud {
    display: flex;
    flex-wrap: wrap;
@@ -731,6 +747,34 @@ a[target=&#39;_blank&#39;]::after {
    flex: 1;
    width: 40;
  }
+
+ .form-success {
+    background-color: var(--color-white);
+    animation: fadeSuccessBackground 1s;
+  }
+
+ @keyframes fadeSuccessBackground {
+  0% {
+    background-color: var(--color-green-highlight);
+  }
+  100% {
+    background-color: white;
+  }
+ }  
+
+ .form-error {
+   background-color: var(--color-white);
+   animation: fadeErrorBackground 1s;
+ }
+
+ @keyframes fadeErrorBackground {
+   0% {
+     background-color: var(--color-red-highlight);
+   }
+   100% {
+     background-color: white;
+   }
+ }  
 
  ul.list {
    margin: 1rem 1rem 0 0rem;
