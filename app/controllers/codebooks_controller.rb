@@ -10,23 +10,25 @@ class CodebooksController < ApplicationController
     @context = params[:id]
     @context_key = Question.from(@context).context
     @enqueued_at = params[:enqueued_at].present? ? Time.at(params[:enqueued_at].to_i).strftime("%T %Z") : nil
-
-    sections = Question::QUESTIONS.keys
     @section_name = Question::QUESTIONS[@context.gsub("class","klass").to_sym]
+    @question = Question.from(@context)
     
     # These modulo gymnastics allow the previous/next arrows to wrap around
+    sections = Question::QUESTIONS.keys
     previous_index = (sections.index(@context.gsub("class","klass").to_sym) - 1) % sections.length
     next_index = (sections.index(@context.gsub("class","klass").to_sym) + 1) % sections.length
     @previous_section = sections[previous_index]
     @next_section = sections[next_index]
 
-    if params[:id].split('_').last == "given"
+    if @question.identity_field?
+      # Identity fields have associated Identity objects.
       @frequencies = Identity.histogram(@context)
-    else
+    elsif @question.experience_field?
+      # Experience fields have associated Code objects.
       @frequencies = Code.histogram(@context_key)
     end
 
-    if @context.include?("_exp") || @context.include?("_feel")
+    if @question.experience_field?
       @categories_histogram = Category.histogram(@context_key)
       @total_codes = @categories_histogram.values.sum
     end
@@ -36,7 +38,7 @@ class CodebooksController < ApplicationController
   def enqueue_categories
     context = Question.from(params[:codebook_id]).context
     CategoryExtractorJob.perform_async(context)
-    redirect_to( action: :show, id: params[:codebook_id], params: {enqueued_at: Time.now.strftime("%s")} )
+    redirect_to(action: :show, id: params[:codebook_id], params: {enqueued_at: Time.now.strftime("%s")})
   end
 
 end
