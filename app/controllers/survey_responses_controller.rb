@@ -2,14 +2,6 @@ class SurveyResponsesController < ApplicationController
   
   USERS = { ENV['GENERAL_ADMISSION_USERNAME'] => ENV['GENERAL_ADMISSION_PASSWORD'] }
   
-#  before_action :authenticate
-    
-  def authenticate
-    authenticate_or_request_with_http_digest("Application") do |name|
-      USERS[name]
-    end
-  end
-
   def index
     if @theme = params.permit(:theme)[:theme]
       @responses = SurveyResponse.where("? = ANY (themes)", @theme).order(:created_at)
