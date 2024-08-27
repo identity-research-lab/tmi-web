@@ -141,12 +141,22 @@ To update the Neo4j database, type:
 
     rake neo4j:migrate
     
-## Developer tips
+## The code
+
+### Reading the code
+
+If you're new to Ruby, but know how to program in another language, there's a great guide to applying what you already know to Ruby at https://www.ruby-lang.org/en/documentation/ruby-from-other-languages/. 
+
+The code in TMI-Web is thoroughly commented, and the test suite is not only functional but acts as further documentation. The code has been written to be as simple and readable as possible, sometimes at the expense of elegance or performance.
 
 ### Read the docs
 
+You can explore code documentation in your browser by typing:
+
     open doc/index.html 
 
+## Common tasks
+    
 ### Clear the Sidekiq (background job) queue
 
 Launch the local interactive Rails console:
