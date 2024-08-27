@@ -2,7 +2,6 @@
 # For example, a category may refer to a subset of the codes related to "age".
 # Categories are machine-derived. As such, they are influenced by biases in external training data.
 # Careful human discernment of categories is required to identify and address these biases.
-
 class Category
 
   include ActiveGraph::Node
