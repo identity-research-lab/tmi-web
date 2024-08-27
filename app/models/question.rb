@@ -48,13 +48,12 @@ class Question
   def initialize(attrs={})
     self.key = attrs[:key]
     self.label = attrs[:label]
-    self
   end
 
-  def field
-    self.label.gsub("class","klass").gsub("id","given")
+  def context
+    "#{self.key}".gsub("_given","").gsub("klass","class").gsub("_exp", "").gsub("_","-")  
   end
-
+  
   def codes_field
     "#{self.key}_codes".gsub("given","id")
   end
