@@ -376,7 +376,7 @@ th a:hover {
  textarea:focus {
    font-family: var(--font-monospace);
  }
- 
+
   input[type="submit"] {
     width: auto;
     font-family: var(--font-body);
@@ -580,7 +580,7 @@ th a:hover {
     flex-direction: row;
     list-style-type: none;
     margin-left: 0rem;
-    font-family: var(--font-monospace);
+    font-family: var(--font-body);
   }
 
   .nodes li div {
@@ -653,7 +653,7 @@ th a:hover {
      background-color: var(--color-white);
      animation: fadeSuccessBackground 1s;
    }
-   
+
   @keyframes fadeSuccessBackground {
    0% {
      background-color: var(--color-green-highlight);
@@ -661,13 +661,13 @@ th a:hover {
    100% {
      background-color: white;
    }
-  }  
-  
+  }
+
   .form-error {
     background-color: var(--color-white);
     animation: fadeErrorBackground 1s;
   }
-  
+
   @keyframes fadeErrorBackground {
     0% {
       background-color: var(--color-red-highlight);
@@ -675,8 +675,8 @@ th a:hover {
     100% {
       background-color: white;
     }
-  }  
-    
+  }
+
   ul.list {
     margin: 1rem 1rem 0 0rem;
     list-style-type: none;
