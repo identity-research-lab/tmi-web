@@ -7,12 +7,14 @@ class CodebooksController < ApplicationController
   end
 
   def show
-    @context = params[:id]
+    @context = params[:id].gsub("class", "klass")
     @question = Question.from(@context)
     @context_key = @question.context
     @enqueued_at = params[:enqueued_at].present? ? Time.at(params[:enqueued_at].to_i).strftime("%T %Z") : nil
 
     # Support the previous/next navigation controls
+
+    Rails.logger.info("!!! => @context = #{@context}, @question.key = #{@question.key}")
     sections = Question::QUESTIONS.keys.map(&:to_s)
     previous_index = (sections.index(@question.key) - 1)
     next_index = (sections.index(@question.key) + 1) % sections.length
