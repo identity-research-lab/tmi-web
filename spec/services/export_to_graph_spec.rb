@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ExportToGraph do
+RSpec.describe Services::ExportToGraph do
 
 	before do
 		allow(SurveyResponse).to receive(:find).and_return(survey_response)
@@ -10,11 +10,11 @@ RSpec.describe ExportToGraph do
 		allow(IdentifiesWith).to receive(:create)
 	end
 
-	let(:service) 	{ ExportToGraph.new(1) }
+	let(:service) 	{ Services::ExportToGraph.new(1) }
 
 	let(:code) 			{ Code.new(name: "not okay", context: "age") }
 	let(:identity) 	{ Identity.new(name: "genx", context: "age") }
-	
+
 	let(:survey_response) {
 		SurveyResponse.new(
 			id: 1,
