@@ -5,10 +5,12 @@
 </h1>
 
 <ol class="nodes">
-<% @responses.each do |r| %>
+<% @responses.each do |response| %>
   <li>
-    <a href="/survey_responses/<%= r.id %>">
-      <div><%= r.id %></div>
+    <a href="/survey_responses/<%= response.id %>">
+      <div>
+        <%= response.identifier %>
+      </div>
     </a>
   </li>
 <% end %>
