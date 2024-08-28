@@ -37,7 +37,7 @@ class SurveyResponse < ApplicationRecord
   # This method uses the SentimentAnalysis service, passing the text of the reflection as an
   # argument. The service returns a classification, which is written to the SurveyResponse record.
   def classify_sentiment
-    if response = SentimentAnalysis.perform(self.notes)
+    if response = Services::SentimentAnalysis.perform(self.notes)
       update_attribute :sentiment, response
       return response
     end
@@ -48,17 +48,17 @@ class SurveyResponse < ApplicationRecord
 
     # Creates a KeywordExtractorJob and pushes it into the background job queue.
     def enqueue_keyword_extraction
-      KeywordExtractorJob.perform_async(self.id)
+      Services::KeywordExtractorJob.perform_async(self.id)
     end
 
     # Creates a SentimentAnalysisJob and pushes it into the background job queue.
     def enqueue_sentiment_analysis
-      SentimentAnalysisJob.perform_async(self.id)
+      Services::SentimentAnalysisJob.perform_async(self.id)
     end
 
     # Invokes a service to update the graph databases from this SurveyResponse object.
     def enqueue_export_to_graph
-      ExportToGraphJob.perform_async(self.id)
+      Services::ExportToGraphJob.perform_async(self.id)
     end
 
 end

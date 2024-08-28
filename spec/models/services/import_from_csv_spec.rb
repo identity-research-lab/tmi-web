@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ImportFromCsv do
+RSpec.describe Services::ImportFromCsv do
 
 	before do
 		allow_any_instance_of(SurveyResponse).to receive(:enqueue_export_to_graph)
@@ -25,8 +25,8 @@ RSpec.describe ImportFromCsv do
 	}
 
 	before do
-		ImportFromCsv.new(complete_record).perform
-		ImportFromCsv.new(incomplete_record).perform
+		Services::ImportFromCsv.new(complete_record).perform
+		Services::ImportFromCsv.new(incomplete_record).perform
 	end
 
 	it 'creates from a valid record' do
