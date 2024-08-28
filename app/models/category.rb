@@ -23,7 +23,7 @@ class Category
 
     text = codes.map(&:name).join(',')
     return unless text.present?
-    return unless themes = DeriveThemes.perform(text)
+    return unless themes = Services::DeriveThemes.perform(text)
 
     Category.where(context: context).destroy_all
 
