@@ -26,7 +26,7 @@ class StatsController < ApplicationController
       "Self-expressed identities" => identity_count,
       "Codes" => code_count,
       "Derived categories" => category_count,
-      "Derived Keywords" => keyword_count
+      "Derived keywords" => keyword_count
     }
   end
 
