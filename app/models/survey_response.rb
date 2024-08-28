@@ -48,17 +48,17 @@ class SurveyResponse < ApplicationRecord
 
     # Creates a KeywordExtractorJob and pushes it into the background job queue.
     def enqueue_keyword_extraction
-      Services::KeywordExtractorJob.perform_async(self.id)
+      KeywordExtractorJob.perform_async(self.id)
     end
 
     # Creates a SentimentAnalysisJob and pushes it into the background job queue.
     def enqueue_sentiment_analysis
-      Services::SentimentAnalysisJob.perform_async(self.id)
+      SentimentAnalysisJob.perform_async(self.id)
     end
 
     # Invokes a service to update the graph databases from this SurveyResponse object.
     def enqueue_export_to_graph
-      Services::ExportToGraphJob.perform_async(self.id)
+      ExportToGraphJob.perform_async(self.id)
     end
 
 end
