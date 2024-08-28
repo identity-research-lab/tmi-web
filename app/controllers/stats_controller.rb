@@ -15,8 +15,10 @@ class StatsController < ApplicationController
     code_count = Code.count
     category_count = Category.count
     keyword_count = Keyword.count
+    node_count = ActiveGraph::Base.query('WITH count{()} AS ct RETURN ct').first.values.first
+    edge_count = ActiveGraph::Base.query('WITH count{()-[]-()} AS ct RETURN ct').first.values.first
 
-    @total_datapoints = survey_response_count + (question_count * survey_response_count) + identity_count + code_count + category_count + keyword_count + sentiments.compact.count
+    @total_datapoints = survey_response_count + (question_count * survey_response_count) + identity_count + code_count + category_count + keyword_count + sentiments.compact.count + edge_count
 
     @stats = {
       "Participant survey responses" => survey_response_count,
@@ -26,7 +28,9 @@ class StatsController < ApplicationController
       "Self-expressed identities" => identity_count,
       "Codes" => code_count,
       "Derived categories" => category_count,
-      "Derived keywords" => keyword_count
+      "Derived keywords" => keyword_count,
+      "Graph nodes" => node_count,
+      "Graph edges" => edge_count
     }
   end
 
