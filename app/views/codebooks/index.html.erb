@@ -4,9 +4,9 @@
 
 <h3>Contexts</h3>
 <ul class="list">
-<% @contexts.each do |k,v| %>
-  <li>
-    <%= link_to v, codebook_path(k) %>
-  </li>
-<% end %>
+  <% @contexts.each do |context,label| %>
+    <li>
+      <%= link_to label, codebook_path(context) %>
+    </li>
+  <% end %>
 </ul>
