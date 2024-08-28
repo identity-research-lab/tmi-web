@@ -8,20 +8,21 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  
+
   root "survey_responses#index"
 
   get "about", controller: "static", action: "about"
-  
+
   resources :survey_responses do
     post "enqueue_keywords", action: "enqueue_keywords"
   end
-  
-  
+
+
   resources :codebooks do
     post "enqueue_categories", action: "enqueue_categories"
   end
-  
+
   resources :questions
-  
+  resources :stats
+
 end

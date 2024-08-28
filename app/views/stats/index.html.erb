@@ -1,0 +1,19 @@
+<%- title "TWI-Web Statistics" %>
+
+<h1>
+  Statistics.
+</h1>
+
+<h2><%= number_with_delimiter(@total_datapoints) %> total datapoints:</h2>
+<ul>
+  <% @stats.each do |label, value| %>
+    <li><%= label %>: <span class="highlight-green"><%= value.is_a?(String) ? value : number_with_delimiter(value) %></span></li>
+  <% end %>
+</ul>
+
+<h2>Overall identity reflection sentiment:</h2>
+<ul>
+  <li><span class="highlight-green"><%= @pronoun_sentiment_positive %>% positive</span></li>
+  <li><span class="highlight-red"><%= @pronoun_sentiment_negative %>% negative</span></li>
+  <li><span class="highlight-grey"><%= @pronoun_sentiment_neutral %>% neutral</span></li>
+</ul>

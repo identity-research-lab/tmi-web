@@ -614,6 +614,18 @@ th a:hover {
     background-color: var(--color-red-highlight);
   }
 
+  .highlight-green {
+    background-color: var(--color-green-highlight);
+  }
+
+  .highlight-grey {
+    background-color: var(--color-light-grey);
+  }
+
+  .highlight-red {
+    background-color: var(--color-red-highlight);
+  }
+
   .word-cloud {
     display: flex;
     flex-wrap: wrap;
