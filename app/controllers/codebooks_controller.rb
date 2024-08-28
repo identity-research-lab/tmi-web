@@ -1,7 +1,5 @@
 class CodebooksController < ApplicationController
 
-  USERS = { ENV['GENERAL_ADMISSION_USERNAME'] => ENV['GENERAL_ADMISSION_PASSWORD'] }
-
   def index
     @contexts = Question::QUESTIONS
   end
