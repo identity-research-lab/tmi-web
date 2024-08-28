@@ -23,9 +23,13 @@ class CodebooksController < ApplicationController
     if @question.identity_field?
       # Identity fields have associated Identity objects.
       @frequencies = Identity.histogram(@context)
+      @frequencies_by_keys = @frequencies.sort{|a, b| a[0] <=> b[0]}
+      @frequencies_by_values = @frequencies.sort{|a, b| a[1] <=> b[1]}
     elsif @question.experience_field?
       # Experience fields have associated Code and Category objects.
       @frequencies = Code.histogram(@context)
+      @frequencies_by_keys = @frequencies.sort{|a, b| a[0] <=> b[0]}
+      @frequencies_by_values = @frequencies.sort{|a, b| a[1] <=> b[1]}
       @categories_histogram = Category.histogram(@context)
       @total_codes = @categories_histogram.values.sum
     end
