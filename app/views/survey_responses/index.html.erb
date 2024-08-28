@@ -5,13 +5,13 @@
 </h1>
 
 <ol class="nodes">
-<% @responses.each do |response| %>
-  <li>
-    <a href="/survey_responses/<%= response.id %>">
-      <div>
-        <%= response.identifier %>
-      </div>
-    </a>
-  </li>
-<% end %>
+  <% @responses.each do |response| %>
+    <li>
+      <a href="/survey_responses/<%= response.id %>">
+        <div>
+          <%= response.identifier %>
+        </div>
+      </a>
+    </li>
+  <% end %>
 </ol>
