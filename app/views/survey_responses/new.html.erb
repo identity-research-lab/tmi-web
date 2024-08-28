@@ -2,13 +2,46 @@
 
 <h1>Upload survey data.</h1>
 
-<p>Note that this will merge new responses from the file you select with existing survey responses. In other words, you will not overwrite or duplicate data by uploading a file.</p>
+<div class="two-column">
 
-<%= form_with url: survey_responses_path, method: :post do |f| %>
-  <label>
-    CSV:
-    <%= f.file_field :csv, direct_upload: true %>
-  </label>
+  <div class="column">
+    <h2>Select a CSV file.</h2>
+    <p>Note that this will merge new responses from the file you select with existing survey responses. In other words, you will not overwrite or duplicate data by uploading a file.</p>
 
-  <%= f.submit "Upload and Merge" %>
-<% end  %>  
+    <%= form_with url: survey_responses_path, method: :post do |f| %>
+      <%= f.file_field :csv, direct_upload: true %>
+      <%= f.submit "Upload and Merge" %>
+    <% end  %>
+  </div>
+
+  <div class="column">
+    <h2>Required fields.</h2>
+
+    <p>Your upload must include the following fields in the header row:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>Meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>source_record_id</code></td>
+          <td>Record ID from the survey platform for cross-reference</td>
+        </tr>
+        <% Question::QUESTIONS.each do |key,label| %>
+          <tr>
+            <td><code><%= key %></code></td>
+            <td><%= label.downcase %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <td><code>pronouns_given_text</code></td>
+          <td>Freeform pronoun field</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
