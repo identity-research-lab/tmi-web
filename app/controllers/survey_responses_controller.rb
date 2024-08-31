@@ -1,17 +1,11 @@
 class SurveyResponsesController < ApplicationController
 
   def index
-    if @theme = params.permit(:theme)[:theme]
-      @responses = SurveyResponse.where("? = ANY (themes)", @theme).order(:created_at)
-    else
-      @responses = SurveyResponse.all.order(:created_at)
-    end
+    @responses = SurveyResponse.all.order(:created_at)
   end
 
   def show
-    @theme = params.permit(:theme)[:theme]
     @response = SurveyResponse.find(params[:id])
-    @total_responses = SurveyResponse.all.count
     @enqueued_at = params[:enqueued_at]
 
     @previous_response = SurveyResponse.where("created_at < ?", @response.created_at).order("created_at DESC").limit(1).first
@@ -19,7 +13,7 @@ class SurveyResponsesController < ApplicationController
 
     persona = Persona.find_or_initialize_by(survey_response_id: @response.id)
     @categories = persona.categories.sort{ |a,b| "#{a.context}.#{a.name}" <=> "#{b.context}.#{b.name}" }
-    @keywords = persona.keywords.sort{ |a,b| a.name <=> b.name }
+    @keywords = persona.keywords.order_by(:name)
   end
 
   def new
@@ -37,7 +31,7 @@ class SurveyResponsesController < ApplicationController
       sanitized_params[key] = value.join(",").split(",").reject(&:empty?).compact.map(&:strip).map(&:downcase)
     end
     success = @response.update(sanitized_params)
-    @question = Question.from(params["question"])
+    @question = Question.from(params[:survey_response].keys.first.gsub("_codes","").gsub("_id", "_given"))
 
     respond_to do |format|
       format.turbo_stream do

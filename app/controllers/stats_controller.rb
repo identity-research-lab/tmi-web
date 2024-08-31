@@ -2,11 +2,6 @@ class StatsController < ApplicationController
 
   def index
 
-    sentiments = SurveyResponse.all.pluck(:sentiment)
-    @pronoun_sentiment_positive = (sentiments.select{|sentiment| sentiment == "positive"}.count / sentiments.count.to_f * 100).to_i
-    @pronoun_sentiment_neutral = (sentiments.select{|sentiment| sentiment == "neutral"}.count / sentiments.count.to_f * 100).to_i
-    @pronoun_sentiment_negative = (sentiments.select{|sentiment| sentiment == "negative"}.count / sentiments.count.to_f * 100).to_i
-
     survey_response_count = SurveyResponse.count
     question_count = Question::QUESTIONS.count
     answer_count = survey_response_count * question_count
@@ -18,7 +13,12 @@ class StatsController < ApplicationController
     node_count = ActiveGraph::Base.query('WITH count{()} AS ct RETURN ct').first.values.first
     edge_count = ActiveGraph::Base.query('WITH count{()-[]-()} AS ct RETURN ct').first.values.first
 
-    @total_datapoints = survey_response_count + (question_count * survey_response_count) + identity_count + code_count + category_count + keyword_count + sentiments.compact.count + edge_count
+    sentiments = SurveyResponse.where("sentiment IS NOT NULL").pluck(:sentiment)
+    @pronoun_sentiment_positive = (sentiments.select{|sentiment| sentiment == "positive"}.count / sentiments.count.to_f * 100).to_i
+    @pronoun_sentiment_neutral = (sentiments.select{|sentiment| sentiment == "neutral"}.count / sentiments.count.to_f * 100).to_i
+    @pronoun_sentiment_negative = (sentiments.select{|sentiment| sentiment == "negative"}.count / sentiments.count.to_f * 100).to_i
+
+    @total_datapoints = survey_response_count + (question_count * survey_response_count) + identity_count + code_count + category_count + keyword_count + sentiments.count + edge_count
 
     @stats = {
       "Participant survey responses" => survey_response_count,

@@ -4,7 +4,6 @@
 	<% end %>
 	<%= form_with model: response, data: { turbo_frame: "#{question.key}" } do |f| %>
 		<%= f.text_area question.codes_field, value: response.read_attribute(question.codes_field).try(:sort).try(:join, ', '), multiple: true, class: "#{@css_class}" %>
-		<%= hidden_field_tag "question", "#{question.key}" %>
 		<%= f.submit "Save", class: "small" %>
 	<% end %>
 <% end %>
