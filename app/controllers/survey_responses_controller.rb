@@ -1,15 +1,10 @@
 class SurveyResponsesController < ApplicationController
 
   def index
-    if @theme = params.permit(:theme)[:theme]
-      @responses = SurveyResponse.where("? = ANY (themes)", @theme).order(:created_at)
-    else
-      @responses = SurveyResponse.all.order(:created_at)
-    end
+    @responses = SurveyResponse.all.order(:created_at)
   end
 
   def show
-    @theme = params.permit(:theme)[:theme]
     @response = SurveyResponse.find(params[:id])
     @total_responses = SurveyResponse.all.count
     @enqueued_at = params[:enqueued_at]
