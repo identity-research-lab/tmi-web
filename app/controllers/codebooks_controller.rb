@@ -12,7 +12,6 @@ class CodebooksController < ApplicationController
 
     # Support the previous/next navigation controls
 
-    Rails.logger.info("!!! => @context = #{@context}, @question.key = #{@question.key}")
     sections = Question::QUESTIONS.keys.map(&:to_s)
     previous_index = (sections.index(@question.key) - 1)
     next_index = (sections.index(@question.key) + 1) % sections.length

@@ -17,11 +17,11 @@
   <% end %>
 
   <% if @total_codes.to_i > 0 %>
+    <p>This word cloud reflects the relative frequency of codes within each derived category.</p>
     <ul class="word-cloud">
       <% @categories_histogram.keys.sort{|a,b| @categories_histogram[a] <=> @categories_histogram[b]}.reverse.each do |category| %>
         <% font_size = ((@categories_histogram[category] / @total_codes.to_f) * 60).to_i + 5 %>
-        <% percentage = ((@categories_histogram[category]  / @total_codes.to_f) * 100).to_i %>
-        <li style="font-size: <%= [font_size, 9].max %>px;"><%= category %> (<%= percentage < 1 ? "<1" : percentage %>%)</li>
+        <li style="font-size: <%= [font_size, 9].max %>px;"><%= category %></li>
       <% end %>
     </ul>
   <% end %>
