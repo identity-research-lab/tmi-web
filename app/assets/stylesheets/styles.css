@@ -554,6 +554,35 @@ th a:hover {
     text-decoration: none;
   }
 
+  .confirmable {
+    position: relative;
+  }
+
+  #confirmation {
+    position: absolute;
+    bottom: 1rem;
+    right: 3rem;
+    width: 1rem;
+    height: 1rem;
+    padding: 1rem;
+    vertical-align: baseline;
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTIwMHB0IiBoZWlnaHQ9IjEyMDBwdCIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMTIwMCAxMjAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogPHBhdGggZD0ibTMxMiA1MjhjLTIyLjgwMSAyMi44MDEtMjIuODAxIDYxLjE5OSAwIDg0bDIxMCAyMTBjOS42MDE2IDkuNjAxNiAyNS4xOTkgOS42MDE2IDM2IDBsNTQwLTU0MGMyMi44MDEtMjIuODAxIDIyLjgwMS02MS4xOTkgMC04NHMtNjEuMTk5LTIyLjgwMS04NCAwbC00NTYgNDU2Yy05LjYwMTYgOS42MDE2LTI1LjE5OSA5LjYwMTYtMzYgMGwtMTI2LTEyNmMtMjIuODAxLTIyLjgwMS02MS4xOTktMjIuODAxLTg0IDB6bTYzOC40IDQ5MmgtNzAwLjhjLTM4LjM5OCAwLTY5LjYwMi0zMS4xOTktNjkuNjAyLTY5LjYwMnYtNzAwLjhjMC0zOC4zOTggMzEuMTk5LTY5LjYwMiA2OS42MDItNjkuNjAyaDQ3MC40YzMzLjYwMiAwIDYwLTI2LjM5OCA2MC02MHMtMjYuMzk4LTYwLTYwLTYwaC01NDBjLTY2IDAtMTIwIDU0LTEyMCAxMjB2ODQwYzAgNjYgNTQgMTIwIDEyMCAxMjBoODQwYzY2IDAgMTIwLTU0IDEyMC0xMjB2LTQyMGMwLTMzLjYwMi0yNi4zOTgtNjAtNjAtNjBzLTYwIDI2LjM5OC02MCA2MHYzNTAuNGMwIDM4LjQwMi0zMS4xOTkgNjkuNjAyLTY5LjYwMiA2OS42MDJ6IiBmaWxsPSIjZmZmIi8+Cjwvc3ZnPgo=) no-repeat;
+    background-size: contain;
+  }
+
+  .appear-disappear {
+    opacity: 1;
+	  animation-name: appear-disappear;
+	  animation-duration: 1s;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes appear-disappear {
+	  0% { opacity:0; }
+	  50% { opacity:1;}
+	  100% { opacity:0; }
+  }
+
   .code {
     margin: 2rem;
     background-color: var(--color-light-grey);

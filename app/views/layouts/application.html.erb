@@ -21,18 +21,27 @@
       </section>
       <%= render "shared/footer" %>
     </div>
-    
+
     <script language="javascript">
       function copyToClipboard(elementId) {
         var element = document.getElementById(elementId);
         var textarea = document.createElement('textarea');
+        var tooltip = document.getElementById('confirmation');
+
         textarea.value = element.textContent;
         document.body.appendChild(textarea);
         textarea.select();
         document.execCommand('copy');
         document.body.removeChild(textarea);
+
+        tooltip.classList.add("hidden");
+        tooltip.classList.remove("appear-disappear");
+
+        setTimeout(function() { tooltip.classList.remove("hidden"); }, 200);
+
+        tooltip.classList.add("appear-disappear");
       }
     </script>
-    
+
   </body>
 </html>
