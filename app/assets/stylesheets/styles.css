@@ -561,7 +561,7 @@ th a:hover {
   #confirmation {
     position: absolute;
     bottom: 1rem;
-    right: 3rem;
+    right: -2rem;
     width: 1rem;
     height: 1rem;
     padding: 1rem;
@@ -585,6 +585,7 @@ th a:hover {
 
   .code {
     margin: 2rem;
+    min-height: 6rem;
     background-color: var(--color-light-grey);
     padding: .5rem;
     font-size: var(--font-size-small);
