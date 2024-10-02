@@ -22,10 +22,13 @@
 <% end %>
 
 <h2>Interactive persona:</h2>
-<p><%= @response.graph_query[:explainer] %></p>
-<p class="code">
-  <a href="#query" id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @response.graph_query[:query] %></a>
-</p>
+<div class="confirmable">
+  <p><%= @response.graph_query[:explainer] %></p>
+  <p class="code">
+    <a id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @response.graph_query[:query] %></a>
+  </p>
+  <div id="confirmation" class="hidden"></div>
+</div>
 
 <h2>Questions and responses:</h2>
 <table>

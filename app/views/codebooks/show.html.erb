@@ -31,11 +31,14 @@
   <% end %>
 
   <% if @categories_histogram.keys.any? %>
-    <h2>tmi-graph query:</h2>
-    <p class="code">
-      <%= Codebook.category_query(@context_key)[:explainer] %><br />
-      <a href="#query" id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= Codebook.category_query(@context_key)[:query] %></a>
-    </p>
+      <h2>tmi-graph query:</h2>
+      <div class="confirmable">
+        <p class="code">
+          <%= Codebook.category_query(@context_key)[:explainer] %><br />
+          <a id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= Codebook.category_query(@context_key)[:query] %></a>
+        </p>
+        <div id="confirmation" class="hidden"></div>
+      </div>
   <% end %>
 
 <% else %>
