@@ -23,8 +23,8 @@
 
 <h2>Interactive persona:</h2>
 <div class="confirmable">
-  <p><%= @response.graph_query[:explainer] %></p>
   <p class="code">
+    // <%= @response.graph_query[:explainer] %><br />
     <a id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @response.graph_query[:query] %></a>
   </p>
   <div id="confirmation" class="hidden"></div>
