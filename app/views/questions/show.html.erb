@@ -1,6 +1,9 @@
 <%- title "Participant Survey Responses to #{@question.label} Question" %>
 
 <h1><%= @responses.count %> Participant Survey Responses to "<%= @question.label %>".</h1>
+<p>
+  These are the responses provided by participants to the "<%= @question.label %>" question. Blank responses are not listed here.
+</p>
 
 <h2>Reference:</h3>
   <ul class="word-cloud">
