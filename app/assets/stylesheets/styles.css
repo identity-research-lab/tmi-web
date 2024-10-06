@@ -442,11 +442,12 @@ th a:hover {
 
  input[type="submit"],
  button {
-   background-color: var(--color-red);
-   padding: .25rem 1rem;
-   color: #fff;
-   border-radius: 5px;
- }
+  background-color: var(--color-red);
+  padding: .25rem 1rem;
+  color: #fff;
+  border-radius: 5px;
+  float: right;
+}
 
  input {
    margin-top: 1rem;
@@ -692,7 +693,7 @@ th a:hover {
   }
 
   .form-success {
-     background-color: var(--color-white);
+     background-color: auto;
      animation: fadeSuccessBackground 1s;
    }
 
@@ -701,7 +702,7 @@ th a:hover {
      background-color: var(--color-green-highlight);
    }
    100% {
-     background-color: white;
+     background-color: auto;
    }
   }
 
@@ -774,6 +775,28 @@ th a:hover {
   }
 
   .logo a {
+    text-decoration: none;
+  }
+
+  .tag {
+    background-color: var(--color-green);
+    color: var(--color-white);
+    line-height: 1.25rem;
+    padding: .6rem;
+    border-radius: 1rem;
+    float: left;
+    min-width: 2rem;
+    margin: 0 1rem 1rem 0;
+  }
+
+  .tag-button {
+    background-color: var(--color-red);
+    color: var(--color-white);
+    float: right;
+  }
+
+  .tag-button a {
+    color: var(--color-white);
     text-decoration: none;
   }
 

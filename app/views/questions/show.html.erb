@@ -35,7 +35,7 @@
           <%= @response_value %>
         </td>
         <td class="form-entry">
-          <%= render "form", response: response, question: @question, success: nil %>
+          <%= render "/survey_responses/form", response: response, question: @question, success: nil %>
         </td>
       </tr>
     <% end %>
