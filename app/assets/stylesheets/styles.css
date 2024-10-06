@@ -73,23 +73,7 @@
    text-decoration-color: var(--color-black);
  }
 
- footer ul {
-   list-style: none;
-   margin: 0;
- }
-
- footer ul li {
-   font-size: 1rem;
-   margin-bottom: .75rem;
- }
-
- footer a {
-   color: var(--color-white);
-   font-family: var(--font-body);
-   text-decoration: none;
- }
-
- ul,
+ul,
  ol {
    list-style-position: inside;
    margin: 1.5rem 0 1.5rem 1.5rem;
@@ -138,11 +122,23 @@
    margin-left: 1rem;
  }
 
- footer a {
-   color: var(--color-white);
-   text-decoration: none;
- }
-
+ footer ul {
+    list-style: none;
+    margin: 0;
+  }
+ 
+  footer ul li {
+    font-size: 1rem;
+    margin-bottom: .75rem;
+  }
+ 
+  footer a {
+    color: var(--color-white);
+    font-family: var(--font-body);
+    text-decoration: underline;
+    text-decoration-color: var(--color-white);
+  }
+ 
  footer a:focus,
  footer a:hover {
    color: var(--color-white);
@@ -630,7 +626,8 @@ th a:hover {
     color: var(--color-white);
   }
 
-  .sentiment {
+  .highlight {
+    background-color: var(--color-green-highlight);
   }
 
   .sentiment-positive {
