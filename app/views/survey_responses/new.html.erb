@@ -10,7 +10,7 @@
 
     <%= form_with url: survey_responses_path, method: :post do |f| %>
       <%= f.file_field :csv, direct_upload: true %>
-      <%= f.submit "Upload and Merge" %>
+      <%= f.submit "Upload and Merge", style: "float: none;" %>
     <% end  %>
   </div>
 
