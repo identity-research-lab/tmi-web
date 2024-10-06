@@ -40,7 +40,14 @@
         setTimeout(function() { tooltip.classList.remove("hidden"); }, 200);
 
         tooltip.classList.add("appear-disappear");
-      }
+      };
+
+      function toggleCodeMode(elementId) {
+        var cloud = document.getElementById("code-cloud-" + elementId);
+        var entry = document.getElementById("code-entry-" + elementId);
+        entry.classList.remove("hidden");
+        cloud.classList.add("hidden");
+      };
     </script>
 
   </body>
