@@ -626,7 +626,8 @@ th a:hover {
     color: var(--color-white);
   }
 
-  .sentiment {
+  .highlight {
+    background-color: var(--color-green-highlight);
   }
 
   .sentiment-positive {
