@@ -76,6 +76,7 @@ Take heart! If everything goes smoothly, you're all set. And if something went w
 
 From the root `tmi-web` directory, run the following commands:
 
+    rake db:drop
     rake db:create
     rake db:migrate
 
@@ -126,6 +127,12 @@ To start TMI-web, type
 You should see the output logs from the application begin to scroll into view. The application will continue running in that terminal shell until you interrupt the process (with `control-c`) or otherwise terminate the application. Shutting down the application can be safely done at any time.
 
 Now that the application has been started, visit [http://localhost:3000](http://localhost:3000) in your web browser.
+
+### Import sample data
+
+In your browser, use the `Upload` navigation link. Click on the file selector, and navigate to the "data" directory inside the TMI-Web project directory. Select the file named `sample_data.csv` and click the `Upload and Merge` button. This creates 100 survey response records with random text.
+
+Since TMI-Web is designed to merge sets of survey responses, note that you will need to completely reset your database before importing real survey responses. Refer to [Prepare the PostgreSQL database](#prepare-the-PostgreSQL-database) above for instructions.
 
 ### What to do if the application doesn't start
 
@@ -192,6 +199,14 @@ Navigate in your terminal to the `db` directory and type
 
     rake neo4j:migrate
 
+### Generate a sample data comma-separated-value (CSV) file for upload
+
+    rake export:sample_data
+    
+or
+
+    rake 'export:sample_data'
+    
 ### Generate code documentation
 
     rdoc -op doc

@@ -118,6 +118,8 @@ GEM
     drb (2.2.1)
     erubi (1.13.0)
     event_stream_parser (1.0.0)
+    faker (3.4.2)
+      i18n (>= 1.8.11, < 2)
     faraday (2.10.0)
       faraday-net_http (>= 2.0, < 3.2)
       logger
@@ -336,6 +338,7 @@ DEPENDENCIES
   capybara
   debug
   dotenv
+  faker (~> 3.4, >= 3.4.2)
   neo4j-ruby-driver
   pg
   pry

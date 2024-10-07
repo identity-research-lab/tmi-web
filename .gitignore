@@ -5,7 +5,7 @@ capybara-*.html
 /db/*.sqlite3-journal
 /db/*.sqlite3-[0-9]*
 /db/*.dump
-
+/export/*.csv
 /public/system
 /coverage/
 /spec/tmp
