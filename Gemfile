@@ -10,7 +10,6 @@ gem 'ruby-openai'
 gem 'activegraph', '11.5.0.beta.3'
 gem 'neo4j-ruby-driver'
 gem 'yard'
-gem 'faker', '~> 3.4', '>= 3.4.2'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.1"
@@ -62,17 +61,11 @@ group :development, :test do
   gem "debug", platforms: %i[ mri windows ]
   gem "rspec"
   gem "rspec-rails"
+  gem 'faker', '~> 3.4', '>= 3.4.2'
 end
 
 group :development do
-  # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
-
-  # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
-  # gem "rack-mini-profiler"
-
-  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  # gem "spring"
 end
 
 group :test do
