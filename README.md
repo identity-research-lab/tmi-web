@@ -191,7 +191,7 @@ Navigate in your terminal to the `db` directory and run these commands:
 
 ### Load PostgresSQL database backup into local db
 
-Navigate in your terminal to the `db` directory and type
+Navigate in your terminal to root directory of the project and type
 
     pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d tmi_web_development db/latest.dump
 
