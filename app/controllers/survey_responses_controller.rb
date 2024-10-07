@@ -14,6 +14,7 @@ class SurveyResponsesController < ApplicationController
     persona = Persona.find_or_initialize_by(survey_response_id: @response.id)
     @categories = persona.categories.sort{ |a,b| "#{a.context}.#{a.name}" <=> "#{b.context}.#{b.name}" }
     @keywords = persona.keywords.order_by(:name)
+    @annotation = @response.annotation || Annotation.new(survey_response_id: @response.id)
   end
 
   def new
@@ -30,6 +31,7 @@ class SurveyResponsesController < ApplicationController
     response_params.each do |key, value|
       sanitized_params[key] = value.join(",").split(",").reject(&:empty?).compact.map(&:strip).map(&:downcase)
     end
+
     success = @response.update(sanitized_params)
     @question = Question.from(params[:survey_response].keys.first.gsub("_codes","").gsub("_id", "_given"))
 
@@ -38,7 +40,6 @@ class SurveyResponsesController < ApplicationController
         render turbo_stream: turbo_stream.replace("#{@question.key}_#{@response.id}", partial: "/survey_responses/form", locals: { response: @response, question: @question, success: success  })
       end
     end
-
   end
 
   def enqueue_keywords
@@ -53,5 +54,3 @@ class SurveyResponsesController < ApplicationController
     end
 
 end
-
-
