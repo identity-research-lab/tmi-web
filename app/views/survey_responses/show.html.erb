@@ -48,7 +48,7 @@
         <td class="label"><%= link_to question.label, question_path(question.key), class: "zoom-link" %></td>
         <td  class="response"><%= @response.read_attribute(question.key) || "(Not answered)" %></td>
         <td class="form-entry">
-          <% if @response.respond_to?(question.key) && @response.read_attribute(question.key).present? || @response.read_attribute(question.codes_field).any? %>
+          <% if @response.respond_to?(question.key) && @response.read_attribute(question.key).present? || @response.read_attribute(question.codes_field).to_a.any? %>
             <%= render "form", response: @response, question: question, success: nil %>
           <% end %>
         </td>
