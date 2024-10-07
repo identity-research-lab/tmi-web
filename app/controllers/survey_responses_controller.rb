@@ -20,7 +20,7 @@ class SurveyResponsesController < ApplicationController
   end
 
   def create
-    ImportFromCsv.perform(params.permit(:csv)[:csv])
+    Services::ImportFromCsv.perform(params.permit(:csv)[:csv])
     redirect_to survey_responses_path
   end
 
