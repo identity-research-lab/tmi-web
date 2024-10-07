@@ -4,14 +4,14 @@
 	<% end %>
 	<% key = "#{question.key}-#{response.id}" %>
 	<%= form_with model: response, data: { turbo_frame: "#{question.key}_#{response.id}" } do |f| %>
-		<div id="code-cloud-<%= key %>">
+		<div id="display-<%= key %>">
 			<% response.read_attribute(question.codes_field).try(:sort).to_a.each do |code| %>
 				<div class="tag <%= @css_class %>"><%= code %></div>
 			<% end %>
-			<div class="tag tag-button"><a onclick="toggleCodeMode('<%= key %>'); return false;">Edit</a></div>
+			<div class="tag tag-button"><a onclick="toggleFormMode('<%= key %>'); return false;">Edit</a></div>
 			<br style="clear: both;" />
 		</div>
-		<div class="hidden" id="code-entry-<%= key %>">
+		<div class="hidden" id="field-<%= key %>">
 			<%= f.text_area question.codes_field, value: response.read_attribute(question.codes_field).try(:sort).try(:join, ', '), multiple: true %>
 			<%= f.submit "Save", class: "small" %>
 		</div>

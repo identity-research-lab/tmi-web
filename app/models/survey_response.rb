@@ -11,6 +11,8 @@ class SurveyResponse < ApplicationRecord
   validates_presence_of :response_id
   validates_uniqueness_of :response_id
 
+  has_one :annotation
+
   # Displays the query and its explanation for locating the SurveyResponse's associated Persona in the graph.
   def graph_query
     {
