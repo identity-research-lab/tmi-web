@@ -187,6 +187,7 @@ ul,
    text-decoration: underline;
    text-decoration-color: var(--color-red);
    text-underline-offset: .25rem;
+   cursor: pointer;
  }
 
  a:focus,

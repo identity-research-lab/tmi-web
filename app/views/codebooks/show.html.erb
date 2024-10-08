@@ -9,6 +9,17 @@
   <%= link_to ">", codebook_path(@next_section), class: "flip", id: "flip-right" %>
 <% end %>
 
+<% if @categories_histogram.keys.any? %>
+    <h2>tmi-graph query:</h2>
+    <div class="confirmable">
+      <p class="code">
+        <%= Codebook.category_query(@context_key)[:explainer] %><br />
+        <a id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= Codebook.category_query(@context_key)[:query] %></a>
+      </p>
+      <div id="confirmation" class="hidden"></div>
+    </div>
+<% end %>
+
 <h2>Derived categories:</h2>
 
 <% if @categories_histogram %>
@@ -33,17 +44,6 @@
   <% end %>
 
   <br style="clear: both;" />
-
-  <% if @categories_histogram.keys.any? %>
-      <h2>tmi-graph query:</h2>
-      <div class="confirmable">
-        <p class="code">
-          <%= Codebook.category_query(@context_key)[:explainer] %><br />
-          <a id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= Codebook.category_query(@context_key)[:query] %></a>
-        </p>
-        <div id="confirmation" class="hidden"></div>
-      </div>
-  <% end %>
 
 <% else %>
   <p>By design, identities are not categorized.</p>
@@ -83,21 +83,26 @@
     const codeElements = Array.from(document.getElementsByClassName('tagged'));
     const tagElement = document.getElementById('category-' + dataAttribute)
     const tagElements = Array.from(document.getElementsByClassName('tag'));
+    const activeElements = Array.from(document.getElementsByClassName('active');
 
-    tagElements.forEach(element => {
+    if (Array.from(tagElement.classList).includes('active')) {
+      tagElements.forEach(element => {
         element.classList.remove('active');
-    });
-
-    tagElement.classList.add('active');
-
-    codeElements.forEach(element => {
-      let tags = JSON.parse(element.getAttribute('data-tags'));
-      if (tags.includes(dataAttribute)) {
-        element.classList.remove('hidden');
-      } else {
-        element.classList.add('hidden');
-      }
-    });
+        codeElements.forEach(element => {
+          element.classList.remove('hidden');
+        });
+      });
+    } else {
+      tagElement.classList.add('active');
+      codeElements.forEach(element => {
+        let tags = JSON.parse(element.getAttribute('data-tags'));
+        if (tags.includes(dataAttribute)) {
+          element.classList.remove('hidden');
+        } else {
+          element.classList.add('hidden');
+        }
+      });
+    }
   }
 
 </script>
