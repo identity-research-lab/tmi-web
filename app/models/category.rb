@@ -18,7 +18,7 @@ class Category
   # This method uses the Clients::OpenAi client passing the codes as an argument to the prompt.
   # The agent returns an array of themes, which are then captured as Category objects.
   def self.from(context)
-    codes = Code.where(context: context)
+    codes = Code.where(context: context.gsub("_exp", ""))
     return unless codes.any?
 
     text = codes.map(&:name).join(',')
@@ -31,7 +31,7 @@ class Category
       category = Category.find_or_create_by(name: theme['theme'].strip.downcase, context: context)
       codes.each do |code|
         next unless theme['codes'].include?(code.name)
-        CategorizedAs.create(from_node: category, to_node: code)
+        code.categories << category
       end
     end
 

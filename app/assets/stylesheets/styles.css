@@ -126,19 +126,19 @@ ul,
     list-style: none;
     margin: 0;
   }
- 
+
   footer ul li {
     font-size: 1rem;
     margin-bottom: .75rem;
   }
- 
+
   footer a {
     color: var(--color-white);
     font-family: var(--font-body);
     text-decoration: underline;
     text-decoration-color: var(--color-white);
   }
- 
+
  footer a:focus,
  footer a:hover {
    color: var(--color-white);
@@ -786,6 +786,10 @@ th a:hover {
     margin: 0 1rem 1rem 0;
   }
 
+  .tag a {
+    color: var(--color-white);
+    text-decoration: none;
+  }
   .tag-button {
     background-color: var(--color-red);
     color: var(--color-white);
