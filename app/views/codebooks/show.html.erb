@@ -21,7 +21,7 @@
     <div class="word-cloud">
       <% @categories_histogram.keys.sort{|a,b| @categories_histogram[a] <=> @categories_histogram[b]}.reverse.each do |category| %>
         <% font_size = ((@categories_histogram[category] / @total_codes.to_f) * 60).to_i + 5 %>
-        <div class="tag" style="font-size: <%= [font_size, 9].max %>px;">
+        <div class="tag" id="category-<%= category %>" style="font-size: <%= [font_size, 9].max %>px;">
           <a onclick="filterBy('<%= category %>'); return false" class="zoom-link"><%= category %></a>
         </div>
       <% end %>
@@ -80,14 +80,19 @@
 <script language="javascript">
 
   function filterBy(dataAttribute) {
-    console.log(dataAttribute);
-    const elements = document.getElementsByClassName('tagged');
-    var elementsArray = Array.from(elements);
-    elementsArray.forEach(element => {
+    const codeElements = Array.from(document.getElementsByClassName('tagged'));
+    const tagElement = document.getElementById('category-' + dataAttribute)
+    const tagElements = Array.from(document.getElementsByClassName('tag'));
+
+    tagElements.forEach(element => {
+        element.classList.remove('active');
+    });
+
+    tagElement.classList.add('active');
+
+    codeElements.forEach(element => {
       let tags = JSON.parse(element.getAttribute('data-tags'));
-      console.log("Tags: " + tags);
       if (tags.includes(dataAttribute)) {
-        console.log("Making " + dataAttribute + " visible.");
         element.classList.remove('hidden');
       } else {
         element.classList.add('hidden');

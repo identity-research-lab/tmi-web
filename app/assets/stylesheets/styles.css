@@ -786,6 +786,10 @@ th a:hover {
     margin: 0 1rem 1rem 0;
   }
 
+  .tag.active {
+    background-color: var(--color-red);
+  }
+
   .tag a {
     color: var(--color-white);
     text-decoration: none;
