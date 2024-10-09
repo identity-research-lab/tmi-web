@@ -48,13 +48,13 @@
   function filterBy(dataAttribute) {
     const dataRows = Array.from(document.getElementsByClassName('data-row'));
     const tagElements = Array.from(document.getElementsByClassName('tag'));
-    const beaconTagElement = tagElements[0];
+    const selectedTagElements = document.getElementsByClassName('active');
 
     dataRows.forEach(element => {
       element.classList.remove('hidden');
     });
 
-    if (Array.from(beaconTagElement.classList).includes('active')) {
+    if (selectedTagElements.length > 0) {
       // reset tags and remove filters from data rows
       tagElements.forEach(element => {
         element.classList.remove('active');
