@@ -9,26 +9,7 @@
   <%= link_to ">", codebook_path(@next_section), class: "flip", id: "flip-right" %>
 <% end %>
 
-<h2>Derived categories:</h2>
-
 <% if @categories_histogram %>
-  <% if @enqueued_at %>
-    <p>Category derivation was started at <%= @enqueued_at %>. Please allow up to 2 minutes for the process to complete. You can reload the page to monitor progress.</p>
-  <% end %>
-
-  <% if @total_codes.to_i > 0 %>
-    <p>This word cloud reflects the relative frequency of codes within each derived category.</p>
-    <ul class="word-cloud">
-      <% @categories_histogram.keys.sort{|a,b| @categories_histogram[a] <=> @categories_histogram[b]}.reverse.each do |category| %>
-        <% font_size = ((@categories_histogram[category] / @total_codes.to_f) * 60).to_i + 5 %>
-        <li style="font-size: <%= [font_size, 9].max %>px;"><%= category %></li>
-      <% end %>
-    </ul>
-  <% end %>
-
-  <% unless @enqueued_at %>
-    <%= button_to "Derive Categories", codebook_enqueue_categories_path(@context, params: { enqueued: true }, method: :put ) %>
-  <% end %>
 
   <% if @categories_histogram.keys.any? %>
       <h2>tmi-graph query:</h2>
@@ -41,6 +22,30 @@
       </div>
   <% end %>
 
+  <h2>Derived categories:</h2>
+
+  <% if @enqueued_at %>
+    <p>Category derivation was started at <%= @enqueued_at %>. Please allow up to 2 minutes for the process to complete. You can reload the page to monitor progress.</p>
+  <% end %>
+
+  <% if @total_codes.to_i > 0 %>
+    <p>This word cloud reflects the relative frequency of codes within each derived category.</p>
+    <div class="word-cloud">
+      <% @categories_histogram.keys.sort{|a,b| @categories_histogram[a] <=> @categories_histogram[b]}.reverse.each do |category| %>
+        <% font_size = ((@categories_histogram[category] / @total_codes.to_f) * 60).to_i + 5 %>
+        <div class="tag" id="category-<%= category %>" style="font-size: <%= [font_size, 9].max %>px;">
+          <a onclick="filterBy('<%= category %>'); return false" class="zoom-link"><%= category %></a>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% unless @enqueued_at %>
+    <%= button_to "Derive Categories", codebook_enqueue_categories_path(@context, params: { enqueued: true }, method: :put ) %>
+  <% end %>
+
+  <br style="clear: both;" />
+
 <% else %>
   <p>By design, identities are not categorized.</p>
 <% end %>
@@ -50,10 +55,10 @@
     <h3>Alphabetically</h3>
     <ul class="list">
       <% @frequencies_by_keys.each do |key,value| %>
-        <li>
+        <li class="tagged" data-tags="<%= @codes.to_a.select{|c| c.name == key}.map(&:categories).flatten.map(&:name) %>">
           <div>
             <div class="stacked-bar" style="width: <%= (value / @frequencies.values.max.to_f) * 100 %>%"></div>
-            <%= "#{key}: #{value}" %>
+            <%= "#{key}: #{value}" %><br />
           </div>
         </li>
       <% end %>
@@ -64,7 +69,7 @@
     <h3>By Frequency</h3>
     <ul class="column list">
       <% @frequencies_by_values.sort{|a, b| a[1] <=> b[1]}.reverse.each do |key,value| %>
-        <li>
+        <li class="tagged" data-tags="<%= @codes.to_a.select{|c| c.name == key}.map(&:categories).flatten.map(&:name) %>">
           <%= "#{key}: #{value}" %>
           <div class="stacked-bar" style="width: <%= (value / @frequencies.values.max.to_f) * 100 %>%"></div>
         </li>
@@ -72,3 +77,33 @@
     </ul>
   </div>
 </div>
+
+<script language="javascript">
+
+  function filterBy(dataAttribute) {
+    const codeElements = Array.from(document.getElementsByClassName('tagged'));
+    const tagElements = Array.from(document.getElementsByClassName('tag'));
+    const tagElement = document.getElementById('category-' + dataAttribute)
+
+    if (Array.from(tagElement.classList).includes('active')) {
+      codeElements.forEach(element => {
+        element.classList.remove('hidden');
+      });
+      tagElement.classList.remove('active');
+    } else {
+      tagElements.forEach(element => {
+        element.classList.remove('active');
+      });
+      tagElement.classList.add('active');
+      codeElements.forEach(element => {
+        let tags = JSON.parse(element.getAttribute('data-tags'));
+        if (tags.includes(dataAttribute)) {
+          element.classList.remove('hidden');
+        } else {
+          element.classList.add('hidden');
+        }
+      });
+    }
+  }
+
+</script>
