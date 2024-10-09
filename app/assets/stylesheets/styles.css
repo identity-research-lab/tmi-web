@@ -393,7 +393,7 @@ th a:hover {
 
   button:active,
   .small:active {
-    border: 1px solid #000;
+    border: 1px solid var(--color-medium-black);
     opacity: 0.75;
   }
 
@@ -444,6 +444,7 @@ th a:hover {
   color: #fff;
   border-radius: 5px;
   margin: 1rem 0;
+  border: 1px solid var(--color-red);
 }
 
  input {
