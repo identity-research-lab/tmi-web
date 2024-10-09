@@ -23,7 +23,7 @@
     <% @responses.each do |response| %>
       <% alt = counter % 2 == 1 ? "" : "alt" %>
       <% counter += 1 %>
-      <tr class="<%= alt %>">
+      <tr class="<%= alt %> data-row" data-tags="<%= response.read_attribute(@question.codes_field) %>">
         <td class="label">
           <%= link_to response.id, response, class: "jump-link" %>
         </td>
@@ -41,3 +41,47 @@
     <% end %>
   </tbody>
 </table>
+
+
+<script language="javascript">
+
+  function filterBy(dataAttribute) {
+    const dataRows = Array.from(document.getElementsByClassName('data-row'));
+    const tagElements = Array.from(document.getElementsByClassName('tag'));
+    const selectedTagElements = document.getElementsByClassName('active');
+
+    dataRows.forEach(element => {
+      element.classList.remove('hidden');
+    });
+
+    if (selectedTagElements.length > 0) {
+      // reset tags and remove filters from data rows
+      tagElements.forEach(element => {
+        element.classList.remove('active');
+      });
+      dataRows.forEach(element => {
+        element.classList.remove('hidden');
+      });
+    } else {
+      // activate tags and apply filters to data rows
+      tagElements.forEach(element => {
+        element.classList.remove('active');
+        if (element.getAttribute('data-code') == dataAttribute) {
+          element.classList.add('active');
+        }
+      });
+      dataRows.forEach(element => {
+        let tags = JSON.parse(element.getAttribute('data-tags'));
+        if (tags.includes(dataAttribute)) {
+          element.classList.remove('hidden');
+        } else {
+          element.classList.add('hidden');
+        }
+      });
+    }
+
+
+
+  }
+
+</script>

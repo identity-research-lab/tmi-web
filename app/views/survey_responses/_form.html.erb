@@ -6,9 +6,9 @@
 	<%= form_with model: response, data: { turbo_frame: "#{question.key}_#{response.id}" } do |f| %>
 		<div id="display-<%= key %>">
 			<% response.read_attribute(question.codes_field).try(:sort).to_a.each do |code| %>
-				<div class="tag <%= @css_class %>"><%= code %></div>
+				<a onclick="filterBy('<%= code %>'); return false"><div class="zoom-link tag <%= @css_class %>" data-code="<%= code %>"><%= code %></div></a>
 			<% end %>
-			<div class="tag tag-button"><a onclick="toggleFormMode('<%= key %>'); return false;">Edit</a></div>
+			<div class="tag-button"><a onclick="toggleFormMode('<%= key %>'); return false;">Edit</a></div>
 			<br style="clear: both;" />
 		</div>
 		<div class="hidden" id="field-<%= key %>">

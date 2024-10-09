@@ -798,6 +798,12 @@ th a:hover {
   .tag-button {
     background-color: var(--color-red);
     color: var(--color-white);
+    line-height: 1.25rem;
+    padding: .6rem;
+    border-radius: 1rem;
+    float: left;
+    min-width: 2rem;
+    margin: 0 1rem 1rem 0;
     float: right;
   }
 
