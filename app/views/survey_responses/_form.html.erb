@@ -2,11 +2,15 @@
 	<% if success %>
 		<% @css_class = success ? "form-success" : "form-error" %>
 	<% end %>
+
 	<% key = "#{question.key}-#{response.id}" %>
 	<%= form_with model: response, data: { turbo_frame: "#{question.key}_#{response.id}" } do |f| %>
+		<% if filters %>
+			<% @tag_class = "zoom-link" %>
+		<% end %>
 		<div id="display-<%= key %>">
 			<% response.read_attribute(question.codes_field).try(:sort).to_a.each do |code| %>
-				<a onclick="filterBy('<%= code %>'); return false"><div class="zoom-link tag <%= @css_class %>" data-code="<%= code %>"><%= code %></div></a>
+				<a onclick="filterBy('<%= code %>'); return false"><div class="tag <%= @tag_class %> <%= @css_class %>" data-code="<%= code %>"><%= code %></div></a>
 			<% end %>
 			<div class="tag-button"><a onclick="toggleFormMode('<%= key %>'); return false;">Edit</a></div>
 			<br style="clear: both;" />
