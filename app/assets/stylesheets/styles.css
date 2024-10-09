@@ -734,7 +734,7 @@ th a:hover {
      content: "";
      width: .8em;
      height: .8em;
-     margin: 0 -0.25rem 0 0.1em;
+     margin: 0 -0.25rem 0 0.25em;
      background: var(--icon-jump-link) no-repeat;
      background-size: contain;
      display: inline-block;
@@ -745,7 +745,7 @@ th a:hover {
      content: "";
      width: .8em;
      height: .8em;
-     margin: 0 -0.25rem 0 0.1em;
+     margin: 0 -0.25rem 0 0.25em;
      background: var(--icon-jump-link-light) no-repeat;
      background-size: contain;
      display: inline-block;
@@ -756,15 +756,22 @@ th a:hover {
      content: "";
      width: .8em;
      height: .8em;
-     margin: 0 -0.25rem 0 0.1em;
+     margin: 0 -0.25rem 0 0.25em;
      background: var(--icon-zoom) no-repeat;
      background-size: contain;
      display: inline-block;
      vertical-align: baseline;
   }
 
-  .tag.zoom-link::after {
+  .zoom-link-light::after {
+     content: "";
+     width: .8em;
+     height: .8em;
+     margin: 0 -0.25rem 0 0.25em;
      background: var(--icon-zoom-light) no-repeat;
+     background-size: contain;
+     display: inline-block;
+     vertical-align: baseline;
   }
 
   .logo {
