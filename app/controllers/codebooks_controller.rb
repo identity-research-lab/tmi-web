@@ -32,7 +32,7 @@ class CodebooksController < ApplicationController
       @categories_histogram = Category.histogram(@context)
       @total_codes = @categories_histogram.values.sum
       Rails.logger.info("!!! params[:id] = #{params[:id]}")
-      @codes = Code.where(context: params[:id].gsub("klass", "class").gsub("_exp", ""))
+      @codes = Code.where(context: params[:id].gsub("klass", "class").gsub("_exp", "").gsub("_", "-"))
     end
 
   end
