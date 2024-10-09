@@ -15,7 +15,7 @@ class Code
   validates_uniqueness_of :name, scope: :context
 
   has_many :out, :personas, rel_class: :Experiences
-  has_many :in, :categories, rel_class: :CategorizedAs
+  has_many :in, :categories, rel_class: :CategorizedAs, dependent: :delete_orphans
 
   # Given a context, generates a hash with each unique Codes as a key and the counts of its uses as a value.
   def self.histogram(context)

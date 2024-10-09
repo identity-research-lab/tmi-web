@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Category do
 
   before do
-    allow(Category).to receive_message_chain(:where, :query_as, :with, :return, :order).and_return(response)
+    allow(Category).to receive_message_chain(:where, :query_as, :with, :where, :return, :order).and_return(response)
   end
 
   let(:result_set) { Struct.new(:values) }
