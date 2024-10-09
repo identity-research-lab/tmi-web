@@ -763,6 +763,10 @@ th a:hover {
      vertical-align: baseline;
   }
 
+  .tag.zoom-link::after {
+     background: var(--icon-zoom-light) no-repeat;
+  }
+
   .logo {
     position: absolute;
     top: 2rem;
