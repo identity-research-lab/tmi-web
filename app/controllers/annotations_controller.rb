@@ -15,7 +15,12 @@ class AnnotationsController < ApplicationController
   def update
     @response = SurveyResponse.find(sanitized_params[:survey_response_id])
     @annotation = Annotation.find_or_initialize_by(survey_response_id: @response.id)
-    success = @annotation.update(text: sanitized_params[:text])
+    @annotation.text = sanitized_params[:text]
+    if sanitized_params[:text].empty?
+      success = @annotation.destroy
+    else
+      success = @annotation.save
+    end
 
     respond_to do |format|
       format.turbo_stream do
