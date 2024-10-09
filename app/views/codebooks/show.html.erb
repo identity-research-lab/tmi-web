@@ -33,9 +33,11 @@
     <div class="word-cloud">
       <% @categories_histogram.keys.sort{|a,b| @categories_histogram[a] <=> @categories_histogram[b]}.reverse.each do |category| %>
         <% font_size = ((@categories_histogram[category] / @total_codes.to_f) * 60).to_i + 5 %>
-        <div class="tag" id="category-<%= category %>" style="font-size: <%= [font_size, 9].max %>px;">
-          <a onclick="filterBy('<%= category %>'); return false" class="zoom-link"><%= category %></a>
-        </div>
+				<a onclick="filterBy('<%= category %>'); return false">
+          <div class="tag zoom-link-light" id="category-<%= category %>" data-code="<%= category %>"  style="font-size: <%= [font_size, 9].max %>px;">
+            <%= category %>
+          </div>
+        </a>
       <% end %>
     </div>
   <% end %>

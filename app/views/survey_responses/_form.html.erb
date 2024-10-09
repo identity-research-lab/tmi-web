@@ -6,7 +6,7 @@
 	<% key = "#{question.key}-#{response.id}" %>
 	<%= form_with model: response, data: { turbo_frame: "#{question.key}_#{response.id}" } do |f| %>
 		<% if filters %>
-			<% @tag_class = "zoom-link" %>
+			<% @tag_class = "zoom-link-light" %>
 		<% end %>
 		<div id="display-<%= key %>">
 			<% response.read_attribute(question.codes_field).try(:sort).to_a.each do |code| %>
