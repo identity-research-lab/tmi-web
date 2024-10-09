@@ -49,7 +49,7 @@
         <td  class="response"><%= @response.read_attribute(question.key) || "(Not answered)" %></td>
         <td class="form-entry">
           <% if @response.respond_to?(question.key) && @response.read_attribute(question.key).present? || @response.read_attribute(question.codes_field).to_a.any? %>
-            <%= render "form", response: @response, question: question, success: nil %>
+            <%= render "form", response: @response, question: question, success: nil, filters: false %>
           <% end %>
         </td>
       </tr>
