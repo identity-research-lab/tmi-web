@@ -37,7 +37,7 @@ class SurveyResponsesController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace("#{@question.key}_#{@response.id}", partial: "/survey_responses/form", locals: { response: @response, question: @question, success: success  })
+        render turbo_stream: turbo_stream.replace("#{@question.key}_#{@response.id}", partial: "/survey_responses/form", locals: { response: @response, question: @question, success: success, filters: false  })
       end
     end
   end

@@ -42,19 +42,19 @@
   </tbody>
 </table>
 
-
 <script language="javascript">
 
   function filterBy(dataAttribute) {
     const dataRows = Array.from(document.getElementsByClassName('data-row'));
     const tagElements = Array.from(document.getElementsByClassName('tag'));
     const selectedTagElements = document.getElementsByClassName('active');
+    const beaconTagElement = selectedTagElements[0];
 
     dataRows.forEach(element => {
       element.classList.remove('hidden');
     });
 
-    if (selectedTagElements.length > 0) {
+    if (selectedTagElements.length > 0 && beaconTagElement.getAttribute('data-code') == dataAttribute) {
       // reset tags and remove filters from data rows
       tagElements.forEach(element => {
         element.classList.remove('active');
@@ -79,8 +79,6 @@
         }
       });
     }
-
-
 
   }
 
