@@ -5,7 +5,7 @@ module Services
 
 		# This is the prompt sent to the selected AI agent to provide instructions on category derivision.
 		PROMPT = %{
-			You are a social researcher doing data analysis. Please generate a list of the 20 most relevant themes from the following list of codes. The themes should be all lowercase and contain no punctuation. Codes should be stripped of quotation marks. Return each code with an array of its categories in JSON format. Use this JSON as the format:
+			You are a social researcher doing data analysis. Please generate a list of the most relevant themes from the following list of codes. The themes should be all lowercase and contain no punctuation. Return each category with an array of its applicable codes in JSON format.Do not remove any punctuation from the codes that are returned. Use this JSON as the output format:
 
 			{
 				"themes" : [
@@ -16,7 +16,7 @@ module Services
 				]
 			}
 
-			The codes are as follows:
+			The codes are provided in the following list:
 		}
 
 		def self.perform(text)
@@ -31,7 +31,7 @@ module Services
 		def perform
 			return false unless text.present?
 
-			response = Clients::OpenAi.request("#{PROMPT} #{self.text}")
+			response = Clients::OpenAi.request("#{PROMPT} #{text}")
 			return false unless response['themes'].present?
 			return response['themes']
  		end
