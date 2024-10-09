@@ -21,7 +21,7 @@ class Category
     codes = Code.where(context: context)
     return unless codes.any?
 
-    text = codes.map(&:name).join(',')
+    text = codes.map(&:name).join(', ')
     return unless text.present?
     return unless themes = Services::DeriveThemes.perform(text)
 
@@ -30,7 +30,7 @@ class Category
     themes.each do |theme|
       category = Category.find_or_create_by(name: theme['theme'].strip.downcase, context: context)
       codes.each do |code|
-        next unless theme['codes'].include?(code.name)
+        next unless theme['codes'].include?(code.name.gsub(/^\"(.+)\"$/,'\1'))
         code.categories << category
       end
     end
