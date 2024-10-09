@@ -443,7 +443,7 @@ th a:hover {
   padding: .25rem 1rem;
   color: #fff;
   border-radius: 5px;
-  float: right;
+  margin: 1rem 0;
 }
 
  input {
