@@ -12,13 +12,13 @@ class Category
   validates :name, presence: true
   validates :context, presence: true
 
-  has_many :out, :codes, rel_class: :CategorizedAs, dependent: :delete_orphans
+  has_many :out, :codes, rel_class: :CategorizedAs
 
   # Regenerates Category objects based on codes within a given context.
   # This method uses the Clients::OpenAi client passing the codes as an argument to the prompt.
   # The agent returns an array of themes, which are then captured as Category objects.
   def self.from(context)
-    codes = Code.where(context: context.gsub("_exp", ""))
+    codes = Code.where(context: context)
     return unless codes.any?
 
     text = codes.map(&:name).join(',')
@@ -40,7 +40,7 @@ class Category
   # Generates a hash with the unique category name as the key and the count of its associated codes as a value.
   def self.histogram(context)
     context = Question.from(context).context
-    categories = where(context: context).query_as(:c).with('c, count{(c)-[:CATEGORIZED_AS]-(code:Code)} AS count').return("c.name, count").order('count DESC')
+    categories = where(context: context).query_as(:c).with('c, count{(c)-[:CATEGORIZED_AS]-(code:Code)} AS ct').where('ct > 0').return("c.name, ct").order('ct DESC')
     categories.inject({}) {|accumulator,category| accumulator[category.values[0]] ||= 0; accumulator[category.values[0]] += category.values[1]; accumulator}
   end
 

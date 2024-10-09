@@ -31,7 +31,8 @@ class CodebooksController < ApplicationController
       @frequencies_by_values = @frequencies.sort{|a, b| a[1] <=> b[1]}
       @categories_histogram = Category.histogram(@context)
       @total_codes = @categories_histogram.values.sum
-      @codes = Code.where(context: @context.gsub("_exp", ""))
+      Rails.logger.info("!!! params[:id] = #{params[:id]}")
+      @codes = Code.where(context: params[:id].gsub("klass", "class").gsub("_exp", ""))
     end
 
   end
