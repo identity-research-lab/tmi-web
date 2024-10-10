@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_07_210517) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_10_001302) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -98,6 +99,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_07_210517) do
     t.string "affinity_codes", default: [], array: true
     t.string "notes_codes", default: [], array: true
     t.string "sentiment"
+    t.string "word_frequency", default: [], array: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

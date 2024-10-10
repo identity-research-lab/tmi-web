@@ -46,6 +46,21 @@ class SurveyResponse < ApplicationRecord
     return false
   end
 
+  # TODO
+  def generate_wordcloud
+    return unless words = Services::GenerateWordCloud.perform(to_corpus)
+    exploded_words = []
+    words.each do |word|
+      word['frequency'].times{ exploded_words << word['word'] }
+    end
+    update_attribute :word_frequency, exploded_words
+    return exploded_words
+  end
+
+  def histogram
+    self.word_frequency.sort.inject({}) { |accumulator, word| accumulator[word] ||= 0; accumulator[word] += 1; accumulator }
+  end
+
   private
 
     # Creates a KeywordExtractorJob and pushes it into the background job queue.
@@ -63,4 +78,12 @@ class SurveyResponse < ApplicationRecord
       ExportToGraphJob.perform_async(self.id)
     end
 
+    # Compile fields into a single body of text.
+    def to_corpus
+      corpus = ""
+      (Question.experience_questions + Question.identity_questions).each do |key|
+        corpus << "#{self.send(key)} "
+      end
+      return corpus
+    end
 end
