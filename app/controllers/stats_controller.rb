@@ -18,13 +18,16 @@ class StatsController < ApplicationController
       @pronoun_sentiment_positive = (sentiments.select{|sentiment| sentiment == "positive"}.count / sentiments.count.to_f * 100).to_i
       @pronoun_sentiment_neutral = (sentiments.select{|sentiment| sentiment == "neutral"}.count / sentiments.count.to_f * 100).to_i
       @pronoun_sentiment_negative = (sentiments.select{|sentiment| sentiment == "negative"}.count / sentiments.count.to_f * 100).to_i
-    else 
+    else
       @pronoun_sentiment_positive = 0
       @pronoun_sentiment_neutral = 0
       @pronoun_sentiment_negative = 0
     end
-    
+
     @total_datapoints = survey_response_count + (question_count * survey_response_count) + identity_count + code_count + category_count + keyword_count + sentiments.count + edge_count
+
+    word_frequencies = SurveyResponse.all.pluck(:word_frequency).flatten.compact
+    @word_cloud_histogram = word_frequencies.tally.reject{|k,v| v < 20}
 
     @stats = {
       "Participant survey responses" => survey_response_count,

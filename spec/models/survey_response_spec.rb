@@ -6,6 +6,7 @@ RSpec.describe SurveyResponse do
     allow_any_instance_of(SurveyResponse).to receive(:enqueue_export_to_graph)
     allow_any_instance_of(SurveyResponse).to receive(:enqueue_keyword_extraction)
     allow_any_instance_of(SurveyResponse).to receive(:enqueue_sentiment_analysis)
+    allow_any_instance_of(SurveyResponse).to receive(:enqueue_wordcloud_generation)
   end
 
   context "#identifier" do

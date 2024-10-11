@@ -4,16 +4,29 @@
   Statistics.
 </h1>
 
-<h2><%= number_with_delimiter(@total_datapoints) %> total datapoints:</h2>
-<ul>
-  <% @stats.each do |label, value| %>
-    <li><%= label %>: <span class="highlight-green"><%= value.is_a?(String) ? value : number_with_delimiter(value) %></span></li>
-  <% end %>
-</ul>
-
 <h2>Overall identity reflection sentiment:</h2>
 <ul>
   <li><span class="highlight-green"><%= @pronoun_sentiment_positive %>% positive</span></li>
   <li><span class="highlight-red"><%= @pronoun_sentiment_negative %>% negative</span></li>
   <li><span class="highlight-grey"><%= @pronoun_sentiment_neutral %>% neutral</span></li>
+</ul>
+
+<% word_count = @word_cloud_histogram.keys.length %>
+<% if word_count > 0 %>
+  <h2>Most frequently used words in survey participant responses:</h2>
+  <div class="word-cloud">
+    <% @word_cloud_histogram.each do |word, count| %>
+      <% font_size = (((count / word_count.to_f) * 60).to_i + 5) % 48 %>
+      <div class="tag" id="word-<%= word %>" data-code="<%= word %>"  style="font-size: <%= [font_size, 9].max %>px;">
+        <%= word %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<h2><%= number_with_delimiter(@total_datapoints) %> total datapoints:</h2>
+<ul>
+  <% @stats.each do |label, value| %>
+    <li><%= label %>: <span class="highlight-green"><%= value.is_a?(String) ? value : number_with_delimiter(value) %></span></li>
+  <% end %>
 </ul>

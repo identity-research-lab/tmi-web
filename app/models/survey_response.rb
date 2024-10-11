@@ -7,6 +7,7 @@ class SurveyResponse < ApplicationRecord
   after_save_commit :enqueue_export_to_graph
   after_create :enqueue_keyword_extraction
   after_create :enqueue_sentiment_analysis
+  after_create :enqueue_wordcloud_generation
 
   validates_presence_of :response_id
   validates_uniqueness_of :response_id
@@ -46,7 +47,22 @@ class SurveyResponse < ApplicationRecord
     return false
   end
 
+  def generate_wordcloud
+    return unless words = Services::GenerateWordCloud.perform(to_corpus)
+    exploded_words = []
+    words.each do |word|
+      next unless word['frequency'] > 1
+      word['frequency'].times{ exploded_words << word['word'] }
+    end
+    update_attribute :word_frequency, exploded_words
+    return exploded_words
+  end
+
   private
+
+    def enqueue_wordcloud_generation
+      WordCloudGeneratorJob.perform_async(self.id)
+    end
 
     # Creates a KeywordExtractorJob and pushes it into the background job queue.
     def enqueue_keyword_extraction
@@ -63,4 +79,12 @@ class SurveyResponse < ApplicationRecord
       ExportToGraphJob.perform_async(self.id)
     end
 
+    # Compile fields into a single body of text.
+    def to_corpus
+      corpus = ""
+      (Question.experience_questions + Question.identity_questions).each do |key|
+        corpus << "#{self.send(key)} "
+      end
+      return corpus
+    end
 end
