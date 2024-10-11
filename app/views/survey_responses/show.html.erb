@@ -73,18 +73,6 @@
   </ul>
 <% end %>
 
-<% word_count = @word_cloud_histogram.keys.length %>
-<% if word_count > 0 %>
-  <div class="word-cloud">
-    <% @word_cloud_histogram.keys.sort{|a,b| @word_cloud_histogram[a] <=> @word_cloud_histogram[b]}.reverse.each do |word| %>
-      <% font_size = ((@word_cloud_histogram[word] / word_count.to_f) * 60).to_i + 5 %>
-      <div class="tag" id="word-<%= word %>" data-code="<%= word %>"  style="font-size: <%= [font_size, 9].max %>px;">
-        <%= word %>
-      </div>
-    <% end %>
-  </div>
-<% end %>
-
 <h2>Researcher Notes</h2>
 <br style="clear: both;" />
 <%= render "/annotations/form", response: @response, annotation: @annotation, success: nil %>

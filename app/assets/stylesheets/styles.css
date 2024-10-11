@@ -662,6 +662,7 @@ th a:hover {
     flex-direction: row;
     list-style-type: none;
     text-align: center;
+    margin: 2rem;
   }
 
   .word-cloud li {

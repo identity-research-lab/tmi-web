@@ -15,7 +15,6 @@ class SurveyResponsesController < ApplicationController
     @categories = persona.categories.sort{ |a,b| "#{a.context}.#{a.name}" <=> "#{b.context}.#{b.name}" }
     @keywords = persona.keywords.order_by(:name)
     @annotation = @response.annotation || Annotation.new(survey_response_id: @response.id)
-    @word_cloud_histogram = @response.histogram
   end
 
   def new
