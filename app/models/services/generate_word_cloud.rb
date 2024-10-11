@@ -6,7 +6,7 @@ module Services
 
 		# This is the prompt passed to the LLM agent to serve as instructions for word cloud generation.
 		WORD_CLOUD_PROMPT = %{
-			You are going to help me create a word cloud. Generate a word frequency histogram from this corpus. Clean the text first by removing common words (stopwords), punctuation, and other unnecessary elements to focus on the most relevant words. Return the results as JSON, using this format:
+			You are going to help me create a word cloud. Generate a word frequency histogram from this corpus. Clean the text first by removing common words (stopwords), punctuation, and other unnecessary elements. Return the results as JSON, using this format:
 
       {
         "words" :

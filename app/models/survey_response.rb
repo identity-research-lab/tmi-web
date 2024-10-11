@@ -51,6 +51,7 @@ class SurveyResponse < ApplicationRecord
     return unless words = Services::GenerateWordCloud.perform(to_corpus)
     exploded_words = []
     words.each do |word|
+      next unless word['frequency'] > 1
       word['frequency'].times{ exploded_words << word['word'] }
     end
     update_attribute :word_frequency, exploded_words
