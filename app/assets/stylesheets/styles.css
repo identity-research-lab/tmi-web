@@ -659,6 +659,7 @@ th a:hover {
   .word-cloud {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-evenly;
     flex-direction: row;
     list-style-type: none;
     text-align: center;
