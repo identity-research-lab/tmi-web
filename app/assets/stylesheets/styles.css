@@ -864,7 +864,7 @@ th a:hover {
      margin: 0 auto 1rem auto;
      width: 100%;
      padding: 2rem 2rem;
-     min-height: 13rem;
+     min-height: 15rem;
    }
 
    nav {
@@ -931,6 +931,10 @@ th a:hover {
 
  @media (min-width: 414px) {
 
+   header {
+     min-height: 15rem;
+   }
+
    .page-title {
      margin-top: 22.5rem;
      width: 50%;
@@ -938,7 +942,7 @@ th a:hover {
 
    nav {
      position: absolute;
-     top: 1.25rem;
+     top: .75rem;
      right: 0.5rem;
    }
 
@@ -966,12 +970,12 @@ th a:hover {
 
    nav {
      position: absolute;
-     top: 1.5rem;
+     top: .5rem;
      right: 4.375rem;
    }
 
    header {
-     min-height: 13rem;
+     min-height: 15rem;
    }
 
  }

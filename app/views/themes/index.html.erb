@@ -1,0 +1,12 @@
+<%- title "Themes" %>
+
+<h1>Explore Themes.</h1>
+
+<h2>Contexts</h2>
+<ul class="list">
+  <% @contexts.each do |context,label| %>
+    <li>
+      <%= link_to label, theme_path(context) %>
+    </li>
+  <% end %>
+</ul>

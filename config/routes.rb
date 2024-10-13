@@ -13,17 +13,16 @@ Rails.application.routes.draw do
 
   get "about", controller: "static", action: "about"
 
-  resources :survey_responses do
-    post "enqueue_keywords", action: "enqueue_keywords"
-  end
-
-
   resources :codebooks do
     post "enqueue_categories", action: "enqueue_categories"
   end
 
+  resources :survey_responses do
+    post "enqueue_keywords", action: "enqueue_keywords"
+  end
+
+  resources :annotations
   resources :questions
   resources :stats
-  resources :annotations
-
+  resources :themes
 end

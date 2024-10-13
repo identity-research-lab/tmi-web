@@ -1,0 +1,44 @@
+<%- title "#{@section_name} Themes" %>
+
+<h1><%= pluralize(@themes.count, "Theme") %> for "<%= @context %>".</h1>
+
+<% if @previous_section %>
+  <%= link_to "<", codebook_path(@previous_section), class: "flip", id: "flip-left" %>
+<% end %>
+<% if @next_section %>
+  <%= link_to ">", codebook_path(@next_section), class: "flip", id: "flip-right" %>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Themes</th>
+      <th>Categories</th>
+      <th>Codes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="alt">
+      <td class="response">
+        <%= rand(2) == 1 ? 'active' : '' %>
+        <div class="tag">Theme One</div>
+        <div class="tag active">Theme Two</div>
+        <div class="tag">Theme Three</div>
+        <div>
+          <input type="text" style="border: 1px solid #aaa; width: 80%" />
+          <button>Add theme</button>
+        </div>
+      </td>
+      <td class="response">
+        <% @categories.each do |category| %>
+          <div class="tag <%= rand(2) == 1 ? 'active' : '' %>"><%= category.name %></div>
+        <% end %>
+      </td>
+      <td class="response">
+        <% @codes.each do |code| %>
+          <div class="tag"><%= code.name %></div>
+        <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>
