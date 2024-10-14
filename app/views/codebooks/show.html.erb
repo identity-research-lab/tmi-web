@@ -34,7 +34,7 @@
       <% @categories_histogram.keys.sort{|a,b| @categories_histogram[a] <=> @categories_histogram[b]}.reverse.each do |category| %>
         <% font_size = ((@categories_histogram[category] / @total_codes.to_f) * 60).to_i + 5 %>
 				<a onclick="filterBy('<%= category %>'); return false">
-          <div class="tag zoom-link-light" id="category-<%= category %>" data-code="<%= category %>"  style="font-size: <%= [font_size, 9].max %>px;">
+          <div class="tag zoom-link-light category" id="category-<%= category %>" data-category="<%= category %>"  style="font-size: <%= [font_size, 9].max %>px;">
             <%= category %>
           </div>
         </a>
@@ -57,7 +57,7 @@
     <h3>Alphabetically</h3>
     <ul class="list">
       <% @frequencies_by_keys.each do |key,value| %>
-        <li class="tagged" data-tags="<%= @codes.to_a.select{|c| c.name == key}.map(&:categories).flatten.map(&:name) %>">
+        <li class="tagged codes" data-categories="<%= @codes.to_a.select{|c| c.name == key}.map(&:categories).flatten.map(&:name) %>">
           <div>
             <div class="stacked-bar" style="width: <%= (value / @frequencies.values.max.to_f) * 100 %>%"></div>
             <%= "#{key}: #{value}" %><br />
@@ -71,7 +71,7 @@
     <h3>By Frequency</h3>
     <ul class="column list">
       <% @frequencies_by_values.sort{|a, b| a[1] <=> b[1]}.reverse.each do |key,value| %>
-        <li class="tagged" data-tags="<%= @codes.to_a.select{|c| c.name == key}.map(&:categories).flatten.map(&:name) %>">
+        <li class="tagged codes" data-categories="<%= @codes.to_a.select{|c| c.name == key}.map(&:categories).flatten.map(&:name) %>">
           <%= "#{key}: #{value}" %>
           <div class="stacked-bar" style="width: <%= (value / @frequencies.values.max.to_f) * 100 %>%"></div>
         </li>
@@ -83,29 +83,41 @@
 <script language="javascript">
 
   function filterBy(dataAttribute) {
-    const codeElements = Array.from(document.getElementsByClassName('tagged'));
-    const tagElements = Array.from(document.getElementsByClassName('tag'));
     const tagElement = document.getElementById('category-' + dataAttribute)
 
     if (Array.from(tagElement.classList).includes('active')) {
-      codeElements.forEach(element => {
-        element.classList.remove('hidden');
-      });
       tagElement.classList.remove('active');
     } else {
-      tagElements.forEach(element => {
-        element.classList.remove('active');
-      });
       tagElement.classList.add('active');
-      codeElements.forEach(element => {
-        let tags = JSON.parse(element.getAttribute('data-tags'));
-        if (tags.includes(dataAttribute)) {
-          element.classList.remove('hidden');
-        } else {
-          element.classList.add('hidden');
-        }
-      });
-    }
+    };
+
+    hideAllCodes();
+
+    const categoryElements = Array.from(document.getElementsByClassName('category'));
+
+    categoryElements.forEach(element => {
+      if (Array.from(element.classList).includes('active')) {
+        categoryID = element.getAttribute('data-category');
+        unhideByCategory(categoryID);
+      };
+    });
+  }
+
+  function unhideByCategory(categoryID) {
+    const codeElements = Array.from(document.getElementsByClassName('codes'));
+    codeElements.forEach(element => {
+      let categories = JSON.parse(element.getAttribute('data-categories'))
+      if (categories.includes(categoryID)) {
+        element.classList.remove('hidden');
+      }
+    });
+  }
+
+  function hideAllCodes() {
+    const codeElements = Array.from(document.getElementsByClassName('codes'));
+    codeElements.forEach(element => {
+      element.classList.add('hidden');
+    });
   }
 
 </script>

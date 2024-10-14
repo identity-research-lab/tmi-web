@@ -64,7 +64,6 @@
     categoryElements.forEach(element => {
       if (Array.from(element.classList).includes('active')) {
         categoryID = element.getAttribute('data-category');
-        console.log(categoryID);
         unhideByCategory(categoryID);
       };
     });
