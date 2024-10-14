@@ -30,14 +30,61 @@
       </td>
       <td class="response">
         <% @categories.each do |category| %>
-          <div class="tag <%= rand(2) == 1 ? 'active' : '' %>"><%= category.name %></div>
+          <a onclick="filterBy('<%= category.id %>'); return false">
+            <div class="tag category zoom-link-light" id="category-<%= category.id %>" data-category="<%= category.id %>">
+              <%= category.name %>
+            </div>
+          </a>
         <% end %>
       </td>
       <td class="response">
         <% @codes.each do |code| %>
-          <div class="tag"><%= code.name %></div>
+          <div class="tag codes hidden" data-categories="<%= code.categories.map(&:id) %>"><%= code.name %></div>
         <% end %>
       </td>
     </tr>
   </tbody>
 </table>
+
+<script language="javascript">
+
+  function filterBy(dataAttribute) {
+    const tagElement = document.getElementById('category-' + dataAttribute)
+
+    if (Array.from(tagElement.classList).includes('active')) {
+      tagElement.classList.remove('active');
+    } else {
+      tagElement.classList.add('active');
+    };
+
+    hideAllCodes();
+
+    const categoryElements = Array.from(document.getElementsByClassName('category'));
+
+    categoryElements.forEach(element => {
+      if (Array.from(element.classList).includes('active')) {
+        categoryID = element.getAttribute('data-category');
+        console.log(categoryID);
+        unhideByCategory(categoryID);
+      };
+    });
+  }
+
+  function unhideByCategory(categoryID) {
+    const codeElements = Array.from(document.getElementsByClassName('codes'));
+    codeElements.forEach(element => {
+      let categories = JSON.parse(element.getAttribute('data-categories'))
+      if (categories.includes(categoryID)) {
+        element.classList.remove('hidden');
+      }
+    });
+  }
+
+  function hideAllCodes() {
+    const codeElements = Array.from(document.getElementsByClassName('codes'));
+    codeElements.forEach(element => {
+      element.classList.add('hidden');
+    });
+  }
+
+</script>
