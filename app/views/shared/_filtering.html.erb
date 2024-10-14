@@ -1,0 +1,49 @@
+<script language="javascript">
+
+  function filterBy(dataAttribute) {
+
+    const categoryElement = document.getElementById('category-' + dataAttribute)
+    if (Array.from(categoryElement.classList).includes('active')) {
+      categoryElement.classList.remove('active');
+    } else {
+      categoryElement.classList.add('active');
+    };
+
+    hideAllCodes();
+
+    const activeCategoryElements = Array.from(document.querySelectorAll('.category.active'));
+    if (activeCategoryElements.length == 0) {
+      showAllCodes();
+    } else {
+      activeCategoryElements.forEach(element => {
+        categoryID = element.getAttribute('data-category');
+        unhideByCategory(categoryID);
+      });
+    }
+  }
+
+  function unhideByCategory(categoryID) {
+    const codeElements = Array.from(document.getElementsByClassName('codes'));
+    codeElements.forEach(element => {
+      let categories = JSON.parse(element.getAttribute('data-categories'))
+      if (categories.includes(categoryID)) {
+        element.classList.remove('hidden');
+      }
+    });
+  }
+
+  function showAllCodes() {
+    const codeElements = Array.from(document.getElementsByClassName('codes'));
+    codeElements.forEach(element => {
+      element.classList.remove('hidden');
+    });
+  }
+
+  function hideAllCodes() {
+    const codeElements = Array.from(document.getElementsByClassName('codes'));
+    codeElements.forEach(element => {
+      element.classList.add('hidden');
+    });
+  }
+
+</script>

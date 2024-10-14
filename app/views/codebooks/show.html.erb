@@ -80,44 +80,4 @@
   </div>
 </div>
 
-<script language="javascript">
-
-  function filterBy(dataAttribute) {
-    const tagElement = document.getElementById('category-' + dataAttribute)
-
-    if (Array.from(tagElement.classList).includes('active')) {
-      tagElement.classList.remove('active');
-    } else {
-      tagElement.classList.add('active');
-    };
-
-    hideAllCodes();
-
-    const categoryElements = Array.from(document.getElementsByClassName('category'));
-
-    categoryElements.forEach(element => {
-      if (Array.from(element.classList).includes('active')) {
-        categoryID = element.getAttribute('data-category');
-        unhideByCategory(categoryID);
-      };
-    });
-  }
-
-  function unhideByCategory(categoryID) {
-    const codeElements = Array.from(document.getElementsByClassName('codes'));
-    codeElements.forEach(element => {
-      let categories = JSON.parse(element.getAttribute('data-categories'))
-      if (categories.includes(categoryID)) {
-        element.classList.remove('hidden');
-      }
-    });
-  }
-
-  function hideAllCodes() {
-    const codeElements = Array.from(document.getElementsByClassName('codes'));
-    codeElements.forEach(element => {
-      element.classList.add('hidden');
-    });
-  }
-
-</script>
+<%= render partial: "/shared/filtering" %>
