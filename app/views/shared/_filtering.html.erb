@@ -4,28 +4,36 @@
 
     const themeElement = document.getElementById('theme-' + dataAttribute);
     if (themeElement != null) {
-      const associatedCategoryIDs = JSON.parse(themeElement.getAttribute('data-categories'));
-      if (associatedCategoryIDs.length > 0) {
+      if (Array.from(themeElement.classList).includes('active')) {
+        // we are deselecting the theme
+        themeElement.classList.remove('active');
         categoryElements = Array.from(document.getElementsByClassName('category'));
         categoryElements.forEach(element => {
-            element.classList.remove('active');
+          element.classList.remove('active');
         });
-      };
-      themeElement.classList.add('active');
-      if (associatedCategoryIDs.length > 0) {
-        categoryElements = Array.from(document.getElementsByClassName('category'));
-        if (categoryElements.length > 0) {
-          categoryElements.forEach(element => {
-            categoryID = element.getAttribute('data-category');
-            if (associatedCategoryIDs.includes(categoryID)) {
-              element.classList.add('active');
-            } else {
-              element.classList.remove('active');
-            }
-          });
+      } else {
+       // we are selecting the theme
+       const themeElements = Array.from(document.getElementsByClassName('theme'));
+       themeElements.forEach(element => {
+        element.classList.remove('active');
+       });
+       themeElement.classList.add('active');
+       associatedCategoryIDs = JSON.parse(themeElement.getAttribute('data-categories'));
+       if (associatedCategoryIDs.length > 0) {
+         categoryElements = Array.from(document.getElementsByClassName('category'));
+          if (categoryElements.length > 0) {
+            categoryElements.forEach(element => {
+              categoryID = element.getAttribute('data-category');
+              if (associatedCategoryIDs.includes(categoryID)) {
+                element.classList.add('active');
+              } else {
+                element.classList.remove('active');
+              }
+            });
+          };
         };
       };
-    }
+    };
 
     const categoryElement = document.getElementById('category-' + dataAttribute)
     if (categoryElement != null) {

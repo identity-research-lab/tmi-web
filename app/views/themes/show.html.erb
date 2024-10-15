@@ -6,7 +6,7 @@
 <div class="tag-collection">
   <% @themes.sort_by(&:name).each do |theme| %>
     <a onclick="filterBy('<%= theme.id %>'); return false">
-      <div class="tag theme" id="theme-<%= theme.id %>" data-categories="<%= theme.categories.map(&:id) %>">Theme One</div>
+      <div class="tag theme" id="theme-<%= theme.id %>" data-categories="<%= theme.categories.map(&:id) %>"><%= theme.name %></div>
     </a>
   <% end %>
   <div class="tag-form-controls">
