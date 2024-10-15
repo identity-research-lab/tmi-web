@@ -349,6 +349,11 @@ th a:hover {
  }
 
  button,
+ input[type="submit"] {
+   border: none;
+ }
+
+ button,
  input[type="text"],
  input[type="email"],
  input[type="submit"],
@@ -357,8 +362,13 @@ th a:hover {
    font-family: var(--font-body);
    font-size: var(--font-size-small);
    padding: .125rem .25rem;
-   border: none;
  }
+
+input[type="text"],
+input[type="email"] {
+   border: 1px solid var(--color-black);
+ }
+
 
  button {
    margin-top: 1rem;
