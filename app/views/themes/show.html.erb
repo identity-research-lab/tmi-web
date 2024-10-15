@@ -2,41 +2,37 @@
 
 <h1><%= pluralize(@themes.count, "Theme") %> for "<%= @context_name %>".</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Themes</th>
-      <th>Categories</th>
-      <th>Codes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr class="alt">
-      <td class="response">
-        <div class="tag">Theme One</div>
-        <div class="tag active">Theme Two</div>
-        <div class="tag">Theme Three</div>
-        <div>
-          <input type="text" style="border: 1px solid #aaa; width: 80%" />
-          <button>Add theme</button>
-        </div>
-      </td>
-      <td class="response">
-        <% @categories.sort_by(&:name).each do |category| %>
-          <a onclick="filterBy('<%= category.id %>'); return false">
-            <div class="tag category zoom-link-light" id="category-<%= category.id %>" data-category="<%= category.id %>">
-              <%= category.name %>
-            </div>
-          </a>
-        <% end %>
-      </td>
-      <td class="response">
-        <% @codes.sort_by(&:name).each do |code| %>
-          <div class="tag codes" data-categories="<%= code.categories.map(&:id) %>"><%= code.name %></div>
-        <% end %>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<h2>Theme:</h2>
+<div class="tag-collection">
+  <% @themes.sort_by(&:name).each do |theme| %>
+    <a onclick="filterBy('<%= theme.id %>'); return false">
+      <div class="tag theme" id="theme-<%= theme.id %>" data-categories="<%= theme.categories.map(&:id) %>">Theme One</div>
+    </a>
+  <% end %>
+  <div class="tag-form-controls">
+    <input type="text" style="border: 1px solid #aaa; width: 80%" />
+    <button>Add theme</button>
+  </div>
+</div>
+
+<h2>Selected categories:</h2>
+
+<div class="tag-collection">
+  <% @categories.sort_by(&:name).each do |category| %>
+    <a onclick="filterBy('<%= category.id %>'); return false">
+      <div class="tag category zoom-link-light" id="category-<%= category.id %>" data-category="<%= category.id %>">
+        <%= category.name %>
+      </div>
+    </a>
+  <% end %>
+</div>
+<br style="clear: both;" />
+
+<h2>Related codes:</h2>
+<div class="tag-collection">
+  <% @codes.sort_by(&:name).each do |code| %>
+    <div class="tag codes" data-categories="<%= code.categories.map(&:id) %>"><%= code.name %></div>
+  <% end %>
+</div>
 
 <%= render partial: "/shared/filtering" %>

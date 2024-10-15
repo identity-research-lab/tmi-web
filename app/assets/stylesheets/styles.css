@@ -169,6 +169,7 @@ ul,
 
  h2 {
    font-family: var(--font-header);
+   margin: 2rem 0rem;
  }
 
  h3 {
@@ -790,6 +791,15 @@ th a:hover {
     text-decoration: none;
   }
 
+  .tag-collection {
+    margin-bottom: 3rem;
+    clear: both;
+  }
+
+  .tag-form-controls {
+    width: 25%;
+  }
+
   .tag {
     background-color: var(--color-green);
     color: var(--color-white);
@@ -1027,8 +1037,6 @@ th a:hover {
    }
 
    section h2 {
-     margin-left: 0em;
-     margin-top: 0em;
      width: 100%;
    }
 
