@@ -6,8 +6,9 @@
 <div class="tag-collection">
   <% @themes.sort_by(&:name).each do |theme| %>
     <a onclick="filterBy('<%= theme.id %>'); return false">
-      <div class="tag theme" id="theme-<%= theme.id %>" data-categories="<%= theme.categories.map(&:id) %>"><%= theme.name %></div>
+      <div class="tag theme" id="theme-<%= theme.id %>" data-theme="<%= theme.id %>" data-categories="<%= theme.categories.map(&:id) %>"><%= theme.name %></div>
     </a>
+    <%= render partial: 'form', locals: { theme: theme } %>
   <% end %>
   <div class="tag-form-controls">
     <input type="text" style="border: 1px solid #aaa; width: 80%" />
@@ -19,7 +20,7 @@
 
 <div class="tag-collection">
   <% @categories.sort_by(&:name).each do |category| %>
-    <a onclick="filterBy('<%= category.id %>'); return false">
+    <a onclick="filterBy('<%= category.id %>'); updateAssociatedCategories(); return false">
       <div class="tag category zoom-link-light" id="category-<%= category.id %>" data-category="<%= category.id %>">
         <%= category.name %>
       </div>
@@ -36,3 +37,19 @@
 </div>
 
 <%= render partial: "/shared/filtering" %>
+
+<script language="javascript">
+
+  function updateAssociatedCategories() {
+    const activeTheme = document.querySelectorAll(".theme.active")[0];
+    const activeThemeID = activeTheme.getAttribute('data-theme');
+    if (activeTheme != null) {
+      const activeCategories = Array.from(document.querySelectorAll(".category.active"));
+      categoryIDs = activeCategories.map((element) => element.getAttribute('data-category'));
+      document.getElementById("field-categories-" + activeThemeID).value = categoryIDs;
+      const submitButton = document.getElementById("button-theme-" + activeTheme.getAttribute('data-theme'));
+      submitButton.click();
+    }
+  }
+
+</script>

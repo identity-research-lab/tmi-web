@@ -25,4 +25,5 @@ Rails.application.routes.draw do
   resources :questions
   resources :stats
   resources :themes
+
 end
