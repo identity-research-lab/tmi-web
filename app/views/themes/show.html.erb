@@ -1,13 +1,6 @@
-<%- title "#{@section_name} Themes" %>
+<%- title "#{@context_name} Themes" %>
 
-<h1><%= pluralize(@themes.count, "Theme") %> for "<%= @context %>".</h1>
-
-<% if @previous_section %>
-  <%= link_to "<", codebook_path(@previous_section), class: "flip", id: "flip-left" %>
-<% end %>
-<% if @next_section %>
-  <%= link_to ">", codebook_path(@next_section), class: "flip", id: "flip-right" %>
-<% end %>
+<h1><%= pluralize(@themes.count, "Theme") %> for "<%= @context_name %>".</h1>
 
 <table>
   <thead>

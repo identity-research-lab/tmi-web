@@ -6,7 +6,7 @@
 <ul class="list">
   <% @contexts.each do |context,label| %>
     <li>
-      <%= link_to label, theme_path(context) %>
+      <%= link_to label, theme_path(context.to_s.gsub("_given","")) %>
     </li>
   <% end %>
 </ul>

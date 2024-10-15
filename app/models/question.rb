@@ -51,17 +51,17 @@ class Question
   end
 
   def context
-    "#{self.key}".gsub("_given","").gsub("klass","class").gsub("_exp", "").gsub("_","-")  
+    "#{self.key}".gsub("_given","").gsub("klass","class").gsub("_exp", "").gsub("_","-")
   end
-  
+
   def codes_field
     "#{self.key}_codes".gsub("given","id")
   end
-  
+
   def identity_field?
     self.key.include? "_given"
   end
-  
+
   def experience_field?
     return true if self.key.include? "_exp"
     return true if self.key.include? "_feel"
