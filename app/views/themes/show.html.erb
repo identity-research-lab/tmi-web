@@ -5,18 +5,19 @@
 <h2>Theme:</h2>
 <div class="tag-collection">
   <% @themes.sort_by(&:name).each do |theme| %>
-	  <a onclick="filterBy('<%= theme.id %>'); return false">
+	  <a onclick="filterBy('<%= theme.id %>'); toggleThemeForm('<%= theme.id %>'); return false">
   	  <div class="tag theme" id="theme-<%= theme.id %>" data-theme="<%= theme.id %>" data-categories="<%= theme.categories.map(&:id) %>"><%= theme.name %></div>
 	  </a>
 	  <%= render partial: 'form', locals: { theme: theme } %>
   <% end %>
-  <div class="tag-form-controls">
+  <div class="tag-form-controls" id="new-theme-form">
 	  <%= form_with model: Theme.new, data: { turbo_frame: "tag-collection" } do |f| %>
 		  <%= f.text_field :name %>
 		  <%= f.hidden_field :context, value: @context %>
 		  <%= f.submit "Add Theme" %>
 	  <% end %>
   </div>
+  <br style="clear: both;" />
 </div>
 
 <h2>Selected categories:</h2>
@@ -42,6 +43,25 @@
 <%= render partial: "/shared/filtering" %>
 
 <script language="javascript">
+
+  function toggleThemeForm(themeID) {
+    const themeElement = document.getElementById('theme-' + themeID);
+    const newThemeFormElement = document.getElementById('new-theme-form');
+    const themeForm = document.getElementById('form-theme-' + themeID);
+
+    if (Array.from(themeElement.classList).includes('active')) {
+      newThemeFormElement.classList.add('hidden');
+      themeForm.classList.remove('hidden');
+    } else {
+      newThemeFormElement.classList.remove('hidden');
+      themeForm.classList.add('hidden');
+    }
+  }
+
+  function showNewThemeForm() {
+    const themeFormElement = document.getElementById('new-theme-form');
+    themeFormElement.classList.remove('hidden');
+  }
 
   function updateAssociatedCategories() {
     const activeTheme = document.querySelectorAll(".theme.active")[0];

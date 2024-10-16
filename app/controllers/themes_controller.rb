@@ -21,8 +21,9 @@ class ThemesController < ApplicationController
   def update
     @theme = Theme.find(params[:id])
 
-    categories = Category.where(id: params[:theme][:categories].split(','))
+    categories = Category.where(id: theme_params[:categories].split(','))
     @theme.categories = categories
+    @theme.name = theme_params[:name]
     @theme.save
 
     respond_to do |format|
@@ -35,7 +36,7 @@ class ThemesController < ApplicationController
   private
 
   def theme_params
-    params.require(:theme).permit(:name, :context)
+    params.require(:theme).permit(:name, :context, :categories)
   end
 
 end
