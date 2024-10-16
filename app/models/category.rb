@@ -13,6 +13,7 @@ class Category
   validates :context, presence: true
 
   has_many :out, :codes, rel_class: :CategorizedAs
+  has_many :in, :categories, rel_class: :EmergesFrom
 
   # Regenerates Category objects based on codes within a given context.
   # This method uses the Clients::OpenAi client passing the codes as an argument to the prompt.
