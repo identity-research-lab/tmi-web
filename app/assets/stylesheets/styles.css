@@ -802,8 +802,9 @@ input[type="email"] {
   }
 
   .tag-collection {
-    margin-bottom: 3rem;
-    clear: both;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 
   .tag-form-controls {
@@ -816,7 +817,6 @@ input[type="email"] {
     line-height: 1.25rem;
     padding: .6rem;
     border-radius: 1rem;
-    float: left;
     min-width: 2rem;
     margin: 0 1rem 1rem 0;
     border: 3px solid var(--color-green);
@@ -827,10 +827,11 @@ input[type="email"] {
     border: 3px solid var(--color-medium-black);
   }
 
-  .tag a {
+  .tag-collection a {
     color: var(--color-white);
     text-decoration: none;
   }
+
   .tag-button {
     background-color: var(--color-red);
     color: var(--color-white);
