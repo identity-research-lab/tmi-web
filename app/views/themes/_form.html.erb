@@ -1,12 +1,6 @@
-<%= turbo_frame_tag "frame-theme-#{theme.id}" do %>
-	<%= form_with model: theme, id: "form-theme-#{theme.id}", class: "hidden", data: { turbo_frame: "theme-#{theme.id}" } do |f| %>
-		<div class="tag-form-controls">
-			<fieldset>
-				<%= f.label :name, "Theme Name:" %>
-				<%= f.text_field :name %>
-			</fieldset>
-    	<%= f.hidden_field :categories, id: "field-categories-#{theme.id}", value: theme.categories.map(&:id) %>
-			<%= f.submit "Update", id: "button-theme-#{theme.id}" %>
-		</div>
+<%= turbo_frame_tag "frame-theme" do %>
+	<%= form_with model: theme, id: "form-theme", class: "hidden", data: { turbo_frame: "theme" } do |f| %>
+		<%= f.hidden_field :categories, id: "field-categories", value: theme.categories.map(&:id) %>
+		<%= f.submit "Update", id: "button-theme" %>
   <% end %>
 <% end %>

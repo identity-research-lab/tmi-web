@@ -2,11 +2,17 @@
 
 <h1>Explore Themes.</h1>
 
-<h2>Contexts</h2>
-<ul class="list">
-  <% @contexts.each do |context,label| %>
-    <li>
-      <%= link_to label, theme_path(context.to_s.gsub("_given","")) %>
-    </li>
+<h2>Themes</h2>
+<div class="tag-collection">
+  <% @themes.each do |theme| %>
+    <div class="tag">
+      <%= link_to theme.name, theme_path(theme.id), class: "zoom-link-light" %>
+    </div>
   <% end %>
-</ul>
+</div>
+
+<h2>Create a New Theme</h2>
+<%= form_with model: Theme.new, data: { turbo_frame: "tag-collection" } do |f| %>
+  <%= f.text_field :name %>
+  <%= f.submit "Add Theme" %>
+<% end %>

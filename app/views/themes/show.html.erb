@@ -1,46 +1,40 @@
-<%- title "#{@context_name} Themes" %>
+<%- title "Themes" %>
 
-<h1><%= pluralize(@themes.count, "Theme") %> for "<%= @context_name %>".</h1>
+<h1><%= @theme.name %></h1>
 
-<h2>Theme:</h2>
-<div class="tag-collection">
-  <% @themes.sort_by(&:name).each do |theme| %>
-    <a onclick="filterBy('<%= theme.id %>');">
-	    <div class="tag theme" id="theme-<%= theme.id %>" data-theme="<%= theme.id %>" data-categories="<%= theme.categories.map(&:id) %>">
-        <%= theme.name %>
-      </div>
-    </a>
-	  <%= render partial: 'form', locals: { theme: theme } %>
-  <% end %>
-  <br style="clear: both;" />
-</div>
-<div class="tag-form-controls" id="new-theme-form">
-  <%= form_with model: Theme.new, data: { turbo_frame: "tag-collection" } do |f| %>
-	  <%= f.text_field :name %>
-	  <%= f.hidden_field :context, value: @context %>
-	  <%= f.submit "Add Theme" %>
-  <% end %>
-</div>
+<%= form_for @theme do |f| %>
+  <fieldset>
+    <%= label :name, "Name" %>
+    <%= f.text_field :name %>
+  </fieldset>
+  <fieldset>
+    <%= label :description, "Description" %>
+    <%= f.text_area :description %>
+  </fieldset>
+  <fieldset>
+    <%= label :notes, "Notes" %>
+    <%= f.text_area :notes %>
+  </fieldset>
+  <%= f.submit "Save" %>
+<% end %>
 
-<h2>Selected categories:</h2>
+<%= render partial: "form", locals: { theme: @theme } %>
 
-<div class="tag-collection">
-  <% @categories.sort_by(&:name).each do |category| %>
-    <a onclick="filterBy('<%= category.id %>'); updateAssociatedCategories(); return false">
-      <div class="tag category zoom-link-light" id="category-<%= category.id %>" data-category="<%= category.id %>">
-        <%= category.name %>
-      </div>
-    </a>
-  <% end %>
-</div>
-<br style="clear: both;" />
-
-<h2>Related codes:</h2>
-<div class="tag-collection">
-  <% @codes.sort_by(&:name).each do |code| %>
-    <div class="tag codes" data-categories="<%= code.categories.map(&:id) %>"><%= code.name %></div>
-  <% end %>
-</div>
+<% @contexts.each do |context| %>
+  <h2><%= context[1] %> Categories</h2>
+  <p>Associated categories are highlighted in black. Click to add or remove a category from this theme. Changes are saved automatically.</p>
+  <% contextual_categories = @categories.select{ |c| c.context == context[0] } %>
+  <div class="tag-collection">
+    <% contextual_categories.sort_by(&:name).each do |category| %>
+      <% is_selected = @theme.categories.include? category %>
+      <a onclick="filterBy('<%= category.id %>'); updateAssociatedCategories(); return false">
+        <div class="tag category <%= is_selected ? 'active' : '' %>" id="category-<%= category.id %>" data-category="<%= category.id %>">
+          <%= category.name %>
+        </div>
+      </a>
+    <% end %>
+  </div>
+<% end %>
 
 <%= render partial: "/shared/filtering" %>
 
@@ -58,11 +52,6 @@
       newThemeFormElement.classList.remove('hidden');
       themeForm.classList.add('hidden');
     }
-  }
-
-  function showNewThemeForm() {
-    const themeFormElement = document.getElementById('new-theme-form');
-    themeFormElement.classList.remove('hidden');
   }
 
   function updateAssociatedCategories() {

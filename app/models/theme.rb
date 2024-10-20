@@ -3,13 +3,13 @@ class Theme
   include ActiveGraph::Node
 
   property :name
-  property :context
+  property :description
+  property :notes
 
   before_validation :sanitize
 
   validates :name, presence: true
-  validates :context, presence: true
-  validates_uniqueness_of :name, scope: :context
+  validates_uniqueness_of :name
 
   has_many :out, :categories, rel_class: :EmergesFrom
 
