@@ -1,0 +1,55 @@
+<%- title "Themes" %>
+
+<h1>Theme: "<%= @theme.name %>"</h1>
+
+<%= render partial: "form", locals: { theme: @theme, success: nil, update_kind: nil } %>
+
+<h2>Categories</h2>
+<p>Categories related to this theme are are highlighted in black below. Click to add or remove a category from this theme. Changes are saved automatically.</p>
+
+<% @contexts.each do |context| %>
+  <% contextual_categories = @categories.select{ |c| c.context == context[0] } %>
+  <% if contextual_categories.any? %>
+    <h3><%= context[1] %></h3>
+      <div class="tag-collection">
+        <% contextual_categories.sort_by(&:name).each do |category| %>
+          <% is_selected = @theme.categories.include? category %>
+          <a onclick="filterBy('<%= category.id %>'); updateAssociatedCategories(); return false">
+            <div class="tag category <%= is_selected ? 'active' : '' %>" id="category-<%= category.id %>" data-category="<%= category.id %>">
+              <%= category.name %>
+            </div>
+          </a>
+        <% end %>
+      </div>
+  <% end %>
+<% end %>
+
+<%= button_to "Delete This Theme", theme_path(@theme), form: { data: { turbo_confirm: "Are you sure?" } }, method: :delete %>
+
+<%= render partial: "/shared/filtering" %>
+
+<script language="javascript">
+
+  function toggleThemeForm(themeID) {
+    const themeElement = document.getElementById('theme-' + themeID);
+    const newThemeFormElement = document.getElementById('new-theme-form');
+    const themeForm = document.getElementById('form-theme-' + themeID);
+
+    if (Array.from(themeElement.classList).includes('active')) {
+      newThemeFormElement.classList.add('hidden');
+      themeForm.classList.remove('hidden');
+    } else {
+      newThemeFormElement.classList.remove('hidden');
+      themeForm.classList.add('hidden');
+    }
+  }
+
+  function updateAssociatedCategories() {
+    const activeCategories = Array.from(document.querySelectorAll(".category.active"));
+    categoryIDs = activeCategories.map((element) => element.getAttribute('data-category'));
+    document.getElementById("field-categories").value = categoryIDs;
+    submitButton = document.getElementById("button-theme");
+    submitButton.click();
+  }
+
+</script>

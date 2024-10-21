@@ -12,11 +12,13 @@
 <h2>Derived categories of experiences:</h2>
 
 <% if @categories.any? %>
-  <ul class="word-cloud">
+  <div class="tag-collection">
     <% @categories.each do |category| %>
-      <li><%= category.name %> | <%= link_to category.context, codebook_path("#{category.context.gsub("-","_")}_exp".gsub("pronouns_feel_exp", "pronouns_feel")), class:"jump-link" %></li>
+      <%= link_to codebook_path("#{category.context.gsub("-","_")}_exp".gsub("pronouns_feel_exp", "pronouns_feel")) do %>
+        <div class="tag zoom-link-light"><%= category.name %> (<%= category.context %>) </div>
+      <% end %>
     <% end %>
-  </ul>
+  </div>
 <% else %>
   <p>No derived categories could be found. Have you generated them from the <%= link_to "codebook", codebooks_path %>?</p>
 <% end %>

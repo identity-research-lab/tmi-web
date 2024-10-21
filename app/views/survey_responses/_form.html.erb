@@ -8,7 +8,7 @@
 		<% if filters %>
 			<% @tag_class = "zoom-link-light" %>
 		<% end %>
-		<div id="display-<%= key %>">
+		<div class="tag-collection" id="display-<%= key %>">
 			<% response.read_attribute(question.codes_field).try(:sort).to_a.each do |code| %>
 				<a onclick="filterBy('<%= code %>'); return false"><div class="tag <%= @tag_class %> <%= @css_class %>" data-code="<%= code %>"><%= code %></div></a>
 			<% end %>
