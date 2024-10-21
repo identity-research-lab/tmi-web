@@ -24,6 +24,7 @@
   <% end %>
 <% end %>
 
+<h2>Danger Zone</h2>
 <%= button_to "Delete This Theme", theme_path(@theme), form: { data: { turbo_confirm: "Are you sure?" } }, method: :delete %>
 
 <%= render partial: "/shared/filtering" %>
