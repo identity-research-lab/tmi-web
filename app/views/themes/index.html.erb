@@ -5,9 +5,9 @@
 <h2>Themes</h2>
 <div class="tag-collection">
   <% @themes.each do |theme| %>
-    <div class="tag">
-      <%= link_to theme.name, theme_path(theme.id), class: "zoom-link-light" %>
-    </div>
+      <%= link_to theme_path(theme.id) do %>
+        <div class="tag zoom-link-light"><%= theme.name %></div>
+      <% end %>
   <% end %>
 </div>
 
