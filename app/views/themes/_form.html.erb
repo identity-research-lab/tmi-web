@@ -1,0 +1,6 @@
+<%= turbo_frame_tag "frame-theme" do %>
+	<%= form_with model: theme, id: "form-theme", class: "hidden", data: { turbo_frame: "theme" } do |f| %>
+		<%= f.hidden_field :categories, id: "field-categories", value: theme.categories.map(&:id) %>
+		<%= f.submit "Update", id: "button-theme" %>
+  <% end %>
+<% end %>
