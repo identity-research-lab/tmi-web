@@ -1,0 +1,19 @@
+<%- title "New Theme" %>
+
+<h1>Add a Theme</h1>
+
+<%= form_with model: @theme do |f| %>
+  <fieldset>
+  <%= label :name, "Name" %>
+  <%= f.text_field :name %>
+  </fieldset>
+  <fieldset>
+  <%= label :description, "Description" %>
+  <%= f.text_area :description  %>
+  </fieldset>
+  <fieldset>
+  <%= label :notes, "Notes" %>
+  <%= f.text_area :notes  %>
+  </fieldset>
+  <%= f.submit "Create" %>
+<% end %>

@@ -4,6 +4,10 @@ class ThemesController < ApplicationController
     @themes = Theme.all.order(&:name)
   end
 
+  def new
+    @theme = Theme.new
+  end
+
   def show
     @contexts = Theme::CONTEXTS
     @theme = Theme.find(params[:id])
@@ -16,16 +20,22 @@ class ThemesController < ApplicationController
     redirect_to @theme
   end
 
+  def destroy
+    @theme = Theme.find(params[:id])
+    @theme.destroy
+    redirect_to themes_path
+  end
+
   def update
     @theme = Theme.find(params[:id])
-    new_category_ids = theme_params[:categories].split(/[\,\s]/)    
+    new_category_ids = theme_params[:categories].split(/[\,\s]/)
     update_kind = @theme.categories.length == new_category_ids.length ? "metadata" : "category"
 
     if theme_params[:categories]
       categories = Category.where(id: new_category_ids)
       @theme.categories = categories
     end
-    
+
     @theme.name = theme_params[:name]
     @theme.description = theme_params[:description]
     @theme.notes = theme_params[:notes]

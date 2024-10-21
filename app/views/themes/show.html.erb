@@ -1,14 +1,16 @@
 <%- title "Themes" %>
 
-<h1><%= @theme.name %></h1>
+<h1>Theme: "<%= @theme.name %>"</h1>
 
 <%= render partial: "form", locals: { theme: @theme, success: nil, update_kind: nil } %>
+
+<h2>Categories</h2>
+<p>Categories related to this theme are are highlighted in black below. Click to add or remove a category from this theme. Changes are saved automatically.</p>
 
 <% @contexts.each do |context| %>
   <% contextual_categories = @categories.select{ |c| c.context == context[0] } %>
   <% if contextual_categories.any? %>
-    <h2><%= context[1] %> Categories</h2>
-      <p>Associated categories are highlighted in black. Click to add or remove a category from this theme. Changes are saved automatically.</p>
+    <h3><%= context[1] %></h3>
       <div class="tag-collection">
         <% contextual_categories.sort_by(&:name).each do |category| %>
           <% is_selected = @theme.categories.include? category %>
@@ -21,6 +23,8 @@
       </div>
   <% end %>
 <% end %>
+
+<%= button_to "Delete This Theme", theme_path(@theme), form: { data: { turbo_confirm: "Are you sure?" } }, method: :delete %>
 
 <%= render partial: "/shared/filtering" %>
 

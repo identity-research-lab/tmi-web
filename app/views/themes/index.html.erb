@@ -1,18 +1,14 @@
 <%- title "Themes" %>
 
 <h1>Explore Themes.</h1>
-
-<h2>Themes</h2>
 <div class="tag-collection">
   <% @themes.each do |theme| %>
       <%= link_to theme_path(theme.id) do %>
         <div class="tag zoom-link-light"><%= theme.name %></div>
       <% end %>
   <% end %>
+  <%= link_to new_theme_path do %>
+    <div class="tag-button">New Theme</div>
+  <% end %>
 </div>
 
-<h2>Create a New Theme</h2>
-<%= form_with model: Theme.new, data: { turbo_frame: "tag-collection" } do |f| %>
-  <%= f.text_field :name %>
-  <%= f.submit "Add Theme" %>
-<% end %>

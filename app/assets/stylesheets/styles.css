@@ -805,7 +805,7 @@ input[type="email"] {
   }
 
   .tag.active {
-    background-color: var(--color-green);
+    background-color: var(--color-medium-black);
     border: 3px solid var(--color-medium-black);
   }
 
@@ -835,6 +835,7 @@ input[type="email"] {
     float: left;
     min-width: 2rem;
     margin: 0 1rem 1rem 0;
+    border: 3px solid var(--color-red);
     float: right;
   }
 
