@@ -55,9 +55,6 @@
   }
 
   function updateAssociatedCategories() {
-    const activeTheme = document.querySelectorAll(".theme.active")[0];
-    const activeThemeID = activeTheme.getAttribute('data-theme');
-    if (activeTheme != null) {
       const activeCategories = Array.from(document.querySelectorAll(".category.active"));
       categoryIDs = activeCategories.map((element) => element.getAttribute('data-category'));
       document.getElementById("field-categories-" + activeThemeID).value = categoryIDs;
