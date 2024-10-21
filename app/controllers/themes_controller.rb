@@ -13,7 +13,7 @@ class ThemesController < ApplicationController
   def create
     @theme = Theme.new(theme_params)
     success = @theme.save
-    redirect_to action: :show, id: @theme.context
+    redirect_to @theme
   end
 
   def update
