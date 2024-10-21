@@ -1,5 +1,18 @@
 <%= turbo_frame_tag "frame-theme" do %>
-	<%= form_with model: theme, id: "form-theme", class: "hidden", data: { turbo_frame: "theme" } do |f| %>
+	<%= form_with model: theme, id: "form-theme", class: "", data: { turbo_frame: "theme" } do |f| %>
+		<% css_class = success ? "form-success" : "form-error" %>
+		<fieldset>
+			<%= label :name, "Name" %>
+			<%= f.text_field :name, class: update_kind == "metadata" ? css_class : "" %>
+		</fieldset>
+		<fieldset>
+			<%= label :description, "Description" %>
+			<%= f.text_area :description, class: update_kind == "metadata" ? css_class : ""  %>
+		</fieldset>
+		<fieldset>
+			<%= label :notes, "Notes" %>
+			<%= f.text_area :notes, class: update_kind == "metadata" ? css_class : ""  %>
+		</fieldset>
 		<%= f.hidden_field :categories, id: "field-categories", value: theme.categories.map(&:id) %>
 		<%= f.submit "Update", id: "button-theme" %>
   <% end %>

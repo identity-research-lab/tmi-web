@@ -2,38 +2,24 @@
 
 <h1><%= @theme.name %></h1>
 
-<%= form_for @theme do |f| %>
-  <fieldset>
-    <%= label :name, "Name" %>
-    <%= f.text_field :name %>
-  </fieldset>
-  <fieldset>
-    <%= label :description, "Description" %>
-    <%= f.text_area :description %>
-  </fieldset>
-  <fieldset>
-    <%= label :notes, "Notes" %>
-    <%= f.text_area :notes %>
-  </fieldset>
-  <%= f.submit "Save" %>
-<% end %>
-
-<%= render partial: "form", locals: { theme: @theme } %>
+<%= render partial: "form", locals: { theme: @theme, success: nil, update_kind: nil } %>
 
 <% @contexts.each do |context| %>
-  <h2><%= context[1] %> Categories</h2>
-  <p>Associated categories are highlighted in black. Click to add or remove a category from this theme. Changes are saved automatically.</p>
   <% contextual_categories = @categories.select{ |c| c.context == context[0] } %>
-  <div class="tag-collection">
-    <% contextual_categories.sort_by(&:name).each do |category| %>
-      <% is_selected = @theme.categories.include? category %>
-      <a onclick="filterBy('<%= category.id %>'); updateAssociatedCategories(); return false">
-        <div class="tag category <%= is_selected ? 'active' : '' %>" id="category-<%= category.id %>" data-category="<%= category.id %>">
-          <%= category.name %>
-        </div>
-      </a>
-    <% end %>
-  </div>
+  <% if contextual_categories.any? %>
+    <h2><%= context[1] %> Categories</h2>
+      <p>Associated categories are highlighted in black. Click to add or remove a category from this theme. Changes are saved automatically.</p>
+      <div class="tag-collection">
+        <% contextual_categories.sort_by(&:name).each do |category| %>
+          <% is_selected = @theme.categories.include? category %>
+          <a onclick="filterBy('<%= category.id %>'); updateAssociatedCategories(); return false">
+            <div class="tag category <%= is_selected ? 'active' : '' %>" id="category-<%= category.id %>" data-category="<%= category.id %>">
+              <%= category.name %>
+            </div>
+          </a>
+        <% end %>
+      </div>
+  <% end %>
 <% end %>
 
 <%= render partial: "/shared/filtering" %>
@@ -55,13 +41,11 @@
   }
 
   function updateAssociatedCategories() {
-      const activeCategories = Array.from(document.querySelectorAll(".category.active"));
-      categoryIDs = activeCategories.map((element) => element.getAttribute('data-category'));
-      document.getElementById("field-categories-" + activeThemeID).value = categoryIDs;
-      activeTheme.dataset.categories = JSON.stringify(categoryIDs);
-      submitButton = document.getElementById("button-theme-" + activeTheme.getAttribute('data-theme'));
-      submitButton.click();
-    }
+    const activeCategories = Array.from(document.querySelectorAll(".category.active"));
+    categoryIDs = activeCategories.map((element) => element.getAttribute('data-category'));
+    document.getElementById("field-categories").value = categoryIDs;
+    submitButton = document.getElementById("button-theme");
+    submitButton.click();
   }
 
 </script>
