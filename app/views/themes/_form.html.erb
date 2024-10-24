@@ -6,10 +6,6 @@
 			<%= f.text_field :name, class: update_kind == "metadata" ? css_class : "" %>
 		</fieldset>
 		<fieldset>
-			<%= label :description, "Description" %>
-			<%= f.text_area :description, class: update_kind == "metadata" ? css_class : ""  %>
-		</fieldset>
-		<fieldset>
 			<%= label :notes, "Notes" %>
 			<%= f.text_area :notes, class: update_kind == "metadata" ? css_class : ""  %>
 		</fieldset>
