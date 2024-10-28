@@ -5,12 +5,12 @@
 <h2>Curated Categories:</h2>
 <div class="tag-collection">
   <% @categories.each do |category| %>
-    <%= link_to edit_category_path(category, params: { context: @context}) do %>
+    <%= link_to category_path(category, params: { context: @context}) do %>
       <div class="tag zoom-link-light category" id="category-<%= category.id %>" data-category="<%= category.id %>"><%= category.name %></div>
     <% end %>
   <% end %>
-  <%= link_to edit_category_path("uncategorized"), params: { context: @context} do %>
-    <div class="tag zoom-link-light">uncategorized codes</div>
+  <%= link_to new_category_path(context: @context_key) do %>
+    <div class="tag-button">New Category</div>
   <% end %>
 </div>
 

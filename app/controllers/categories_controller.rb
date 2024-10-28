@@ -9,28 +9,29 @@ class CategoriesController < ApplicationController
     @enqueued_at = params[:enqueued_at].present? ? Time.at(params[:enqueued_at].to_i).strftime("%T %Z") : nil
   end
 
-  def edit
-    @context = params[:context].gsub("class", "klass")
+  def show
+    @category = Category.find(params[:id])
+    @context = @category.context.gsub("class", "klass")
     @question = Question.from(@context)
     @context_key = @question.context
-    @category = params[:id] == "uncategorized" ? Category.new(context: @context) : Category.find(params[:id])
     @codes = Code.where(context: @context_key).order(:name)
   end
 
   def new
-    @category = Category.new(context: params[:context])
+    @category = Category.new(name: "New Category", context: params[:context])
   end
 
   def create
     @category = Category.new(category_params)
-    success = @category.save
-    redirect_to @category
+    if @category.save
+      redirect_to category_path(@category)
+    end
   end
 
   def destroy
     @category = Category.find(params[:id])
     @category.destroy
-    redirect_to categories_path
+    redirect_to categories_path(context: @category.context)
   end
 
   def update
@@ -64,7 +65,7 @@ class CategoriesController < ApplicationController
   private
 
   def category_params
-    params.require(:category).permit(:name, :description, :codes)
+    params.require(:category).permit(:name, :description, :context, :codes)
   end
 
 end

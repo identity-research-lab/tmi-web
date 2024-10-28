@@ -6,23 +6,26 @@
 
 <p><%= link_to "More categories", categories_path(context: @context) %></p>
 
-<h2>Codes</h2>
-<p>Codes associated with this category are are highlighted in black below. Click to add or remove a code from this category. Changes are saved automatically.</p>
+<% if @category.id.present? %>
+  <h2>Codes</h2>
+  <p>Codes associated with this category are are highlighted in black below. Click to add or remove a code from this category. Changes are saved automatically.</p>
 
-<div class="tag-collection">
-  <% @codes.each do |code| %>
-    <% is_selected = @category.codes.include? code %>
-    <a onclick="updateAssociatedCodes('<%= code.id %>'); return false">
-      <div class="tag codes <%= is_selected ? 'active' : '' %>" id="<%= code.id %>" data-code="<%= code.id %>">
-        <%= code.name %>
-      </div>
-    </a>
-  <% end %>
-</div>
+  <div class="tag-collection">
+    <% @codes.each do |code| %>
+      <% is_selected = @category.codes.include? code %>
+      <a onclick="updateAssociatedCodes('<%= code.id %>'); return false">
+        <div class="tag codes <%= is_selected ? 'active' : '' %>" id="<%= code.id %>" data-code="<%= code.id %>">
+          <%= code.name %>
+        </div>
+      </a>
+    <% end %>
+  </div>
+<% end %>
 
-
-<h2>Danger Zone</h2>
-<%= button_to "Delete This Category", category_path(@category), form: { data: { turbo_confirm: "Are you sure?" } }, method: :delete %>
+<% if @category.id.present? %>
+  <h2>Danger Zone</h2>
+  <%= button_to "Delete This Category", category_path(@category), form: { data: { turbo_confirm: "Are you sure?" } }, method: :delete %>
+<% end %>
 
 <%= render partial: "/shared/filtering" %>
 
