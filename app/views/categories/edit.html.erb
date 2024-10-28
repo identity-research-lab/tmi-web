@@ -10,8 +10,8 @@
 <div class="tag-collection">
   <% @codes.each do |code| %>
     <% is_selected = @category.codes.include? code %>
-    <a onclick="updateAssociatedCodes(); return false">
-      <div class="tag code <%= is_selected ? 'active' : '' %>" id="<%= code.id %>" data-code="<%= code.id %>">
+    <a onclick="updateAssociatedCodes('<%= code.id %>'); return false">
+      <div class="tag codes <%= is_selected ? 'active' : '' %>" id="<%= code.id %>" data-code="<%= code.id %>">
         <%= code.name %>
       </div>
     </a>
@@ -26,8 +26,14 @@
 
 <script language="javascript">
 
-  function updateAssociatedCodes() {
-    const activeCodes = Array.from(document.querySelectorAll(".code"));
+  function updateAssociatedCodes(codeID) {
+    const codeElement = document.getElementById(codeID);
+    if (Array.from(codeElement.classList).includes("active")) {
+      codeElement.classList.remove("active")
+    } else {
+      codeElement.classList.add("active")
+    }
+    const activeCodes = Array.from(document.querySelectorAll(".codes.active"));
     codeIDs = activeCodes.map((element) => element.getAttribute('data-code'));
     document.getElementById("field-codes").value = codeIDs;
     submitButton = document.getElementById("button-category");

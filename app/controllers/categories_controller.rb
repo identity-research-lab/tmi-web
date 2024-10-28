@@ -11,39 +11,33 @@ class CategoriesController < ApplicationController
 
   def edit
     @category = params[:id] == "uncategorized" ? Category.new(context: params[:context]) : Category.find(params[:id])
-    @codes = @category.codes
-  end
-
-  def enqueue_categories
-    context = params[:context].gsub("class", "klass")
-    CategoryExtractorJob.perform_async(context)
-    redirect_to(action: :index, params: {context: context, enqueued_at: Time.now.strftime("%s")})
+    @codes = Code.where(context: @category.context).order(:name)
   end
 
   def new
-    @category = Theme.new
+    @category = Category.new(context: params[:context])
   end
 
   def create
-    @category = Theme.new(category_params)
+    @category = Category.new(category_params)
     success = @category.save
     redirect_to @category
   end
 
   def destroy
-    @category = Theme.find(params[:id])
+    @category = Category.find(params[:id])
     @category.destroy
     redirect_to categories_path
   end
 
   def update
-    @category = Theme.find(params[:id])
-    new_category_ids = category_params[:categories].split(/[\,\s]/)
-    update_kind = @category.categories.length == new_category_ids.length ? "metadata" : "category"
+    @category = Category.find(params[:id])
+    new_code_ids = category_params[:codes].split(/[\,\s]/)
+    update_kind = @category.codes.length == new_code_ids.length ? "metadata" : "category"
 
-    if category_params[:categories]
-      categories = Category.where(id: new_category_ids)
-      @category.categories = categories
+    if category_params[:codes]
+      codes = Code.where(id: new_code_ids)
+      @category.codes = codes
     end
 
     @category.name = category_params[:name]
@@ -58,10 +52,16 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def enqueue_categories
+    context = params[:context].gsub("class", "klass")
+    CategoryExtractorJob.perform_async(context)
+    redirect_to(action: :index, params: {context: context, enqueued_at: Time.now.strftime("%s")})
+  end
+
   private
 
   def category_params
-    params.require(:category).permit(:name, :description, :categories)
+    params.require(:category).permit(:name, :description, :codes)
   end
 
 end
