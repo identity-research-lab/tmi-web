@@ -9,9 +9,11 @@
   <%= link_to ">", codebook_path(@next_section), class: "flip", id: "flip-right" %>
 <% end %>
 
-<% if @categories_histogram %>
+<% if @question.identity_field? %>
+  <p>By design, identities are not categorized.</p>
+<% else %>
 
-  <% if @categories_histogram.keys.any? %>
+  <% if @categories_histogram.present? %>
       <h2>tmi-graph query:</h2>
       <div class="confirmable">
         <p class="code">
@@ -22,34 +24,25 @@
       </div>
   <% end %>
 
-  <h2>Generated categories:</h2>
+  <h2>Categories:</h2>
+    <p>Categories are derived from participant experiences, and represent collections of codes. Click on any category in the word cloud to see its associated codes. You may select more than one category to filter the results.</p>
 
-  <% if @enqueued_at %>
-    <p>Category generation was started at <%= @enqueued_at %>. Please allow up to 2 minutes for the process to complete. You can reload the page to monitor progress.</p>
-  <% end %>
-
-  <% if @total_codes.to_i > 0 %>
-    <p>This word cloud reflects the relative frequency of codes within each generated category. Click on any category in the word cloud to see its associated codes. You may select more than one category.</p>
     <div class="tag-collection">
-      <% @categories_histogram.keys.sort{|a,b| @categories_histogram[a] <=> @categories_histogram[b]}.reverse.each do |category| %>
-        <% font_size = ((@categories_histogram[category] / @total_codes.to_f) * 60).to_i + 5 %>
-				<a onclick="filterBy('<%= category %>'); return false">
-          <div class="tag zoom-link-light category" id="category-<%= category %>" data-category="<%= category %>"  style="font-size: <%= [font_size, 9].max %>px;">
-            <%= category %>
-          </div>
-        </a>
+      <% if @total_codes.to_i > 0 %>
+        <% @categories_histogram.keys.sort{|a,b| @categories_histogram[a] <=> @categories_histogram[b]}.reverse.each do |category| %>
+          <% font_size = ((@categories_histogram[category] / @total_codes.to_f) * 60).to_i + 5 %>
+				  <a onclick="filterBy('<%= category %>'); return false">
+            <div class="tag zoom-link-light category" id="category-<%= category %>" data-category="<%= category %>"  style="font-size: <%= [font_size, 9].max %>px;">
+              <%= category %>
+            </div>
+          </a>
+        <% end %>
+      <% end %>
+      <%= link_to categories_path(context: @context) do %>
+        <div class="tag tag-button">Manage Categories</div>
       <% end %>
     </div>
-  <% end %>
 
-  <% unless @enqueued_at %>
-    <%= button_to "Generate Categories", codebook_enqueue_categories_path(@context, params: { enqueued: true }, method: :put ) %>
-  <% end %>
-
-  <br style="clear: both;" />
-
-<% else %>
-  <p>By design, identities are not categorized.</p>
 <% end %>
 
 <div class="two-column">

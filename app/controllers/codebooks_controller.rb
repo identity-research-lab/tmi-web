@@ -8,7 +8,6 @@ class CodebooksController < ApplicationController
     @context = params[:id].gsub("class", "klass")
     @question = Question.from(@context)
     @context_key = @question.context
-    @enqueued_at = params[:enqueued_at].present? ? Time.at(params[:enqueued_at].to_i).strftime("%T %Z") : nil
 
     # Support the previous/next navigation controls
 
@@ -35,12 +34,6 @@ class CodebooksController < ApplicationController
       @codes = Code.where(context: params[:id].gsub("klass", "class").gsub("_exp", "").gsub("_", "-"))
     end
 
-  end
-
-  def enqueue_categories
-    context = Question.from(params[:codebook_id]).context
-    CategoryExtractorJob.perform_async(context)
-    redirect_to(action: :show, id: params[:codebook_id], params: {enqueued_at: Time.now.strftime("%s")})
   end
 
 end

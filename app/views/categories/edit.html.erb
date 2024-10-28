@@ -1,0 +1,37 @@
+<%- title "Categories" %>
+
+<h1>Category: "<%= @category.name %>"</h1>
+
+<%= render partial: "form", locals: { category: @category, success: nil, update_kind: nil } %>
+
+<h2>Codes</h2>
+<p>Codes associated with this category are are highlighted in black below. Click to add or remove a code from this category. Changes are saved automatically.</p>
+
+<div class="tag-collection">
+  <% @codes.each do |code| %>
+    <% is_selected = @category.codes.include? code %>
+    <a onclick="updateAssociatedCodes(); return false">
+      <div class="tag code <%= is_selected ? 'active' : '' %>" id="<%= code.id %>" data-code="<%= code.id %>">
+        <%= code.name %>
+      </div>
+    </a>
+  <% end %>
+</div>
+
+
+<h2>Danger Zone</h2>
+<%= button_to "Delete This Category", category_path(@category), form: { data: { turbo_confirm: "Are you sure?" } }, method: :delete %>
+
+<%= render partial: "/shared/filtering" %>
+
+<script language="javascript">
+
+  function updateAssociatedCodes() {
+    const activeCodes = Array.from(document.querySelectorAll(".code"));
+    codeIDs = activeCodes.map((element) => element.getAttribute('data-code'));
+    document.getElementById("field-codes").value = codeIDs;
+    submitButton = document.getElementById("button-category");
+    submitButton.click();
+  }
+
+</script>
