@@ -10,8 +10,11 @@ class CategoriesController < ApplicationController
   end
 
   def edit
-    @category = params[:id] == "uncategorized" ? Category.new(context: params[:context]) : Category.find(params[:id])
-    @codes = Code.where(context: @category.context).order(:name)
+    @context = params[:context].gsub("class", "klass")
+    @question = Question.from(@context)
+    @context_key = @question.context
+    @category = params[:id] == "uncategorized" ? Category.new(context: @context) : Category.find(params[:id])
+    @codes = Code.where(context: @context_key).order(:name)
   end
 
   def new

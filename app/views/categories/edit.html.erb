@@ -4,6 +4,8 @@
 
 <%= render partial: "form", locals: { category: @category, success: nil, update_kind: nil } %>
 
+<p><%= link_to "More categories", categories_path(context: @context) %></p>
+
 <h2>Codes</h2>
 <p>Codes associated with this category are are highlighted in black below. Click to add or remove a code from this category. Changes are saved automatically.</p>
 
