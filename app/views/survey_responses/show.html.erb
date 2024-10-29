@@ -1,6 +1,6 @@
-<%- title "Participant Survey Response #{@response.identifier}" %>
+<%- title "Participant Survey Response #{@survey_response.identifier}" %>
 
-<h1>Participant Survey Response <%= @response.identifier %></h1>
+<h1>Participant Survey Response <%= @survey_response.identifier %></h1>
 
 <% if @previous_response %>
   <%= link_to "<", survey_response_path(@previous_response), class: "flip", id: "flip-left" %>
@@ -14,9 +14,7 @@
 <% if @categories.any? %>
   <div class="tag-collection">
     <% @categories.each do |category| %>
-      <%= link_to codebook_path("#{category.context.gsub("-","_")}_exp".gsub("pronouns_feel_exp", "pronouns_feel")) do %>
-        <div class="tag zoom-link-light"><%= category.name %> (<%= category.context %>) </div>
-      <% end %>
+      <div class="tag"><%= category.name %> (<%= category.context %>) </div>
     <% end %>
   </div>
 <% else %>
@@ -26,8 +24,8 @@
 <h2>Interactive persona:</h2>
 <div class="confirmable">
   <p class="code">
-    // <%= @response.graph_query[:explainer] %><br />
-    <a id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @response.graph_query[:query] %></a>
+    // <%= @survey_response.graph_query[:explainer] %><br />
+    <a id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @survey_response.graph_query[:query] %></a>
   </p>
   <div id="confirmation" class="hidden"></div>
 </div>
@@ -43,26 +41,25 @@
   </thead>
   <tbody>
     <% counter = 0 %>
-    <% Question::QUESTIONS.keys.map{|k| Question.from(k) }.each do |question| %>
+    <% @responses.each do |response| %>
       <% alt = counter % 2 == 1 ? "" : "alt" %>
       <% counter += 1 %>
+      <% question = response.question %>
       <tr class="<%= alt %>">
-        <td class="label"><%= link_to question.label, question_path(question.key), class: "zoom-link" %></td>
-        <td  class="response"><%= @response.read_attribute(question.key) || "(Not answered)" %></td>
+        <td class="label"><%= link_to question.label, question_path(question), class: "zoom-link" %></td>
+        <td  class="response"><%= response.value || "(Not answered)" %></td>
         <td class="form-entry">
-          <% if @response.respond_to?(question.key) && @response.read_attribute(question.key).present? || @response.read_attribute(question.codes_field).to_a.any? %>
-            <%= render "form", response: @response, question: question, success: nil, filters: false %>
-          <% end %>
+          <%= render "/responses/form", response: response, success: nil, filters: false %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<% if @response.sentiment.present? %>
+<% if @survey_response.sentiment.present? %>
   <h2>Sentiment analysis:</h2>
   <p>
-    The overall sentiment of the identity reflection response is <span class="sentiment sentiment-<%= @response.sentiment %>"><%= @response.sentiment %></span>.
+    The overall sentiment of the identity reflection response is <span class="sentiment sentiment-<%= @survey_response.sentiment %>"><%= @survey_response.sentiment %></span>.
   </p>
 <% end %>
 
@@ -77,4 +74,4 @@
 
 <h2>Researcher Notes</h2>
 <br style="clear: both;" />
-<%= render "/annotations/form", response: @response, annotation: @annotation, success: nil %>
+<%= render "/annotations/form", response: @survey_response, annotation: @annotation, success: nil %>

@@ -2,11 +2,11 @@
 
 <h1>Browse the Codebook.</h1>
 
-<h3>Contexts</h3>
+<h3>Questions</h3>
 <ul class="list">
-  <% @contexts.each do |context,label| %>
+  <% @questions.each do |question| %>
     <li>
-      <%= link_to label, codebook_path(context) %>
+      <%= link_to question.label, codebook_path(question.id) %>
     </li>
   <% end %>
 </ul>

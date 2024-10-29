@@ -13,7 +13,7 @@ class Category
   validates :context, presence: true
 
   has_many :out, :codes, rel_class: :CategorizedAs
-  has_many :in, :categories, rel_class: :EmergesFrom
+  has_many :in, :themes, rel_class: :EmergesFrom
 
   # Regenerates Category objects based on codes within a given context.
   # This method uses the Clients::OpenAi client passing the codes as an argument to the prompt.
@@ -40,7 +40,6 @@ class Category
 
   # Generates a hash with the unique category name as the key and the count of its associated codes as a value.
   def self.histogram(context)
-    context = Question.from(context).context
     categories = where(context: context).query_as(:c).with('c, count{(c)-[:CATEGORIZED_AS]-(code:Code)} AS ct').where('ct > 0').return("c.name, ct").order('ct DESC')
     categories.inject({}) {|accumulator,category| accumulator[category.values[0]] ||= 0; accumulator[category.values[0]] += category.values[1]; accumulator}
   end

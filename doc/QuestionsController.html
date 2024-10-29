@@ -150,7 +150,7 @@
             <pre><span class="ruby-comment"># File app/controllers/questions_controller.rb, line 13</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">show</span>
   <span class="ruby-ivar">@question</span> = <span class="ruby-constant">Question</span>.<span class="ruby-identifier">from</span>(<span class="ruby-identifier">params</span>[<span class="ruby-value">:id</span>])
-  <span class="ruby-ivar">@responses</span> = <span class="ruby-constant">SurveyResponse</span>.<span class="ruby-identifier">all</span>.<span class="ruby-identifier">order</span>(<span class="ruby-value">:created_at</span>).<span class="ruby-identifier">reject</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">sr</span><span class="ruby-operator">|</span> <span class="ruby-identifier">sr</span>.<span class="ruby-identifier">read_attribute</span>(<span class="ruby-ivar">@question</span>.<span class="ruby-identifier">key</span>).<span class="ruby-identifier">nil?</span> }
+  <span class="ruby-ivar">@survey_responses</span> = <span class="ruby-constant">SurveyResponse</span>.<span class="ruby-identifier">all</span>.<span class="ruby-identifier">order</span>(<span class="ruby-value">:created_at</span>).<span class="ruby-identifier">reject</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">sr</span><span class="ruby-operator">|</span> <span class="ruby-identifier">sr</span>.<span class="ruby-identifier">read_attribute</span>(<span class="ruby-ivar">@question</span>.<span class="ruby-identifier">key</span>).<span class="ruby-identifier">nil?</span> }
 <span class="ruby-keyword">end</span></pre>
           </div>
         </div>

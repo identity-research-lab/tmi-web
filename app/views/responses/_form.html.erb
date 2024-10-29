@@ -1,0 +1,22 @@
+<%= turbo_frame_tag "frame-response-#{response.id}" do %>
+	<% if success %>
+		<% @css_class = success ? "form-success" : "form-error" %>
+	<% end %>
+
+	<%= form_with model: response, data: { turbo_frame: "frame-response-#{response.id}" } do |f| %>
+		<% if filters %>
+			<% @tag_class = "zoom-link-light" %>
+		<% end %>
+		<div class="tag-collection" id="display-<%= response.id %>">
+			<% response.raw_codes.sort.each do |code| %>
+				<a onclick="filterBy('<%= code %>'); return false"><div class="tag <%= @tag_class %> <%= @css_class %>" data-code="<%= code %>"><%= code %></div></a>
+			<% end %>
+			<div class="tag-button"><a onclick="toggleFormMode('<%= response.id %>'); return false;">Edit</a></div>
+			<br style="clear: both;" />
+		</div>
+		<div class="hidden" id="field-<%= response.id %>">
+			<%= f.text_area :raw_codes, value: response.raw_codes.try(:sort).try(:join, ', '), multiple: true %>
+			<%= f.submit "Save", class: "small" %>
+		</div>
+	<% end %>
+<% end %>

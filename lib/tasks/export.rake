@@ -10,15 +10,17 @@ namespace :export do
 		# Create the directory if it doesn't exist
 		FileUtils.mkdir_p(File.dirname(file_path))
 
+		questions = Question.all
+
 		# Open the CSV file and write the data
 		CSV.open(file_path, 'w') do |csv|
 			# Write the header row
-			columns = ["source_record_id"] + Question::QUESTIONS.keys.map(&:to_s)
+			columns = ["source_record_id"] + questions.map(&:key)
 			csv << columns
 
 			# Fetch the SurveyResponse records and write each one to the CSV
-			SurveyResponse.find_each do |response|
-				csv << [response.id] + Question::QUESTIONS.keys.map{ |key| response.send(key) }
+			SurveyResponse.find_each do |survey_response|
+				csv << [survey_response.id] + Response.where(survey_response_id: survey_response.id).order(:question_id).map(&:value)
 			end
 		end
 
@@ -27,25 +29,25 @@ namespace :export do
 
 	task sample_data: :environment do
 		require 'csv'
-	
+
 		# Define the file path for the CSV
 		file_path = Rails.root.join('export', 'sample_data.csv')
-	
+
 		# Create the directory if it doesn't exist
 		FileUtils.mkdir_p(File.dirname(file_path))
-	
+
 		# Open the CSV file and write the data
 		CSV.open(file_path, 'w') do |csv|
 			# Write the header row
-			columns = ["source_record_id"] + Question::QUESTIONS.keys.map(&:to_s)
+			columns = ["source_record_id"] + Question.all.map(&:key)
 			csv << columns
-	
+
 			# Fetch the SurveyResponse records and write each one to the CSV
 			100.times do |i|
-				csv << [i] + Question::QUESTIONS.map{ |q| Faker::Lorem.sentence }
+				csv << [i] + Question.all.map{ |q| Faker::Lorem.sentence }
 			end
 		end
-	
+
 		puts "A sample CSV been successfully exported to #{file_path}"
 	end
 
