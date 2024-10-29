@@ -37,7 +37,7 @@ module Services
 
 		# If a SurveyResponse doesn't contain a response for the required fields, it will be considered invalid.
 		def record_valid?
-			Question.identity_questions.map(&:key)select{ |key| record[key.to_s].present? }.count >= 1
+			Question.identity_questions.map(&:key).select{ |key| record[key.to_s].present? }.count >= 1
 		end
 
 	end
