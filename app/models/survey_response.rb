@@ -12,17 +12,6 @@ class SurveyResponse < ApplicationRecord
   has_one :annotation, dependent: :destroy
   has_many :responses, dependent: :destroy
 
-  # This should only be called as part of an asynchronous job
-  def self.from(record_id, record)
-    if survey_response = SurveyResponse.find_or_create_by(response_id: record_id)
-		  Question.all.each do |question|
-		    Response.create!(question_id: question.id, survey_response_id: survey_response.id, value: record[question.key])
-		  end
-      Services::ExportToGraph.perform(survey_response.id)
-      return survey_response
-    end
-  end
-
   # Displays the query and its explanation for locating the SurveyResponse's associated Persona in the graph.
   def graph_query
     {
