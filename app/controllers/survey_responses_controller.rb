@@ -15,7 +15,7 @@ class SurveyResponsesController < ApplicationController
     @categories = persona.categories.sort{ |a,b| "#{a.context}.#{a.name}" <=> "#{b.context}.#{b.name}" }
     @keywords = persona.keywords.order_by(:name)
     @annotation = @survey_response.annotation || Annotation.new(survey_response_id: @survey_response.id)
-    @responses = @survey_response.responses
+    @responses = @survey_response.responses.order(:created_at)
   end
 
   def new
