@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   resources :annotations
   resources :questions
+  resources :responses
   resources :stats
   resources :themes
 

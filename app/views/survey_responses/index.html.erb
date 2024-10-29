@@ -1,11 +1,11 @@
 <%- title "Participant Survey Responses" %>
 
 <h1>
-  <%= pluralize @responses.size, "participant survey response" %>.
+  <%= pluralize @survey_responses.size, "participant survey response" %>.
 </h1>
 
 <ol class="nodes">
-  <% @responses.each do |response| %>
+  <% @survey_responses.each do |response| %>
     <li>
       <a href="/survey_responses/<%= response.id %>">
         <div>
