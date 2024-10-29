@@ -3,7 +3,7 @@ class StatsController < ApplicationController
   def index
 
     survey_response_count = SurveyResponse.count
-    question_count = Question::QUESTIONS.count
+    question_count = Question.all.count
     answer_count = survey_response_count * question_count
     persona_count = Persona.count
     identity_count = Identity.count

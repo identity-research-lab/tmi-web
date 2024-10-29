@@ -31,7 +31,10 @@ class Keyword
     return unless survey_response = SurveyResponse.find(survey_response_id.to_i)
     return unless persona = Persona.find_by(survey_response_id: survey_response_id.to_i)
 
-    response = Clients::OpenAi.request("#{PROMPT} #{survey_response.notes}")
+    reflection_question_ids = Question.where(is_reflection: true).pluck(:id)
+    corpus = survey_response.responses.select{|r| reflection_question_ids.include? r.question_id}.map(&:value).join(". ")
+
+    response = Clients::OpenAi.request("#{PROMPT} #{corpus}")
     response['words'].compact.map(&:downcase).uniq.each do |word|
       if keyword = Keyword.find_or_create_by(name: word)
         ReflectsOn.create(from_node: persona, to_node: keyword )

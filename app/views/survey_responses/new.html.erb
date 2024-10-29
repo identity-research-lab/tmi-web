@@ -31,16 +31,12 @@
           <td><code>source_record_id</code></td>
           <td>Record ID from the survey platform for cross-reference</td>
         </tr>
-        <% Question::QUESTIONS.each do |key,label| %>
+        <% Question.all.each do |key,label| %>
           <tr>
             <td><code><%= key %></code></td>
             <td><%= label.downcase %></td>
           </tr>
         <% end %>
-        <tr>
-          <td><code>pronouns_given_text</code></td>
-          <td>Freeform pronoun field</td>
-        </tr>
       </tbody>
     </table>
   </div>
