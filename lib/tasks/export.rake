@@ -39,12 +39,12 @@ namespace :export do
 		# Open the CSV file and write the data
 		CSV.open(file_path, 'w') do |csv|
 			# Write the header row
-			columns = ["source_record_id"] + Question::QUESTIONS.keys.map(&:to_s)
+			columns = ["source_record_id"] + Question.all.map(&:key)
 			csv << columns
 
 			# Fetch the SurveyResponse records and write each one to the CSV
 			100.times do |i|
-				csv << [i] + Question::QUESTIONS.map{ |q| Faker::Lorem.sentence }
+				csv << [i] + Question.all.map{ |q| Faker::Lorem.sentence }
 			end
 		end
 
