@@ -14,9 +14,7 @@
 <% if @categories.any? %>
   <div class="tag-collection">
     <% @categories.each do |category| %>
-      <%= link_to codebook_path("#{category.context.gsub("-","_")}_exp".gsub("pronouns_feel_exp", "pronouns_feel")) do %>
-        <div class="tag zoom-link-light"><%= category.name %> (<%= category.context %>) </div>
-      <% end %>
+      <div class="tag"><%= category.name %> (<%= category.context %>) </div>
     <% end %>
   </div>
 <% else %>
