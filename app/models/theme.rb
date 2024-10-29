@@ -13,21 +13,6 @@ class Theme
 
   has_many :out, :categories, rel_class: :EmergesFrom
 
-  CONTEXTS = {
-    "age" => "Age",
-    "class" => "Class",
-    "race-ethnicity" => "Race/Ethnicity",
-    "religion" => "Religion",
-    "disability" => "Disability",
-    "neurodiversity" => "Neurodiversity",
-    "gender" => "Gender",
-    "lgbtqia" => "LGBTQIA+ Status",
-    "pronouns" => "Pronouns",
-    "pronouns-feel" => "Pronoun Feelings",
-    "affinity" => "Identity Affinities",
-    "notes" => "Identity Reflection"
-  }
-
   private
 
   def sanitize

@@ -37,11 +37,16 @@ class SurveyResponse < ApplicationRecord
     end
   end
 
+  def reflections_corpus
+    reflection_question_ids = Question.where(is_reflection: true).pluck(:id)
+    responses.select{|r| reflection_question_ids.include? r.question_id}.map(&:value).join(". ")
+  end
+
   # Calculates and sets the sentiment based on a the "identity reflection / notes" field.
   # This method uses the SentimentAnalysis service, passing the text of the reflection as an
   # argument. The service returns a classification, which is written to the SurveyResponse record.
   def classify_sentiment
-    if response = Services::SentimentAnalysis.perform(self.notes)
+    if response = Services::SentimentAnalysis.perform(reflections_corpus)
       update_attribute :sentiment, response
       return response
     end
@@ -80,7 +85,7 @@ class SurveyResponse < ApplicationRecord
       ExportToGraphJob.perform_async(self.id)
     end
 
-    # Compile fields into a single body of text.
+    # Compile all fields into a single body of text.
     def to_corpus
       responses.map(&:value).compact.join(". ")
     end
