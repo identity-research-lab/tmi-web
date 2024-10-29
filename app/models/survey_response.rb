@@ -82,10 +82,6 @@ class SurveyResponse < ApplicationRecord
 
     # Compile fields into a single body of text.
     def to_corpus
-      corpus = ""
-      (Question.experience_questions + Question.identity_questions).each do |key|
-        corpus << "#{self.send(key)} "
-      end
-      return corpus
+      responses.map(&:value).compact.join(". ")
     end
 end

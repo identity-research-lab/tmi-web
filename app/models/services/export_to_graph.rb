@@ -41,8 +41,9 @@ module Services
 				response.raw_codes.compact.uniq.each do |name|
 					if question.is_identity?
 						if identity = Identity.find_or_create_by(name: name.strip, context: context)
-						next unless identity.valid?
-						IdentifiesWith.create(from_node: persona, to_node: identity)
+							next unless identity.valid?
+							IdentifiesWith.create(from_node: persona, to_node: identity)
+						end
 					else
 						if code = Code.find_or_create_by(name: name, context: context)
 							next unless code.valid?
