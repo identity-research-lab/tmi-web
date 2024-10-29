@@ -1,0 +1,25 @@
+class PopulateDefaultQuestions < ActiveRecord::Migration[7.2]
+  def change
+    Question.create(key: 'age_given', label: "Age", is_identity: true, context_id: Context.find_by(name: 'age').id)
+    Question.create(key: 'age_exp', label: "Experience with Age", is_experience: true, context_id: Context.find_by(name: 'age').id)
+    Question.create(key: 'klass_given', label: "Class", is_identity: true, context_id: Context.find_by(name: 'class').id)
+    Question.create(key: 'klass_exp', label: "Experience with Class", is_experience: true, context_id: Context.find_by(name: 'class').id)
+    Question.create(key: 'race_ethnicity_given', label: "Race/Ethnicity", is_identity: true, context_id: Context.find_by(name: 'race-ethnicity').id)
+    Question.create(key: 'race_ethnicity_exp', label: "Experience with Race/Ethnicity", is_experience: true, context_id: Context.find_by(name: 'race-ethnicity').id)
+    Question.create(key: 'religion_given', label: "Religion", is_identity: true, context_id: Context.find_by(name: 'religion').id)
+    Question.create(key: 'religion_exp', label: "Experience with Religion", is_experience: true, context_id: Context.find_by(name: 'religion').id)
+    Question.create(key: 'disability_given', label: "Disability", is_identity: true, context_id: Context.find_by(name: 'disability').id)
+    Question.create(key: 'disability_exp', label: "Experience with Disability", is_experience: true, context_id: Context.find_by(name: 'disability').id)
+    Question.create(key: 'neurodiversity_given', label: "Neurodiversity", is_identity: true, context_id: Context.find_by(name: 'neurodiversity').id)
+    Question.create(key: 'neurodiversity_exp', label: "Experience with Neurodiversity", is_experience: true, context_id: Context.find_by(name: 'neurodiversity').id)
+    Question.create(key: 'gender_given', label: "Gender", is_identity: true, context_id: Context.find_by(name: 'gender').id)
+    Question.create(key: 'gender_exp', label: "Experience with Gender", is_experience: true, context_id: Context.find_by(name: 'gender').id)
+    Question.create(key: 'lgbtqia_given', label: "LGBTQIA+ Status", is_identity: true, context_id: Context.find_by(name: 'lgbtqia').id)
+    Question.create(key: 'lgbtqia_exp', label: "Experience with LGBTQIA+", is_experience: true, context_id: Context.find_by(name: 'lgbtqia').id)
+    Question.create(key: 'pronouns_given', label: "Pronouns Given", is_identity: true, context_id: Context.find_by(name: 'pronouns').id)
+    Question.create(key: 'pronouns_exp', label: "Experience with Pronouns", is_experience: true, context_id: Context.find_by(name: 'pronouns').id)
+    Question.create(key: 'pronouns_feel', label: "Pronoun Feelings", is_feeling: true, context_id: Context.find_by(name: 'pronoun_feelings').id)
+    Question.create(key: 'affinity', label: "Identity Affinities", is_affinity: true, context_id: Context.find_by(name: 'identity_affinities').id)
+    Question.create(key: 'notes', label: "Identity Reflection", is_reflection: true, context_id: Context.find_by(name: 'identity_reflection').id)
+  end
+end

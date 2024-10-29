@@ -1,8 +1,8 @@
 class QuestionsController < ApplicationController
 
   def show
-    @question = Question.from(params[:id])
-    @responses = SurveyResponse.where("#{@question.key} IS NOT NULL").order(:created_at)
+    @question = Question.find(params[:id])
+    @responses = @question.responses.order(:survey_response_id)
   end
 
 end

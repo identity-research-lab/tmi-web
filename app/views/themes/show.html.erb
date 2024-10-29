@@ -8,9 +8,9 @@
 <p>Categories related to this theme are are highlighted in black below. Click to add or remove a category from this theme. Changes are saved automatically.</p>
 
 <% @contexts.each do |context| %>
-  <% contextual_categories = @categories.select{ |c| c.context == context[0] } %>
+  <% contextual_categories = @categories.select{ |c| c.context == context.name } %>
   <% if contextual_categories.any? %>
-    <h3><%= context[1] %></h3>
+    <h3><%= context.display_name %></h3>
       <div class="tag-collection">
         <% contextual_categories.sort_by(&:name).each do |category| %>
           <% is_selected = @theme.categories.include? category %>

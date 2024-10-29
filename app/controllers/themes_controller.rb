@@ -9,7 +9,7 @@ class ThemesController < ApplicationController
   end
 
   def show
-    @contexts = Theme::CONTEXTS
+    @contexts = Context.all.order(:name)
     @theme = Theme.find(params[:id])
     @categories = Category.all
   end

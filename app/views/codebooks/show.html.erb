@@ -3,10 +3,10 @@
 <h1><%= pluralize(@frequencies.count, "Code") %> for "<%= @section_name %>".</h1>
 
 <% if @previous_section %>
-  <%= link_to "<", codebook_path(@previous_section), class: "flip", id: "flip-left" %>
+  <%= link_to "<", codebook_path(id: @previous_section), class: "flip", id: "flip-left" %>
 <% end %>
 <% if @next_section %>
-  <%= link_to ">", codebook_path(@next_section), class: "flip", id: "flip-right" %>
+  <%= link_to ">", codebook_path(id: @next_section), class: "flip", id: "flip-right" %>
 <% end %>
 
 <% if @question.identity_field? %>

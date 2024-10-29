@@ -7,7 +7,7 @@
 
 <h2>Reference:</h3>
   <ul class="word-cloud">
-    <li><%= link_to "Codes for #{@question.label}", codebook_path(@question.key), class: "jump-link" %></li>
+    <li><%= link_to "Codes for #{@question.label}", codebook_path(@question.id), class: "jump-link" %></li>
   </ul>
 
 <table>
@@ -23,19 +23,15 @@
     <% @responses.each do |response| %>
       <% alt = counter % 2 == 1 ? "" : "alt" %>
       <% counter += 1 %>
-      <tr class="<%= alt %> data-row" data-tags="<%= response.read_attribute(@question.codes_field) %>">
+      <tr class="<%= alt %> data-row" data-tags="<%= response.raw_codes %>">
         <td class="label">
-          <%= link_to response.id, response, class: "jump-link" %>
+          <%= link_to response.survey_response_id, survey_response_path(response.survey_response_id), class: "jump-link" %>
         </td>
         <td class="response">
-          <% @response_value = response.read_attribute(@question.key) %>
-          <% if @response_value.respond_to?(:join) %>
-            <% @response_value = @response_value.sort.join(", ") %>
-          <% end %>
-          <%= @response_value %>
+          <%= response.value %>
         </td>
         <td class="form-entry">
-          <%= render "/survey_responses/form", response: response, question: @question, success: nil, filters: true %>
+          <%= render "/responses/form", response: response, success: nil, filters: true %>
         </td>
       </tr>
     <% end %>
