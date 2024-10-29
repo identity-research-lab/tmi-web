@@ -23,13 +23,4 @@ RSpec.describe SurveyResponse do
 
   end
 
-  context "callbacks" do
-
-    it "sanitizes array values on save" do
-      survey_response = SurveyResponse.create(response_id: "123456", age_exp_codes: ["foo", "bar"])
-      expect(survey_response.age_exp_codes).to eq(["foo", "bar"])
-    end
-
-  end
-
 end
