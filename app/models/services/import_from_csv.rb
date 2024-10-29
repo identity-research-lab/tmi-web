@@ -7,8 +7,6 @@ module Services
 
 		attr_accessor :record
 
-		REQUIRED_FIELDS = [ Question.identity_questions.first.key ]
-
 		# Given a file handle to a data file, parse the file contents as CSV and hydrate SurveyResponse records in serial.
 		def self.perform(file_handle)
 			CSV.read(file_handle, headers: true).each do |record|
@@ -39,7 +37,7 @@ module Services
 
 		# If a SurveyResponse doesn't contain a response for the required fields, it will be considered invalid.
 		def record_valid?
-			REQUIRED_FIELDS.select{ |field| record[field.to_s].present? }.count == REQUIRED_FIELDS.count
+			Question.identity_questions.map(&:key)select{ |key| record[key.to_s].present? }.count >= 1
 		end
 
 	end
