@@ -31,10 +31,10 @@
           <td><code>source_record_id</code></td>
           <td>Record ID from the survey platform for cross-reference</td>
         </tr>
-        <% Question.all.each do |key,label| %>
+        <% Question.all.each do |question| %>
           <tr>
-            <td><code><%= key %></code></td>
-            <td><%= label.downcase %></td>
+            <td><code><%= question.key %></code></td>
+            <td><%= question.label.downcase %></td>
           </tr>
         <% end %>
       </tbody>

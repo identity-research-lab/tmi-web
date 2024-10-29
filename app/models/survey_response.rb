@@ -4,16 +4,24 @@ class SurveyResponse < ApplicationRecord
   require 'csv'
   require 'openai'
 
-  after_save_commit :enqueue_export_to_graph
-  after_create :enqueue_keyword_extraction
-  after_create :enqueue_sentiment_analysis
-  after_create :enqueue_wordcloud_generation
+  after_update :enqueue_export_to_graph
 
   validates_presence_of :response_id
   validates_uniqueness_of :response_id
 
-  has_one :annotation
-  has_many :responses
+  has_one :annotation, dependent: :destroy
+  has_many :responses, dependent: :destroy
+
+  # This should only be called as part of an asynchronous job
+  def self.from(record_id, record)
+    if survey_response = SurveyResponse.find_or_create_by(response_id: record_id)
+		  Question.all.each do |question|
+		    Response.create!(question_id: question.id, survey_response_id: survey_response.id, value: record[question.key])
+		  end
+      Services::ExportToGraph.perform(survey_response.id)
+      return survey_response
+    end
+  end
 
   # Displays the query and its explanation for locating the SurveyResponse's associated Persona in the graph.
   def graph_query
@@ -64,29 +72,28 @@ class SurveyResponse < ApplicationRecord
     return exploded_words
   end
 
-  private
+  # Invokes a service to update the graph databases from this SurveyResponse object.
+  def enqueue_export_to_graph
+    ExportToGraphJob.perform_async(self.id)
+  end
 
-    def enqueue_wordcloud_generation
-      WordCloudGeneratorJob.perform_async(self.id)
-    end
+  def enqueue_wordcloud_generation
+    WordCloudGeneratorJob.perform_async(self.id)
+  end
 
-    # Creates a KeywordExtractorJob and pushes it into the background job queue.
-    def enqueue_keyword_extraction
-      KeywordExtractorJob.perform_async(self.id)
-    end
+  # Creates a KeywordExtractorJob and pushes it into the background job queue.
+  def enqueue_keyword_extraction
+    KeywordExtractorJob.perform_async(self.id)
+  end
 
-    # Creates a SentimentAnalysisJob and pushes it into the background job queue.
-    def enqueue_sentiment_analysis
-      SentimentAnalysisJob.perform_async(self.id)
-    end
+  # Creates a SentimentAnalysisJob and pushes it into the background job queue.
+  def enqueue_sentiment_analysis
+    SentimentAnalysisJob.perform_async(self.id)
+  end
 
-    # Invokes a service to update the graph databases from this SurveyResponse object.
-    def enqueue_export_to_graph
-      ExportToGraphJob.perform_async(self.id)
-    end
+  # Compile all fields into a single body of text.
+  def to_corpus
+    responses.map(&:value).compact.join(". ")
+  end
 
-    # Compile all fields into a single body of text.
-    def to_corpus
-      responses.map(&:value).compact.join(". ")
-    end
 end
