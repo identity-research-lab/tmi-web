@@ -1,5 +1,6 @@
 class Response < ApplicationRecord
 
+  # TODO I need this to run under normal circumstances but NOT during the db migration that creates the records.
   after_save_commit :enqueue_export_to_graph
 
   belongs_to :survey_response
