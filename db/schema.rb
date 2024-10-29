@@ -10,8 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_10_001302) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_29_012413) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -48,6 +49,38 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_10_001302) do
     t.datetime "updated_at", null: false
     t.bigint "survey_response_id", null: false
     t.index ["survey_response_id"], name: "index_annotations_on_survey_response_id"
+  end
+
+  create_table "contexts", force: :cascade do |t|
+    t.string "name"
+    t.string "display_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "questions", force: :cascade do |t|
+    t.string "key"
+    t.string "label"
+    t.boolean "is_experience", default: false
+    t.boolean "is_identity", default: false
+    t.boolean "is_feeling", default: false
+    t.boolean "is_affinity", default: false
+    t.boolean "is_reflection", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "context_id"
+    t.index ["context_id"], name: "index_questions_on_context_id"
+  end
+
+  create_table "responses", force: :cascade do |t|
+    t.text "value"
+    t.string "raw_codes", default: [], array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "question_id", null: false
+    t.bigint "survey_response_id", null: false
+    t.index ["question_id"], name: "index_responses_on_question_id"
+    t.index ["survey_response_id"], name: "index_responses_on_survey_response_id"
   end
 
   create_table "survey_responses", force: :cascade do |t|
@@ -104,4 +137,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_10_001302) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "annotations", "survey_responses"
+  add_foreign_key "questions", "contexts"
+  add_foreign_key "responses", "questions"
+  add_foreign_key "responses", "survey_responses"
 end
