@@ -4,7 +4,6 @@ class Theme
 
   property :name
   property :description
-  property :notes
 
   before_validation :sanitize
 

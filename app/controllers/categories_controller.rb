@@ -52,12 +52,6 @@ class CategoriesController < ApplicationController
     end
   end
 
-  def enqueue_categories
-    context = params[:context].gsub("class", "klass")
-    CategoryExtractorJob.perform_async(context)
-    redirect_to(action: :index, params: {context: context, enqueued_at: Time.now.strftime("%s")})
-  end
-
   private
 
   def category_params

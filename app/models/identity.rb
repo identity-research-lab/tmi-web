@@ -9,6 +9,7 @@ class Identity
 
   validates :name, presence: true
   validates :context, presence: true
+  validates_uniqueness_of :name, scope: :context
 
   has_many :out, :personas, rel_class: :IdentifiesWith
 

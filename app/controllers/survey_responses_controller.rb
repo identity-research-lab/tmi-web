@@ -6,8 +6,6 @@ class SurveyResponsesController < ApplicationController
 
   def show
     @survey_response = SurveyResponse.find(params[:id])
-    @enqueued_at = params[:enqueued_at]
-
     @previous_response = SurveyResponse.where("created_at < ?", @survey_response.created_at).order("created_at DESC").limit(1).first
     @next_response = SurveyResponse.where("created_at > ?", @survey_response.created_at).order("created_at ASC").limit(1).first
 
@@ -24,11 +22,6 @@ class SurveyResponsesController < ApplicationController
   def create
     Services::ImportFromCsv.perform(params.permit(:csv)[:csv])
     redirect_to survey_responses_path
-  end
-
-  def enqueue_keywords
-    KeywordExtractorJob.perform_async(params[:survey_response_id])
-    redirect_to( action: :show, id: params[:survey_response_id], params: {enqueued_at: Time.now.strftime("%I:%M:%S %P (%Z)")} )
   end
 
 end

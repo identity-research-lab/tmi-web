@@ -19,6 +19,7 @@ module Services
 			# Destroy the existing persona so that neo4j will reap orphaned nodes like Codes and Identities.
 			Persona.find_or_initialize_by(survey_response_id: survey_response.id).destroy
 			populate_codes
+			populate_identities
 			return true
 		end
 
@@ -37,18 +38,31 @@ module Services
 		def populate_codes
 			survey_response.responses.each do |response|
 				question = response.question
+				next if question.is_identity?
+
 				context = question.context.name
+
 				response.raw_codes.compact.uniq.each do |name|
-					if question.is_identity?
-						if identity = Identity.find_or_create_by(name: name.strip, context: context)
-							next unless identity.valid?
-							IdentifiesWith.create(from_node: persona, to_node: identity)
-						end
-					else
-						if code = Code.find_or_create_by(name: name, context: context)
-							next unless code.valid?
-							Experiences.create(from_node: persona, to_node: code)
-						end
+					if code = Code.find_or_create_by(name: name, context: context)
+						next unless code.valid?
+						Experiences.create(from_node: persona, to_node: code)
+					end
+				end
+			end
+		end
+
+		# Creates Identity nodes and connects them to the associated Persona.
+		def populate_identities
+			survey_response.responses.each do |response|
+				question = response.question
+				next unless question.is_identity?
+
+				context = question.context.name
+
+				response.raw_codes.compact.uniq.each do |name|
+					if identity = Identity.find_or_create_by(name: name.strip, context: context)
+						next unless identity.valid?
+						IdentifiesWith.create(from_node: persona, to_node: identity)
 					end
 				end
 			end
