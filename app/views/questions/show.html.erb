@@ -18,6 +18,7 @@
     <% @responses.each do |response| %>
       <% alt = counter % 2 == 1 ? "" : "alt" %>
       <% counter += 1 %>
+      <% next unless response.value.present? %>
       <tr class="<%= alt %> data-row" data-codes="<%= response.codes.map(&:id) %>">
         <td class="label">
           <%= link_to response.survey_response_id, survey_response_path(response.survey_response_id), class: "jump-link" %>
