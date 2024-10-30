@@ -52,6 +52,10 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def enqueue_category_suggestions
+
+  end
+
   private
 
   def category_params
