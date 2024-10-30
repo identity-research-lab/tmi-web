@@ -4,8 +4,6 @@ class SurveyResponse < ApplicationRecord
   require 'csv'
   require 'openai'
 
-  after_update :enqueue_export_to_graph
-
   validates_presence_of :response_id
   validates_uniqueness_of :response_id
 
