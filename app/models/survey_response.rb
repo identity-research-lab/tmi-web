@@ -4,8 +4,6 @@ class SurveyResponse < ApplicationRecord
   require 'csv'
   require 'openai'
 
-  after_update :enqueue_export_to_graph
-
   validates_presence_of :response_id
   validates_uniqueness_of :response_id
 
@@ -72,11 +70,7 @@ class SurveyResponse < ApplicationRecord
     return exploded_words
   end
 
-  # Invokes a service to update the graph databases from this SurveyResponse object.
-  def enqueue_export_to_graph
-    ExportToGraphJob.perform_async(self.id)
-  end
-
+  # Creates a WordCloudGeneratorJob and pushes in into the background job queue.
   def enqueue_wordcloud_generation
     WordCloudGeneratorJob.perform_async(self.id)
   end
