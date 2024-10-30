@@ -35,10 +35,4 @@ class CodebooksController < ApplicationController
 
   end
 
-  def enqueue_categories
-    context = Question.find(params[:codebook_id]).context.name
-    CategoryExtractorJob.perform_async(context)
-    redirect_to(action: :show, id: params[:codebook_id], params: {enqueued_at: Time.now.strftime("%s")})
-  end
-
 end

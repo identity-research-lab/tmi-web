@@ -6,7 +6,7 @@ class Response < ApplicationRecord
   belongs_to :question
 
   def codes
-    Code.where(name: self.raw_codes)
+    @codes ||= Code.where(name: self.raw_codes)
   end
 
   private

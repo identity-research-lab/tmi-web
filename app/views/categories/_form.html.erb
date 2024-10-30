@@ -1,5 +1,5 @@
-<%= turbo_frame_tag "frame-theme" do %>
-	<%= form_with model: theme, id: "form-theme", class: "", data: { turbo_frame: "theme" } do |f| %>
+<%= turbo_frame_tag "frame-category" do %>
+	<%= form_with model: category, id: "form-category", url: question_category_path(question_id: question.id, id: category.id), class: "", data: { turbo_frame: "category" } do |f| %>
 		<% css_class = success ? "form-success" : "form-error" %>
 		<fieldset>
 			<%= label :name, "Name" %>
@@ -9,7 +9,7 @@
 			<%= label :description, "Description" %>
 			<%= f.text_area :description, class: update_kind == "metadata" ? css_class : ""  %>
 		</fieldset>
-		<%= f.hidden_field :categories, id: "field-categories", value: theme.categories.map(&:id) %>
-		<%= f.submit "Update", id: "button-theme" %>
+		<%= f.hidden_field :codes, id: "field-codes", value: category.codes.map(&:id) %>
+		<%= f.submit "Update", id: "button-category" %>
   <% end %>
 <% end %>

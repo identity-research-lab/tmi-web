@@ -9,7 +9,7 @@
 		<% end %>
 		<div class="tag-collection" id="display-<%= response.id %>">
 			<% response.raw_codes.sort.each do |code| %>
-				<a onclick="filterBy('<%= code %>'); return false"><div class="tag <%= @tag_class %> <%= @css_class %>" data-code="<%= code %>"><%= code %></div></a>
+				<a onclick="filterBy('<%= code %>'); return false"><div class="tag codes <%= @tag_class %> <%= @css_class %>" data-code="<%= code %>"><%= code %></div></a>
 			<% end %>
 			<div class="tag-button"><a onclick="toggleFormMode('<%= response.id %>'); return false;">Edit</a></div>
 			<br style="clear: both;" />
