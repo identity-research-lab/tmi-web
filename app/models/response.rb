@@ -13,7 +13,9 @@ class Response < ApplicationRecord
 
     # Invokes a service to update the graph databases from the associated SurveyResponse object.
     def enqueue_export_to_graph
-      SurveyResponse.find(self.survey_response_id).save
+      if survey_response_id = SurveyResponse.find(self.survey_response_id).id
+        ExportToGraphJob.perform_async(survey_response_id)
+      end
     end
 
 end
