@@ -8,8 +8,8 @@
 			<% @tag_class = "zoom-link-light" %>
 		<% end %>
 		<div class="tag-collection" id="display-<%= response.id %>">
-			<% response.codes.sort_by(&:name).each do |code| %>
-				<a onclick="filterBy('<%= code.id %>'); return false"><div class="tag codes <%= @tag_class %> <%= @css_class %>" data-code="<%= code.id %>"><%= code.name %></div></a>
+			<% response.raw_codes.sort.each do |code| %>
+				<a onclick="filterBy('<%= code %>'); return false"><div class="tag codes <%= @tag_class %> <%= @css_class %>" data-code="<%= code %>"><%= code %></div></a>
 			<% end %>
 			<div class="tag-button"><a onclick="toggleFormMode('<%= response.id %>'); return false;">Edit</a></div>
 			<br style="clear: both;" />
