@@ -2,9 +2,9 @@
 
 <h1>Category: "<%= @category.name %>"</h1>
 
-<%= render partial: "form", locals: { category: @category, success: nil, update_kind: nil } %>
+<%= render partial: "form", locals: { category: @category, question: @question, success: nil, update_kind: nil } %>
 
-<p><%= link_to "More categories", categories_path(context: @context) %></p>
+<p><%= link_to "More categories", question_categories_path(question_id: @question.id) %></p>
 
 <% if @category.id.present? %>
   <h2>Codes</h2>
@@ -24,7 +24,7 @@
 
 <% if @category.id.present? %>
   <h2>Danger Zone</h2>
-  <%= button_to "Delete This Category", category_path(@category), form: { data: { turbo_confirm: "Are you sure?" } }, method: :delete %>
+  <%= button_to "Delete This Category", question_category_path(question_id: @question.id, category_id: @category.id), form: { data: { turbo_confirm: "Are you sure?" } }, method: :delete %>
 <% end %>
 
 <%= render partial: "/shared/filtering" %>

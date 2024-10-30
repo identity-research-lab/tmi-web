@@ -9,7 +9,7 @@
   <%= link_to ">", codebook_path(id: @next_section), class: "flip", id: "flip-right" %>
 <% end %>
 
-<% if @question.identity_field? %>
+<% if @question.is_identity? %>
   <p>By design, identities are not categorized.</p>
 <% else %>
 
@@ -38,7 +38,7 @@
           </a>
         <% end %>
       <% end %>
-      <%= link_to categories_path(context: @context) do %>
+      <%= link_to question_categories_path(question_id: @question.id) do %>
         <div class="tag tag-button">Manage Categories</div>
       <% end %>
     </div>

@@ -2,7 +2,7 @@
 
 <h1>Add a Category</h1>
 
-<%= form_with model: @category do |f| %>
+<%= form_with model: @category, url: question_categories_path(question_id: @question.id) do |f| %>
   <fieldset>
   <%= label :name, "Name" %>
   <%= f.text_field :name %>

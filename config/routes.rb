@@ -22,8 +22,10 @@ Rails.application.routes.draw do
   end
 
   resources :annotations
-  resources :categories
-  resources :questions
+  resources :questions do
+    resources :categories
+  end
+
   resources :responses
   resources :stats
   resources :themes
