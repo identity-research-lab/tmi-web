@@ -1,14 +1,11 @@
 <%- title "Participant Survey Responses to #{@question.label} Question" %>
 
 <h1><%= @responses.count %> Participant Survey Responses to "<%= @question.label %>".</h1>
-<p>
-  These are the responses provided by participants to the "<%= @question.label %>" question. Blank responses are not listed here.
-</p>
+<p>These are the responses provided by participants to the "<%= @question.label %>" question. Blank responses are not listed here. Click on a code to show all survey participant responses related to that code.</p>
 
-<h2>Reference:</h3>
-  <ul class="word-cloud">
-    <li><%= link_to "Codes for #{@question.label}", codebook_path(@question.id), class: "jump-link" %></li>
-  </ul>
+<p>For a complete list of codes for this question, refer to the <%= link_to "codebook.", codebook_path(@question.id), class: "jump-link" %></p>
+
+
 
 <table>
   <thead>
