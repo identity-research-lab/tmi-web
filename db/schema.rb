@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_29_012413) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_30_190525) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -85,51 +85,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_29_012413) do
 
   create_table "survey_responses", force: :cascade do |t|
     t.boolean "finished"
-    t.text "age_given"
-    t.text "age_exp"
-    t.text "klass_given"
-    t.text "klass_exp"
-    t.text "race_ethnicity_given"
-    t.text "race_ethnicity_exp"
-    t.text "religion_given"
-    t.text "religion_exp"
-    t.text "disability_given"
-    t.text "disability_exp"
-    t.text "neurodiversity_given"
-    t.text "neurodiversity_exp"
-    t.text "gender_given"
-    t.text "gender_exp"
-    t.text "lgbtqia_given"
-    t.text "lgbtqia_exp"
-    t.text "pronouns_given"
-    t.text "pronouns_exp"
-    t.text "pronouns_feel"
-    t.text "affinity"
-    t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "age_exp_codes", default: [], array: true
-    t.string "klass_exp_codes", default: [], array: true
-    t.string "race_ethnicity_exp_codes", default: [], array: true
-    t.string "religion_exp_codes", default: [], array: true
-    t.string "gender_exp_codes", default: [], array: true
-    t.string "disability_exp_codes", default: [], array: true
-    t.string "neurodiversity_exp_codes", default: [], array: true
-    t.string "lgbtqia_exp_codes", default: [], array: true
     t.string "response_id"
-    t.string "age_id_codes", default: [], array: true
-    t.string "klass_id_codes", default: [], array: true
-    t.string "race_ethnicity_id_codes", default: [], array: true
-    t.string "religion_id_codes", default: [], array: true
-    t.string "gender_id_codes", default: [], array: true
-    t.string "disability_id_codes", default: [], array: true
-    t.string "neurodiversity_id_codes", default: [], array: true
-    t.string "lgbtqia_id_codes", default: [], array: true
-    t.string "pronouns_id_codes", default: [], array: true
-    t.string "pronouns_exp_codes", default: [], array: true
-    t.string "pronouns_feel_codes", default: [], array: true
-    t.string "affinity_codes", default: [], array: true
-    t.string "notes_codes", default: [], array: true
     t.string "sentiment"
     t.string "word_frequency", default: [], array: true
   end
