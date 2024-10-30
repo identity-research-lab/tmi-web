@@ -16,29 +16,6 @@ class Category
   has_many :out, :codes, rel_class: :CategorizedAs
   has_many :in, :themes, rel_class: :EmergesFrom
 
-  # Regenerates Category objects based on codes within a given context.
-  # This method uses the Clients::OpenAi client passing the codes as an argument to the prompt.
-  # The agent returns an array of themes, which are then captured as Category objects.
-  def self.from(context)
-    codes = Code.where(context: context)
-    return unless codes.any?
-
-    text = codes.map(&:name).join(', ')
-    return unless text.present?
-    return unless themes = Services::DeriveThemes.perform(text)
-
-    Category.where(context: context).destroy_all
-
-    themes.each do |theme|
-      category = Category.find_or_create_by(name: theme['theme'].strip.downcase, context: context)
-      codes.each do |code|
-        next unless theme['codes'].include?(code.name.gsub(/^\"(.+)\"$/,'\1'))
-        code.categories << category
-      end
-    end
-
-  end
-
   # Generates a hash with the unique category name as the key and the count of its associated codes as a value.
   def self.histogram(context)
     categories = where(context: context).query_as(:c).with('c, count{(c)-[:CATEGORIZED_AS]-(code:Code)} AS ct').where('ct > 0').return("c.name, ct").order('ct DESC')
