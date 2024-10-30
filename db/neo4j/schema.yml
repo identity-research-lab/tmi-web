@@ -28,7 +28,14 @@
   REQUIRE (n.`migration_id`) IS UNIQUE OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
 - 'CREATE CONSTRAINT `constraint_dd2c112` FOR (n:`Theme`) REQUIRE (n.`uuid`) IS UNIQUE
   OPTIONS {indexConfig: {}, indexProvider: ''range-1.0''}'
-:indexes: []
+:indexes:
+- CREATE RANGE INDEX `index_1b3228ee` FOR (n:`Code`) ON (n.`context`)
+- CREATE RANGE INDEX `index_2a91af07` FOR (n:`Identity`) ON (n.`name`)
+- CREATE RANGE INDEX `index_32e8f300` FOR (n:`Category`) ON (n.`context`)
+- CREATE RANGE INDEX `index_4bd64d5` FOR (n:`Code`) ON (n.`name`)
+- CREATE RANGE INDEX `index_5cb729d1` FOR (n:`Identity`) ON (n.`context`)
+- CREATE RANGE INDEX `index_61584458` FOR (n:`Category`) ON (n.`name`)
+- CREATE RANGE INDEX `index_aabeed83` FOR (n:`Theme`) ON (n.`name`)
 :versions:
 - '20240323194853'
 - '20240323195422'
@@ -37,3 +44,4 @@
 - '20240607210627'
 - '20240615023034'
 - '20240615212620'
+- '20241030222630'
