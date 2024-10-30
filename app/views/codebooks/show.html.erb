@@ -1,6 +1,7 @@
 <%- title "#{@section_name} Codebook" %>
 
 <h1><%= pluralize(@frequencies.count, "Code") %> for "<%= @section_name %>".</h1>
+<p>You can also <%= link_to "view all participant survey responses", question_path(@question.id) %> to this question.</p>
 
 <% if @previous_section %>
   <%= link_to "<", codebook_path(id: @previous_section), class: "flip", id: "flip-left" %>
