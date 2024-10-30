@@ -8,6 +8,7 @@ class Category
 
   property :name
   property :context
+  property :description
 
   validates :name, presence: true
   validates :context, presence: true

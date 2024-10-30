@@ -1,0 +1,48 @@
+<%- title "Categories" %>
+
+<h1>Category: "<%= @category.name %>"</h1>
+
+<%= render partial: "form", locals: { category: @category, question: @question, success: nil, update_kind: nil } %>
+
+<p><%= link_to "More categories", question_categories_path(question_id: @question.id) %></p>
+
+<% if @category.id.present? %>
+  <h2>Codes</h2>
+  <p>Codes associated with this category are are highlighted in black below. Click to add or remove a code from this category. Changes are saved automatically.</p>
+
+  <div class="tag-collection">
+    <% @codes.each do |code| %>
+      <% is_selected = @category.codes.include? code %>
+      <a onclick="updateAssociatedCodes('<%= code.id %>'); return false">
+        <div class="tag codes <%= is_selected ? 'active' : '' %>" id="<%= code.id %>" data-code="<%= code.id %>">
+          <%= code.name %>
+        </div>
+      </a>
+    <% end %>
+  </div>
+<% end %>
+
+<% if @category.id.present? %>
+  <h2>Danger Zone</h2>
+  <%= button_to "Delete This Category", question_category_path(question_id: @question.id, category_id: @category.id), form: { data: { turbo_confirm: "Are you sure?" } }, method: :delete %>
+<% end %>
+
+<%= render partial: "/shared/filtering" %>
+
+<script language="javascript">
+
+  function updateAssociatedCodes(codeID) {
+    const codeElement = document.getElementById(codeID);
+    if (Array.from(codeElement.classList).includes("active")) {
+      codeElement.classList.remove("active")
+    } else {
+      codeElement.classList.add("active")
+    }
+    const activeCodes = Array.from(document.querySelectorAll(".codes.active"));
+    codeIDs = activeCodes.map((element) => element.getAttribute('data-code'));
+    document.getElementById("field-codes").value = codeIDs;
+    submitButton = document.getElementById("button-category");
+    submitButton.click();
+  }
+
+</script>

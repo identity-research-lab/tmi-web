@@ -1,0 +1,24 @@
+<%- title "#{@section_name} Codebook Categories" %>
+
+<h1>Explore categories for "<%= @section_name %>".</h1>
+
+<h2>Curated Categories:</h2>
+<div class="tag-collection">
+  <% @categories.each do |category| %>
+    <%= link_to question_category_path(question_id: @question.id, id: category.id) do %>
+      <div class="tag zoom-link-light category" id="category-<%= category.id %>" data-category="<%= category.id %>"><%= category.name %></div>
+    <% end %>
+  <% end %>
+  <%= link_to new_question_category_path(question_id: @question.id) do %>
+    <div class="tag-button">New Category</div>
+  <% end %>
+</div>
+
+<h2>Suggested Categories:</h2>
+<% if @enqueued_at %>
+  <p>Category suggestions were requested at <%= @enqueued_at %>. Please allow up to 2 minutes for the process to complete. You can reload the page to monitor progress.</p>
+<% else %>
+  <%= button_to "Get Suggestions", codebook_enqueue_categories_path(@question.id, params: { enqueued: true }, method: :put ) %>
+<% end %>
+
+<%= render partial: "/shared/filtering" %>
