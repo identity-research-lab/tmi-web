@@ -10,7 +10,7 @@ class SurveyResponse < ApplicationRecord
   has_one :annotation, dependent: :destroy
   has_many :responses, dependent: :destroy
 
-  # This should only be called as part of an asynchronous job
+  # This should normally only be called as part of an asynchronous job.
   def self.from(record_id, record)
     if survey_response = SurveyResponse.find_or_create_by(response_id: record_id)
 		  Question.all.each do |question|
