@@ -5,18 +5,21 @@ module Services
 
 		# This is the prompt sent to the selected AI agent to provide instructions on category derivision.
 		PROMPT = %{
-			You are a social researcher doing data analysis. Please generate a list of the most relevant categories from the following list of codes. The categories should be all lowercase and contain no punctuation. Return each category with an array of its applicable codes in JSON format.Do not remove any punctuation from the codes that are returned. Use this JSON as the output format:
+			You are a social researcher doing qualitative analysis on survey data. Please generate a list of suggested categories from a list of codes. The categories should be all lowercase and contain no punctuation. Use this JSON as the output format:
 
 			{
 				"categories" : [
 					{
-						"category": "foo",
-						"codes": [ "bar", "bat", "baz"]
-					}
+						"category": "foo"
+					},
+					{
+						"category": "bar"
+					},
+
 				]
 			}
 
-			The codes are provided in the following list:
+			The list of codes is:
 		}
 
 		def self.perform(text)
