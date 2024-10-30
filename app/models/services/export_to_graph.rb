@@ -33,24 +33,24 @@ module Services
 			)
 		end
 
-		# Creates Code nodes and connects them to the associated Persona.
+		# Creates Code or Identity nodes and connects them to the associated Persona.
 		def populate_codes
 			survey_response.responses.each do |response|
 				question = response.question
 				context = question.context.name
 				if question.is_identity?
 					response.raw_codes.compact.uniq.each do |name|
-						if identity = Identity.find_or_create_by(name: name.strip, context: context)
-							next unless identity.valid?
-							IdentifiesWith.create(from_node: persona, to_node: identity)
-						end
+						next unless name.present?
+						identity = Identity.find_or_create_by(name: name.strip, context: context)
+						next unless identity.valid?
+						IdentifiesWith.create(from_node: persona, to_node: identity)
 					end
 				else
 					response.raw_codes.compact.uniq.each do |name|
-						if code = Code.find_or_create_by(name: name, context: context)
-							next unless code.valid?
-							Experiences.create(from_node: persona, to_node: code)
-						end
+						next unless name.present?
+						code = Code.find_or_create_by(name: name.strip, context: context)
+						next unless code.valid?
+						Experiences.create(from_node: persona, to_node: code)
 					end
 				end
 			end
