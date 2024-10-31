@@ -36,8 +36,15 @@ class CodebooksController < ApplicationController
   end
 
   def enqueue_category_suggestions
-    @question = Question.find(params[:codebook_id])
-    CategorySuggestionsJob.perform_async(@question.context_id)
+    question = Question.find(params[:codebook_id])
+    context = question.context
+    CategorySuggestionsJob.perform_async(context.id)
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace("frame-suggestions", partial: "/categories/suggestions", locals: { context: context, question: question, enqueued: params[:enqueued] })
+      end
+    end
+
   end
 
 end

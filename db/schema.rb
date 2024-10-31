@@ -57,6 +57,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_31_002325) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "suggested_categories", default: [], array: true
+    t.datetime "suggestions_updated_at"
   end
 
   create_table "questions", force: :cascade do |t|
