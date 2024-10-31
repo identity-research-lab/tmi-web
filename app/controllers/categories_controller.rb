@@ -4,6 +4,7 @@ class CategoriesController < ApplicationController
 
   def index
     @section_name = @question.label
+    @context = @question.context
     @categories = Category.where(context: @question.context.name).order(:name)
     @enqueued_at = params[:enqueued_at].present? ? Time.at(params[:enqueued_at].to_i).strftime("%T %Z") : nil
   end
@@ -14,7 +15,8 @@ class CategoriesController < ApplicationController
   end
 
   def new
-    @category = Category.new(name: "New Category", context: @question.context.name)
+    @category  = Category.new(name: "New Category", context: @question.context.name)
+    @context = @question.context
   end
 
   def create

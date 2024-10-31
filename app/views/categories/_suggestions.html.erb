@@ -1,0 +1,23 @@
+<%= turbo_frame_tag "frame-suggestions" do %>
+
+  <% if enqueued && DateTime.parse(enqueued) > context.suggestions_updated_at %>
+    <div class="throbber"><div></div><div></div></div>
+    <script language="javascript">
+      function refreshSpinner() {
+        setInterval(() => {
+          console.log("firing");
+          location.reload();
+        }, 3000);
+      }
+      refreshSpinner();
+    </script>
+  <% else %>
+    <ul>
+      <% context.suggested_categories.each do |suggestion| %>
+        <li><%= suggestion %></li>
+      <% end %>
+    </ul>
+    <%= button_to "Get Suggestions", codebook_enqueue_category_suggestions_path(question.id, params: { enqueued: DateTime.now }, method: :put, form: { data: { turbo: true, turbo_stream: true } } ) %>
+  <% end %>
+
+<% end %>

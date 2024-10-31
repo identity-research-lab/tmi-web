@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   resources :themes
 
   resources :codebooks do
-    post "enqueue_categories", action: "enqueue_categories"
+    post "enqueue_category_suggestions", action: "enqueue_category_suggestions"
   end
 
   resources :questions do

@@ -109,6 +109,7 @@ GEM
       fiber-local
       json
     crass (1.0.6)
+    csv (3.3.0)
     date (3.3.4)
     debug (1.9.2)
       irb (~> 1.10)
@@ -185,6 +186,7 @@ GEM
     nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    ostruct (0.6.0)
     pg (1.5.7)
     pry (0.14.2)
       coderay (~> 1.1)
@@ -334,10 +336,12 @@ DEPENDENCIES
   activegraph (= 11.5.0.beta.3)
   bootsnap
   capybara
+  csv
   debug
   dotenv
   faker (~> 3.4, >= 3.4.2)
   neo4j-ruby-driver
+  ostruct
   pg
   pry
   puma (>= 5.0)
@@ -356,7 +360,7 @@ DEPENDENCIES
   yard
 
 RUBY VERSION
-   ruby 3.2.2p53
+   ruby 3.3.5p100
 
 BUNDLED WITH
    2.5.6

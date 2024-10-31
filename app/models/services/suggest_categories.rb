@@ -1,7 +1,7 @@
 module Services
 	class SuggestCategories
 
-		attr_accessor :text
+		attr_accessor :context
 
 		# This is the prompt sent to the selected AI agent to provide instructions on category derivision.
 		PROMPT = %{
@@ -19,21 +19,25 @@ module Services
 				]
 			}
 
-			The list of codes is:
+			The array of codes is:
 		}
 
-		def self.perform(text)
-			new(text).perform
+		def self.perform(context_id)
+			new(context_id).perform
 		end
 
-		def initialize(text)
-			@text = text
+		def initialize(context_id)
+			@context = Context.find(context_id)
 		end
 
 		# Uses the OpenAI client to pass the prompt and text through the API for sentiment analysis.
 		def perform
-			return false unless text.present?
-			response = Clients::OpenAi.request("#{PROMPT} #{text}")
+			return false unless context.present?
+			codes = Code.where(context: context.name).map(&:name)
+
+			response = Clients::OpenAi.request("#{PROMPT} #{codes}")
+			# response = { "categories" => [ { "category" => "divisions" }, { "category" => "third space" }, { "category" => "intergenerational" } ] }
+
 			return false unless response['categories'].present?
 			return response['categories']
  		end

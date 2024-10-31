@@ -16,10 +16,6 @@
 </div>
 
 <h2>Suggested Categories:</h2>
-<% if @enqueued_at %>
-  <p>Category suggestions were requested at <%= @enqueued_at %>. Please allow up to 2 minutes for the process to complete. You can reload the page to monitor progress.</p>
-<% else %>
-  <%= button_to "Get Suggestions", codebook_enqueue_categories_path(@question.id, params: { enqueued: true }, method: :put ) %>
-<% end %>
+<%= render partial: "suggestions", locals: { context: @context, question: @question, enqueued: nil } %>
 
 <%= render partial: "/shared/filtering" %>
