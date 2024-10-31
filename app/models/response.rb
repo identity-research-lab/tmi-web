@@ -2,7 +2,7 @@ class Response < ApplicationRecord
 
   after_update :enqueue_export_to_graph
 
-  belongs_to :survey_response
+  belongs_to :case
   belongs_to :question
 
   def codes
@@ -13,8 +13,8 @@ class Response < ApplicationRecord
 
     # Invokes a service to update the graph databases from the associated SurveyResponse object.
     def enqueue_export_to_graph
-      if survey_response_id = SurveyResponse.find(self.survey_response_id).id
-        ExportToGraphJob.perform_async(survey_response_id)
+      if case_id = SurveyResponse.find(self.case_id).id
+        ExportToGraphJob.perform_async(case_id)
       end
     end
 

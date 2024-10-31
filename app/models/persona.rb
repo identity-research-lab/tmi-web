@@ -5,7 +5,7 @@ class Persona
   include ActiveGraph::Node
 
   property :name
-  property :survey_response_id
+  property :case_id
   property :permalink
 
   validates :name, presence: true

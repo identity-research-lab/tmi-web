@@ -2,9 +2,9 @@ class StatsController < ApplicationController
 
   def index
 
-    survey_response_count = SurveyResponse.count
+    case_count = Case.count
     question_count = Question.all.count
-    answer_count = survey_response_count * question_count
+    answer_count = case_count * question_count
     persona_count = Persona.count
     identity_count = Identity.count
     code_count = Code.count
@@ -13,7 +13,7 @@ class StatsController < ApplicationController
     node_count = ActiveGraph::Base.query('WITH count{()} AS ct RETURN ct').first.values.first
     edge_count = ActiveGraph::Base.query('WITH count{()-[]-()} AS ct RETURN ct').first.values.first
 
-    sentiments = SurveyResponse.where("sentiment IS NOT NULL").pluck(:sentiment)
+    sentiments = Case.where("sentiment IS NOT NULL").pluck(:sentiment)
     if sentiments.any?
       @pronoun_sentiment_positive = (sentiments.select{|sentiment| sentiment == "positive"}.count / sentiments.count.to_f * 100).to_i
       @pronoun_sentiment_neutral = (sentiments.select{|sentiment| sentiment == "neutral"}.count / sentiments.count.to_f * 100).to_i
@@ -24,13 +24,13 @@ class StatsController < ApplicationController
       @pronoun_sentiment_negative = 0
     end
 
-    @total_datapoints = survey_response_count + (question_count * survey_response_count) + identity_count + code_count + category_count + keyword_count + sentiments.count + edge_count
+    @total_datapoints = case_count + (question_count * case_count) + identity_count + code_count + category_count + keyword_count + sentiments.count + edge_count
 
-    word_frequencies = SurveyResponse.all.pluck(:word_frequency).flatten.compact
+    word_frequencies = Case.all.pluck(:word_frequency).flatten.compact
     @word_cloud_histogram = word_frequencies.tally.reject{|k,v| v < 20}
 
     @stats = {
-      "Participant survey responses" => survey_response_count,
+      "Participant survey responses" => case_count,
       "Survey questions" => question_count,
       "Survey answers" => answer_count,
       "Personas" => persona_count,

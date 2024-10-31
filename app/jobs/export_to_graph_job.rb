@@ -6,7 +6,7 @@ class ExportToGraphJob
 	queue_as :default
 
 	def perform(id)
-		Rails.logger.info("ExportToGraphJob running with survey response #{id}")
+		Rails.logger.info("ExportToGraphJob running with case #{id}")
 		Services::ExportToGraph.perform(id)
 	end
 

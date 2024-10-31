@@ -1,12 +1,12 @@
-<%- title "Participant Survey Response #{@survey_response.identifier}" %>
+<%- title "Case #{@survey_response.identifier}" %>
 
-<h1>Participant Survey Response <%= @survey_response.identifier %></h1>
+<h1>Case <%= @survey_response.identifier %></h1>
 
-<% if @previous_response %>
-  <%= link_to "<", survey_response_path(@previous_response), class: "flip", id: "flip-left" %>
+<% if @previous_case %>
+  <%= link_to "<", case_path(@previous_case), class: "flip", id: "flip-left" %>
 <% end %>
-<% if @next_response %>
-  <%= link_to ">", survey_response_path(@next_response), class: "flip", id: "flip-right" %>
+<% if @next_case %>
+  <%= link_to ">", case_path(@next_case), class: "flip", id: "flip-right" %>
 <% end %>
 
 <h2>Derived categories of experiences:</h2>
@@ -24,8 +24,8 @@
 <h2>Interactive persona:</h2>
 <div class="confirmable">
   <p class="code">
-    // <%= @survey_response.graph_query[:explainer] %><br />
-    <a id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @survey_response.graph_query[:query] %></a>
+    // <%= @case.graph_query[:explainer] %><br />
+    <a id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @case.graph_query[:query] %></a>
   </p>
   <div id="confirmation" class="hidden"></div>
 </div>
@@ -41,25 +41,25 @@
   </thead>
   <tbody>
     <% counter = 0 %>
-    <% @responses.each do |response| %>
+    <% @cases.each do |kase| %>
       <% alt = counter % 2 == 1 ? "" : "alt" %>
       <% counter += 1 %>
-      <% question = response.question %>
+      <% question = kase.question %>
       <tr class="<%= alt %>">
         <td class="label"><%= link_to question.label, question_path(question), class: "zoom-link" %></td>
-        <td  class="response"><%= response.value || "(Not answered)" %></td>
+        <td  class="kase"><%= kase.value || "(Not answered)" %></td>
         <td class="form-entry">
-          <%= render "/responses/form", response: response, success: nil, filters: false %>
+          <%= render "/kases/form", kase: kase, success: nil, filters: false %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<% if @survey_response.sentiment.present? %>
+<% if @case.sentiment.present? %>
   <h2>Sentiment analysis:</h2>
   <p>
-    The overall sentiment of the identity reflection response is <span class="sentiment sentiment-<%= @survey_response.sentiment %>"><%= @survey_response.sentiment %></span>.
+    The overall sentiment of the identity reflection response is <span class="sentiment sentiment-<%= @case.sentiment %>"><%= @case.sentiment %></span>.
   </p>
 <% end %>
 
@@ -74,4 +74,4 @@
 
 <h2>Researcher Notes</h2>
 <br style="clear: both;" />
-<%= render "/annotations/form", response: @survey_response, annotation: @annotation, success: nil %>
+<%= render "/annotations/form", kase: @case, annotation: @annotation, success: nil %>

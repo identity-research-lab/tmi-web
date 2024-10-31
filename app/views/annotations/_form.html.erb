@@ -3,7 +3,7 @@
 		<% @css_class = success ? "form-success" : "form-error" %>
 	<% end %>
 	<%= form_with model: @annotation, data: { turbo_frame: "annotation" } do |f| %>
-    <%= f.hidden_field :survey_response_id, value: response.id %>
+    <%= f.hidden_field :case_id, value: kase.id %>
 		<%= f.text_area :text, class: @css_class %>
 		<%= f.submit "Save Note", class: "small" %>
 	<% end %>

@@ -4,6 +4,6 @@ class Annotation < ApplicationRecord
   validates_presence_of :survey_response_id
   validates_presence_of :text
 
-  belongs_to :survey_response
+  belongs_to :case
 
 end
