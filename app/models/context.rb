@@ -7,4 +7,9 @@ class Context < ApplicationRecord
 
   has_many :questions
 
+  def suggest_categories
+    categories = Services::SuggestCategories.perform(self.id).map{|category| category['category'] }
+    update_attribute(:suggested_categories, categories)
+  end
+
 end

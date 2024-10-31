@@ -53,7 +53,7 @@ class CategoriesController < ApplicationController
   end
 
   def enqueue_category_suggestions
-
+    CategorySuggestionsJob.perform_async(@question.context_id)
   end
 
   private
