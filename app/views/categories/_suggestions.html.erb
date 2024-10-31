@@ -1,11 +1,10 @@
 <%= turbo_frame_tag "frame-suggestions" do %>
 
-  <% if enqueued && DateTime.parse(enqueued) > context.suggestions_updated_at %>
+  <% if enqueued && (context.suggestions_updated_at.nil? || DateTime.parse(enqueued) > context.suggestions_updated_at) %>
     <div class="throbber"><div></div><div></div></div>
     <script language="javascript">
       function refreshSpinner() {
         setInterval(() => {
-          console.log("firing");
           location.reload();
         }, 3000);
       }
