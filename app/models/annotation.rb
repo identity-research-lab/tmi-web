@@ -1,9 +1,9 @@
-# An Annotation is a note or comment made by a researcher and attached to a Survey Response.
+# An Annotation is a note or comment made by a researcher and attached to a Case.
 class Annotation < ApplicationRecord
 
-  validates_presence_of :survey_response_id
+  validates_presence_of :case_id
   validates_presence_of :text
 
-  belongs_to :survey_response
+  belongs_to :case
 
 end

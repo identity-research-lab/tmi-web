@@ -27,11 +27,11 @@ class Keyword
   # Regenerates Keyword objects based on a the "identity reflection / notes" field.
   # This method uses the Clients::OpenAi client passing the codes as an argument to the prompt.
   # The agent returns an array of nouns, which are then captured as Keyword objects.
-  def self.from(survey_response_id)
-    return unless survey_response = SurveyResponse.find(survey_response_id.to_i)
-    return unless persona = Persona.find_by(survey_response_id: survey_response_id.to_i)
+  def self.from(case_id)
+    return unless kase = Case.find(case_id.to_i)
+    return unless persona = Persona.find_by(kase_id: kase_id.to_i)
 
-    corpus = survey_response.reflections_corpus
+    corpus = kase.reflections_corpus
 
     response = Clients::OpenAi.request("#{PROMPT} #{corpus}")
     response['words'].compact.map(&:downcase).uniq.each do |word|

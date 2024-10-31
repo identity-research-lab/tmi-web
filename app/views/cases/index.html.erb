@@ -1,0 +1,17 @@
+<%- title "Cases" %>
+
+<h1>
+  <%= pluralize @cases.size, "Case" %>.
+</h1>
+
+<ol class="nodes">
+  <% @cases.each do |kase| %>
+    <li>
+      <%= link_to case_path(kase.id) do %>
+        <div>
+          <%= kase.identifier %>
+        </div>
+      <% end %>
+    </li>
+  <% end %>
+</ol>

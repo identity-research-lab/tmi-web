@@ -1,23 +1,23 @@
 module Services
 
-	# Translates data from a SurveyResponse into nodes in the graph database.
+	# Translates data from a Case into nodes in the graph database.
 	class ExportToGraph
 
-		attr_accessor :survey_response
+		attr_accessor :kase
 
-		def self.perform(survey_response_id)
-			new(survey_response_id).perform
+		def self.perform(case_id)
+			new(case_id).perform
 		end
 
-		def initialize(survey_response_id)
-			@survey_response = SurveyResponse.find(survey_response_id)
+		def initialize(case_id)
+			@kase = Case.find(case_id)
 		end
 
 		def perform
-			return false unless survey_response
+			return false unless kase
 
 			# Destroy the existing persona so that neo4j will reap orphaned nodes like Codes and Identities.
-			Persona.find_or_initialize_by(survey_response_id: survey_response.id).destroy
+			Persona.find_or_initialize_by(case_id: kase.id).destroy
 			populate_codes
 			populate_identities
 			return true
@@ -25,18 +25,18 @@ module Services
 
 		private
 
-		# Hydrates a new Persona with data from the SurveyResponse.
+		# Hydrates a new Persona with data from the Case.
 		def persona
 			@persona ||= Persona.find_or_create_by(
-				name: "Persona #{survey_response.identifier}",
-				survey_response_id: survey_response.id,
-				permalink: survey_response.permalink
+				name: "Persona #{kase.identifier}",
+				case_id: kase.id,
+				permalink: kase.permalink
 			)
 		end
 
 		# Creates Code nodes and connects them to the associated Persona.
 		def populate_codes
-			survey_response.responses.each do |response|
+			kase.responses.each do |response|
 				question = response.question
 				next if question.is_identity?
 
@@ -53,7 +53,7 @@ module Services
 
 		# Creates Identity nodes and connects them to the associated Persona.
 		def populate_identities
-			survey_response.responses.each do |response|
+			kase.responses.each do |response|
 				question = response.question
 				next unless question.is_identity?
 

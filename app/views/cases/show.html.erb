@@ -1,12 +1,12 @@
-<%- title "Participant Survey Response #{@survey_response.identifier}" %>
+<%- title "Case #{@kase.identifier}" %>
 
-<h1>Participant Survey Response <%= @survey_response.identifier %></h1>
+<h1>Case <%= @kase.identifier %></h1>
 
-<% if @previous_response %>
-  <%= link_to "<", survey_response_path(@previous_response), class: "flip", id: "flip-left" %>
+<% if @previous_case %>
+  <%= link_to "<", case_path(@previous_case), class: "flip", id: "flip-left" %>
 <% end %>
-<% if @next_response %>
-  <%= link_to ">", survey_response_path(@next_response), class: "flip", id: "flip-right" %>
+<% if @next_case %>
+  <%= link_to ">", case_path(@next_case), class: "flip", id: "flip-right" %>
 <% end %>
 
 <h2>Derived categories of experiences:</h2>
@@ -24,8 +24,8 @@
 <h2>Interactive persona:</h2>
 <div class="confirmable">
   <p class="code">
-    // <%= @survey_response.graph_query[:explainer] %><br />
-    <a id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @survey_response.graph_query[:query] %></a>
+    // <%= @kase.graph_query[:explainer] %><br />
+    <a id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @kase.graph_query[:query] %></a>
   </p>
   <div id="confirmation" class="hidden"></div>
 </div>
@@ -56,10 +56,10 @@
   </tbody>
 </table>
 
-<% if @survey_response.sentiment.present? %>
+<% if @kase.sentiment.present? %>
   <h2>Sentiment analysis:</h2>
   <p>
-    The overall sentiment of the identity reflection response is <span class="sentiment sentiment-<%= @survey_response.sentiment %>"><%= @survey_response.sentiment %></span>.
+    The overall sentiment of the identity reflection response is <span class="sentiment sentiment-<%= @kase.sentiment %>"><%= @kase.sentiment %></span>.
   </p>
 <% end %>
 
@@ -74,4 +74,4 @@
 
 <h2>Researcher Notes</h2>
 <br style="clear: both;" />
-<%= render "/annotations/form", response: @survey_response, annotation: @annotation, success: nil %>
+<%= render "/annotations/form", kase: @kase, annotation: @annotation, success: nil %>

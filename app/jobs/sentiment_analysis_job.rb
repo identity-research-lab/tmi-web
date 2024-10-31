@@ -1,4 +1,4 @@
-# This background job triggers sentiment analysis on the identified SurveyResponse.
+# This background job triggers sentiment analysis on the identified Case.
 class SentimentAnalysisJob
 
   include Sidekiq::Job
@@ -6,8 +6,8 @@ class SentimentAnalysisJob
   queue_as :default
 
   def perform(id)
-    return unless record = SurveyResponse.find(id)
-    Rails.logger.info("SentimentAnalysisJob running with survey response ID #{id}")
+    return unless record = Case.find(id)
+    Rails.logger.info("SentimentAnalysisJob running with case #{id}")
     record.classify_sentiment
   end
 
