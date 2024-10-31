@@ -24,7 +24,7 @@ class Case < ApplicationRecord
   # Displays the query and its explanation for locating the Case's associated Persona in the graph.
   def graph_query
     {
-      explainer: "Access and explore this participant's response data (and all of its relationships) as an Interactive Persona in the TMI-Graph app.",
+      explainer: "Access and explore this case (and all of its relationships) as an Interactive Persona in the TMI-Graph app.",
       query: "MATCH (p:Persona)-[]-(n) WHERE p.permalink=\"#{permalink}\" RETURN p,n"
     }
   end

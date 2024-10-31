@@ -1,6 +1,6 @@
-<%- title "Case #{@survey_response.identifier}" %>
+<%- title "Case #{@kase.identifier}" %>
 
-<h1>Case <%= @survey_response.identifier %></h1>
+<h1>Case <%= @kase.identifier %></h1>
 
 <% if @previous_case %>
   <%= link_to "<", case_path(@previous_case), class: "flip", id: "flip-left" %>
@@ -24,8 +24,8 @@
 <h2>Interactive persona:</h2>
 <div class="confirmable">
   <p class="code">
-    // <%= @case.graph_query[:explainer] %><br />
-    <a id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @case.graph_query[:query] %></a>
+    // <%= @kase.graph_query[:explainer] %><br />
+    <a id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= @kase.graph_query[:query] %></a>
   </p>
   <div id="confirmation" class="hidden"></div>
 </div>
@@ -41,25 +41,25 @@
   </thead>
   <tbody>
     <% counter = 0 %>
-    <% @cases.each do |kase| %>
+    <% @responses.each do |response| %>
       <% alt = counter % 2 == 1 ? "" : "alt" %>
       <% counter += 1 %>
-      <% question = kase.question %>
+      <% question = response.question %>
       <tr class="<%= alt %>">
         <td class="label"><%= link_to question.label, question_path(question), class: "zoom-link" %></td>
-        <td  class="kase"><%= kase.value || "(Not answered)" %></td>
+        <td  class="response"><%= response.value || "(Not answered)" %></td>
         <td class="form-entry">
-          <%= render "/kases/form", kase: kase, success: nil, filters: false %>
+          <%= render "/responses/form", response: response, success: nil, filters: false %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<% if @case.sentiment.present? %>
+<% if @kase.sentiment.present? %>
   <h2>Sentiment analysis:</h2>
   <p>
-    The overall sentiment of the identity reflection response is <span class="sentiment sentiment-<%= @case.sentiment %>"><%= @case.sentiment %></span>.
+    The overall sentiment of the identity reflection response is <span class="sentiment sentiment-<%= @kase.sentiment %>"><%= @kase.sentiment %></span>.
   </p>
 <% end %>
 
@@ -74,4 +74,4 @@
 
 <h2>Researcher Notes</h2>
 <br style="clear: both;" />
-<%= render "/annotations/form", kase: @case, annotation: @annotation, success: nil %>
+<%= render "/annotations/form", kase: @kase, annotation: @annotation, success: nil %>

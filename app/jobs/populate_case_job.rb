@@ -1,5 +1,5 @@
 # This background job performs the Keyword extraction process.
-class PopulateCodeJob
+class PopulateCaseJob
 
   include Sidekiq::Job
 

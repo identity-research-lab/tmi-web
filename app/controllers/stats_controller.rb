@@ -30,7 +30,7 @@ class StatsController < ApplicationController
     @word_cloud_histogram = word_frequencies.tally.reject{|k,v| v < 20}
 
     @stats = {
-      "Participant survey responses" => case_count,
+      "Cases" => case_count,
       "Survey questions" => question_count,
       "Survey answers" => answer_count,
       "Personas" => persona_count,

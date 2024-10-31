@@ -10,9 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_31_164738) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_31_204549) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -47,8 +46,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_31_164738) do
     t.text "text"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "survey_response_id", null: false
-    t.index ["survey_response_id"], name: "index_annotations_on_survey_response_id"
+    t.bigint "case_id", null: false
+    t.index ["case_id"], name: "index_annotations_on_case_id"
   end
 
   create_table "cases", force: :cascade do |t|
@@ -89,15 +88,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_31_164738) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "question_id", null: false
-    t.bigint "survey_response_id", null: false
+    t.bigint "case_id", null: false
+    t.index ["case_id"], name: "index_responses_on_case_id"
     t.index ["question_id"], name: "index_responses_on_question_id"
-    t.index ["survey_response_id"], name: "index_responses_on_survey_response_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "annotations", "cases", column: "survey_response_id"
+  add_foreign_key "annotations", "cases"
   add_foreign_key "questions", "contexts"
-  add_foreign_key "responses", "cases", column: "survey_response_id"
+  add_foreign_key "responses", "cases"
   add_foreign_key "responses", "questions"
 end

@@ -1,4 +1,4 @@
-<%- title "Cases %>
+<%- title "Cases" %>
 
 <h1>
   <%= pluralize @cases.size, "Case" %>.
@@ -7,7 +7,7 @@
 <ol class="nodes">
   <% @cases.each do |kase| %>
     <li>
-      <%= link_to case_path(kase.id) do %>">
+      <%= link_to case_path(kase.id) do %>
         <div>
           <%= kase.identifier %>
         </div>

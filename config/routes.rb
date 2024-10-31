@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  root "survey_responses#index"
+  root "cases#index"
 
   get "about", controller: "static", action: "about"
 
@@ -26,7 +26,7 @@ Rails.application.routes.draw do
     resources :categories
   end
 
-  resources :survey_responses do
+  resources :cases do
     post "enqueue_keywords", action: "enqueue_keywords"
   end
 

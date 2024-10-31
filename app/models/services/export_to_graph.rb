@@ -1,6 +1,6 @@
 module Services
 
-	# Translates data from a SurveyResponse into nodes in the graph database.
+	# Translates data from a Case into nodes in the graph database.
 	class ExportToGraph
 
 		attr_accessor :kase
@@ -25,7 +25,7 @@ module Services
 
 		private
 
-		# Hydrates a new Persona with data from the SurveyResponse.
+		# Hydrates a new Persona with data from the Case.
 		def persona
 			@persona ||= Persona.find_or_create_by(
 				name: "Persona #{kase.identifier}",

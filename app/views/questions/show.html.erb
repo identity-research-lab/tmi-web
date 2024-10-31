@@ -21,7 +21,7 @@
       <% next unless response.value.present? %>
       <tr class="<%= alt %> data-row" data-codes="<%= response.raw_codes %>">
         <td class="label">
-          <%= link_to response.survey_response_id, survey_response_path(response.survey_response_id), class: "jump-link" %>
+          <%= link_to response.case_id, case_path(response.case_id), class: "jump-link" %>
         </td>
         <td class="response">
           <%= response.value %>

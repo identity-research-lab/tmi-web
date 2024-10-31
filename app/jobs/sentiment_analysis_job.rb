@@ -1,4 +1,4 @@
-# This background job triggers sentiment analysis on the identified SurveyResponse.
+# This background job triggers sentiment analysis on the identified Case.
 class SentimentAnalysisJob
 
   include Sidekiq::Job
