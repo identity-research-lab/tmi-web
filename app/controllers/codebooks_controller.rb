@@ -35,4 +35,9 @@ class CodebooksController < ApplicationController
 
   end
 
+  def enqueue_category_suggestions
+    @question = Question.find(params[:codebook_id])
+    CategorySuggestionsJob.perform_async(@question.context_id)
+  end
+
 end

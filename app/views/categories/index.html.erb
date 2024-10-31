@@ -16,6 +16,12 @@
 </div>
 
 <h2>Suggested Categories:</h2>
+<ul>
+  <% @context.suggested_categories.each do |suggestion| %>
+    <li><%= suggestion %></li>
+  <% end %>
+</ul>
+
 <% if @enqueued_at %>
   <p>Category suggestions were requested at <%= @enqueued_at %>. Please allow up to 2 minutes for the process to complete. You can reload the page to monitor progress.</p>
 <% else %>

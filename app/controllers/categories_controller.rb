@@ -4,6 +4,7 @@ class CategoriesController < ApplicationController
 
   def index
     @section_name = @question.label
+    @context = @question.context
     @categories = Category.where(context: @question.context.name).order(:name)
     @enqueued_at = params[:enqueued_at].present? ? Time.at(params[:enqueued_at].to_i).strftime("%T %Z") : nil
   end
@@ -50,10 +51,6 @@ class CategoriesController < ApplicationController
         render turbo_stream: turbo_stream.replace("frame-category", partial: "/categories/form", locals: { category: @category, question: @question, success: success, update_kind: update_kind })
       end
     end
-  end
-
-  def enqueue_category_suggestions
-    CategorySuggestionsJob.perform_async(@question.context_id)
   end
 
   private
