@@ -2,15 +2,32 @@
 
 <h1>Add a Category</h1>
 
-<%= form_with model: @category, url: question_categories_path(question_id: @question.id) do |f| %>
-  <fieldset>
-  <%= label :name, "Name" %>
-  <%= f.text_field :name %>
-  </fieldset>
-  <fieldset>
-  <%= label :description, "Description" %>
-  <%= f.text_area :description  %>
-  </fieldset>
-  <%= f.hidden_field :context %>
-  <%= f.submit "Create" %>
-<% end %>
+<div class="two-column">
+
+  <div class="column">
+    <%= form_with model: @category, url: question_categories_path(question_id: @question.id) do |f| %>
+      <fieldset>
+      <%= label :name, "Name" %>
+      <%= f.text_field :name %>
+      </fieldset>
+      <fieldset>
+      <%= label :description, "Description" %>
+      <%= f.text_area :description  %>
+      </fieldset>
+      <%= f.hidden_field :context %>
+      <%= f.submit "Create" %>
+    <% end %>
+  </div>
+
+  <% if @context.suggested_categories.any? %>
+    <div class="column">
+      <h2>Suggested categories:</h2>
+      <ul>
+        <% @context.suggested_categories.each do |suggestion| %>
+          <li><%= suggestion %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+</div>

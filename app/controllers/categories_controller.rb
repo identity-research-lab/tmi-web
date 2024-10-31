@@ -15,7 +15,8 @@ class CategoriesController < ApplicationController
   end
 
   def new
-    @category = Category.new(name: "New Category", context: @question.context.name)
+    @category  = Category.new(name: "New Category", context: @question.context.name)
+    @context = @question.context
   end
 
   def create
