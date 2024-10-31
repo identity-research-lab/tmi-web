@@ -7,7 +7,8 @@ class CategorySuggestionsJob
 
   def perform(context_id)
     Rails.logger.info("CategorySuggestionsJob running with context id #{context_id}")
-    Context.suggest_categories
+    return unless context = Context.find(context_id)
+    context.suggest_categories
   end
 
 end
