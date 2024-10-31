@@ -21,7 +21,7 @@
 }
 .throbber div {
   position: absolute;
-  border: 4px solid currentColor;
+  border: 4px solid var(--color-green);
   opacity: 1;
   border-radius: 50%;
   animation: throbber 2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
