@@ -35,8 +35,8 @@ module Services
 			return false unless context.present?
 			codes = Code.where(context: context.name).map(&:name)
 
-			# response = Clients::OpenAi.request("#{PROMPT} #{codes}")
-			response = { "categories" => [ { "category" => "divisions" }, { "category" => "third space" }, { "category" => "intergenerational" } ] }
+			response = Clients::OpenAi.request("#{PROMPT} #{codes}")
+			# response = { "categories" => [ { "category" => "divisions" }, { "category" => "third space" }, { "category" => "intergenerational" } ] }
 
 			return false unless response['categories'].present?
 			return response['categories']
