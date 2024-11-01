@@ -197,7 +197,7 @@ GEM
     puma (6.4.3)
       nio4r (~> 2.0)
     racc (1.8.1)
-    rack (3.1.7)
+    rack (3.1.8)
     rack-session (2.0.0)
       rack (>= 3.0.0)
     rack-test (2.1.0)
@@ -280,8 +280,7 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     set (1.1.0)
-    sidekiq (7.3.2)
-      concurrent-ruby (< 2)
+    sidekiq (7.3.4)
       connection_pool (>= 2.3.0)
       logger
       rack (>= 2.2.4)
