@@ -10,7 +10,7 @@ class Context < ApplicationRecord
   def suggest_categories
     update_attribute(:suggested_categories, [])
     categories = Services::SuggestCategories.perform(self.id).map{|category| category['category'] }
-    update_attribute(:suggested_categories, categories)
+    update(suggested_categories: categories, suggestions_updated_at: DateTime.now)
   end
 
 end

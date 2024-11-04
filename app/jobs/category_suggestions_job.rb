@@ -9,7 +9,6 @@ class CategorySuggestionsJob
     Rails.logger.info("CategorySuggestionsJob running with context id #{context_id}")
     return unless context = Context.find(context_id)
     context.suggest_categories
-    context.update_attribute(:suggestions_updated_at, DateTime.now)
   end
 
 end
