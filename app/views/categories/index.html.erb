@@ -3,19 +3,48 @@
 <h1>Explore categories for "<%= @section_name %>".</h1>
 <p>When you're done, you can <%= link_to "go back to the codebook", codebook_path(@question.id) %>.</p>
 
-<h2>Curated Categories:</h2>
-<div class="tag-collection">
-  <% @categories.each do |category| %>
-    <%= link_to question_category_path(question_id: @question.id, id: category.id) do %>
-      <div class="tag zoom-link-light category" id="category-<%= category.id %>" data-category="<%= category.id %>"><%= category.name %></div>
+<% if @isEditMode %>
+  <h2>Select a Category to Edit:</h2>
+  <div class="tag-collection">
+    <% @categories.each do |category| %>
+      <%= link_to question_category_path(question_id: @question.id, id: category.id) do %>
+        <div class="tag edit-link-light category"><%= category.name %></div>
+      <% end %>
     <% end %>
-  <% end %>
-  <%= link_to new_question_category_path(question_id: @question.id) do %>
-    <div class="tag-button">New Category</div>
-  <% end %>
-</div>
+    <%= link_to new_question_category_path(question_id: @question.id) do %>
+      <div class="tag-button">New Category</div>
+    <% end %>
+    <%= link_to question_categories_path(question_id: @question.id) do %>
+      <div class="tag-button">Compare Categories</div>
+    <% end %>
+  </div>
+<% else %>
+  <h2>Select Categories to Compare:</h2>
+  <div class="tag-collection">
+    <div class="tag zoom-link-light category" onclick="filterBy('uncategorized');" id="category-uncategorized" data-category="uncategorized">Uncategorized Codes</div>
+    <% @categories.each do |category| %>
+      <div class="tag zoom-link-light category" onclick="filterBy('<%= category.id %>');" id="category-<%= category.id %>" data-category="<%= category.id %>"><%= category.name %></div>
+    <% end %>
+    <%= link_to question_categories_path(question_id: @question.id, is_edit_mode: "true") do %>
+      <div class="tag-button">Edit Categories</div>
+    <% end %>
+  </div>
+<% end %>
 
-<h2>Suggested Categories:</h2>
-<%= render partial: "suggestions", locals: { context: @context, question: @question, enqueued: nil } %>
+<% if @isEditMode %>
+  <h2>Suggested Categories:</h2>
+  <%= render partial: "suggestions", locals: { context: @context, question: @question, enqueued: nil } %>
+<% else %>
+  <h2>Associated Codes:</h2>
+  <p>Codes belonging to the selected categories are displayed below.</p>
+  <div class="tag-collection">
+    <% @codes.each do |code| %>
+      <% categories = code.categories.map(&:id) %>
+      <div class="tag codes" id="<%= code.id %>" data-code="<%= code.id %>" data-categories="<%= categories.any? ? categories : ["uncategorized"] %>">
+        <%= code.name %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
 
 <%= render partial: "/shared/filtering" %>

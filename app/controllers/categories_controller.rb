@@ -5,8 +5,10 @@ class CategoriesController < ApplicationController
   def index
     @section_name = @question.label
     @context = @question.context
+    @codes = Code.where(context: @context.name).order(:name)
     @categories = Category.where(context: @question.context.name).order(:name)
     @enqueued_at = params[:enqueued_at].present? ? Time.at(params[:enqueued_at].to_i).strftime("%T %Z") : nil
+    @isEditMode = params[:is_edit_mode] == "true"
   end
 
   def show
