@@ -748,6 +748,17 @@ input[type="email"] {
      vertical-align: baseline;
   }
 
+  .edit-link-light::after {
+     content: "";
+     width: .8em;
+     height: .8em;
+     margin: 0 -0.25rem 0 0.25em;
+     background: var(--icon-edit-light) no-repeat;
+     background-size: contain;
+     display: inline-block;
+     vertical-align: baseline;
+  }
+
   .zoom-link::after {
      content: "";
      width: .8em;
