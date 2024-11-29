@@ -8,10 +8,12 @@ RSpec.describe Services::ExportToGraph do
 
 		allow(Persona).to receive(:find_or_create_by).and_return(persona)
 		allow(Persona).to receive(:find_or_initialize_by).and_return(persona)
-		allow(persona).to receive(:destroy)
 
 		allow(Identity).to receive(:find_or_create_by).and_return(identity)
+		allow(Identity).to receive(:reap_orphans)
+
 		allow(Code).to receive(:find_or_create_by).and_return(code)
+		allow(Code).to receive(:reap_orphans)
 
 		allow(response_1).to receive(:question).and_return(question_1)
 		allow(response_2).to receive(:question).and_return(question_2)
