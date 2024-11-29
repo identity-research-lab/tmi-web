@@ -19,6 +19,15 @@ class Identity
     identities.inject({}) {|accumulator,identity| accumulator[identity.values[0]] ||= 0; accumulator[identity.values[0]] += identity.values[1]; accumulator}
   end
 
+  def self.orphans
+    query_as(:i).with('i, count{(i)-[:IDENTIFIES_WITH]-(:Persona)} AS ct').where('ct = 0').return('i, ct').map(&:first)
+  end
+
+  def self.reap_orphans
+    orphans = query_as(:i).with('i, count{(i)-[:IDENTIFIES_WITH]-(:Persona)} AS ct').where('ct = 0').return('i, ct').map(&:first)
+    orphans.each(&:destroy)
+  end
+
   private
 
   def strip_whitespace

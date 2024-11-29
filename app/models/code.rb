@@ -23,6 +23,15 @@ class Code
     codes.inject({}) {|accumulator,code| accumulator[code.values[0]] ||= 0; accumulator[code.values[0]] += code.values[1]; accumulator}
   end
 
+  def self.orphans
+    query_as(:c).with('c, count{(c)-[:EXPERIENCES]-(:Persona)} AS ct').where('ct = 0').return('c, ct').map(&:first)
+  end
+
+  def self.reap_orphans
+    orphans = query_as(:c).with('c, count{(c)-[:EXPERIENCES]-(:Persona)} AS ct').where('ct = 0').return('c, ct').map(&:first)
+    orphans.each(&:destroy)
+  end
+
   private
 
   def sanitize

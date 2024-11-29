@@ -16,8 +16,6 @@ module Services
 		def perform
 			return false unless kase
 
-			# Destroy the existing persona so that neo4j will reap orphaned nodes like Codes and Identities.
-			Persona.find_or_initialize_by(case_id: kase.id).destroy
 			populate_codes
 			populate_identities
 			return true
@@ -41,6 +39,7 @@ module Services
 				next if question.is_identity?
 
 				context = question.context.name
+				persona.codes = []
 
 				response.raw_codes.compact.uniq.each do |name|
 					if code = Code.find_or_create_by(name: name, context: context)
@@ -49,6 +48,9 @@ module Services
 					end
 				end
 			end
+
+			# Clean up any Codes that are no longer associated with a Persona.
+			Code.reap_orphans
 		end
 
 		# Creates Identity nodes and connects them to the associated Persona.
@@ -58,6 +60,7 @@ module Services
 				next unless question.is_identity?
 
 				context = question.context.name
+				persona.identities = []
 
 				response.raw_codes.compact.uniq.each do |name|
 					if identity = Identity.find_or_create_by(name: name.strip, context: context)
@@ -66,6 +69,9 @@ module Services
 					end
 				end
 			end
+
+			# Clean up any Identities that are no longer associated with a Persona.
+			Identity.reap_orphans
 		end
 
 	end
