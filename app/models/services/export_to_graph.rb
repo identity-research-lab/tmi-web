@@ -34,16 +34,17 @@ module Services
 
 		# Creates Code nodes and connects them to the associated Persona.
 		def populate_codes
+
+			persona.codes = []
+
+			# Clean up any Codes that are no longer associated with a Persona.
+			Code.reap_orphans
+
 			kase.responses.each do |response|
 				question = response.question
 				next if question.is_identity?
 
 				context = question.context.name
-				persona.codes = []
-
-				# Clean up any Codes that are no longer associated with a Persona.
-				Code.reap_orphans
-
 				response.raw_codes.compact.uniq.each do |name|
 					if code = Code.find_or_create_by(name: name, context: context)
 						next unless code.valid?
@@ -56,15 +57,17 @@ module Services
 
 		# Creates Identity nodes and connects them to the associated Persona.
 		def populate_identities
+
+			persona.identities = []
+
+			# Clean up any Identities that are no longer associated with a Persona.
+			Identity.reap_orphans
+
 			kase.responses.each do |response|
 				question = response.question
 				next unless question.is_identity?
 
 				context = question.context.name
-				persona.identities = []
-
-				# Clean up any Identities that are no longer associated with a Persona.
-				Identity.reap_orphans
 
 				response.raw_codes.compact.uniq.each do |name|
 					if identity = Identity.find_or_create_by(name: name.strip, context: context)
