@@ -15,8 +15,12 @@ RSpec.describe Services::ExportToGraph do
 		allow(Code).to receive(:find_or_create_by).and_return(code)
 		allow(Code).to receive(:reap_orphans)
 
+
 		allow(response_1).to receive(:question).and_return(question_1)
 		allow(response_2).to receive(:question).and_return(question_2)
+
+		allow(response_1).to receive(:case).and_return(Case.new(id: 1))
+		allow(response_2).to receive(:case).and_return(Case.new(id: 1))
 
 		allow(question_1).to receive(:context).and_return(context)
 		allow(question_2).to receive(:context).and_return(context)
@@ -38,14 +42,14 @@ RSpec.describe Services::ExportToGraph do
 	let(:kase) { Case.new(id: 1) }
 
 	it "creates identities" do
-		allow(kase).to receive(:responses).and_return([response_1])
+		allow(Response).to receive(:find).and_return(response_1)
 		expect(Identity).to receive(:find_or_create_by).with(name: "not okay", context: "age").and_return(identity)
 		expect(IdentifiesWith).to receive(:create)
 		service.perform
 	end
 
 	it "creates codes" do
-		allow(kase).to receive(:responses).and_return([response_2])
+		allow(Response).to receive(:find).and_return(response_2)
 		expect(Code).to receive(:find_or_create_by).with(name: "just okay", context: "age"). and_return(code)
 		expect(Experiences).to receive(:create)
 		service.perform
