@@ -13,10 +13,14 @@ class Case < ApplicationRecord
   # This should normally only be called as part of an asynchronous job.
   def self.from(record_id, record)
     if kase = Case.find_or_create_by(response_id: record_id)
+      Persona.find_or_create_by(
+        name: "Persona #{kase.identifier}",
+        case_id: kase.id,
+        permalink: kase.permalink
+      )
 		  Question.all.each do |question|
 		    Response.create!(question_id: question.id, kase_id: kase.id, value: record[question.key])
 		  end
-      Services::ExportToGraph.perform(kase.id)
       return kase
     end
   end

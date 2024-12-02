@@ -1,6 +1,6 @@
 class Response < ApplicationRecord
 
-  after_update :enqueue_export_to_graph
+  after_update :sync_to_graph
 
   belongs_to :case
   belongs_to :question
@@ -9,11 +9,61 @@ class Response < ApplicationRecord
     @codes ||= Code.where(name: self.raw_codes)
   end
 
+  def sync_to_graph
+    if question.is_identity?
+      populate_identities
+    else
+      populate_codes
+    end
+  end
+
   private
 
-    # Invokes a service to update the graph databases from the associated Case object.
-    def enqueue_export_to_graph
-      ExportToGraphJob.perform_async(self.id)
+    def context_name
+      @context_name ||= question.context.name
+    end
+
+    def persona
+      @persona ||= Persona.find_or_create_by(
+        name: "Persona #{self.case.identifier}",
+        case_id: self.case.id,
+        permalink: self.case.permalink
+      )
+    end
+
+    # Creates Code nodes and connects them to the associated Persona.
+    def populate_codes
+
+      # Break association with previous codes in this context
+      persona.codes = persona.codes.reject{ |c| c.context == context_name }
+
+      # Clean up any Codes that are no longer associated with a Persona.
+      Code.reap_orphans
+
+      self.raw_codes.compact.uniq.each do |name|
+        if code = Code.find_or_create_by(name: name, context: context_name)
+          next unless code.valid?
+          Experiences.create(from_node: persona, to_node: code)
+        end
+      end
+
+    end
+
+    # Creates Identity nodes and connects them to the associated Persona.
+    def populate_identities
+
+      persona.identities = persona.identities.reject{ |i| i.context == context_name }
+
+      # Clean up any Identities that are no longer associated with a Persona.
+      Identity.reap_orphans
+
+      self.raw_codes.compact.uniq.each do |name|
+        if identity = Identity.find_or_create_by(name: name.strip, context: context_name)
+          next unless identity.valid?
+          IdentifiesWith.create(from_node: persona, to_node: identity)
+        end
+      end
+
     end
 
 end
