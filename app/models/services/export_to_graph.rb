@@ -41,6 +41,9 @@ module Services
 				context = question.context.name
 				persona.codes = []
 
+				# Clean up any Codes that are no longer associated with a Persona.
+				Code.reap_orphans
+
 				response.raw_codes.compact.uniq.each do |name|
 					if code = Code.find_or_create_by(name: name, context: context)
 						next unless code.valid?
@@ -49,8 +52,6 @@ module Services
 				end
 			end
 
-			# Clean up any Codes that are no longer associated with a Persona.
-			Code.reap_orphans
 		end
 
 		# Creates Identity nodes and connects them to the associated Persona.
@@ -62,6 +63,9 @@ module Services
 				context = question.context.name
 				persona.identities = []
 
+				# Clean up any Identities that are no longer associated with a Persona.
+				Identity.reap_orphans
+
 				response.raw_codes.compact.uniq.each do |name|
 					if identity = Identity.find_or_create_by(name: name.strip, context: context)
 						next unless identity.valid?
@@ -70,8 +74,6 @@ module Services
 				end
 			end
 
-			# Clean up any Identities that are no longer associated with a Persona.
-			Identity.reap_orphans
 		end
 
 	end
