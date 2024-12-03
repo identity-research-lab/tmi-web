@@ -58,7 +58,7 @@ class Response < ApplicationRecord
       self.raw_codes.compact.uniq.each do |name|
         if identity = Identity.find_or_create_by(name: name.strip, context: context_name)
           next unless identity.valid?
-          IdentifiesWith.create(from_node: persona, to_node: identity)
+          persona.identities << identity
         end
       end
 
