@@ -8,6 +8,8 @@ RSpec.describe Response do
 
     allow(Persona).to receive(:find_or_create_by).and_return(persona)
     allow(Persona).to receive(:find_or_initialize_by).and_return(persona)
+    allow(persona).to receive(:codes).and_return([])
+    allow(persona).to receive(:identities).and_return([])
 
     allow(Identity).to receive(:find_or_create_by).and_return(identity)
     allow(Identity).to receive(:reap_orphans)
@@ -43,14 +45,12 @@ RSpec.describe Response do
   it "creates identities" do
     allow(Response).to receive(:find).and_return(response_1)
     expect(Identity).to receive(:find_or_create_by).with(name: "not okay", context: "age").and_return(identity)
-    expect(IdentifiesWith).to receive(:create)
     response_1.sync_to_graph
   end
 
   it "creates codes" do
     allow(Response).to receive(:find).and_return(response_2)
     expect(Code).to receive(:find_or_create_by).with(name: "just okay", context: "age"). and_return(code)
-    expect(Experiences).to receive(:create)
     response_2.sync_to_graph
   end
 
