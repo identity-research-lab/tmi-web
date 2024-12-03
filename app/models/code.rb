@@ -14,8 +14,8 @@ class Code
   validates :context, presence: true
   validates_uniqueness_of :name, scope: :context
 
-  has_many :out, :personas, rel_class: :Experiences
-  has_many :in, :categories, rel_class: :CategorizedAs
+  has_many :in, :personas, rel_class: :Experiences
+  has_many :in, :categories, rel_class: :CategorizedAs, dependent: :delete_orphans
 
   # Given a context, generates a hash with each unique Codes as a key and the counts of its uses as a value.
   def self.histogram(context)
@@ -24,12 +24,11 @@ class Code
   end
 
   def self.orphans
-    query_as(:c).with('c, count{(c)-[:EXPERIENCES]-(:Persona)} AS ct').where('ct = 0').return('c, ct').map(&:first)
+    query_as(:c).with('c, count{(c)-[:EXPERIENCES]-()} AS ct').where('ct = 0').return('c, ct').map(&:first)
   end
 
   def self.reap_orphans
-    orphans = query_as(:c).with('c, count{(c)-[:EXPERIENCES]-(:Persona)} AS ct').where('ct = 0').return('c, ct').map(&:first)
-    orphans.each(&:destroy)
+    Code.orphans.each(&:destroy)
   end
 
   private

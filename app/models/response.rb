@@ -38,14 +38,15 @@ class Response < ApplicationRecord
       persona.codes = persona.codes.reject{ |c| c.context == context_name }
 
       # Clean up any Codes that are no longer associated with a Persona.
-      Code.reap_orphans
-
       self.raw_codes.compact.uniq.each do |name|
         if code = Code.find_or_create_by(name: name, context: context_name)
           next unless code.valid?
           Experiences.create(from_node: persona, to_node: code)
         end
       end
+
+      # Clean up any Codes that are no longer associated with a Persona.
+      Code.reap_orphans
 
     end
 
@@ -54,15 +55,15 @@ class Response < ApplicationRecord
 
       persona.identities = persona.identities.reject{ |i| i.context == context_name }
 
-      # Clean up any Identities that are no longer associated with a Persona.
-      Identity.reap_orphans
-
       self.raw_codes.compact.uniq.each do |name|
         if identity = Identity.find_or_create_by(name: name.strip, context: context_name)
           next unless identity.valid?
           IdentifiesWith.create(from_node: persona, to_node: identity)
         end
       end
+
+      # Clean up any Identities that are no longer associated with a Persona.
+      Identity.reap_orphans
 
     end
 
