@@ -41,7 +41,7 @@ class Response < ApplicationRecord
       self.raw_codes.compact.uniq.each do |name|
         if code = Code.find_or_create_by(name: name, context: context_name)
           next unless code.valid?
-          Experiences.create(from_node: persona, to_node: code)
+          persona.codes << code
         end
       end
 
