@@ -38,7 +38,6 @@ class ThemesController < ApplicationController
 
     @theme.name = theme_params[:name]
     @theme.description = theme_params[:description]
-    @theme.notes = theme_params[:notes]
     update_kind ||= "metadata"
     success = @theme.save
 
