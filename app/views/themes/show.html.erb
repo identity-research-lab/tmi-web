@@ -1,6 +1,7 @@
 <%- title "Themes" %>
 
 <h1>Theme: "<%= @theme.name %>"</h1>
+<p><%= link_to "More themes.", themes_path %></p>
 
 <%= render partial: "form", locals: { theme: @theme, success: nil, update_kind: nil } %>
 
