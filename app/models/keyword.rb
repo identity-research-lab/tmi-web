@@ -11,7 +11,7 @@ class Keyword
   validates :name, presence: true
   validates :name, uniqueness: true
 
-  has_many :in, :personas, rel_class: :ReflectsOn, dependent: :delete_orphans
+  has_many :in, :personas, rel_class: :ReflectsOn
 
   # This is the prompt passed to the AI agent to serve as instructions for extracting Keywords.
   PROMPT = %{
