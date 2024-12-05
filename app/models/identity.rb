@@ -24,7 +24,7 @@ class Identity
   end
 
   def self.reap_orphans
-    Identity.orphans.each(&:destroy)
+    query_as(:i).with('i, count{(i)-[:IDENTIFIES_WITH]-(:Persona)} AS ct').where('ct = 0').return('i, ct').map(&:first).each(&:destroy)
   end
 
   private

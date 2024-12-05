@@ -6,7 +6,7 @@ class Response < ApplicationRecord
   belongs_to :question
 
   def codes
-    @codes ||= Code.where(name: self.raw_codes)
+    @codes ||= Code.where(name: self.raw_codes, context: self.question.context.name)
   end
 
   def sync_to_graph
