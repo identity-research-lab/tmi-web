@@ -40,13 +40,12 @@ class Response < ApplicationRecord
       # Clean up any Codes that are no longer associated with a Persona.
       self.raw_codes.compact.uniq.each do |name|
         if code = Code.find_or_create_by(name: name, context: context_name)
-          next unless code.valid?
           persona.codes << code
         end
       end
 
       # Clean up any Codes that are no longer associated with a Persona.
-      Code.reap_orphans
+#      Code.reap_orphans
 
     end
 
@@ -57,13 +56,12 @@ class Response < ApplicationRecord
 
       self.raw_codes.compact.uniq.each do |name|
         if identity = Identity.find_or_create_by(name: name.strip, context: context_name)
-          next unless identity.valid?
           persona.identities << identity
         end
       end
 
       # Clean up any Identities that are no longer associated with a Persona.
-      Identity.reap_orphans
+#      Identity.reap_orphans
 
     end
 
