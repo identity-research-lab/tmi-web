@@ -45,7 +45,7 @@ class Response < ApplicationRecord
       end
 
       # Clean up any Codes that are no longer associated with a Persona.
-#      Code.reap_orphans
+      Code.reap_orphans
 
     end
 
@@ -61,7 +61,7 @@ class Response < ApplicationRecord
       end
 
       # Clean up any Identities that are no longer associated with a Persona.
-#      Identity.reap_orphans
+      Identity.reap_orphans
 
     end
 
