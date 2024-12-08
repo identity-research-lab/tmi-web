@@ -2,7 +2,10 @@ class ResponsesController < ApplicationController
 
   def update
     @response = Response.find(params[:id])
-    success = @response.update(raw_codes: response_params[:raw_codes].join(",").split(",").reject(&:empty?).compact.map(&:strip).map(&:downcase))
+    Rails.logger.info("!!! => response_params[:raw_codes] = #{response_params[:raw_codes]}")
+    
+    raw_codes = response_params[:raw_codes].first.parse_csv.map(&:strip).reject(&:empty?).compact.map(&:downcase)
+    success = @response.update(raw_codes: raw_codes)
 
     respond_to do |format|
       format.turbo_stream do
