@@ -8,7 +8,7 @@
     <h2>Select a CSV file.</h2>
     <p>Note that this will merge new responses from the file you select with existing cases. In other words, you will not overwrite or duplicate data by uploading a file.</p>
 
-    <%= form_with url: case_path, method: :post do |f| %>
+    <%= form_with url: cases_path, method: :post do |f| %>
       <%= f.file_field :csv, direct_upload: true %>
       <%= f.submit "Upload and Merge", style: "float: none;" %>
     <% end  %>
