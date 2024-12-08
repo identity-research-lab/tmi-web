@@ -13,4 +13,8 @@ class Context < ApplicationRecord
     update_attribute(:suggested_categories, categories)
   end
 
+  def primary_experience_question
+    self.questions.find_by(is_experience: true)
+  end
+
 end

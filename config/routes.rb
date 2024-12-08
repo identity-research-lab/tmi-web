@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :annotations
   resources :responses
-  resources :stats
+  resources :statistics
   resources :themes
 
   resources :codebooks do
@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   resources :questions do
     resources :categories
   end
+  get "categories", controller: "categories", action: "by_context"
 
   resources :cases do
     post "enqueue_keywords", action: "enqueue_keywords"

@@ -11,6 +11,10 @@ class CategoriesController < ApplicationController
     @isEditMode = params[:is_edit_mode] == "true"
   end
 
+  def by_context
+    @contexts = Context.all.order(:display_name)
+  end
+
   def show
     @category = Category.find(params[:id])
     @codes = Code.where(context: @category.context).order(:name)
@@ -63,7 +67,7 @@ class CategoriesController < ApplicationController
   end
 
   def scope_question
-    @question = Question.find(params[:question_id])
+    @question = params[:question_id].present? ? Question.find(params[:question_id]) : Question.new
   end
 
 end
