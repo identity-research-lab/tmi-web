@@ -1,7 +1,7 @@
 <%- title "#{@section_name} Codebook Categories" %>
 
 <h1>Explore categories for "<%= @section_name %>".</h1>
-<p>When you're done, you can <%= link_to "go back to the codebook", codebook_path(@question.id) %>.</p>
+<p>When you're done, you can <%= link_to "go back to the codebook", codebook_path(@question.id) %> or <%= link_to "move on to themes", themes_path %>.</p>
 
 <% if @isEditMode %>
   <h2>Select a Category to Edit:</h2>

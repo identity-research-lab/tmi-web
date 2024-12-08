@@ -12,16 +12,18 @@
   <% contextual_categories = @categories.select{ |c| c.context == context.name } %>
   <% if contextual_categories.any? %>
     <h3><%= context.display_name %></h3>
-      <div class="tag-collection">
-        <% contextual_categories.sort_by(&:name).each do |category| %>
-          <% is_selected = @theme.categories.include? category %>
-          <a onclick="filterBy('<%= category.id %>'); updateAssociatedCategories(); return false">
-            <div class="tag category <%= is_selected ? 'active' : '' %>" id="category-<%= category.id %>" data-category="<%= category.id %>">
-              <%= category.name %>
-            </div>
-          </a>
-        <% end %>
-      </div>
+    <p>You can also <%= link_to "explore these categories and their associated codes", question_categories_path(context.primary_experience_question) %>.</p>
+
+    <div class="tag-collection">
+      <% contextual_categories.sort_by(&:name).each do |category| %>
+        <% is_selected = @theme.categories.include? category %>
+        <a onclick="filterBy('<%= category.id %>'); updateAssociatedCategories(); return false">
+          <div class="tag category <%= is_selected ? 'active' : '' %>" id="category-<%= category.id %>" data-category="<%= category.id %>">
+            <%= category.name %>
+          </div>
+        </a>
+      <% end %>
+    </div>
   <% end %>
 <% end %>
 
