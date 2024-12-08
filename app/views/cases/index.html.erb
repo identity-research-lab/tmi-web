@@ -4,6 +4,12 @@
   <%= pluralize @cases.size, "Case" %>.
 </h1>
 
+<% if @cases.any? %>
+  <p>You can also <%= link_to "upload more cases", new_case_path %>.</p>
+<% else %>
+  <p>To get started, <%= link_to "upload your cases", new_case_path %>.</p>
+<% end %>
+
 <ol class="nodes">
   <% @cases.each do |kase| %>
     <li>

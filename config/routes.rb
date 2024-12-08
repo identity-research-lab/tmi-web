@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :annotations
   resources :responses
-  resources :stats
+  resources :statistics
   resources :themes
 
   resources :codebooks do

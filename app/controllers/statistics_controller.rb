@@ -1,4 +1,4 @@
-class StatsController < ApplicationController
+class StatisticsController < ApplicationController
 
   def index
 
