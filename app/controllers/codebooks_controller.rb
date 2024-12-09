@@ -7,6 +7,7 @@ class CodebooksController < ApplicationController
   def show
     @question = Question.find(params[:id])
     @context = @question.context
+    @categories = @context.categories
     @enqueued_at = params[:enqueued_at].present? ? Time.at(params[:enqueued_at].to_i).strftime("%T %Z") : nil
 
     # Support the previous/next navigation controls
