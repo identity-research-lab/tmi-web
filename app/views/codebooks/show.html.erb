@@ -1,7 +1,7 @@
 <%- title "#{@section_name} Codebook" %>
 
 <h1><%= pluralize(@frequencies.count, "Code") %> for "<%= @section_name %>".</h1>
-<p>You can also <%= link_to "view all cases", question_path(@question.id) %> to this question.</p>
+<p>You can also <%= link_to "view all responses", question_path(@question.id) %> to this question.</p>
 
 <% if @previous_section %>
   <%= link_to "<", codebook_path(id: @previous_section), class: "flip", id: "flip-left" %>
@@ -39,7 +39,7 @@
           </a>
         <% end %>
       <% end %>
-      <%= link_to question_categories_path(question_id: @question.id) do %>
+      <%= link_to context_path(id: @question.context.id) do %>
         <div class="tag tag-button">Manage Categories</div>
       <% end %>
     </div>

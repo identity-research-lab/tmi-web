@@ -4,7 +4,7 @@
 
 <%= render partial: "form", locals: { category: @category, context: @context, success: nil, update_kind: nil } %>
 
-<p>When you're done, you can <%= link_to "explore more categories", context_path(id: @context.id) %>.</p>
+<p>When you're done, you can <%= link_to "explore more #{@context.display_name} categories", context_path(id: @context.id) %>.</p>
 
 <% if @category.id.present? %>
   <h2>Codes</h2>

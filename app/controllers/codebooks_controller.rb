@@ -36,7 +36,7 @@ class CodebooksController < ApplicationController
   end
 
   def enqueue_category_suggestions
-    context = Context.find(params[:context_id]
+    context = Context.find(params[:context_id])
     CategorySuggestionsJob.perform_async(context.id)
     respond_to do |format|
       format.turbo_stream do
