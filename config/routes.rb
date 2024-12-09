@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   resources :questions do
     resources :categories
   end
+
   get "categories", controller: "categories", action: "by_context"
 
   resources :cases do
