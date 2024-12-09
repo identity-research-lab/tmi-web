@@ -1,0 +1,11 @@
+<%- title "Categories" %>
+
+<h1>Browse categories.</h1>
+
+<ul class="list">
+  <% @contexts.each do |context| %>
+    <li>
+      <%= link_to context.display_name, context_path(context) %>
+    </li>
+  <% end %>
+</ul>

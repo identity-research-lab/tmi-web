@@ -5,7 +5,7 @@
 <div class="two-column">
 
   <div class="column">
-    <%= form_with model: @category, url: question_categories_path(question_id: @question.id) do |f| %>
+    <%= form_with model: @category, url: context_categories_path(context_id: @context.id) do |f| %>
       <fieldset>
       <%= label :name, "Name" %>
       <%= f.text_field :name %>

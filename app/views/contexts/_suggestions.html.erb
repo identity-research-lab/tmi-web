@@ -16,7 +16,7 @@
         <li><%= suggestion %></li>
       <% end %>
     </ul>
-    <%= button_to "Get Suggestions", codebook_enqueue_category_suggestions_path(question.id, params: { enqueued: DateTime.now }, method: :put, form: { data: { turbo: true, turbo_stream: true } } ) %>
+    <%= button_to "Get Suggestions", codebook_enqueue_category_suggestions_path(context.id, params: { enqueued: DateTime.now }, method: :put, form: { data: { turbo: true, turbo_stream: true } } ) %>
   <% end %>
 
 <% end %>
