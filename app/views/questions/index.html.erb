@@ -1,0 +1,15 @@
+<%- title "Codebook" %>
+
+<h1>Explore Responses.</h1>
+<ul class="breadcrumbs">
+  <li><a href="/">Home</a> /</li>
+  <li>Responses</li>
+</ul>
+
+<ul class="list">
+  <% @questions.each do |question| %>
+    <li>
+      <%= link_to question.label, question_path(question.id) %>
+    </li>
+  <% end %>
+</ul>

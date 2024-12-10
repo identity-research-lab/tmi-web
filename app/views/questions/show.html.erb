@@ -3,8 +3,7 @@
 <h1><%= @responses.count %> Participant Survey Responses to "<%= @question.label %>".</h1>
 <ul class="breadcrumbs">
   <li><a href="/">Home</a> /</li>
-  <li><%= link_to "Cases", cases_path %> /</li>
-  <li>Responses /</li>
+  <li><%= link_to "Responses", questions_path %> /</li>
   <li><%= @question.label %></li>
 </ul>
 
