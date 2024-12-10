@@ -29,7 +29,7 @@ class Case < ApplicationRecord
   def graph_query
     {
       explainer: "Access and explore this case (and all of its relationships) as an Interactive Persona in the TMI-Graph app.",
-      query: "MATCH (p:Persona)-[]-(n) WHERE p.permalink=\"#{permalink}\" RETURN p,n"
+      query: "MATCH (p:Persona)-[]-(n) WHERE p.case_id=\"#{self.id}\" RETURN p,n"
     }
   end
 
