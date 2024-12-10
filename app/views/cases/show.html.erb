@@ -1,6 +1,6 @@
 <%- title "Case #{@kase.identifier}" %>
 
-<h1>Case <%= @kase.identifier %></h1>
+<h1>Case <%= @kase.identifier %>.</h1>
 
 <% if @previous_case %>
   <%= link_to "<", case_path(@previous_case), class: "flip", id: "flip-left" %>

@@ -1,6 +1,13 @@
 <%- title "#{@context.display_name} Categories" %>
 
-<h1><%= @context.display_name %> categories.</h1>
+<h1>"<%= @context.display_name %>" Categories.</h1>
+
+<% if @previous_context_id %>
+  <%= link_to "<", context_path(id: @previous_context_id), class: "flip", id: "flip-left" %>
+<% end %>
+<% if @next_context_id %>
+  <%= link_to ">", context_path(id: @next_context_id), class: "flip", id: "flip-right" %>
+<% end %>
 
 <% if @isEditMode %>
   <p>When you're done, you can <%= link_to "go back to categories and codes", context_path(id: @context.id) %> or <%= link_to "move on to themes", themes_path %>.</p>

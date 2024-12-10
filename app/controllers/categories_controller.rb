@@ -5,6 +5,14 @@ class CategoriesController < ApplicationController
   def show
     @category = Category.find(params[:id])
     @codes = Code.where(context: @category.context).order(:name)
+    @context = Context.find_by(name: @category.context)
+
+    category_ids = Category.where(context: @category.context).pluck(:id)
+    previous_index = (category_ids.index(@category.id) - 1)
+    next_index = (category_ids.index(@category.id) + 1) % category_ids.length
+    @previous_category_id = category_ids[previous_index]
+    @next_category_id = category_ids[next_index]
+
   end
 
   def new
