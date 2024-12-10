@@ -7,6 +7,7 @@ class CodebooksController < ApplicationController
   def show
     @question = Question.find(params[:id])
     @context = @question.context
+    @categories = @context.categories
     @enqueued_at = params[:enqueued_at].present? ? Time.at(params[:enqueued_at].to_i).strftime("%T %Z") : nil
 
     # Support the previous/next navigation controls
@@ -36,12 +37,11 @@ class CodebooksController < ApplicationController
   end
 
   def enqueue_category_suggestions
-    question = Question.find(params[:codebook_id])
-    context = question.context
+    context = Context.find(params[:context_id])
     CategorySuggestionsJob.perform_async(context.id)
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace("frame-suggestions", partial: "/categories/suggestions", locals: { context: context, question: question, enqueued: params[:enqueued] })
+        render turbo_stream: turbo_stream.replace("frame-suggestions", partial: "/categories/suggestions", locals: { context: context, enqueued: params[:enqueued] })
       end
     end
 

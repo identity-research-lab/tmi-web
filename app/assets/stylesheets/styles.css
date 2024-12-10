@@ -178,6 +178,11 @@ ul,
    margin-top: 1.25rem;
  }
 
+ h3 a {
+   text-decoration: none;
+   color: var(--color-black);
+ }
+ 
  p {
    margin: 1.5rem 0;
  }

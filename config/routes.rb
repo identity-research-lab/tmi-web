@@ -13,22 +13,23 @@ Rails.application.routes.draw do
 
   get "about", controller: "static", action: "about"
 
+  resources :contexts do
+    resources :categories
+  end
+
   resources :annotations
   resources :responses
   resources :statistics
   resources :themes
 
-  resources :codebooks do
-    post "enqueue_category_suggestions", action: "enqueue_category_suggestions"
-  end
-
-  resources :questions do
-    resources :categories
-  end
-  get "categories", controller: "categories", action: "by_context"
-
   resources :cases do
     post "enqueue_keywords", action: "enqueue_keywords"
   end
 
+  # Move these into contexts block  
+  resources :codebooks do
+    post "enqueue_category_suggestions", action: "enqueue_category_suggestions"
+  end
+  resources :questions
+  
 end

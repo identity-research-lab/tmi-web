@@ -1,31 +1,31 @@
-<%- title "#{@section_name} Codebook Categories" %>
+<%- title "#{@context.display_name} Categories" %>
 
-<h1>Explore categories for "<%= @section_name %>".</h1>
-<p>You can <%= link_to "find more categories", categories_path(action: :by_context) %>, <%= link_to "go to the codebook", codebook_path(@question.id) %>, or <%= link_to "move on to themes", themes_path %>.</p>
+<h1><%= @context.display_name %> categories.</h1>
 
 <% if @isEditMode %>
+  <p>When you're done, you can <%= link_to "go back to categories and codes", context_path(id: @context.id) %> or <%= link_to "move on to themes", themes_path %>.</p>
+
   <h2>Select a Category to Edit:</h2>
   <div class="tag-collection">
     <% @categories.each do |category| %>
-      <%= link_to question_category_path(question_id: @question.id, id: category.id) do %>
+      <%= link_to context_category_path(context_id: @context.id, id: category.id) do %>
         <div class="tag edit-link-light category"><%= category.name %></div>
       <% end %>
     <% end %>
-    <%= link_to new_question_category_path(question_id: @question.id) do %>
+    <%= link_to new_context_category_path(context_id: @context.id) do %>
       <div class="tag-button">New Category</div>
-    <% end %>
-    <%= link_to question_categories_path(question_id: @question.id) do %>
-      <div class="tag-button">Compare Categories</div>
     <% end %>
   </div>
 <% else %>
+  <p>You can <%= link_to "explore more categories", contexts_path %> or <%= link_to "move on to themes", themes_path %>.</p>
+
   <h2>Select Categories to Compare:</h2>
   <div class="tag-collection">
     <div class="tag zoom-link-light category" onclick="filterBy('uncategorized');" id="category-uncategorized" data-category="uncategorized">Uncategorized Codes</div>
     <% @categories.each do |category| %>
       <div class="tag zoom-link-light category" onclick="filterBy('<%= category.id %>');" id="category-<%= category.id %>" data-category="<%= category.id %>"><%= category.name %></div>
     <% end %>
-    <%= link_to question_categories_path(question_id: @question.id, is_edit_mode: "true") do %>
+    <%= link_to context_path(context_id: @context.id, is_edit_mode: "true") do %>
       <div class="tag-button">Edit Categories</div>
     <% end %>
   </div>
@@ -33,7 +33,7 @@
 
 <% if @isEditMode %>
   <h2>Suggested Categories:</h2>
-  <%= render partial: "suggestions", locals: { context: @context, question: @question, enqueued: nil } %>
+  <%= render partial: "suggestions", locals: { context: @context, enqueued: nil } %>
 <% else %>
   <h2>Associated Codes:</h2>
   <p>Codes belonging to the selected categories are displayed below.</p>

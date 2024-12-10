@@ -1,19 +1,6 @@
 class CategoriesController < ApplicationController
 
-  before_action :scope_question
-
-  def index
-    @section_name = @question.label
-    @context = @question.context
-    @codes = Code.where(context: @context.name).order(:name)
-    @categories = Category.where(context: @question.context.name).order(:name)
-    @enqueued_at = params[:enqueued_at].present? ? Time.at(params[:enqueued_at].to_i).strftime("%T %Z") : nil
-    @isEditMode = params[:is_edit_mode] == "true"
-  end
-
-  def by_context
-    @contexts = Context.all.order(:display_name)
-  end
+  before_action :scope_context
 
   def show
     @category = Category.find(params[:id])
@@ -21,21 +8,20 @@ class CategoriesController < ApplicationController
   end
 
   def new
-    @category  = Category.new(name: "New Category", context: @question.context.name)
-    @context = @question.context
+    @category  = Category.new(name: "New Category", context: @context.name)
   end
 
   def create
     @category = Category.new(category_params)
     if @category.save
-      redirect_to question_category_path(@question, @category)
+      redirect_to context_category_path(@context, @category)
     end
   end
 
   def destroy
     @category = Category.find(params[:id])
     @category.destroy
-    redirect_to question_categories_path(@question)
+    redirect_to context_path(@context)
   end
 
   def update
@@ -55,7 +41,7 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace("frame-category", partial: "/categories/form", locals: { category: @category, question: @question, success: success, update_kind: update_kind })
+        render turbo_stream: turbo_stream.replace("frame-category", partial: "/categories/form", locals: { category: @category, context: @context, success: success, update_kind: update_kind })
       end
     end
   end
@@ -66,8 +52,8 @@ class CategoriesController < ApplicationController
     params.require(:category).permit(:name, :description, :context, :codes)
   end
 
-  def scope_question
-    @question = params[:question_id].present? ? Question.find(params[:question_id]) : Question.new
+  def scope_context
+    @context = params[:context_id].present? ? Context.find(params[:context_id]) : Context.new
   end
 
 end

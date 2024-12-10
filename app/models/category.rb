@@ -12,7 +12,8 @@ class Category
 
   validates :name, presence: true
   validates :context, presence: true
-
+  validates_uniqueness_of :name, scope: :context
+  
   has_many :out, :codes, rel_class: :CategorizedAs
   has_many :in, :themes, rel_class: :EmergesFrom
 

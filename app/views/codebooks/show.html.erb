@@ -1,7 +1,7 @@
 <%- title "#{@section_name} Codebook" %>
 
-<h1><%= pluralize(@frequencies.count, "Code") %> for "<%= @section_name %>".</h1>
-<p>You can also <%= link_to "view all cases", question_path(@question.id) %> to this question.</p>
+<h1>"<%= @section_name %>" Codebook.</h1>
+<p>You can also <%= link_to "view all responses", question_path(@question.id) %> to this question.</p>
 
 <% if @previous_section %>
   <%= link_to "<", codebook_path(id: @previous_section), class: "flip", id: "flip-left" %>
@@ -11,6 +11,7 @@
 <% end %>
 
 <% if @question.is_identity? %>
+  <h2>Categories.</h2>
   <p>By design, identities are not categorized.</p>
 <% else %>
 
@@ -25,30 +26,31 @@
       </div>
   <% end %>
 
-  <h2>Categories:</h2>
-    <p>Categories are derived from participant experiences, and represent collections of codes. Click on any category in the word cloud to see its associated codes. You may select more than one category to filter the results.</p>
+  <h2><%= pluralize(@categories.count, "Category") %>.</h2>
+  <p>Categories are derived from participant experiences, and represent collections of codes. Click on any category in the word cloud to see its associated codes. You may select more than one category to filter the results.</p>
 
-    <div class="tag-collection">
-      <% if @total_codes.to_i > 0 %>
-        <% @categories_histogram.keys.sort{|a,b| @categories_histogram[a] <=> @categories_histogram[b]}.reverse.each do |category| %>
-          <% font_size = ((@categories_histogram[category] / @total_codes.to_f) * 60).to_i + 5 %>
-				  <a onclick="filterBy('<%= category %>'); return false">
-            <div class="tag zoom-link-light category" id="category-<%= category %>" data-category="<%= category %>"  style="font-size: <%= [font_size, 9].max %>px;">
-              <%= category %>
-            </div>
-          </a>
-        <% end %>
+  <div class="tag-collection">
+    <% if @total_codes.to_i > 0 %>
+      <% @categories_histogram.keys.sort{|a,b| @categories_histogram[a] <=> @categories_histogram[b]}.reverse.each do |category| %>
+        <% font_size = ((@categories_histogram[category] / @total_codes.to_f) * 60).to_i + 5 %>
+			  <a onclick="filterBy('<%= category %>'); return false">
+          <div class="tag zoom-link-light category" id="category-<%= category %>" data-category="<%= category %>"  style="font-size: <%= [font_size, 9].max %>px;">
+            <%= category %>
+          </div>
+        </a>
       <% end %>
-      <%= link_to question_categories_path(question_id: @question.id) do %>
-        <div class="tag tag-button">Manage Categories</div>
-      <% end %>
-    </div>
+    <% end %>
+    <%= link_to context_path(id: @question.context.id) do %>
+      <div class="tag tag-button">Manage Categories</div>
+    <% end %>
+  </div>
 
 <% end %>
+<h2><%= pluralize(@frequencies.count, "Code") %>.</h2>
 
 <div class="two-column">
   <div class="column">
-    <h3>Alphabetically</h3>
+    <h3>Sorted Alphabetically</h3>
     <ul class="list">
       <% @frequencies_by_keys.each do |key,value| %>
         <li class="tagged codes" data-categories="<%= @codes.to_a.select{|c| c.name == key}.map(&:categories).flatten.map(&:name) %>">
@@ -62,7 +64,7 @@
   </div>
 
   <div class="column">
-    <h3>By Frequency</h3>
+    <h3>Sorted by Frequency</h3>
     <ul class="column list">
       <% @frequencies_by_values.sort{|a, b| a[1] <=> b[1]}.reverse.each do |key,value| %>
         <li class="tagged codes" data-categories="<%= @codes.to_a.select{|c| c.name == key}.map(&:categories).flatten.map(&:name) %>">
