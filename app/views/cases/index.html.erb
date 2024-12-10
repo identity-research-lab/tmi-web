@@ -1,13 +1,13 @@
 <%- title "Cases" %>
 
 <h1>
-  <%= pluralize @cases.size, "Case" %>.
+  Explore <%= pluralize @cases.size, "Case" %>.
 </h1>
 
 <% if @cases.any? %>
-  <p>You can also <%= link_to "upload more cases", new_case_path %>.</p>
+  <p>Add more cases by <%= link_to "uploading a data file", new_case_path %>.</p>
 <% else %>
-  <p>To get started, <%= link_to "upload your cases", new_case_path %>.</p>
+  <p>To get started, <%= link_to "upload your data file", new_case_path %>.</p>
 <% end %>
 
 <ol class="nodes">

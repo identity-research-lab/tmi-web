@@ -1,12 +1,12 @@
 <%- title "Upload" %>
 
-<h1>Upload survey data.</h1>
+<h1>Upload a Data File.</h1>
 
 <div class="two-column">
 
   <div class="column">
-    <h2>Select a CSV file.</h2>
-    <p>Note that this will merge new responses from the file you select with existing cases. In other words, you will not overwrite or duplicate data by uploading a file.</p>
+    <h2>Select a CSV data file.</h2>
+    <p>Note that this will merge new responses from the file you select with existing cases. In other words, you will not overwrite or duplicate data by uploading a data file more than once.</p>
 
     <%= form_with url: cases_path, method: :post do |f| %>
       <%= f.file_field :csv, direct_upload: true %>
@@ -17,7 +17,7 @@
   <div class="column">
     <h2>Required fields.</h2>
 
-    <p>Your upload must include the following fields in the header row (in any order):</p>
+    <p>Your data file must include the following fields in the header row (in any order):</p>
 
     <table>
       <thead>
@@ -29,12 +29,16 @@
       <tbody>
         <tr>
           <td><code>source_record_id</code></td>
-          <td>Record ID from the survey platform for cross-reference</td>
+          <td>Record ID from the data collection platform for cross-reference</td>
         </tr>
+        <% row_index = 0 %>
         <% Question.all.each do |question| %>
-          <tr>
+          <% row_index += 1 %>
+          <tr class="<%= row_index.odd? ? 'alt' : ''%>">
             <td><code><%= question.key %></code></td>
-            <td><%= question.label.downcase %></td>
+            <td>
+              <%= question.label %>
+          </td>
           </tr>
         <% end %>
       </tbody>
