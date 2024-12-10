@@ -15,9 +15,12 @@ Rails.application.routes.draw do
 
   resources :contexts do
     resources :categories
+    post "enqueue_category_suggestions", action: "enqueue_category_suggestions"
   end
 
   resources :annotations
+  resources :codebooks
+  resources :questions
   resources :responses
   resources :statistics
   resources :themes
@@ -26,10 +29,5 @@ Rails.application.routes.draw do
     post "enqueue_keywords", action: "enqueue_keywords"
   end
 
-  # Move these into contexts block  
-  resources :codebooks do
-    post "enqueue_category_suggestions", action: "enqueue_category_suggestions"
-  end
-  resources :questions
   
 end
