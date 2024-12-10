@@ -17,8 +17,17 @@ class ContextsController < ApplicationController
     next_index = (context_ids.index(@context.id) + 1) % context_ids.length
     @previous_context_id = context_ids[previous_index]
     @next_context_id = context_ids[next_index]
-
   end
+
+  def enqueue_category_suggestions
+    CategorySuggestionsJob.perform_async(params[:context_id])
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace("frame-suggestions", partial: "/contexts/suggestions", locals: { context: @context, enqueued: params[:enqueued] })
+      end
+    end
+  end
+  
 
   private
 
