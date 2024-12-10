@@ -54,7 +54,11 @@
         <td class="label"><%= link_to question.label, question_path(question), class: "zoom-link" %></td>
         <td  class="response"><%= response.value || "(Not answered)" %></td>
         <td class="form-entry">
-          <%= render "/responses/form", response: response, success: nil, filters: false %>
+          <% if question.is_affinity || question.is_reflection %>
+            —
+          <% else %>
+            <%= render "/responses/form", response: response, success: nil, filters: true %>
+          <% end %>
         </td>
       </tr>
     <% end %>
