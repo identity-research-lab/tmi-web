@@ -19,8 +19,8 @@
       <h2>tmi-graph query:</h2>
       <div class="confirmable">
         <p class="code">
-          <%= Codebook.category_query(@context_key)[:explainer] %><br />
-          <a id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= Codebook.category_query(@context_key)[:query] %></a>
+          <%= Codebook.category_query(@context)[:explainer] %><br />
+          <a id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')"><%= Codebook.category_query(@context)[:query] %></a>
         </p>
         <div id="confirmation" class="hidden"></div>
       </div>
