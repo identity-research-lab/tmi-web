@@ -1,6 +1,11 @@
 <%- title "New Theme" %>
 
 <h1>Add a Theme</h1>
+<ul class="breadcrumbs">
+  <li><a href="/">Home</a> /</li>
+  <li><%= link_to "Themes", themes_path %> /</li>
+  <li>New</li>
+</ul>
 
 <%= form_with model: @theme do |f| %>
   <fieldset>

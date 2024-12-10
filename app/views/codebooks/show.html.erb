@@ -1,6 +1,12 @@
 <%- title "#{@section_name} Codebook" %>
 
 <h1>"<%= @section_name %>" Codebook.</h1>
+<ul class="breadcrumbs">
+  <li><a href="/">Home</a> /</li>
+  <li><%= link_to "Codebooks", codebooks_path %> /</li>
+  <li><%= @section_name %></li>
+</ul>
+
 <p>You can also <%= link_to "view all responses", question_path(@question.id) %> to this question.</p>
 
 <% if @previous_section %>

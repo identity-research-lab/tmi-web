@@ -1,7 +1,5 @@
 <%- title "#{@context.display_name} Categories" %>
 
-<h1>"<%= @context.display_name %>" Categories.</h1>
-
 <% if @previous_context_id %>
   <%= link_to "<", context_path(id: @previous_context_id), class: "flip", id: "flip-left" %>
 <% end %>
@@ -10,8 +8,14 @@
 <% end %>
 
 <% if @isEditMode %>
-  <p>When you're done, you can <%= link_to "go back to categories and codes", context_path(id: @context.id) %> or <%= link_to "move on to themes", themes_path %>.</p>
-
+  <h1>Manage "<%= @context.display_name %>" Categories.</h1>
+  <ul class="breadcrumbs">
+    <li><a href="/">Home</a> /</li>
+    <li><%= link_to "Categories", contexts_path %> /</li>
+    <li><%= link_to @context.display_name, context_path(@context) %> /</li>
+    <li>Manage</li>
+  </ul>
+  
   <h2>Select a Category to Edit:</h2>
   <div class="tag-collection">
     <% @categories.each do |category| %>
@@ -24,16 +28,21 @@
     <% end %>
   </div>
 <% else %>
-  <p>You can <%= link_to "explore more categories", contexts_path %> or <%= link_to "move on to themes", themes_path %>.</p>
-
+  <h1>"<%= @context.display_name %>" Categories.</h1>
+  <ul class="breadcrumbs">
+    <li><a href="/">Home</a> /</li>
+    <li><%= link_to "Categories", contexts_path %> /</li>
+    <li><%= @context.display_name %></li>
+  </ul>
+  
   <h2>Select Categories to Compare:</h2>
   <div class="tag-collection">
     <div class="tag zoom-link-light category" onclick="filterBy('uncategorized');" id="category-uncategorized" data-category="uncategorized">Uncategorized Codes</div>
     <% @categories.each do |category| %>
       <div class="tag zoom-link-light category" onclick="filterBy('<%= category.id %>');" id="category-<%= category.id %>" data-category="<%= category.id %>"><%= category.name %></div>
     <% end %>
-    <%= link_to context_path(context_id: @context.id, is_edit_mode: "true") do %>
-      <div class="tag-button">Edit Categories</div>
+    <%= link_to context_path(@context, is_edit_mode: "true") do %>
+      <div class="tag-button">Manage Categories</div>
     <% end %>
   </div>
 <% end %>
