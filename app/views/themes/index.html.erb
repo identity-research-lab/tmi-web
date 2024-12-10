@@ -1,7 +1,12 @@
 <%- title "Themes" %>
 
 <h1>Explore Themes.</h1>
-<div class="tag-collection">
+<ul class="breadcrumbs">
+  <li><a href="/">Home</a> /</li>
+  <li>Themes</li>
+</ul>
+
+<div class="tag-collection" style="margin-top: 1rem;">
   <% @themes.each do |theme| %>
       <%= link_to theme_path(theme.id) do %>
         <div class="tag zoom-link-light"><%= theme.name %></div>

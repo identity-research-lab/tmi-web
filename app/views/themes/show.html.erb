@@ -1,7 +1,11 @@
 <%- title "Themes" %>
 
 <h1>"<%= @theme.name %>" Theme.</h1>
-<p><%= link_to "More themes.", themes_path %></p>
+<ul class="breadcrumbs">
+  <li><a href="/">Home</a> /</li>
+  <li><%= link_to "Themes", themes_path %> /</li>
+  <li><%= @theme.name %></li>
+</ul>
 
 <% if @previous_theme_id %>
   <%= link_to "<", theme_path(id: @previous_theme_id), class: "flip", id: "flip-left" %>

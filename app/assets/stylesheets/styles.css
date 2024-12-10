@@ -169,13 +169,13 @@ ul,
 
  h2 {
    font-family: var(--font-header);
-   margin: 2rem 0rem;
+   margin: 2rem 0rem 0rem 0rem;
  }
 
  h3 {
    font-family: var(--font-header);
    font-size: 1.25rem;
-   margin-top: 1.25rem;
+   margin: 1rem 0rem 0rem 0rem;
  }
 
  h3 a {
@@ -580,6 +580,34 @@ input[type="email"] {
 	  100% { opacity:0; }
   }
 
+  ul.breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    list-style: none;
+    margin: -2rem 0 0rem 0;
+    padding: 0;
+    text-align: left;
+  }
+
+  ul.breadcrumbs li {
+    margin-right: .25rem;
+    font-size: 0.75rem;
+  } 
+   
+  ul.breadcrumbs li a {
+     color: var(--color-medium-black);
+     padding: 0;
+     text-decoration: none;
+   }
+  
+  ul.breadcrumbs li a:focus,
+  ul.breadcrumbs li a:hover {
+     color: var(--color-black);
+     text-decoration: underline;
+     text-decoration-color: var(--color-medium-black);
+   }
+  
   .code {
     margin: 2rem;
     min-height: 8rem;

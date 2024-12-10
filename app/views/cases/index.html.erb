@@ -1,8 +1,10 @@
 <%- title "Cases" %>
 
-<h1>
-  Explore <%= pluralize @cases.size, "Case" %>.
-</h1>
+<h1>Explore <%= pluralize @cases.size, "Case" %>.</h1>
+<ul class="breadcrumbs">
+  <li><a href="/">Home</a> /</li>
+  <li>Cases</li>
+</ul>
 
 <% if @cases.any? %>
   <p>Add more cases by <%= link_to "uploading a data file", new_case_path %>.</p>
