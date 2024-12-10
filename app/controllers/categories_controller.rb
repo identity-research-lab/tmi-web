@@ -12,7 +12,6 @@ class CategoriesController < ApplicationController
     next_index = (category_ids.index(@category.id) + 1) % category_ids.length
     @previous_category_id = category_ids[previous_index]
     @next_category_id = category_ids[next_index]
-
   end
 
   def new
