@@ -1,7 +1,7 @@
 class ThemesController < ApplicationController
 
   def index
-    @themes = Theme.all.order(&:name)
+    @themes = Theme.all.order(:name)
   end
 
   def new
@@ -45,6 +45,7 @@ class ThemesController < ApplicationController
 
     @theme.name = theme_params[:name]
     @theme.description = theme_params[:description]
+    @theme.notes = theme_params[:notes]
     update_kind ||= "metadata"
     success = @theme.save
 
