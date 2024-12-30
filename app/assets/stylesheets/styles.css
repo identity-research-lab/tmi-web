@@ -182,7 +182,7 @@ ul,
    text-decoration: none;
    color: var(--color-black);
  }
- 
+
  p {
    margin: 1.5rem 0;
  }
@@ -327,7 +327,7 @@ th a:hover {
 
  fieldset {
    border: 0;
-   width: 35%;
+   width: 80%;
    text-align: left;
  }
 
@@ -364,8 +364,8 @@ textarea {
 
 input[type="text"],
 input[type="email"] {
-
- }
+  width: 50%;
+}
 
 
  button {
@@ -458,6 +458,10 @@ input[type="email"] {
  textarea {
    min-height: 6.25rem;
    resize: none;
+ }
+
+ .form-theme textarea {
+   height: 10rem;
  }
 
  section img {
@@ -593,21 +597,21 @@ input[type="email"] {
   ul.breadcrumbs li {
     margin-right: .25rem;
     font-size: 0.75rem;
-  } 
-   
+  }
+
   ul.breadcrumbs li a {
      color: var(--color-medium-black);
      padding: 0;
      text-decoration: none;
    }
-  
+
   ul.breadcrumbs li a:focus,
   ul.breadcrumbs li a:hover {
      color: var(--color-black);
      text-decoration: underline;
      text-decoration-color: var(--color-medium-black);
    }
-  
+
   .code {
     margin: 2rem;
     min-height: 8rem;
@@ -716,7 +720,6 @@ input[type="email"] {
     flex-direction: column;
     flex-basis: 100%;
     flex: 1;
-    width: 40;
   }
 
   .form-success {
