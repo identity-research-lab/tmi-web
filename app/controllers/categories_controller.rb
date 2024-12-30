@@ -63,4 +63,8 @@ class CategoriesController < ApplicationController
     @context = params[:context_id].present? ? Context.find(params[:context_id]) : Context.new
   end
 
+  def scope_nav
+    @nav_context = "categories"
+  end
+
 end

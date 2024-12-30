@@ -17,4 +17,8 @@ class ResponsesController < ApplicationController
     params.require(:response).permit(raw_codes: [])
   end
 
+  def scope_nav
+    @nav_context = "responses"
+  end
+
 end

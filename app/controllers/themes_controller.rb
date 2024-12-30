@@ -12,13 +12,13 @@ class ThemesController < ApplicationController
     @contexts = Context.all.order(:name)
     @theme = Theme.find(params[:id])
     @categories = Category.all
-    
+
     theme_ids = Theme.all.order(:name).pluck(:id)
     previous_index = (theme_ids.index(@theme.id) - 1)
     next_index = (theme_ids.index(@theme.id) + 1) % theme_ids.length
     @previous_theme_id = theme_ids[previous_index]
     @next_theme_id = theme_ids[next_index]
-    
+
   end
 
   def create
@@ -60,6 +60,10 @@ class ThemesController < ApplicationController
 
   def theme_params
     params.require(:theme).permit(:name, :description, :notes, :categories)
+  end
+
+  def scope_nav
+    @nav_context = "themes"
   end
 
 end
