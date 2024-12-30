@@ -35,4 +35,8 @@ class AnnotationsController < ApplicationController
       params.require(:annotation).permit(:case_id, :text)
     end
 
+    def scope_nav
+      @nav_context = "cases"
+    end
+
 end

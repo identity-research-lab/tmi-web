@@ -36,4 +36,10 @@ class CodebooksController < ApplicationController
 
   end
 
+  private
+
+  def scope_nav
+    @nav_context = "codebooks"
+  end
+
 end

@@ -43,4 +43,10 @@ class StatisticsController < ApplicationController
     }
   end
 
+  private
+
+  def scope_nav
+    @nav_context = "about"
+  end
+
 end
