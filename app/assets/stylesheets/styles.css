@@ -53,15 +53,30 @@
  nav a {
    color: var(--color-white);
    display: block;
-   padding: 0;
    text-decoration: none;
  }
+
+nav {
+  position: absolute;
+  top: .75rem;
+  right: 0.5rem;
+}
 
  nav a:focus,
  nav a:hover {
    color: var(--color-white);
    text-decoration-color: var(--color-white);
  }
+
+ nav ul li.active {
+   background-color: var(--color-white);
+   color: var(--color-black);
+   padding: 0rem .25rem;
+  }
+
+  nav ul li.active a {
+   color: var(--color-black);
+  }
 
  nav.subpage a {
    color: var(--color-black);
@@ -820,7 +835,6 @@ input[type="email"] {
   .logo {
     position: absolute;
     top: 2rem;
-    right: 3rem;
     width: 15rem;
     height: 5rem;
     border: none;
@@ -924,21 +938,20 @@ input[type="email"] {
 
    header {
      box-sizing: border-box;
-     margin: 0 auto;
+     margin: 0 auto 1rem auto;
      width: 100%;
-     padding: 2rem 2rem 0rem 2rem;
+     padding: 2rem 2rem;
      min-height: 15rem;
    }
 
    nav {
      position: absolute;
      top: 1.25rem;
-     left: 0.5rem;
    }
 
    nav ul {
      list-style: none;
-     margin: 2.25rem 0 0 2.25rem;
+     margin: 1.25rem 0 0 0;
      padding: 0;
      text-align: left;
    }
@@ -947,23 +960,7 @@ input[type="email"] {
      float: none;
      display: block;
      font-size: 1rem;
-     height: 1.5rem;
-     padding: .25rem .5rem;
-     margin: .75rem 1rem 0rem 0rem;
-     background-color: var(--color-medium-black);
-     border-radius: 1rem 1rem 0rem 0rem;
    }
-
-   nav ul li.active {
-     background-color: var(--color-white);
-     color: var(--color-black);
-     height: 3rem;
-   }
-
-   nav ul li.active a {
-      background-color: var(--color-white);
-      color: var(--color-black);
-    }
 
    section {
      box-sizing: border-box;
@@ -1019,12 +1016,6 @@ input[type="email"] {
      width: 50%;
    }
 
-   nav {
-     position: absolute;
-     top: .75rem;
-     right: 0.5rem;
-   }
-
    nav li {
      margin-left: 3.125rem;
    }
@@ -1060,7 +1051,7 @@ input[type="email"] {
  }
  /* end @media (min-width: 640px) */
 
- @media (min-width: 1000px) {
+ @media (min-width: 900px) {
 
    html {
      font-size: 1rem;
@@ -1116,11 +1107,49 @@ input[type="email"] {
 
    header {
      min-height: 7rem;
+     margin: 0 auto;
+     padding: 2rem 2rem 0rem 2rem;
    }
 
    footer {
      padding: 1rem;
      border-bottom: 5rem solid var(--color-black);
+   }
+
+   nav {
+     position: absolute;
+     top: 1.75rem;
+     left: 0.5rem;
+     padding-bottom: 0rem;
+     margin-bottom: 0rem;
+   }
+
+   nav ul {
+    margin: 2.25rem 0 0 2.25rem;
+    padding: 0;
+   }
+
+   nav ul li {
+    padding: .25rem .5rem .5rem .5rem;
+    margin: .75rem 1rem 0rem 0rem;
+    background-color: var(--color-medium-black);
+    border-radius: 1rem 1rem 0rem 0rem;
+    height: 1.5rem;
+   }
+
+   nav ul li.active {
+    background-color: var(--color-white);
+    color: var(--color-black);
+    padding: .25rem .5rem .5rem .5rem;
+   }
+
+   nav ul li.active a {
+    color: var(--color-black);
+   }
+
+   .logo {
+    top: 2rem;
+    right: 3rem;
    }
 
  }
