@@ -121,7 +121,7 @@ GEM
     drb (2.2.1)
     erubi (1.13.1)
     event_stream_parser (1.0.0)
-    faker (3.4.2)
+    faker (3.5.1)
       i18n (>= 1.8.11, < 2)
     faraday (2.12.0)
       faraday-net_http (>= 2.0, < 3.4)
@@ -343,7 +343,7 @@ DEPENDENCIES
   csv
   debug
   dotenv
-  faker (~> 3.4, >= 3.4.2)
+  faker (~> 3.5)
   neo4j-ruby-driver
   ostruct
   pg
