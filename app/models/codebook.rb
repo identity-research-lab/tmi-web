@@ -5,7 +5,7 @@ class Codebook
   def self.category_query(context)
     {
       explainer: "// Show me a graph of \"#{context.display_name.downcase}\" codes and their associated categories.",
-      query: "MATCH (code:Code)-[:CATEGORIZED_AS]-(cat:Category) WHERE cat.context=\"#{context.name}\" RETURN code,cat"
+      query: "MATCH (cat:Category)-[:CONTAINS]-(code:Code) WHERE cat.context=\"#{context.name}\" RETURN code,cat"
     }
   end
 
