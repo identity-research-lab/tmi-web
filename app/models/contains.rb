@@ -1,5 +1,5 @@
-# CategorizedAs defines the unique relation (edge) between a Category and a Code.
-class CategorizedAs
+# Contains defines the unique relation (edge) between a Category and a Code.
+class Contains
 
   include ActiveGraph::Relationship
 
