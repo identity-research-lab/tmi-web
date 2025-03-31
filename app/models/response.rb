@@ -6,7 +6,7 @@ class Response < ApplicationRecord
   belongs_to :question
 
   def codes
-    @codes ||= Code.where(name: self.raw_codes, context: self.question.context.name)
+    @codes ||= Code.where(name: self.raw_codes, dimension: self.question.context.name)
   end
 
   def sync_to_graph
@@ -35,11 +35,11 @@ class Response < ApplicationRecord
     def populate_codes
 
       # Break association with previous codes in this context
-      persona.codes = persona.codes.reject{ |c| c.context == context_name }
+      persona.codes = persona.codes.reject{ |c| c.dimension == context_name }
 
       # Clean up any Codes that are no longer associated with a Persona.
       self.raw_codes.compact.uniq.each do |name|
-        if code = Code.find_or_create_by(name: name, context: context_name)
+        if code = Code.find_or_create_by(name: name, dimension: context_name)
           persona.codes << code
         end
       end
@@ -52,10 +52,10 @@ class Response < ApplicationRecord
     # Creates Identity nodes and connects them to the associated Persona.
     def populate_identities
 
-      persona.identities = persona.identities.reject{ |i| i.context == context_name }
+      persona.identities = persona.identities.reject{ |i| i.dimension == context_name }
 
       self.raw_codes.compact.uniq.each do |name|
-        if identity = Identity.find_or_create_by(name: name.strip, context: context_name)
+        if identity = Identity.find_or_create_by(name: name.strip, dimension: context_name)
           persona.identities << identity
         end
       end

@@ -33,7 +33,7 @@ module Services
 		# Uses the OpenAI client to pass the prompt and text through the API for sentiment analysis.
 		def perform
 			return false unless context.present?
-			codes = Code.where(context: context.name).map(&:name)
+			codes = Code.where(dimension: context.name).map(&:name)
 			response = Clients::OpenAi.request("#{PROMPT} #{codes}")
 			return false unless response['categories'].present?
 			return response['categories']

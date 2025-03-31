@@ -31,7 +31,7 @@ class CodebooksController < ApplicationController
       @frequencies_by_values = @frequencies.sort{|a, b| a[1] <=> b[1]}
       @categories_histogram = Category.histogram(@context.name)
       @total_codes = @categories_histogram.values.sum
-      @codes = Code.where(context: @context.name)
+      @codes = Code.where(dimension: @context.name)
     end
 
   end

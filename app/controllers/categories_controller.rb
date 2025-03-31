@@ -4,10 +4,10 @@ class CategoriesController < ApplicationController
 
   def show
     @category = Category.find(params[:id])
-    @codes = Code.where(context: @category.context).order(:name)
-    @context = Context.find_by(name: @category.context)
+    @codes = Code.where(dimension: @category.dimension).order(:name)
+    @context = Context.find_by(name: @category.dimension)
 
-    category_ids = Category.where(context: @category.context).pluck(:id)
+    category_ids = Category.where(dimension: @category.dimension).pluck(:id)
     previous_index = (category_ids.index(@category.id) - 1)
     next_index = (category_ids.index(@category.id) + 1) % category_ids.length
     @previous_category_id = category_ids[previous_index]
@@ -15,7 +15,7 @@ class CategoriesController < ApplicationController
   end
 
   def new
-    @category  = Category.new(name: "New Category", context: @context.name)
+    @category  = Category.new(name: "New Category", dimension: @context.name)
   end
 
   def create

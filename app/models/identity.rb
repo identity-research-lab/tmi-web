@@ -1,21 +1,21 @@
-# An Identity is a word or phrase used by a survey participant to self-describe. Identities have associated contexts.
+# An Identity is a word or phrase used by a survey participant to self-describe. Identities have associated dimensions.
 class Identity
   include ActiveGraph::Node
 
   property :name
-  property :context
+  property :dimension
 
   before_validation :strip_whitespace
 
   validates :name, presence: true
-  validates :context, presence: true
-  validates_uniqueness_of :name, scope: :context
+  validates :dimension, presence: true
+  validates_uniqueness_of :name, scope: :dimension
 
   has_many :in, :personas, rel_class: :IdentifiesWith
 
   # Generates a hash consisting of Identities and their number of occurrences.
-  def self.histogram(context)
-    identities = where(context: context).query_as(:i).with('i, count{(i)-[:IDENTIFIES_WITH]-(p:Persona)} AS c').return('i.name, c').order('c DESC')
+  def self.histogram(dimension)
+    identities = where(dimension: dimension).query_as(:i).with('i, count{(i)-[:IDENTIFIES_WITH]-(p:Persona)} AS c').return('i.name, c').order('c DESC')
     identities.inject({}) {|accumulator,identity| accumulator[identity.values[0]] ||= 0; accumulator[identity.values[0]] += identity.values[1]; accumulator}
   end
 
