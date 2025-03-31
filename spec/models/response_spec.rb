@@ -24,17 +24,17 @@ RSpec.describe Response do
     allow(response_1).to receive(:case).and_return(Case.new(id: 1))
     allow(response_2).to receive(:case).and_return(Case.new(id: 1))
 
-    allow(question_1).to receive(:context).and_return(context)
-    allow(question_2).to receive(:context).and_return(context)
+    allow(question_1).to receive(:dimension).and_return(dimension)
+    allow(question_2).to receive(:dimension).and_return(dimension)
 
     allow(code).to receive(:valid?).and_return(true)
     allow(identity).to receive(:valid?).and_return(true)
 
   end
 
-  let(:code) 						{ Code.new(name: "not okay", context: "age") }
-  let(:context) 				{ Context.new(name: "age") }
-  let(:identity) 				{ Identity.new(name: "genx", context: "age") }
+  let(:code) 						{ Code.new(name: "not okay", dimension: "age") }
+  let(:dimension) 		  { Dimension.new(name: "age") }
+  let(:identity) 				{ Identity.new(name: "genx", dimension: "age") }
   let(:persona) 				{ Persona.new(case_id: 1) }
   let(:question_1) 			{ Question.new(is_identity: true) }
   let(:question_2) 			{ Question.new(is_experience: true) }
@@ -44,13 +44,13 @@ RSpec.describe Response do
 
   it "creates identities" do
     allow(Response).to receive(:find).and_return(response_1)
-    expect(Identity).to receive(:find_or_create_by).with(name: "not okay", context: "age").and_return(identity)
+    expect(Identity).to receive(:find_or_create_by).with(name: "not okay", dimension: "age").and_return(identity)
     response_1.sync_to_graph
   end
 
   it "creates codes" do
     allow(Response).to receive(:find).and_return(response_2)
-    expect(Code).to receive(:find_or_create_by).with(name: "just okay", context: "age"). and_return(code)
+    expect(Code).to receive(:find_or_create_by).with(name: "just okay", dimension: "age"). and_return(code)
     response_2.sync_to_graph
   end
 

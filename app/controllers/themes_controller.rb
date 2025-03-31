@@ -9,7 +9,7 @@ class ThemesController < ApplicationController
   end
 
   def show
-    @contexts = Context.all.order(:name)
+    @dimensions = Dimension.all.order(:name)
     @theme = Theme.find(params[:id])
     @categories = Category.all
 

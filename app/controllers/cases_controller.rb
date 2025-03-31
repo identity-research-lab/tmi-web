@@ -10,7 +10,7 @@ class CasesController < ApplicationController
     @next_case = Case.where("created_at > ?", @kase.created_at).order("created_at ASC").limit(1).first
 
     persona = Persona.find_or_initialize_by(case_id: @kase.id)
-    @categories = persona.categories.sort{ |a,b| "#{a.context}.#{a.name}" <=> "#{b.context}.#{b.name}" }
+    @categories = persona.categories.sort{ |a,b| "#{a.dimension}.#{a.name}" <=> "#{b.dimension}.#{b.name}" }
     @keywords = persona.keywords.order_by(:name)
     @annotation = @kase.annotation || Annotation.new(case_id: @kase.id)
     @responses = @kase.responses.order(:created_at)

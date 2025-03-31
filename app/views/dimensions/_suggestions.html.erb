@@ -1,6 +1,6 @@
 <%= turbo_frame_tag "frame-suggestions" do %>
 
-  <% if enqueued && (context.suggestions_updated_at.nil? || DateTime.parse(enqueued) > context.suggestions_updated_at) %>
+  <% if enqueued && (dimension.suggestions_updated_at.nil? || DateTime.parse(enqueued) > dimension.suggestions_updated_at) %>
     <div class="throbber"><div></div><div></div></div>
     <script language="javascript">
       function refreshSpinner() {
@@ -12,11 +12,11 @@
     </script>
   <% else %>
     <ul>
-      <% context.suggested_categories.each do |suggestion| %>
+      <% dimension.suggested_categories.each do |suggestion| %>
         <li><%= suggestion %></li>
       <% end %>
     </ul>
-    <%= button_to "Get Suggestions", context_enqueue_category_suggestions_path(context.id, params: { enqueued: DateTime.now }, method: :put, form: { data: { turbo: true, turbo_stream: true } } ) %>
+    <%= button_to "Get Suggestions", dimension_enqueue_category_suggestions_path(dimension.id, params: { enqueued: DateTime.now }, method: :put, form: { data: { turbo: true, turbo_stream: true } } ) %>
   <% end %>
 
 <% end %>

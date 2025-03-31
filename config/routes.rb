@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   get "about", controller: "static", action: "about"
 
-  resources :contexts do
+  resources :dimensions do
     resources :categories
     post "enqueue_category_suggestions", action: "enqueue_category_suggestions"
   end
@@ -29,5 +29,5 @@ Rails.application.routes.draw do
     post "enqueue_keywords", action: "enqueue_keywords"
   end
 
-  
+
 end

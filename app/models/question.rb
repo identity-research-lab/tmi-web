@@ -4,7 +4,7 @@
 class Question < ApplicationRecord
 
   has_many :responses
-  belongs_to :context
+  belongs_to :dimension
 
   def self.experience_questions
     Question.where(is_experience: true)

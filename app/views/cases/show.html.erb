@@ -19,7 +19,7 @@
 <% if @categories.any? %>
   <div class="tag-collection">
     <% @categories.each do |category| %>
-      <div class="tag"><%= category.name %> (<%= category.context %>) </div>
+      <div class="tag"><%= category.name %> (<%= category.dimension %>) </div>
     <% end %>
   </div>
 <% else %>

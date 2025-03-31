@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_31_204549) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_31_170657) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_stat_statements"
   enable_extension "plpgsql"
@@ -60,7 +60,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_31_204549) do
     t.string "word_frequency", default: [], array: true
   end
 
-  create_table "contexts", force: :cascade do |t|
+  create_table "dimensions", force: :cascade do |t|
     t.string "name"
     t.string "display_name"
     t.datetime "created_at", null: false
@@ -79,8 +79,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_31_204549) do
     t.boolean "is_reflection", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "context_id"
-    t.index ["context_id"], name: "index_questions_on_context_id"
+    t.bigint "dimension_id"
+    t.index ["dimension_id"], name: "index_questions_on_dimension_id"
   end
 
   create_table "responses", force: :cascade do |t|
@@ -97,7 +97,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_31_204549) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "annotations", "cases"
-  add_foreign_key "questions", "contexts"
+  add_foreign_key "questions", "dimensions"
   add_foreign_key "responses", "cases"
   add_foreign_key "responses", "questions"
 end

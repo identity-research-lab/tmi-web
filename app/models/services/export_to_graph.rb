@@ -3,7 +3,7 @@ module Services
 	# Updates associated codes and identities from a Response in the graph database.
 	class ExportToGraph
 
-		attr_accessor :response, :question, :context, :kase
+		attr_accessor :response
 
 		def self.perform(response_id)
 			new(response_id).perform

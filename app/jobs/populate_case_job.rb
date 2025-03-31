@@ -5,9 +5,9 @@ class PopulateCaseJob
 
   queue_as :default
 
-  def perform(context, record)
-    Rails.logger.info("PopulateCodeJob running with context #{context}")
-    kase = Case.from(context, record)
+  def perform(dimension, record)
+    Rails.logger.info("PopulateCodeJob running with dimension #{dimension}")
+    kase = Case.from(dimension, record)
     kase.generate_wordcloud
     kase.classify_sentiment
     Keyword.from(self.id)

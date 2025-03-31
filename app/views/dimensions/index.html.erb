@@ -1,15 +1,15 @@
 <%- title "Categories" %>
 
-<h1>Explore Categories.</h1>
+<h1>Explore Categories by Identity Dimension.</h1>
 <ul class="breadcrumbs">
   <li><a href="/">Home</a> /</li>
   <li>Categories</li>
 </ul>
 
 <ul class="list">
-  <% @contexts.each do |context| %>
+  <% @dimensions.each do |dimension| %>
     <li>
-      <%= link_to context.display_name, context_path(context) %>
+      <%= link_to dimension.display_name, dimension_path(dimension) %>
     </li>
   <% end %>
 </ul>

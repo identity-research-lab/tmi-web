@@ -5,11 +5,11 @@ class CategorySuggestionsJob
 
   queue_as :default
 
-  def perform(context_id)
-    Rails.logger.info("CategorySuggestionsJob running with context id #{context_id}")
-    return unless context = Context.find(context_id)
-    context.suggest_categories
-    context.update_attribute(:suggestions_updated_at, DateTime.now)
+  def perform(dimension_id)
+    Rails.logger.info("CategorySuggestionsJob running with dimension id #{dimension_id}")
+    return unless dimension = Dimension.find(dimension_id)
+    dimension.suggest_categories
+    dimension.update_attribute(:suggestions_updated_at, DateTime.now)
   end
 
 end

@@ -2,7 +2,7 @@
   <nav>
     <ul>
       <li id="themes-nav" class="<%= @nav_context == 'themes' ? 'active' : '' %>"><%= link_to "Themes", themes_path %></a></li>
-      <li id="categories-nav" class="<%= @nav_context == 'categories' ? 'active' : '' %>"><%= link_to "Categories", contexts_path %></a></li>
+      <li id="categories-nav" class="<%= @nav_context == 'categories' ? 'active' : '' %>"><%= link_to "Categories", dimensions_path %></a></li>
       <li id="codebooks-nav" class="<%= @nav_context == 'codebooks' ? 'active' : '' %>"><%= link_to "Codebooks", codebooks_path %></a></li>
       <li id="responses-nav" class="<%= @nav_context == 'responses' ? 'active' : '' %>"><%= link_to "Responses", questions_path %></a></li>
       <li id="cases-nav" class="<%= @nav_context == 'cases' ? 'active' : '' %>"><%= link_to "Cases", cases_path %></a></li>

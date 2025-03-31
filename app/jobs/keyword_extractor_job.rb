@@ -1,13 +1,13 @@
 # This background job performs the Keyword extraction process.
 class KeywordExtractorJob
-    
+
   include Sidekiq::Job
-  
+
   queue_as :default
-  
-  def perform(context)
-    Rails.logger.info("KeywordExtractorJob running with context #{context}")
-    Keyword.from(context)
+
+  def perform(dimension)
+    Rails.logger.info("KeywordExtractorJob running with dimension #{dimension}")
+    Keyword.from(dimension)
   end
-  
+
 end
