@@ -19,13 +19,13 @@
 <h2>Categories</h2>
 <p>Categories related to this theme are are highlighted in black below. Click to add or remove a category from this theme. Changes are saved automatically.</p>
 
-<% @contexts.each do |context| %>
-  <% contextual_categories = context.categories %>
-  <% if contextual_categories.any? %>
-    <h3><%= link_to context.display_name, context_path(id: context.id), class: "jump-link" %></h3>
+<% @dimensions.each do |dimension| %>
+  <% dimension_categories = dimension.categories %>
+  <% if dimension_categories.any? %>
+    <h3><%= link_to dimension.display_name, dimension_path(id: dimension.id), class: "jump-link" %></h3>
 
     <div class="tag-collection">
-      <% contextual_categories.sort_by(&:name).each do |category| %>
+      <% dimension_categories.sort_by(&:name).each do |category| %>
         <% is_selected = @theme.categories.include? category %>
         <a onclick="filterBy('<%= category.id %>'); updateAssociatedCategories(); return false">
           <div class="tag category <%= is_selected ? 'active' : '' %>" id="category-<%= category.id %>" data-category="<%= category.id %>">

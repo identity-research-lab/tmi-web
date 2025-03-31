@@ -1,5 +1,5 @@
-# A Context reflects a demographic category.
-class Context < ApplicationRecord
+# A Dimension reflects a demographic category.
+class Dimension < ApplicationRecord
 
   validates_presence_of :name
   validates_presence_of :display_name

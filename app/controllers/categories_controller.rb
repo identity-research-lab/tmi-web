@@ -1,11 +1,11 @@
 class CategoriesController < ApplicationController
 
-  before_action :scope_context
+  before_action :scope_dimension
 
   def show
     @category = Category.find(params[:id])
     @codes = Code.where(dimension: @category.dimension).order(:name)
-    @context = Context.find_by(name: @category.dimension)
+    @dimension = Dimension.find_by(name: @category.dimension)
 
     category_ids = Category.where(dimension: @category.dimension).pluck(:id)
     previous_index = (category_ids.index(@category.id) - 1)
@@ -15,20 +15,20 @@ class CategoriesController < ApplicationController
   end
 
   def new
-    @category  = Category.new(name: "New Category", dimension: @context.name)
+    @category  = Category.new(name: "New Category", dimension: @dimension.name)
   end
 
   def create
     @category = Category.new(category_params)
     if @category.save
-      redirect_to context_category_path(@context, @category)
+      redirect_to dimension_category_path(@dimension, @category)
     end
   end
 
   def destroy
     @category = Category.find(params[:id])
     @category.destroy
-    redirect_to context_path(@context)
+    redirect_to dimension_path(@dimension)
   end
 
   def update
@@ -48,7 +48,7 @@ class CategoriesController < ApplicationController
 
     respond_to do |format|
       format.turbo_stream do
-        render turbo_stream: turbo_stream.replace("frame-category", partial: "/categories/form", locals: { category: @category, context: @context, success: success, update_kind: update_kind })
+        render turbo_stream: turbo_stream.replace("frame-category", partial: "/categories/form", locals: { category: @category, dimension: @dimension, success: success, update_kind: update_kind })
       end
     end
   end
@@ -56,11 +56,11 @@ class CategoriesController < ApplicationController
   private
 
   def category_params
-    params.require(:category).permit(:name, :description, :context, :codes)
+    params.require(:category).permit(:name, :description, :dimension, :codes)
   end
 
-  def scope_context
-    @context = params[:context_id].present? ? Context.find(params[:context_id]) : Context.new
+  def scope_dimension
+    @dimension = params[:dimension_id].present? ? Dimension.find(params[:dimension_id]) : Dimension.new
   end
 
   def scope_nav

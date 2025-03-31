@@ -3,14 +3,14 @@
 <h1>Add a Category</h1>
 <ul class="breadcrumbs">
   <li><a href="/">Home</a> /</li>
-  <li><%= link_to "Categories", contexts_path %> /</li>
+  <li><%= link_to "Categories", dimensions_path %> /</li>
   <li>New</li>
 </ul>
 
 <div class="two-column">
 
   <div class="column">
-    <%= form_with model: @category, url: context_categories_path(context_id: @context.id) do |f| %>
+    <%= form_with model: @category, url: dimension_categories_path(dimension_id: @dimension.id) do |f| %>
       <fieldset>
       <%= label :name, "Name" %>
       <%= f.text_field :name %>
@@ -19,16 +19,16 @@
       <%= label :description, "Description" %>
       <%= f.text_area :description  %>
       </fieldset>
-      <%= f.hidden_field :context %>
+      <%= f.hidden_field :dimension %>
       <%= f.submit "Create" %>
     <% end %>
   </div>
 
-  <% if @context.suggested_categories.any? %>
+  <% if @dimension.suggested_categories.any? %>
     <div class="column">
       <h2>Suggested categories:</h2>
       <ul>
-        <% @context.suggested_categories.each do |suggestion| %>
+        <% @dimension.suggested_categories.each do |suggestion| %>
           <li><%= suggestion %></li>
         <% end %>
       </ul>

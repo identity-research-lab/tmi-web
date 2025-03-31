@@ -1,47 +1,47 @@
-<%- title "#{@context.display_name} Categories" %>
+<%- title "#{@dimension.display_name} Categories" %>
 
-<% if @previous_context_id %>
-  <%= link_to "<", context_path(id: @previous_context_id), class: "flip", id: "flip-left" %>
+<% if @previous_dimension_id %>
+  <%= link_to "<", dimension_path(id: @previous_dimension_id), class: "flip", id: "flip-left" %>
 <% end %>
-<% if @next_context_id %>
-  <%= link_to ">", context_path(id: @next_context_id), class: "flip", id: "flip-right" %>
+<% if @next_dimension_id %>
+  <%= link_to ">", dimension_path(id: @next_dimension_id), class: "flip", id: "flip-right" %>
 <% end %>
 
 <% if @isEditMode %>
-  <h1>Manage "<%= @context.display_name %>" Categories.</h1>
+  <h1>Manage "<%= @dimension.display_name %>" Categories.</h1>
   <ul class="breadcrumbs">
     <li><a href="/">Home</a> /</li>
-    <li><%= link_to "Categories", contexts_path %> /</li>
-    <li><%= link_to @context.display_name, context_path(@context) %> /</li>
+    <li><%= link_to "Categories", dimensions_path %> /</li>
+    <li><%= link_to @dimension.display_name, dimension_path(@dimension) %> /</li>
     <li>Manage</li>
   </ul>
-  
+
   <h2>Select a Category to Edit:</h2>
   <div class="tag-collection">
     <% @categories.each do |category| %>
-      <%= link_to context_category_path(context_id: @context.id, id: category.id) do %>
+      <%= link_to dimension_category_path(dimension_id: @dimension.id, id: category.id) do %>
         <div class="tag edit-link-light category"><%= category.name %></div>
       <% end %>
     <% end %>
-    <%= link_to new_context_category_path(context_id: @context.id) do %>
+    <%= link_to new_dimension_category_path(dimension_id: @dimension.id) do %>
       <div class="tag-button">New Category</div>
     <% end %>
   </div>
 <% else %>
-  <h1>"<%= @context.display_name %>" Categories.</h1>
+  <h1>"<%= @dimension.display_name %>" Categories.</h1>
   <ul class="breadcrumbs">
     <li><a href="/">Home</a> /</li>
-    <li><%= link_to "Categories", contexts_path %> /</li>
-    <li><%= @context.display_name %></li>
+    <li><%= link_to "Categories", dimensions_path %> /</li>
+    <li><%= @dimension.display_name %></li>
   </ul>
-  
+
   <h2>Select Categories to Compare:</h2>
   <div class="tag-collection">
     <div class="tag zoom-link-light category" onclick="filterBy('uncategorized');" id="category-uncategorized" data-category="uncategorized">Uncategorized Codes</div>
     <% @categories.each do |category| %>
       <div class="tag zoom-link-light category" onclick="filterBy('<%= category.id %>');" id="category-<%= category.id %>" data-category="<%= category.id %>"><%= category.name %></div>
     <% end %>
-    <%= link_to context_path(@context, is_edit_mode: "true") do %>
+    <%= link_to dimension_path(@dimension, is_edit_mode: "true") do %>
       <div class="tag-button">Manage Categories</div>
     <% end %>
   </div>
@@ -49,7 +49,7 @@
 
 <% if @isEditMode %>
   <h2>Suggested Categories:</h2>
-  <%= render partial: "suggestions", locals: { context: @context, enqueued: nil } %>
+  <%= render partial: "suggestions", locals: { dimension: @dimension, enqueued: nil } %>
 <% else %>
   <h2>Associated Codes:</h2>
   <p>Codes belonging to the selected categories are displayed below.</p>

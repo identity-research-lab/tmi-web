@@ -6,8 +6,8 @@ class CodebooksController < ApplicationController
 
   def show
     @question = Question.find(params[:id])
-    @context = @question.context
-    @categories = @context.categories
+    @dimension = @question.dimension
+    @categories = @dimension.categories
     @enqueued_at = params[:enqueued_at].present? ? Time.at(params[:enqueued_at].to_i).strftime("%T %Z") : nil
 
     # Support the previous/next navigation controls
@@ -21,17 +21,17 @@ class CodebooksController < ApplicationController
 
     if @question.is_identity?
       # Identity fields have associated Identity objects.
-      @frequencies = Identity.histogram(@context.name)
+      @frequencies = Identity.histogram(@dimension.name)
       @frequencies_by_keys = @frequencies.sort{|a, b| a[0] <=> b[0]}
       @frequencies_by_values = @frequencies.sort{|a, b| a[1] <=> b[1]}
     else
       # Experience fields have associated Code and Category objects.
-      @frequencies = Code.histogram(@context.name)
+      @frequencies = Code.histogram(@dimension.name)
       @frequencies_by_keys = @frequencies.sort{|a, b| a[0] <=> b[0]}
       @frequencies_by_values = @frequencies.sort{|a, b| a[1] <=> b[1]}
-      @categories_histogram = Category.histogram(@context.name)
+      @categories_histogram = Category.histogram(@dimension.name)
       @total_codes = @categories_histogram.values.sum
-      @codes = Code.where(dimension: @context.name)
+      @codes = Code.where(dimension: @dimension.name)
     end
 
   end
