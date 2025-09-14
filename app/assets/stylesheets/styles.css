@@ -95,7 +95,7 @@ ul,
  }
 
  em {
-   font-family: var(--font-body);
+   font-family: var(--font-header);
  }
 
  li {
@@ -294,6 +294,14 @@ th a:hover {
   text-decoration: underline;
 }
 
+table.search {
+  border: none;
+}
+
+.search td {
+  border: 1px solid #ddd;
+  margin: 1rem 0;
+}
  abbr {
    text-decoration: none;
  }

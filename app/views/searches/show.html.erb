@@ -1,0 +1,32 @@
+<%- title "Search TMI-WEB" %>
+
+<h1>Find it in TMI-Web.</h1>
+<ul class="breadcrumbs">
+  <li><a href="/">Home</a> /</li>
+  <li>Search</li>
+</ul>
+
+<%= form_with model: @search, id: "form-search", class: "form-search" do |f| %>
+	<fieldset>
+		<%= label :query, "Find responses containing:" %>
+		<%= f.text_field :query %>
+	</fieldset>
+	<%= f.submit "Search", id: "button-theme" %>
+<% end %>
+
+<h3><%= pluralize @search.responses.size, "Result" %></h3>
+
+<table class="search">
+  <% @search.responses.each do |response| %>
+    <tr>
+      <td>
+        <h4><%= link_to "Case ##{response.case.identifier}", response.case %></h4>
+        <h3 style="margin-bottom: 0">"<%= response.value %>"</h3>
+        <p style="margin-top: 0; color: #444;">
+          <em>Dimension:</em> <%= response.question.dimension.name %><br />
+          <em>Codes:</em> <%= response.raw_codes.join(', ') %>
+        </p>
+      </td>
+    </tr>
+  <% end %>
+</table>
