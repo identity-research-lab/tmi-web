@@ -1,0 +1,15 @@
+<%- title "Search TMI-WEB" %>
+
+<h1>Find it in TMI-Web.</h1>
+<ul class="breadcrumbs">
+  <li><a href="/">Home</a> /</li>
+  <li>Search</li>
+</ul>
+
+<%= form_with model: Search.new(""), data: {turbo: false} do |f| %>
+	<fieldset>
+		<%= label :query, "Find responses containing:" %>
+		<%= f.text_field :query %>
+	</fieldset>
+	<%= f.submit "Search", id: "button-theme" %>
+<% end %>

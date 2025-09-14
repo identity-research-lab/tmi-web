@@ -95,7 +95,7 @@ ul,
  }
 
  em {
-   font-family: var(--font-body);
+   font-family: var(--font-header);
  }
 
  li {
@@ -184,7 +184,11 @@ ul,
 
  h2 {
    font-family: var(--font-header);
-   margin: 2rem 0rem 1rem 0rem;
+   margin: 1rem 0rem 1rem 0rem;
+ }
+
+ h2 a {
+  font-size: 1.25rem;
  }
 
  h3 {
@@ -294,6 +298,14 @@ th a:hover {
   text-decoration: underline;
 }
 
+table.search {
+  border: none;
+}
+
+.search td {
+  border: 1px solid #ddd;
+  margin: 1rem 0;
+}
  abbr {
    text-decoration: none;
  }
@@ -508,12 +520,16 @@ input[type="email"] {
    font-size: 1rem;
  }
 
+  article {
+    border: 1px solid var(--color-light-grey);
+    padding: 0 1rem;
+    margin: 0 0 1rem 0;
+  }
+
  article h2 {
    color: var(--color-black);
    font-family: var(--font-body);
    font-size: 1.5rem;
-   padding: 1.25rem 0 0 0;
-   margin-bottom: -1.25rem;
  }
 
  article h1 {
@@ -951,7 +967,7 @@ input[type="email"] {
 
    nav ul {
      list-style: none;
-     margin: 1.25rem 0 0 0;
+     margin: .5rem 0 0 0;
      padding: 0;
      text-align: left;
    }
