@@ -897,6 +897,9 @@ input[type="email"] {
      vertical-align: baseline;
   }
 
+  .tag .highlight {
+    background: none;
+  }
 
   .tag-collection a {
     color: var(--color-white);

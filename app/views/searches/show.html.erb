@@ -16,22 +16,39 @@
 
 <h2><%= pluralize @search.responses.size, "Result" %> for "<%= @search.query %>"</h3>
 
-<% @search.responses.each do |response| %>
-  <article>
-    <h2><%= link_to "Case ##{response.case.identifier}", response.case %></h2>
-    <blockquote>
-      <p>"<%= response.value %>"</p>
-    </blockquote>
-    <p>
-      <em>Survey Question:</em> <%= link_to response.question.label, response.question %><br />
-      <em>Dimension:</em> <%= response.question.dimension.display_name %><br />
-      <% if response.raw_codes.any? %><em>Codes:</em><% end %>
-    </p>
-    <div class="tag-collection">
-      <% response.raw_codes.each do |code| %>
-        <div class="tag"><%= code %></div>
-      <% end %>
-    </div>
-  </article>
-<% end %>
+<div id="results">
+  <% @search.responses.each do |response| %>
+    <article>
+      <h2><%= link_to "Case ##{response.case.identifier}", response.case %></h2>
+      <blockquote>
+        <p>"<%= response.value %>"</p>
+      </blockquote>
+      <p>
+        <em>Survey Question:</em> <%= link_to response.question.label, response.question %><br />
+        <em>Dimension:</em> <%= response.question.dimension.display_name %><br />
+        <% if response.raw_codes.any? %><em>Codes:</em><% end %>
+      </p>
+      <div class="tag-collection">
+        <% response.raw_codes.each do |code| %>
+          <div class="tag"><%= code %></div>
+        <% end %>
+      </div>
+    </article>
+  <% end %>
+</div>
 
+<script>
+  const highlightText = (substring) => {
+    if (!substring) return;
+    const elements = document.getElementsByTagName("p");
+    console.log(elements.size);
+    const regex = new RegExp(`(${substring})`, "gi");
+    for (const el of elements) {
+      el.innerHTML = el.textContent.replace(
+        regex,
+        '<span class="highlight-red">$1</span>'
+      );
+    }
+  }
+  highlightText('<%= @search.query %>');
+</script>
