@@ -6,7 +6,7 @@
   <li>Search</li>
 </ul>
 
-<%= form_with model: @search, id: "form-search", class: "form-search" do |f| %>
+<%= form_with model: @search, id: "form-search", class: "form-search", data: { turbo: false } do |f| %>
 	<fieldset>
 		<%= label :query, "Find responses containing:" %>
 		<%= f.text_field :query %>
@@ -14,19 +14,24 @@
 	<%= f.submit "Search", id: "button-theme" %>
 <% end %>
 
-<h3><%= pluralize @search.responses.size, "Result" %></h3>
+<h2><%= pluralize @search.responses.size, "Result" %> for "<%= @search.query %>"</h3>
 
-<table class="search">
-  <% @search.responses.each do |response| %>
-    <tr>
-      <td>
-        <h4><%= link_to "Case ##{response.case.identifier}", response.case %></h4>
-        <h3 style="margin-bottom: 0">"<%= response.value %>"</h3>
-        <p style="margin-top: 0; color: #444;">
-          <em>Dimension:</em> <%= response.question.dimension.name %><br />
-          <em>Codes:</em> <%= response.raw_codes.join(', ') %>
-        </p>
-      </td>
-    </tr>
-  <% end %>
-</table>
+<% @search.responses.each do |response| %>
+  <article>
+    <h2><%= link_to "Case ##{response.case.identifier}", response.case %></h2>
+    <blockquote>
+      <p>"<%= response.value %>"</p>
+    </blockquote>
+    <p>
+      <em>Survey Question:</em> <%= link_to response.question.label, response.question %><br />
+      <em>Dimension:</em> <%= response.question.dimension.display_name %><br />
+      <% if response.raw_codes.any? %><em>Codes:</em><% end %>
+    </p>
+    <div class="tag-collection">
+      <% response.raw_codes.each do |code| %>
+        <div class="tag"><%= code %></div>
+      <% end %>
+    </div>
+  </article>
+<% end %>
+

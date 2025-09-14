@@ -6,7 +6,6 @@ class SearchesController < ApplicationController
 
   def create
     @search = Search.new(params[:search][:query])
-    Rails.logger.info("!!! => #{@search.responses.count}")
     render :show
   end
 
