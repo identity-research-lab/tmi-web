@@ -21,7 +21,7 @@
     <article>
       <h2><%= link_to "Case ##{response.case.identifier}", response.case %></h2>
       <blockquote>
-        <p>"<%= response.value %>"</p>
+        <p class="response-text">"<%= response.value %>"</p>
       </blockquote>
       <p>
         <em>Survey Question:</em> <%= link_to response.question.label, response.question %><br />
@@ -40,13 +40,13 @@
 <script>
   const highlightText = (substring) => {
     if (!substring) return;
-    const elements = document.getElementsByTagName("p");
+    const elements = document.getElementsByClassName("response-text");
     console.log(elements.size);
     const regex = new RegExp(`(${substring})`, "gi");
     for (const el of elements) {
       el.innerHTML = el.textContent.replace(
         regex,
-        '<span class="highlight-red">$1</span>'
+        '<span class="highlight-green">$1</span>'
       );
     }
   }
