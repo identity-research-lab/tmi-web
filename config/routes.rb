@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   resources :responses
   resources :statistics
   resources :themes
+  resources :searches
 
   resources :cases do
     post "enqueue_keywords", action: "enqueue_keywords"
