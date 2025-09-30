@@ -9,9 +9,26 @@
 		<% end %>
 		<div class="tag-collection" id="display-<%= response.id %>">
 			<% response.raw_codes.sort.each do |code| %>
-				<a onclick="filterBy('<%= code %>'); return false"><div class="tag codes <%= @tag_class %> <%= @css_class %>" data-code="<%= code %>"><%= code %></div></a>
+					<div class="tag codes <%= @tag_class %> <%= @css_class %>" data-code="<%= code %>" onmouseover="toggleIconControls('<%= code %>');"  onmouseout="toggleIconControls('<%= code %>');">
+						<%= code %>
+						<div class="tag-icon-control top">
+							<a onclick="filterBy('<%= code %>'); return false">
+								<%= image_tag "icons/remove.png", class: "tag-icon-control top hidden", data: { code: code }, alt: "Remove this code" %>
+								</a>
+						</div>
+						<div class="tag-icon-control middle">
+							<a onclick="filterBy('<%= code %>'); return false">
+								<%= image_tag "icons/edit.png", class: "tag-icon-control middle hidden", data: { code: code }, alt: "Rename this code" %>
+								</a>
+						</div>
+						<div class="tag-icon-control bottom">
+							<a onclick="filterBy('<%= code %>'); return false">
+								<%= image_tag "icons/filter.png", class: "tag-icon-control bottom hidden", data: { code: code }, alt: "Filter by this code" %>
+								</a>
+						</div>
+					</div>
 			<% end %>
-			<div class="tag-button"><a onclick="toggleFormMode('<%= response.id %>'); return false;">Edit</a></div>
+			<div class="tag-button"><a onclick="toggleFormMode('<%= response.id %>'); return false;">Add...</a></div>
 			<br style="clear: both;" />
 		</div>
 		<div class="hidden" id="field-<%= response.id %>">
