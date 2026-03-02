@@ -4,6 +4,8 @@ TMI-Web is a social science research tool for managing, analyzing, coding, and v
 
 [![Hippocratic License HL3-CORE](https://img.shields.io/static/v1?label=Hippocratic%20License&message=HL3-CORE&labelColor=5e2751&color=bc8c3d)](https://firstdonoharm.dev/version/3/0/core.html)
 
+<img width="2047" height="1081" alt="tmi-screenshot-app-and-graph" src="https://github.com/user-attachments/assets/0cd6ba80-6d33-4192-9077-d6bf038fc26a" />
+
 ## High-level architecture
 
 TMI-Web has three primary components: the web application, the survey response database, and the persona database.
