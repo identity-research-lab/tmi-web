@@ -826,7 +826,7 @@ input[type="email"] {
      vertical-align: baseline;
   }
 
-  .zoom-link::after {
+  /* .zoom-link::after {
      content: "";
      width: .8em;
      height: .8em;
@@ -846,7 +846,7 @@ input[type="email"] {
      background-size: contain;
      display: inline-block;
      vertical-align: baseline;
-  }
+  } */
 
   .logo {
     position: absolute;
@@ -870,13 +870,39 @@ input[type="email"] {
     width: 25%;
   }
 
+  .tag-icon-control .bottom {
+    height: 19px;
+    width: 19px;
+    position: absolute;
+    top: 2.5rem;
+    right: -12px;
+  }
+
+  .tag-icon-control .middle {
+    height: 19px;
+    width: 19px;
+    position: absolute;
+    top: 1rem;
+    right: -12px;
+  }
+
+  .tag-icon-control .top {
+    height: 19px;
+    width: 19px;
+    position: absolute;
+    top: -.5rem;
+    right: -12px;
+  }
+
   .tag {
     background-color: var(--color-green);
+    position: relative;
     color: var(--color-white);
     line-height: 1.25rem;
     padding: .6rem;
     border-radius: 1rem;
     min-width: 2rem;
+    min-height: 2.5rem;
     margin: 0 1rem 1rem 0;
     border: 3px solid var(--color-green);
   }

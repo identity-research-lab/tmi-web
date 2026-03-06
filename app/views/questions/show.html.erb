@@ -53,6 +53,20 @@
 
 <script language="javascript">
 
+  function toggleIconControls(codeID) {
+    const icons = Array.from(document.getElementsByClassName('tag-icon-control'))
+
+    icons.forEach(element => {
+      if (element.getAttribute('data-code') == codeID) {
+        if (Array.from(element.classList).includes('hidden')) {
+          element.classList.remove('hidden');
+        } else {
+          element.classList.add('hidden');
+        }
+      }
+    });
+  }
+
   function filterBy(codeID) {
 
     const dataRows = Array.from(document.getElementsByClassName('data-row'));
