@@ -51,7 +51,12 @@ class Case < ApplicationRecord
     reflection_question_ids = Question.where(is_reflection: true).pluck(:id)
     responses.select{|r| reflection_question_ids.include? r.question_id}.map(&:value).join(". ")
   end
-
+  
+  # TODO FIXME hardcoded
+  def status
+    "In Progress"
+  end
+  
   # Calculates and sets the sentiment based on a the "identity reflection / notes" field.
   # This method uses the SentimentAnalysis service, passing the text of the reflection as an
   # argument. The service returns a classification, which is written to the Case record.
