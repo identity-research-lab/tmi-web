@@ -9,8 +9,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  root "cases#index"
-
+  root "home", controller: "static", action: "home"
   get "about", controller: "static", action: "about"
 
   resources :dimensions do

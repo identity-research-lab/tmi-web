@@ -1,0 +1,55 @@
+<script language="javascript">
+  function copyToClipboard(elementId) {
+    var element = document.getElementById(elementId);
+    var textarea = document.createElement('textarea');
+    var tooltip = document.getElementById('confirmation');
+
+    textarea.value = element.textContent;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+
+    tooltip.classList.add("hidden");
+    tooltip.classList.remove("appear-disappear");
+
+    setTimeout(function() { tooltip.classList.remove("hidden"); }, 200);
+
+    tooltip.classList.add("appear-disappear");
+  };
+
+  function toggleFormMode(elementId) {
+    var cloud = document.getElementById("display-" + elementId);
+    var entry = document.getElementById("field-" + elementId);
+    entry.classList.remove("hidden");
+    cloud.classList.add("hidden");
+  };
+</script>
+<!-- MOBILE NAVIGATION SCRIPT -->
+<script>
+
+  const menuButton = document.querySelector(".mobile-menu");
+  const topNav = document.querySelector(".top-nav");
+  const mobileProjectLinks = `
+  <div class="mobile-divider"></div>
+  <div class="mobile-project-label">Active Project:</div>
+  <a href="00project-dashboard.html" class="mobile-project-link">Dashboard</a>
+  <a href="01code-cases.html" class="mobile-project-link">Cases</a>
+  <a href="03code-survey-items.html" class="mobile-project-link">Survey Items</a>
+  <a href="05code-metrics.html" class="mobile-project-link">Code Metrics</a>
+  <a href="#" class="mobile-project-link">Codes</a>
+  <a href="#" class="mobile-project-link">Categories</a>
+  <a href="#" class="mobile-project-link">Themes</a>
+  <a href="#" class="mobile-project-link">Graph</a>
+  `;
+  
+  if (!topNav.querySelector(".mobile-project-label")) {
+    topNav.insertAdjacentHTML("beforeend", mobileProjectLinks);
+  }
+  
+  menuButton.addEventListener("click", () => {
+    const isOpen = topNav.classList.toggle("is-open");
+    menuButton.setAttribute("aria-expanded", String(isOpen));
+  });
+
+</script>

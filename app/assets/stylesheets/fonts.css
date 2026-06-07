@@ -5,20 +5,20 @@
 }
   
 @font-face {
-	font-family: 'Roboto-Regular';
-	font-weight: 400;
-	src: url(/assets/Roboto-Regular.ttf);
+  font-family: 'Roboto-Regular';
+  font-weight: 400;
+  src: url(/assets/Roboto-Regular.ttf);
 }
-	
+  
 @font-face {
-	font-family: 'Roboto-Medium';
-	font-weight: 500;
-	src: url(/assets/Roboto-Medium.ttf);
+  font-family: 'Roboto-Medium';
+  font-weight: 500;
+  src: url(/assets/Roboto-Medium.ttf);
 }
-	
+  
 @font-face {
-	font-family: 'Roboto-Bold';
-	font-weight: 700;
-	src: url(/assets/Roboto-Bold.ttf);
+  font-family: 'Roboto-Bold';
+  font-weight: 700;
+  src: url(/assets/Roboto-Bold.ttf);
 }
-	
+  

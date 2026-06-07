@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TMI-Web <%= content_for?(:title) ? "| #{content_for(:title)}" : "" %></title>
+    <title>TMI-WEB <%= content_for?(:title) ? "| #{content_for(:title)}" : "" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
     <%= favicon_link_tag 'favico/apple-touch-icon.png', rel: 'apple-touch-icon', type: 'image/png' %>
@@ -14,41 +14,13 @@
   </head>
 
   <body>
-    <%= render "shared/header" %>
-    <div id="veil">
-      <section>
-        <%= yield %>
-      </section>
-      <%= render "shared/footer" %>
-    </div>
-
-    <script language="javascript">
-      function copyToClipboard(elementId) {
-        var element = document.getElementById(elementId);
-        var textarea = document.createElement('textarea');
-        var tooltip = document.getElementById('confirmation');
-
-        textarea.value = element.textContent;
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-
-        tooltip.classList.add("hidden");
-        tooltip.classList.remove("appear-disappear");
-
-        setTimeout(function() { tooltip.classList.remove("hidden"); }, 200);
-
-        tooltip.classList.add("appear-disappear");
-      };
-
-      function toggleFormMode(elementId) {
-        var cloud = document.getElementById("display-" + elementId);
-        var entry = document.getElementById("field-" + elementId);
-        entry.classList.remove("hidden");
-        cloud.classList.add("hidden");
-      };
-    </script>
-
+		<main class="page">
+			<%= render "shared/header" %>
+			<div id="veil">
+				<%= yield %>
+				<%= render "shared/footer" %>
+			</div>
+		</main>
+		<%= render "shared/polyfill" %>
   </body>
 </html>
