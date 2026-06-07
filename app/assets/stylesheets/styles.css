@@ -20,9 +20,9 @@
    --color-red-tint: #600;
    --color-red-highlight: #eaa;
    --color-white: #FFFFFF;
-   --font-body: "KoHo Regular";
-   --font-title: "KoHo Regular";
-   --font-header: "KoHo-Bold";
+   --font-body: "Roboto-Regular";
+   --font-title: "Roboto-Regular";
+   --font-header: "Roboto-Bold";
    --font-monospace: "Courier New";
    --font-size-small: 0.85rem;
  }
