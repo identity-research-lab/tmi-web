@@ -1,7 +1,10 @@
 class CasesController < ApplicationController
 
   def index
-    @cases = Case.all.order(:created_at)
+    @cases = Case.all.order(:created_at).limit(10)
+    @personas = Persona.where(case_id: @cases.map(&:id))
+    @codes_count = Code.all.count
+    @search ||= Search.new("")
   end
 
   def show

@@ -1,5 +1,47 @@
-<footer>
-  <p class="colophon-copyright">
-    &copy; Copyright <%= Date.today.year %> <a href="https://identityresearchlab.com">IDentity Research Lab</a>.<br /><a href="https://github.com/identity-research-lab/tmi-web">Source code is openly available.</a>
-  </p>
+<footer class="site-footer">
+	<div class="footer-grid">
+		<div class="footer-column">
+			<div class="footer-heading">TMI-WEB</div>
+			<p class="footer-text">Ethically open sourced with the <%= link_to "Hippocratic License (HL3-CORE)", "https://firstdonoharm.dev/version/3/0/core.html" %>. <a href="https://github.com/identity-research-lab/tmi-web">Source code is freely available for reading, remixing, and reusing.</a></p>
+		</div>
+		<div class="footer-column">
+      <ul>
+        <li class="footer-heading">Active Project</li>
+        <li><%= link_to "Dashboard", cases_path %></li>
+        <li><%= link_to "Cases", cases_path %></li>
+        <li><%= link_to "Survey Items", questions_path %></li>
+        <li><%= link_to "Code Metrics", codebooks_path %></li>
+        <li><%= link_to "Codes", codebooks_path %></li>
+        <li><%= link_to "Categories", dimensions_path %></li>
+        <li><%= link_to "Themes", themes_path %></li>
+        <li><%= link_to "Graph", themes_path %></li>
+        <li><%= link_to "Search", searches_path %></li>
+      </ul>
+		</div>
+
+		<div class="footer-column">
+      <ul>
+        <li class="footer-heading">Information</li>
+        <li><%= link_to "About", about_path %></li>
+        <li><%= link_to "Use Cases", "#" %></li>
+        <li><%= link_to "Contribute", "#" %></li>
+        <li><%= link_to "Contact", "#" %></li>
+      </ul>
+		</div>
+
+    <div class="footer-column">
+      <ul>
+        <li class="footer-heading">Resources</li>
+        <li><%= link_to "Instructional Guides", "#" %></li>
+        <li><%= link_to "Scholarship", "#" %></li>
+      </ul>
+    </div>
+	</div>
+	
+	<div class="footer-bottom">
+		<span>&copy; Copyright <%= Date.today.year %> <a href="https://identityresearchlab.com">IDentity Research Lab</a>.</span>
+		<span class="footer-separator"></span>
+		<span>Qualitative Depth · Computational Scalability</span>
+	</div>
+
 </footer>

@@ -1,25 +1,206 @@
 <%- title "Cases" %>
 
-<h1>Explore <%= pluralize @cases.size, "Case" %>.</h1>
-<ul class="breadcrumbs">
-  <li><a href="/">Home</a> /</li>
-  <li>Cases</li>
+<section class="app-header">
+
+<div class="app-header-copy">
+
+<div class="app-label">
+Active Project · <span class="app-label-dense">Participant-Centered Coding Pathway</span>
+</div>
+
+<h1 class="app-title">
+All Participant Cases
+</h1>
+
+<p class="app-description">
+Enter the dataset through individual participant cases/personas. Review one participant’s responses across the full survey, preserving narrative continuity, situated identity, relational context, and within-case complexity during the coding process.
+</p>
+
+</div>
+
+<aside class="app-header-panel" aria-label="Dataset summary">
+
+<div class="app-panel-title">
+Dataset Status
+</div>
+
+<div class="app-stats-grid">
+
+<div class="app-stat">
+<span class="app-stat-value"><%= @cases.size %></span>
+<span class="app-stat-label">Cases</span>
+</div>
+
+<div class="app-stat">
+<span class="app-stat-value">XX</span>
+<span class="app-stat-label">Uncoded</span>
+</div>
+
+<div class="app-stat">
+<span class="app-stat-value"><%= @codes_count %></span>
+<span class="app-stat-label">Applied Codes</span>
+</div>
+
+<div class="app-stat">
+<span class="app-stat-value">00/00/00</span>
+<span class="app-stat-label">Latest Activity</span>
+</div>
+
+</div>
+
+</aside>
+
+</section>
+
+<section class="dashboard-upload">
+
+<div>
+
+<div class="app-label">
+Project Data
+</div>
+
+<h2 class="workspace-title">
+Upload or Update Project Spreadsheet
+</h2>
+
+<p class="workspace-note">
+Start a new TMI-WEB project by uploading a completed TMI-WEB Survey Template (.csv). Return here anytime to merge updated survey responses, cases, or project data into the active dataset.
+</p>
+
+</div>
+
+<ul class="dashboard-upload-actions">
+<% if @cases.any? %>
+  <li><%= link_to "Merge Updated Project Data", new_case_path, class: "button small secondary" %></li>
+<% else %>
+  <li><%= link_to "Upload New Project Spreadsheet", new_case_path, class: "button small secondary" %></li>
+<% end %>
 </ul>
 
-<% if @cases.any? %>
-  <p>Add more cases by <%= link_to "uploading a data file", new_case_path %>.</p>
-<% else %>
-  <p>To get started, <%= link_to "upload your data file", new_case_path %>.</p>
-<% end %>
+</section>
 
-<ol class="nodes">
-  <% @cases.each do |kase| %>
-    <li>
-      <%= link_to case_path(kase.id) do %>
-        <div>
-          <%= kase.identifier %>
-        </div>
-      <% end %>
-    </li>
-  <% end %>
-</ol>
+<section class="app-toolbar" aria-label="Case tools">
+  <div class="app-toolbar-left">
+    <%= form_with model: Search.new(""), data: {turbo: false} do |f| %>
+      <%= f.search_field :query, class: "app-input", placeholder: "Search Cases", aria: { label: "Search cases" } %>
+
+      <select class="app-select" aria-label="Filter cases">
+        <option>All cases</option>
+        <option>Uncoded</option>
+        <option>In Progress</option>
+        <option>Recently updated</option>
+        <option>Has categories</option>
+      </select>
+      
+      <select class="app-select" aria-label="Sort cases">
+        <option>Sort: Recently edited</option>
+        <option>Sort: Case ID</option>
+        <option>Sort: Most coded</option>
+        <option>Sort: Uncoded first</option>
+      </select>
+      <%= f.submit "Search", id: "button-theme", class: "button small secondary" %>
+    <% end %>
+  </div>
+</section>
+
+<section class="app-section">
+
+<div class="section-label">
+Cases / Personas
+</div>
+
+<div class="case-table-wrap">
+
+<table class="case-table">
+
+<thead>
+<tr>
+<th scope="col">Persona</th>
+<th scope="col">Identity Snapshot</th>
+<th scope="col">Codes</th>
+<th scope="col">Categories</th>
+<th scope="col">Status</th>
+<th scope="col">Activity</th>
+</tr>
+</thead>
+
+<tbody>
+
+<% @personas.each do |persona| %>
+  <%- kase = @cases.detect {|c| c.id == persona.case_id } %>
+  <tr class="case-row">
+    <td>
+      <%= link_to persona.name, case_path(persona.case_id), class: "case-id-link" %>
+      <div class="case-subtext">
+        Graph:<br />
+        <a id="copy-to-clipboard" onclick="copyToClipboard('copy-to-clipboard')" class="copy-query-button cypher-link" aria-label="Copy Cypher query">
+          <%= kase.graph_query[:query] %>⧉
+        </a>
+        <div id="confirmation" class="hidden"></div>
+      </div>
+    </td>
+    <td>
+      <div class="identity-tags">
+        <% persona.identities.each do |identity| %>
+          <span class="tag"><%= identity.name %></span>
+        <% end %>
+      </div>
+    </td>
+    <td>
+      <div class="code-tags">
+        <% codes = persona.codes %>
+        <span class="tag dark"><%= pluralize persona.codes.size, "Code" %></span>
+        <% codes.each do |code| %>
+          <span class="tag"><%= code.name %></span>
+        <% end %>
+      </div>
+    </td>
+    <td>
+      <div class="category-tags">
+        <% persona.categories.each do |category| %>
+          <span class="tag"><%= category.name %></span>
+        <% end %>
+      </div>
+    </td>
+    <td>
+      <span class="status-pill active"><%= kase.status %></span>
+    </td>
+    <td>
+      <strong>Edited <%= time_ago_in_words kase.updated_at %> ago</strong>
+      <div class="activity-subtext">
+        Last code edit · XXX
+      </div>
+    </td>
+  </tr>
+<% end %>
+</tbody>
+
+</table>
+
+</div>
+
+<div class="table-pagination">
+  <div class="rows-per-page">
+    <label for="rows-per-page">Rows per page</label>
+    <select id="rows-per-page" class="app-select">
+      <option>10</option>
+      <option>25</option>
+      <option>50</option>
+      <option>100</option>
+    </select>
+  </div>
+  
+  <nav class="pagination-controls" aria-label="Cases pagination">
+    <a href="#" class="pagination-button" aria-label="Previous page">←</a>
+    <a href="#" class="pagination-button active">1</a>
+    <a href="#" class="pagination-button">2</a>
+    <a href="#" class="pagination-button">3</a>
+    <span class="pagination-ellipsis">…</span>
+    <a href="#" class="pagination-button">22</a>
+    <a href="#" class="pagination-button" aria-label="Next page"></a>
+  </nav>
+  
+</div>
+
+</section>

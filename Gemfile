@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-ruby "3.3.5"
+ruby "4.0.5"
 
 # TMI-specific
 gem 'sidekiq'
@@ -12,9 +12,11 @@ gem 'neo4j-ruby-driver'
 gem 'yard'
 gem 'csv'
 gem 'ostruct'
+gem 'benchmark'
+gem 'connection_pool', '~> 2.4'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.2.1"
+gem "rails"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -23,7 +25,7 @@ gem "sprockets-rails"
 # gem "sqlite3", "~> 1.4"
 
 # Use postgres
-gem "pg"
+gem "pg", ">=1.6.3"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
